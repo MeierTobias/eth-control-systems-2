@@ -16,6 +16,9 @@ To clone this repo and the necessary submodules add the `--recurse-submodules` f
 After you cloned this repo there are two options to build the LaTeX files ether you [use the Docker Container](#docker) or build it with your [native installed LaTeX compile](#native-latex-compiler) of choice.
 If you want a hassle-free way to work with our LaTeX project, we recommend using Docker.
 
+> **Important**
+Make sure to compile with xelatex (required by fontspec).
+
 ### Docker
 
 1. Make sure you have Docker installed on your system. If you don't have it already, you can download and install it from the [official Docker website](https://www.docker.com/get-started/).
@@ -28,6 +31,13 @@ If you want a hassle-free way to work with our LaTeX project, we recommend using
 If you want to use your own native installed LaTeX compiler we recommend to use [TeXLive](https://www.tug.org/texlive/) which integrates well within visual studio code.
 
 If you use the [LaTeX Workshop extension](vscode:extension/James-Yu.latex-workshop) you can add the following lines to your `.vscode/settings.json` file to configure the system:
+
+To compile with xelatex set: **(required)**
+
+```json
+"latex-workshop.latex.recipe.default": "latexmk (xelatex)"
+```
+
 
 Specify an output directory:
 
