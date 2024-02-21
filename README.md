@@ -30,7 +30,7 @@ Make sure to compile with xelatex (required by fontspec).
 
 If you want to use your own native installed LaTeX compiler we recommend to use [TeXLive](https://www.tug.org/texlive/) which integrates well within visual studio code.
 
-If you use the [LaTeX Workshop extension](vscode:extension/James-Yu.latex-workshop) you can add the following lines to your `.vscode/settings.json` file to configure the system:
+If you use the [LaTeX Workshop extension](vscode:extension/James-Yu.latex-workshop) you can add the following lines to your `.vscode/settings.json` file to configure the system. There is an example settings file you can use. To get the minimum required configuration always open the provided code-workspace. This can be done by File->"Open Workspace from File" and then select the file `.vscode/eth-comp-control.code-workspace`.
 
 To compile with xelatex set: **(required)**
 
