@@ -1,5 +1,7 @@
 # ignore vs-code settings
-.vscode/
+/.vscode/*
+!.vscode/settings.json.example
+!.vscode/eth-control-systems-2.code-workspace
 
 # ignore the latex build
 build/
