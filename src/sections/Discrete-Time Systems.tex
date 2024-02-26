@@ -66,7 +66,8 @@ As in CT, the system is \textbf{strictly causal} iff $D=0$.
     y[k]=\underbrace{CA^kx_0}_{\text{homogeneous r.}} + \underbrace{C\sum_{i=0}^{k-1}A^{k-i-1}Bu[i]+Du[k]}_{\text{forced response}}
 \end{align*}
 \subsubsection{Internal Stability for DT Systems}
-\textbf{If A is Diagonalizable}\\
+\ptitle{If A is Diagonalizable}
+
 For diagonalizable matrices A:
 \noindent\begin{align*}
     A^k & =(T\Lambda T^{-1})^k=T\Lambda^kT^{-1}=T\begin{bmatrix}\lambda_1^k&&&\\&\lambda_2^k&&\\&&\ddots&\\&&&\lambda_n^k\end{bmatrix}T^{-1}
@@ -76,7 +77,8 @@ $\lim_{k\to+\infty}A^k=0$ is fulfilled if
     |\lambda_i| & <1,\quad\forall i=1,\ldots,n
 \end{align*}
 which means that all Eigenvalues must lie within the unit circle in the complex plane.\\
-\textbf{If A is Defective}\\
+\ptitle{If A is Defective}
+
 Similarly, each block in the Jordan form will converge to zero if and only if
 \noindent\begin{align*}
     |\lambda_i| & <1,\quad\forall i=1,\ldots,n
@@ -88,7 +90,8 @@ Reminder:
 \end{align*}
 %
 \subsection{Transfer Functions (TF) of DT LTI Systems}
-\textbf{Time Response to Elementry Inputs}\\
+\ptitle{Time Response to Elementry Inputs}
+
 Similar to the CT case, a geometric sequence $z^k$ corresponds to an input sequence
 \noindent\begin{align*}
     u[k] & =u_0z^k=u_0e^{ksT}=u(kT), \; z=e^{sT}
@@ -97,25 +100,29 @@ The corresponding time response is
 \noindent\begin{align*}
     y[k] & = \underbrace{CA^k(x_0-C(zI-A)^{-1}Bu_0)}_{\mathsf{transient}}+ \\\underbrace{C(zI-A)^{-1}Bu_0z^k+Du_0z^k}_{\mathsf{steady-state}}
 \end{align*}
-\textbf{Pulse/Discrete TF}\\
+\ptitle{Pulse/Discrete TF}
+
 For asymptotically stable DT LTI systems, for large $k$:
 \noindent\begin{align*}
     y[k] & \approx G(z)u[k]  \\
     G(z) & :=C(z1-A)^{-1}B+D
 \end{align*}
 \subsubsection{Special TF and Remarks}
-\textbf{DC Gain}\\
+\ptitle{DC Gain}
+
 If it exists (no eigenvalue at $1$), the real matrix
 \noindent\begin{align*}
     G(1) & =C(1-A)^{-1}B+D
 \end{align*}
 is called DC gain and corresponds to $\lim_{k\to+\infty}y[k]$ for $z=1$ i.e. $u[k]=u_0$.\\
 %
-\textbf{Time Delay}\\
+\ptitle{Time Delay}
+
 \noindent\begin{align*}
     y[k] & =u[k-1] & =u_0z^{k-1}=\frac1zu[k]
 \end{align*}
-\textbf{Realizations of DT TF}\\
+\ptitle{Realizations of DT TF}
+
 All methods to create (state space) realizations of CT TF as LTI models can be adapted to DT TF.
 %
 %
@@ -127,7 +134,8 @@ There are two main design paradigms for DT control systems:
     \item DT: The CT system is converted to a DT system and the design process happens in DT
     \item Emulation: the design process happens in CT and the result is transferred to DT
 \end{enumerate}
-\textbf{Derivation of DT State Space Matrices}\\
+\ptitle{Derivation of DT State Space Matrices}
+
 \noindent\begin{align*}
     A_d & :=e^{AT}                                                   \\
     B_d & :=\left(\int_0^T {e^{A\theta}}d\theta\right)B              \\
@@ -141,7 +149,8 @@ For given Eigenvalues $\lambda_i$ of $A$ the eigenvalues of $A_d$ are
 \noindent\begin{align*}
     z & =e^{\lambda_1T},e^{\lambda_2T},\ldots,e^{\lambda_nT}
 \end{align*}
-\textbf{Mapping}\\
+\ptitle{Mapping}
+
 \begin{enumerate}
     \item CT left half plane $\rightarrow$ DT unit disk
     \item CT neighborhood of origin $\rightarrow$ DT neighborhood of $+1$ point
@@ -151,7 +160,8 @@ For given Eigenvalues $\lambda_i$ of $A$ the eigenvalues of $A_d$ are
 \subsubsection{Emulation}
 Design the control system in CT. This outputs a compensator (as TF or state space model) which is then converted to DT.
 \paragraph{Emulation in Frequency Domain}
-\textbf{Tustin's Method}\\
+\ptitle{Tustin's Method}
+
 \noindent\begin{align*}
     G_{c,d}(z) & =G_{c}\left(s=\frac2T\frac{z-1}{z+1}\right)
 \end{align*}
@@ -159,7 +169,8 @@ which corresponds to a rearranged Padé approximation for $z$.
 \paragraph{Emulation in Time Domain}
 If the design process outputs a state space controller the resulting matrices could easily be transferred to DT.\\
 However, the "hold and sample" does not work for the compensator as its inputs are DT and the outputs are held (not vice versa).\\
-\textbf{Numerical Emulation: Forward Difference}\\
+\ptitle{Numerical Emulation: Forward Difference}
+
 \noindent\begin{align*}
     \xi(t)-\xi(t-T) & \approx T\cdot\dot{\xi}(t-T)   \\
                     & \text{yields}                  \\
@@ -167,14 +178,16 @@ However, the "hold and sample" does not work for the compensator as its inputs a
 \end{align*}
 which is simple but can result in an unstable compensator as $s=\lambda \rightarrow z=1+\lambda T$.\\
 %
-\textbf{Numerical Emulation: Backward Difference}\\
+\ptitle{Numerical Emulation: Backward Difference}
+
 \noindent\begin{align*}
     \xi(t)-\xi(t-T) & \approx T\cdot\dot{\xi}(T)                   \\
                     & \text{yields}                                \\
     \xi(t)          & \approx(I-AT)^{-1}\xi(t-T)+(I-AT)^{-1}BTe(t)
 \end{align*}
 which avoids instability as $s=\lambda \rightarrow z=(1-\lambda T)^{-1}$. This transforms poles into a disk smaller than the unit disk. DT poles cannot get negative real part.\\
-\textbf{Numerical Emulation: Trapezoidal Rule}\\
+\ptitle{Numerical Emulation: Trapezoidal Rule}
+
 \noindent\begin{align*}
     \xi(t)-\xi(t-T) & \approx \frac T2\left(\dot{\xi}(t)+\dot{\xi}(t-T)\right) \\
                     & \text{yields}                                            \\
