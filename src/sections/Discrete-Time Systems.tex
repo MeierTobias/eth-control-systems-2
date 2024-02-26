@@ -3,7 +3,7 @@
 All continuous-time (CT) system properties hold for discrete-time (DT) in the same way as DT values form a subset of CT values.
 \subsubsection{Sub-Sub-Section}
 %%
-\textbf{D $\rightarrow$ A: Zero-Order Hold (ZOH)}\\
+\ptitle{D $\rightarrow$ A: Zero-Order Hold (ZOH)}
 \noindent\begin{align*}
     y(t) & =u[k], \; \forall kT \le t < (k+1)T                 \\
     y(t) & =u[\lfloor t/T\rfloor], \; \forall t \in \mathbb{R}
@@ -17,7 +17,8 @@ Holding results in a CT signal with average delay $T/2$.
 Sampler: a linear system that takes CT signal as input and outputs DT sequence.\\
 %%
 \subsubsection{Aliasing}
-\textbf{Nyquist-Shannon Sampling Theorem}\\
+\ptitle{Nyquist-Shannon Sampling Theorem}
+
 A signal can be reconstructed without aliasing from samples at rate $1/T$ if it does not contain frequencies higher than the Nyquist (folding) frequency:
 \noindent\begin{align*}
     \omega_{\mathbf{f}}: & =\frac\pi T[rad/s]=\frac1{2T}[Hz]
@@ -31,7 +32,8 @@ has the same samples as a sinusoid with frequency
     \omega' & =\left|\omega\pm n\frac{2\pi}{T}\right|,\; n\in\mathbb{N}
 \end{align*}
 %
-\textbf{Anti-Aliasing Filter}\\
+\ptitle{Anti-Aliasing Filter}
+
 Low-pass filter before the A $\rightarrow$ D converter with
 \noindent\begin{align*}
     \omega_{c,LP} & < \omega_f
@@ -41,7 +43,8 @@ where $\omega_{c,LP}$ must be high enough to caputre system dynamics.
 %
 \subsection{DT State-Space Models}
 \subsubsection{Difference Equations}
-\textbf{General Case}\\
+\ptitle{General Case}
+
 A finite-dimensional, DT, causal system can be modelled by
 \noindent\begin{align*}
     x[k+1] & =f(t,x[k],u[k]), \; x[0]=x_0 \\
