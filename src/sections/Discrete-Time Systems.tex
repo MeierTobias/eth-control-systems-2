@@ -1,0 +1,100 @@
+\section{Discrete-Time Systems}
+\subsection{Digital Control Systems}
+All continuous-time (CT) system properties hold for discrete-time (DT) in the same way as DT values form a subset of CT values.
+\subsubsection{Sub-Sub-Section}
+%%
+\textbf{D $\rightarrow$ A: Zero-Order Hold (ZOH)}\\
+\noindent\begin{align*}
+    y(t) & =u[k], \; \forall kT \le t < (k+1)T                 \\
+    y(t) & =u[\lfloor t/T\rfloor], \; \forall t \in \mathbb{R}
+\end{align*}
+Hold: a linear system that takes DT signal as input and outputs CT signal.\\
+Holding results in a CT signal with average delay $T/2$.
+%%
+\textbf{A $\rightarrow$ D: Sampling}\\
+\noindent\begin{align*}
+    y[k]= & u(kT),\quad\forall k\in\mathbb{Z}
+\end{align*}
+Sampler: a linear system that takes CT signal as input and outputs DT sequence.\\
+%%
+\subsubsection{Aliasing}
+\textbf{Nyquist-Shannon Sampling Theorem}\\
+A signal can be reconstructed without aliasing from samples at rate $1/T$ if it does not contain frequencies higher than the Nyquist (folding) frequency:
+\noindent\begin{align*}
+    \omega_{\mathbf{f}}: & =\frac\pi T[rad/s]=\frac1{2T}[Hz]
+\end{align*}
+A signal
+\noindent\begin{align*}
+    y[k] & =\cos[\omega\cdot kT]
+\end{align*}
+has the same samples as a sinusoid with frequency
+\noindent\begin{align*}
+    \omega' & =\left|\omega\pm n\frac{2\pi}{T}\right|,\; n\in\mathbb{N}
+\end{align*}
+%
+\textbf{Anti-Aliasing Filter}\\
+Low-pass filter before the A $\rightarrow$ D converter with
+\noindent\begin{align*}
+    \omega_{c,LP} & < \omega_f
+\end{align*}
+where $\omega_{c,LP}$ must be high enough to caputre system dynamics.
+%
+%
+\subsection{DT State-Space Models}
+\subsubsection{Difference Equations}
+\textbf{General Case}\\
+A finite-dimensional, DT, causal system can be modelled by
+\noindent\begin{align*}
+    x[k+1] & =f(t,x[k],u[k]), \; x[0]=x_0 \\
+    y[t]   & =h(t,x[k],u[k])
+\end{align*}
+If the system is additionally linear it can be modelled by
+\noindent\begin{align*}
+    x[k+1] & =A[k]x[k]+B[k]u[k], \; x[0]=x_0 \\
+    y[k]   & =C[k]x[k]+D[k]u[k]
+\end{align*}
+A LTI system can be modelled by
+\noindent\begin{align*}
+    x[k+1] & =Ax[k]+Bu[k], \; x[0]=x_0 \\
+    y[k]   & =Cx[k]+Du[k]
+\end{align*}
+As in CT, the system is \textbf{strictly causal} iff $D=0$.
+\paragraph{Time Response}
+\noindent\begin{align*}
+    y[k]=\underbrace{CA^kx_0}_{\text{homogeneous r.}} + \underbrace{C\sum_{i=0}^{k-1}A^{k-i-1}Bu[i]+Du[k]}_{\text{forced response}}
+\end{align*}
+\paragraph{Internal Stability for DT Systems}
+\textbf{If A is Diagonalizable}\\
+For diagonalizable matrices A:
+\noindent\begin{align*}
+    A^k & =(T\Lambda T^{-1})^k=T\Lambda^kT^{-1}=T\begin{bmatrix}\lambda_1^k&&&\\&\lambda_2^k&&\\&&\ddots&\\&&&\lambda_n^k\end{bmatrix}T^{-1}
+\end{align*}
+$\lim_{k\to+\infty}A^k=0$ is fulfilled if
+\noindent\begin{align*}
+    |\lambda_i| & <1,\quad\forall i=1,\ldots,n
+\end{align*}
+which means that all Eigenvalues must lie within the unit circle.\\
+\textbf{If A is Defective}\\
+Similarly, each block in the Jordan form will converge to zero if and only if
+\noindent\begin{align*}
+    |\lambda_i| & <1,\quad\forall i=1,\ldots,n
+\end{align*}
+Reminder:
+\noindent\begin{align*}
+    \left.\exp\left(\begin{bmatrix}\lambda&1\\ 0&\lambda\\\end{bmatrix}\right.t\right) &=\begin{bmatrix}1&t\\0&1\\0&0\end{bmatrix}\text{e}^{\lambda t} \\
+    \left.\exp\left(\begin{bmatrix}\lambda&1&0\\0&\lambda&1\\0&0&\lambda\end{bmatrix}\right.t\right) &=\begin{bmatrix}1&t&\frac{1}{2!}t^2\\0&1&t\\0&0&1\end{bmatrix}\text{e}^{\lambda t}
+\end{align*}
+
+
+
+\noindent\begin{align*}
+\end{align*}
+\noindent\begin{align*}
+\end{align*}
+\noindent\begin{align*}
+\end{align*}
+\noindent\begin{align*}
+\end{align*}
+
+
+
