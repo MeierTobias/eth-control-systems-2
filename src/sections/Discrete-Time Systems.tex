@@ -98,7 +98,8 @@ Similar to the CT case, a geometric sequence $z^k$ corresponds to an input seque
 \end{align*}
 The corresponding time response is
 \noindent\begin{align*}
-    y[k] & = \underbrace{CA^k(x_0-C(zI-A)^{-1}Bu_0)}_{\mathsf{transient}}+ \\\underbrace{C(zI-A)^{-1}Bu_0z^k+Du_0z^k}_{\mathsf{steady-state}}
+    y[k] & = \underbrace{CA^k(x_0-C(zI-A)^{-1}Bu_0)}_{\mathsf{transient}}+ \\
+    & \underbrace{C(zI-A)^{-1}Bu_0z^k+Du_0z^k}_{\mathsf{steady-state}}
 \end{align*}
 \ptitle{Pulse/Discrete TF}
 
@@ -131,8 +132,8 @@ All methods to create (state space) realizations of CT TF as LTI models can be a
 \subsubsection{Basics}
 There are two main design paradigms for DT control systems:
 \begin{enumerate}
-    \item DT: The CT system is converted to a DT system and the design process happens in DT
-    \item Emulation: the design process happens in CT and the result is transferred to DT
+    \item DT: The CT system is converted to a DT system and the design process happens in DT (sensible if you exactly know the sampling time $T$)
+    \item Emulation: the design process happens in CT and the result is transferred to DT (sensible if $T$ is unknown (e.g. complex plant), then design in CT and use a fast computer for good DT approximation)
 \end{enumerate}
 \ptitle{Derivation of DT State Space Matrices}
 
