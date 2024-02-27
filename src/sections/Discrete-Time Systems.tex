@@ -44,11 +44,10 @@ where $\omega_{c,LP}$ must be high enough to caputre system dynamics.
 %
 \subsection{DT State-Space Models}
 \subsubsection{Difference Equations}
-$t = kT$
 \renewcommand{\arraystretch}{1.3}
 \setlength\tabcolsep{3pt} % default value: 6pt
 \begin{tabularx}{\linewidth}{@{}lll@{}}
-                                                             & Time-Invariant          & Time-Variant                 \\
+                                                             & Time-Invariant          & Time-Variant ($t = kT$)                \\
     \cmidrule{2-3}
     \multirow{3}{*}{\begin{sideways}Nonlinear\end{sideways}} & $x[k+1] = f(x[k],u[k])$ & $x[k+1] = f(t,x[k],u[k])$    \\
                                                              & $y[t] = h(x[k],u[k])$   & $y[t] = h(t,x[k],u[k])$      \\
@@ -124,16 +123,15 @@ The corresponding time response is
 For asymptotically stable DT LTI systems, for large $k$:
 \noindent\begin{align*}
     y[k] & \approx G(z)u[k]    \\
-    G(z) & :=C{(z1-A)}^{-1}B+D
+    G(z) & :=C{(zI-A)}^{-1}B+D
 \end{align*}
 \subsubsection{Special TF and Remarks}
 \ptitle{DC Gain}
 
-If it exists (no eigenvalue at $1$), the real matrix
+If $G(z)$ is asymptotically stable and $A$ is invertible, i.e. has no eigenvalue at 1, then
 \noindent\begin{align*}
-    G(1) & =C{(1-A)}^{-1}B+D
+    \lim_{k\to+\infty}y[k]=G(1)u_0=(C{(1-A)}^{-1}B+D)u_0
 \end{align*}
-is called DC gain and corresponds to $\lim_{k\to+\infty}y[k]$ for $z=1$ i.e. $u[k]=u_0$.\\
 %
 \ptitle{Time Delay}
 
