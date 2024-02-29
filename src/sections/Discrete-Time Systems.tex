@@ -178,6 +178,7 @@ If $G(z)$ is asymptotically stable and $A$ is invertible, i.e.\ has no eigenvalu
 \end{equation*}
 
 \ptitle{Time Delay}
+
 \begin{equation*}
     y[k] =u[k-1] =u_0z^{k-1}=\frac1zu[k]
 \end{equation*}
@@ -194,17 +195,7 @@ There are two main design paradigms for DT control systems:
     \item Emulation:\ the design process happens in CT and the result is transferred to DT
 \end{enumerate}
 
-\subsubsection{DT}
-The \textbf{DT state space matrices} can be derived from the \textbf{CT state space matrices}:
-\begin{align*}
-    A_d & :=e^{AT} & B_d & :=\left(\int_0^T {e^{A\theta}}d\theta\right)B \overset{A \text{ invert.}}{=} A^{-1}\left(A_d-I\right)B \\
-    C_d & :=C      & D_d & :=D
-\end{align*}
-\begin{align*}
-    x[k+1] & =A_d x[k]+B_d u[k], \; x[0]=x_0 \\
-    y[k]   & =C_d x[k]+D_d u[k]
-\end{align*}
-\paragraph{s Plane vs.\ z Plane}
+\subsubsection{s Plane vs.\ z Plane}
 Similar to CT, the natural dynamics of a DT LTI system are given by the Eigenvalues of $A_d$.
 
 For given Eigenvalues $\lambda_i$ of $A$ the eigenvalues of $A_d$ are
@@ -231,22 +222,35 @@ Design the control system in CT.\ This outputs a compensator (as TF or state spa
 which corresponds to a rearranged Padé approximation for $z$.
 
 \paragraph{Emulation in Time Domain}
-If the design process outputs a state space controller the resulting matrices could easily be transferred to DT.
+If the design process outputs a state space controller the resulting matrices could easily be transferred to DT (hold and sample).
+However, the ``hold and sample`` does not work for the compensator as its inputs are DT and the outputs are held (not vice versa).\\\\
+\ptitle{Hold and Sample}
 
-However, the ``hold and sample'' does not work for the compensator as its inputs are DT and the outputs are held (not vice versa).
+Assume the CT design process outputs a CT controller with given $G_c(s)$ and the corresponding $A, B, C, D$ matrices.\\
+The \textbf{DT state space matrices} can then be derived from the \textbf{CT state space matrices}:
+\begin{align*}
+    A_d & :=e^{AT} & B_d & :=\left(\int_0^T {e^{A\theta}}d\theta\right)B \overset{A \text{ invert.}}{=} A^{-1}\left(A_d-I\right)B \\
+    C_d & :=C      & D_d & :=D
+\end{align*}
+The input output relation of the controller is then given by
+\begin{align*}
+    \xi[k+1] & =A_d \xi[k]+B_d e(kT), \; \xi[0]=\xi_0 \\
+    u[k]     & =C_d \xi[k]+D_d e(kT)
+\end{align*}
+Alternatively the DT state space matrices $A_d, B_d, C_d, D_d$ can be used to compute the DT transfer function $G_{c,d}(z)$ and the corresponding difference equation can be derived using the z transform.
 
 \ptitle{Numerical Emulation: Forward Difference}
 \begin{align*}
-    \xi(t)-\xi(t-T) & \approx T\cdot\dot{\xi}(t-T)   \\
-                    & \text{yields}                  \\
+    \xi(t)-\xi(t-T) & \approx T\cdot\dot{\xi}(t-T) =T\cdot(A\xi(t-T)+Be(t-T)) \\
+                    & \text{yields}                                           \\
     \xi(t)          & \approx(I+AT)\xi(t-T)+BTe(t-T)
 \end{align*}
 which is simple but can result in an unstable compensator as $s=\lambda \rightarrow z=1+\lambda T$.
 
 \ptitle{Numerical Emulation: Backward Difference}
 \begin{align*}
-    \xi(t)-\xi(t-T) & \approx T\cdot\dot{\xi}(T)                       \\
-                    & \text{yields}                                    \\
+    \xi(t)-\xi(t-T) & \approx T\cdot\dot{\xi}(T) =T\cdot(A\xi(t)+Be(t)) \\
+                    & \text{yields}                                     \\
     \xi(t)          & \approx{(I-AT)}^{-1}\xi(t-T)+{(I-AT)}^{-1}BTe(t)
 \end{align*}
 which avoids instability as $s=\lambda \rightarrow z={(1-\lambda T)}^{-1}$. This transforms poles into a disk smaller than the unit disk. DT poles cannot get negative real part.
@@ -258,4 +262,4 @@ which avoids instability as $s=\lambda \rightarrow z={(1-\lambda T)}^{-1}$. This
     \xi(t)          & \approx{\left(I-\frac{AT}{2}\right)}^{-1}\left(I+\frac{AT}{2}\right)\xi(t-T) \\
                     & +{\left(I-\frac{AT}{2}\right)}^{-1}BT\frac{e(t)+e(t-T)}2
 \end{align*}
-which maps the left half plane to the unit disk.
+which maps the left half plane to the unit disk. This discretization method corresponds to Tustin's method in frequency domain.
