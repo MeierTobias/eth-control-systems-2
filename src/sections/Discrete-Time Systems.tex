@@ -1,9 +1,11 @@
 \section{Discrete-Time Systems}
 \subsection{Digital Control Systems}
 All continuous-time (CT) system properties hold for discrete-time (DT) in the same way as DT values form a subset of CT values.
-\subsubsection{Holding, D $\rightarrow$ A}
-\textbf{Hold}: a linear system that takes DT signal as input and outputs CT signal.\\
-Holding results in a CT signal with average delay $T/2$.\\
+\subsubsection{Holding, D \textrightarrow{} A}
+\textbf{Hold}: a linear system that takes DT signal as input and outputs CT signal.
+
+Holding results in a CT signal with average delay $T/2$.
+\newpar{}
 
 \ptitle{Zero-Order Hold (ZOH)}
 
@@ -12,7 +14,7 @@ Holding results in a CT signal with average delay $T/2$.\\
     y(t) & =u[\lfloor t/T\rfloor], \; \forall t \in \mathbb{R}
 \end{align*}
 
-\subsubsection{Sampling, A $\rightarrow$ D}
+\subsubsection{Sampling, A \textrightarrow{} D}
 \textbf{Sampler}: a linear system that takes CT signal as input and outputs DT sequence.
 \noindent\begin{align*}
     y[k]= & u(kT),\quad\forall k\in\mathbb{Z}
@@ -32,22 +34,22 @@ has the same samples as a sinusoid with frequency
 \noindent\begin{align*}
     \omega' & =\left|\omega\pm n\frac{2\pi}{T}\right|,\; n\in\mathbb{N}
 \end{align*}
-%
+
 \ptitle{Anti-Aliasing Filter}
 
 Low-pass filter before the A $\rightarrow$ D converter with
 \noindent\begin{align*}
     \omega_{c,LP} & < \omega_f
 \end{align*}
-where $\omega_{c,LP}$ must be high enough to caputre system dynamics.
-%
-%
+where $\omega_{c,LP}$ must be high enough to capture system dynamics.
+
 \subsection{DT State-Space Models}
 \subsubsection{Difference Equations}
 \renewcommand{\arraystretch}{1.3}
-\setlength\tabcolsep{3pt} % default value: 6pt
+\setlength{\oldtabcolsep}{\tabcolsep}\setlength\tabcolsep{3pt}
+
 \begin{tabularx}{\linewidth}{@{}lll@{}}
-                                                             & Time-Invariant          & Time-Variant ($t = kT$)                \\
+                                                             & Time-Invariant          & Time-Variant ($t = kT$)      \\
     \cmidrule{2-3}
     \multirow{3}{*}{\begin{sideways}Nonlinear\end{sideways}} & $x[k+1] = f(x[k],u[k])$ & $x[k+1] = f(t,x[k],u[k])$    \\
                                                              & $y[t] = h(x[k],u[k])$   & $y[t] = h(t,x[k],u[k])$      \\
@@ -55,10 +57,11 @@ where $\omega_{c,LP}$ must be high enough to caputre system dynamics.
     \cmidrule{2-3}
     \multirow{3}{*}{\begin{sideways}Linear\end{sideways}}    & $x[k+1] = Ax[k]+Bu[k]$  & $x[k+1] = A[k]x[k]+B[k]u[k]$ \\
                                                              & $y[k] = Cx[k]+Du[k]$    & $y[k] = C[k]x[k]+D[k]u[k]$   \\
-                                                             & $x[0] = x_0$            & $x[0]=x_0$                   \\
+                                                             & $x[0] = x_0$            & $x[0]=x_0$
 \end{tabularx}
+
 \renewcommand{\arraystretch}{1}
-\setlength\tabcolsep{6pt} % default value: 6pt
+\setlength{\tabcolsep}{\oldtabcolsep}
 
 % \ptitle{General Case}
 
@@ -133,7 +136,7 @@ For asymptotically stable DT LTI systems, for large $k$:
 \subsubsection{Special TF and Remarks}
 \ptitle{DC Gain}
 
-If $G(z)$ is asymptotically stable and $A$ is invertible, i.e. has no eigenvalue at 1, then
+If $G(z)$ is asymptotically stable and $A$ is invertible, i.e.\ has no eigenvalue at 1, then
 \noindent\begin{align*}
     \lim_{k\to+\infty}y[k]=G(1)u_0=(C{(1-A)}^{-1}B+D)u_0
 \end{align*}
@@ -145,9 +148,8 @@ If $G(z)$ is asymptotically stable and $A$ is invertible, i.e. has no eigenvalue
 \end{align*}
 \ptitle{Realizations of DT TF}
 
-All methods to create (state space) realizations of CT TF as LTI models can be adapted to DT TF.\
-%
-%
+All methods to create (state space) realizations of CT TF as LTI models can be adapted to DT TF.
+
 \subsection{Design and Implementation of DT Control Systems}
 % \subsubsection{Basics}
 There are two main design paradigms for DT control systems:
@@ -180,7 +182,7 @@ For given Eigenvalues $\lambda_i$ of $A$ the eigenvalues of $A_d$ are
     \item CT finite poles cannot be mapped to the DT origin and the DT origin does not have a CT equivalent
 \end{enumerate}
 \subsubsection{Emulation}
-Design the control system in CT.\ This outputs a compensator (as TF or state space model) which is then converted to DT.\
+Design the control system in CT.\ This outputs a compensator (as TF or state space model) which is then converted to DT.
 \paragraph{Emulation in Frequency Domain}
 \ptitle{Tustin's Method}
 
@@ -189,7 +191,8 @@ Design the control system in CT.\ This outputs a compensator (as TF or state spa
 \end{align*}
 which corresponds to a rearranged Padé approximation for $z$.
 \paragraph{Emulation in Time Domain}
-If the design process outputs a state space controller the resulting matrices could easily be transferred to DT.\\
+If the design process outputs a state space controller the resulting matrices could easily be transferred to DT.
+
 However, the ``hold and sample'' does not work for the compensator as its inputs are DT and the outputs are held (not vice versa).\\
 \ptitle{Numerical Emulation: Forward Difference}
 
@@ -211,9 +214,9 @@ which avoids instability as $s=\lambda \rightarrow z={(1-\lambda T)}^{-1}$. This
 \ptitle{Numerical Emulation: Trapezoidal Rule}
 
 \noindent\begin{align*}
-    \xi(t)-\xi(t-T) & \approx \frac T2\left(\dot{\xi}(t)+\dot{\xi}(t-T)\right) \\
-                    & \text{yields}                                            \\
-    \xi(t)          & \approx{\left(I-\frac{AT}{2}\right)}^{-1}\left(I+\frac{AT}{2}\right)\xi(t-T)                   \\
+    \xi(t)-\xi(t-T) & \approx \frac T2\left(\dot{\xi}(t)+\dot{\xi}(t-T)\right)                     \\
+                    & \text{yields}                                                                \\
+    \xi(t)          & \approx{\left(I-\frac{AT}{2}\right)}^{-1}\left(I+\frac{AT}{2}\right)\xi(t-T) \\
                     & +{\left(I-\frac{AT}{2}\right)}^{-1}BT\frac{e(t)+e(t-T)}2
 \end{align*}
 which maps the left half plane to the unit disk.
