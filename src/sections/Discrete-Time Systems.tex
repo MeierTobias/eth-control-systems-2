@@ -93,16 +93,32 @@ As in CT, the system is \textbf{strictly causal} iff $D=0$.
 
 For diagonalizable matrices A:
 \begin{equation*}
-    A^k ={(T\Lambda T^{-1})}^k=T\Lambda^{k}T^{-1}=T\begin{bmatrix}\lambda_1^k&&&\\&\lambda_2^k&&\\&&\ddots&\\&&&\lambda_n^k\end{bmatrix}T^{-1}
+    A^k ={(T\Lambda T^{-1})}^k=T\Lambda^{k}T^{-1}=T
+    \begin{bmatrix}
+        \lambda_1^k &             &        &             \\
+                    & \lambda_2^k &        &             \\
+                    &             & \ddots &             \\
+                    &             &        & \lambda_n^k
+    \end{bmatrix}T^{-1}
 \end{equation*}
-The system is stable if $\lim_{k\to+\infty}A^k=0$
+$\lim_{k\to+\infty}A^k=0$ is fulfilled if
 \begin{equation*}
     |\lambda_i| <1,\quad\forall i=1,\ldots,n
 \end{equation*}
-which means that all Eigenvalues must lie within the unit circle in the complex plane.\\
+which means that all Eigenvalues must lie within the unit circle for the system to be stable.
+
 Reminder:
 \begin{equation*}
-    \exp\left(\begin{bmatrix}\lambda_1&0\\0&\lambda_2\end{bmatrix}T\right) = \begin{bmatrix}e^{\lambda_{1}T}&0\\0&e^{\lambda_{2}T}\end{bmatrix}
+    \exp\left(
+    \begin{bmatrix}
+        \lambda_1 & 0         \\
+        0         & \lambda_2
+    \end{bmatrix}
+    T\right) =
+    \begin{bmatrix}
+        e^{\lambda_{1}T} & 0                \\
+        0                & e^{\lambda_{2}T}
+    \end{bmatrix}
 \end{equation*}
 
 \ptitle{If A is Defective}
@@ -113,8 +129,24 @@ Similarly, each block in the Jordan form will converge to zero if and only if
 \end{equation*}
 Reminder:
 \begin{align*}
-    \left.\exp\left(\begin{bmatrix}\lambda&1\\ 0&\lambda\\\end{bmatrix}\right.t\right)               & =\begin{bmatrix}1&t\\0&1\end{bmatrix}\text{e}^{\lambda t}                          \\
-    \left.\exp\left(\begin{bmatrix}\lambda&1&0\\0&\lambda&1\\0&0&\lambda\end{bmatrix}\right.t\right) & =\begin{bmatrix}1&t&\frac{1}{2!}t^2\\0&1&t\\0&0&1\end{bmatrix}\text{e}^{\lambda t}
+    \left.\exp\left(
+    \begin{bmatrix}\lambda & 1       \\
+               0       & \lambda \\
+        \end{bmatrix}\right.t\right)           & =
+    \begin{bmatrix}1 & t \\
+               0 & 1
+    \end{bmatrix}
+    \text{e}^{\lambda t}                       \\
+    \left.\exp\left(
+    \begin{bmatrix}\lambda & 1       & 0       \\
+               0       & \lambda & 1       \\
+               0       & 0       & \lambda
+        \end{bmatrix}\right.t\right) & =
+    \begin{bmatrix}1 & t & \frac{1}{2!}t^2 \\
+               0 & 1 & t               \\
+               0 & 0 & 1
+    \end{bmatrix}
+    \text{e}^{\lambda t}
 \end{align*}
 
 \subsection{Transfer Functions (TF) of DT LTI Systems}
