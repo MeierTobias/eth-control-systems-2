@@ -211,7 +211,7 @@ For given Eigenvalues $\lambda_i$ of $A$ the eigenvalues of $A_d$ are
 \end{center}
 
 
-\subsubsection{Discretization: Hold and Sample}
+\subsubsection{Discretization: Hold and Sample}\label{disc::hold_and_sample}
 
 To discretize the $A, B, C, D$ matrices of a time continuous system one has to apply the following transformations:
 \begin{align*}
@@ -220,7 +220,7 @@ To discretize the $A, B, C, D$ matrices of a time continuous system one has to a
 \end{align*}
 Alternatively the DT state space matrices $A_d, B_d, C_d, D_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform.
 
-\subsubsection{Discretization: Frequency Domain}
+\subsubsection{Discretization: Frequency Domain}\label{disc::tustin}
 \ptitle{Tustin's Method}
 \begin{equation*}
     G_{d}(z)=G\left(s=\frac2T\frac{z-1}{z+1}\right)
@@ -231,34 +231,43 @@ which corresponds to a rearranged Padé approximation for $z$.
 
 \paragraph{Forward Difference}
 \noindent\begin{align*}
-    \xi(t)-\xi(t-T) & \approx T\cdot\dot{\xi}(t-T) =T\cdot(A\xi(t-T)+Be(t-T)) \\
-                    & \text{yields}                                           \\
-    \xi(t)          & \approx(I+AT)\xi(t-T)+BTe(t-T)
+    x(t)-x(t-T) & \approx T\cdot\dot{x}(t-T) =T\cdot(Ax(t-T)+Bu(t-T)) \\
+                & \text{yields}                                       \\
+    x(t)        & \approx(I+AT)x(t-T)+BTu(t-T)
 \end{align*}
-which is simple but can result in an unstable compensator as $s=\lambda \rightarrow z=1+\lambda T$.
 
-\includegraphics[width=0.4\linewidth]{disc_approx_forward.pdf}
+\begin{tabularx}{\linewidth}{@{}m{0.6\linewidth}X@{}}
+    which is simple but can result in an unstable compensator as $s=\lambda \rightarrow z=1+\lambda T$.
+     &
+    \includegraphics[width=0.9\linewidth, align=m]{disc_approx_forward.pdf}
+\end{tabularx}
 
 \paragraph{Backward Difference}
-\begin{align*}
-    \xi(t)-\xi(t-T) & \approx T\cdot\dot{\xi}(T) =T\cdot(A\xi(t)+Be(t)) \\
-                    & \text{yields}                                     \\
-    \xi(t)          & \approx{(I-AT)}^{-1}\xi(t-T)+{(I-AT)}^{-1}BTe(t)
+\noindent\begin{align*}
+    x(t)-x(t-T) & \approx T\cdot\dot{x}(T) =T\cdot(Ax(t)+Bu(t))  \\
+                & \text{yields}                                  \\
+    x(t)        & \approx{(I-AT)}^{-1}x(t-T)+{(I-AT)}^{-1}BTu(t)
 \end{align*}
-which avoids instability as $s=\lambda \rightarrow z={(1-\lambda T)}^{-1}$. This transforms poles into a disk smaller than the unit disk. DT poles cannot get negative real part.
 
-\includegraphics[width=0.4\linewidth]{disc_approx_backwards.pdf}
+\begin{tabularx}{\linewidth}{@{}m{0.6\linewidth}X@{}}
+    which avoids instability as $s=\lambda \rightarrow z={(1-\lambda T)}^{-1}$. This transforms poles into a disk smaller than the unit disk. DT poles cannot get negative real part.
+     &
+    \includegraphics[width=0.9\linewidth, align=m]{disc_approx_backwards.pdf}
+\end{tabularx}
 
-\paragraph{Trapezoidal Rule}
-\begin{align*}
-    \xi(t)-\xi(t-T) & \approx \frac T2\left(\dot{\xi}(t)+\dot{\xi}(t-T)\right)                     \\
-                    & \text{yields}                                                                \\
-    \xi(t)          & \approx{\left(I-\frac{AT}{2}\right)}^{-1}\left(I+\frac{AT}{2}\right)\xi(t-T) \\
-                    & +{\left(I-\frac{AT}{2}\right)}^{-1}BT\frac{e(t)+e(t-T)}2
+\paragraph{Trapezoidal Rule}\label{disc::trapezoid}
+\noindent\begin{align*}
+    x(t)-x(t-T) & \approx \frac T2\left(\dot{x}(t)+\dot{x}(t-T)\right)                       \\
+                & \text{yields}                                                              \\
+    x(t)        & \approx{\left(I-\frac{AT}{2}\right)}^{-1}\left(I+\frac{AT}{2}\right)x(t-T) \\
+                & +{\left(I-\frac{AT}{2}\right)}^{-1}BT\frac{u(t)+u(t-T)}2
 \end{align*}
-which maps the left half plane to the unit disk. This discretization method corresponds to Tustin's method in frequency domain.
 
-\includegraphics[width=0.4\linewidth]{disc_approx_trapezoid.pdf}
+\begin{tabularx}{\linewidth}{@{}m{0.6\linewidth}X@{}}
+    which maps the left half plane to the unit disk. This discretization method corresponds to Tustin's method in frequency domain.
+     &
+    \includegraphics[width=0.9\linewidth, align=m]{disc_approx_trapezoid.pdf}
+\end{tabularx}
 
 \subsection{Design and Implementation of DT Control Systems}
 There are two main design paradigms for DT control systems:
@@ -272,7 +281,17 @@ There are two main design paradigms for DT control systems:
 \end{center}
 
 \subsubsection{DT}
+\begin{enumerate}
+    \item First the CT model of the plant is transformed into a DT model (use the ``Hold and Sample'' discretization method as shown in~\ref{disc::hold_and_sample}).
+    \item Then the discrete compensator can be designed.
+\end{enumerate}
 
 \subsubsection{Emulation}
-Design the control system in CT.\ This outputs a compensator (as TF or state space model) which is then converted to DT.
-
+\begin{enumerate}
+    \item First the compensator is design in the CT domain.
+    \item This compensator is then transformed into a discrete compensator with one of the following methods:
+          \begin{itemize}
+              \item Frequency domain \textrightarrow{} Tustin's method (\ref{disc::tustin})
+              \item Time domain \textrightarrow{} Trapezoid method (\ref{disc::trapezoid})
+          \end{itemize}
+\end{enumerate}
