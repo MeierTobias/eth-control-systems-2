@@ -1,0 +1,58 @@
+\section{Reachability/Controllability and Observability}
+
+\subsection{Reachability/Controllability}
+
+An LTI system is reachable if there exists a control signal that takes the system from an initial condition $x_0 = 0$ to any desired final state $x_f$, in finite time.
+
+\begin{equation*}
+    R:= \begin{bmatrix}
+        B & AB & A^2B & A^3B & \cdots & A^{n-1}B
+    \end{bmatrix}
+\end{equation*}
+Mathematically expressed, a system is reachable if and only if the reachability matrix $R$ has full row rank $n$.
+\begin{align*}
+    \text{rank}(R) & = n    \\
+    \det(R)        & \neq 0
+\end{align*}
+
+\ptitle{SISO diagonal systems}
+
+The $i$-th mode of a system in diagonal form is reachable only if $\tilde{b}_i \neq 0$
+
+\ptitle{Controllability}
+
+An LTI system is controllable if, for any initial condition $x_0$, there exists a control input that brings the state $x$ to $0$ in finite time.
+
+For continuous-time systems controllability and reachability are the same. However, for a discrete-time system with a non-invertible $A$ matrix there is a subtle difference. For example the DT system $x[k+1] = 0x[k] + 0u[k]$ is contr but unreachable.
+
+\subsection{Observability}
+
+An LTI system is observable if, for any initial condition $x_0$, this initial condition can be reconstructed uniquely based on the knowledge of the input and output signal over a finite time interval.
+
+\begin{equation*}
+    O:= \begin{bmatrix}
+        C      \\
+        CA     \\
+        CA^2   \\
+        \vdots \\
+        CA^{n-1}
+    \end{bmatrix}
+\end{equation*}
+Mathematically expressed, a system is observable if and only if the observability matrix $O$ has full column rank $n$.
+\begin{align*}
+    \text{rank}(O) & = n    \\
+    \det(O)        & \neq 0
+\end{align*}
+
+\ptitle{SISO diagonal systems}
+
+The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i \neq 0$
+
+\subsection{Stabilizability and Detectability}
+\begin{itemize}
+    \item A system is stabilizable if all unstable modes are reachable.
+    \item A system is detectable if all unstable modes are observable.
+    \item In a system that is stabilizable and detectable all the modes that cannot be controlled and/or observed must behaving ``nicely'' on their own.
+\end{itemize}
+
+\subsection{Kalman Decomposition}
