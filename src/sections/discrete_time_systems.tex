@@ -1,0 +1,279 @@
+\section{Discrete-Time Systems}
+\subsection{Digital Control Systems}
+All continuous-time (CT) system properties hold for discrete-time (DT) in the same way as DT values form a subset of CT values.
+\subsubsection{Holding, D \textrightarrow{} A}
+\textbf{Hold}: a linear system that takes DT signal as input and outputs CT signal.
+
+Holding results in a CT signal with average delay $T/2$.
+\newpar{}
+
+\ptitle{Zero-Order Hold (ZOH)}
+\begin{align*}
+    y(t) & =u[k], \; \forall kT \le t < (k+1)T                 \\
+    y(t) & =u[\lfloor t/T\rfloor], \; \forall t \in \mathbb{R}
+\end{align*}
+
+\subsubsection{Sampling, A \textrightarrow{} D}
+\textbf{Sampler}: a linear system that takes CT signal as input and outputs DT sequence.
+\begin{equation*}
+    y[k]=u(kT),\quad\forall k\in\mathbb{Z}
+\end{equation*}
+
+\subsubsection{Aliasing}
+\ptitle{Nyquist-Shannon Sampling Theorem}
+
+A signal can be reconstructed without aliasing from samples at rate $1/T$ if it does not contain frequencies higher than the Nyquist (folding) frequency:
+\begin{equation*}
+    \omega_{\mathbf{f}}:=\frac\pi T[rad/s]=\frac1{2T}[Hz]
+\end{equation*}
+A signal
+\begin{equation*}
+    y[k]=\cos[\omega\cdot kT]
+\end{equation*}
+has the same samples as a sinusoid with frequency
+\begin{equation*}
+    \omega'=\left|\omega\pm n\frac{2\pi}{T}\right|,\; n\in\mathbb{N}
+\end{equation*}
+
+\ptitle{Anti-Aliasing Filter}
+
+Low-pass filter before the A $\rightarrow$ D converter with
+\begin{equation*}
+    \omega_{c,LP} < \omega_f
+\end{equation*}
+where $\omega_{c,LP}$ must be high enough to capture system dynamics.
+
+\subsection{DT State-Space Models}
+\subsubsection{Difference Equations}
+
+\renewcommand{\arraystretch}{1.3}
+\setlength{\oldtabcolsep}{\tabcolsep}\setlength\tabcolsep{3pt}
+
+\begin{tabularx}{\linewidth}{@{}lll@{}}
+                                                             & Time-Invariant          & Time-Variant ($t = kT$)      \\
+    \cmidrule{2-3}
+    \multirow{3}{*}{\begin{sideways}Nonlinear\end{sideways}} & $x[k+1] = f(x[k],u[k])$ & $x[k+1] = f(t,x[k],u[k])$    \\
+                                                             & $y[t] = h(x[k],u[k])$   & $y[t] = h(t,x[k],u[k])$      \\
+                                                             & $x[0]=x_0$              & $x[0]=x_0$                   \\
+    \cmidrule{2-3}
+    \multirow{3}{*}{\begin{sideways}Linear\end{sideways}}    & $x[k+1] = Ax[k]+Bu[k]$  & $x[k+1] = A[k]x[k]+B[k]u[k]$ \\
+                                                             & $y[k] = Cx[k]+Du[k]$    & $y[k] = C[k]x[k]+D[k]u[k]$   \\
+                                                             & $x[0] = x_0$            & $x[0]=x_0$
+\end{tabularx}
+
+\renewcommand{\arraystretch}{1}
+\setlength{\tabcolsep}{\oldtabcolsep}
+
+As in CT, the system is \textbf{strictly causal} iff $D=0$.
+
+\subsubsection{Time Response}
+\noindent\begin{equation*}
+    y[k]=\underbrace{CA^{k}x_0}_{\textsf{homogeneous r.}} + \underbrace{C\sum_{i=0}^{k-1}A^{k-i-1}Bu[i]+Du[k]}_{\textsf{forced response}}
+\end{equation*}
+
+\subsubsection{Internal Stability for DT Systems}
+\ptitle{If A is Diagonalizable}
+
+For diagonalizable matrices A:\
+\begin{equation*}
+    A^k ={(T\Lambda T^{-1})}^k=T\Lambda^{k}T^{-1}=T
+    \begin{bmatrix}
+        \lambda_1^k &             &        &             \\
+                    & \lambda_2^k &        &             \\
+                    &             & \ddots &             \\
+                    &             &        & \lambda_n^k
+    \end{bmatrix}T^{-1}
+\end{equation*}
+$\lim_{k\to+\infty}A^k=0$ is fulfilled if
+\begin{equation*}
+    |\lambda_i| <1,\quad\forall i=1,\ldots,n
+\end{equation*}
+which means that all Eigenvalues must lie within the unit circle for the system to be stable.
+
+Reminder:
+\begin{equation*}
+    \exp\left(
+    \begin{bmatrix}
+        \lambda_1 & 0         \\
+        0         & \lambda_2
+    \end{bmatrix}
+    T\right) =
+    \begin{bmatrix}
+        e^{\lambda_{1}T} & 0                \\
+        0                & e^{\lambda_{2}T}
+    \end{bmatrix}
+\end{equation*}
+
+\ptitle{If A is Defective}
+
+Similarly, each block in the Jordan form will converge to zero if and only if
+\begin{equation*}
+    |\lambda_i| <1,\quad\forall i=1,\ldots,n
+\end{equation*}
+Reminder:
+\begin{align*}
+    \left.\exp\left(
+    \begin{bmatrix}\lambda & 1       \\
+               0       & \lambda \\
+        \end{bmatrix}\right.t\right)           & =
+    \begin{bmatrix}1 & t \\
+               0 & 1
+    \end{bmatrix}
+    \text{e}^{\lambda t}                       \\
+    \left.\exp\left(
+    \begin{bmatrix}\lambda & 1       & 0       \\
+               0       & \lambda & 1       \\
+               0       & 0       & \lambda
+        \end{bmatrix}\right.t\right) & =
+    \begin{bmatrix}1 & t & \frac{1}{2!}t^2 \\
+               0 & 1 & t               \\
+               0 & 0 & 1
+    \end{bmatrix}
+    \text{e}^{\lambda t}
+\end{align*}
+
+\subsection{Transfer Functions (TF) of DT LTI Systems}
+\ptitle{Time Response to Elementry Inputs}
+
+Similar to the CT case, a geometric sequence $z^k$ corresponds to an input sequence
+\begin{equation*}
+    u[k] =u_0z^k=u_0e^{ksT}=u(kT), \; z=e^{sT}
+\end{equation*}
+The corresponding time response is
+\begin{align*}
+    y[k] & = \underbrace{CA^k(x_0-C{(zI-A)}^{-1}Bu_0)}_{\textsf{transient}}+\dots \\
+         & +\underbrace{C{(zI-A)}^{-1}Bu_0z^k+Du_0z^k}_{\textsf{steady-state}}
+\end{align*}
+
+\ptitle{Pulse/Discrete TF}
+
+For asymptotically stable DT LTI systems, for large $k$:
+\begin{align*}
+    y[k] & \approx G(z)u[k]    \\
+    G(z) & :=C{(zI-A)}^{-1}B+D
+\end{align*}
+\subsubsection{Special TF and Remarks}
+\ptitle{DC Gain}
+
+If $G(z)$ is asymptotically stable and $A$ is invertible, i.e.\ has no eigenvalue at 1, then
+\begin{equation*}
+    \lim_{k\to+\infty}y[k]=G(1)u_0=(C{(1-A)}^{-1}B+D)u_0
+\end{equation*}
+
+\ptitle{Time Delay}
+
+\begin{equation*}
+    y[k] =u[k-1] =u_0z^{k-1}=\frac1zu[k]
+\end{equation*}
+
+\ptitle{Realizations of DT TF}
+
+All methods to create (state space) realizations of CT TF as LTI models can be adapted to DT TF.\
+
+\subsection{System Discretization}
+
+Similar to CT, the natural dynamics of a DT LTI system are given by the Eigenvalues of $A_d$.
+
+For given Eigenvalues $\lambda_i$ of $A$ the eigenvalues of $A_d$ are
+\begin{equation*}
+    z=e^{\lambda_1T},e^{\lambda_2T},\ldots,e^{\lambda_{n}T}
+\end{equation*}
+
+\ptitle{Mapping}
+
+\begin{enumerate}
+    \item CT left half plane $\rightarrow$ DT unit disk
+    \item CT neighborhood of origin $\rightarrow$ DT neighborhood of $+1$ point
+    \item CT poles at $j\omega_f$ $\rightarrow$ DT $-1$ point (because $e^{j\omega_{f}T}=-1$)
+    \item CT finite poles cannot be mapped to the DT origin and the DT origin does not have a CT equivalent
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[width=0.9\linewidth]{mapping.png}
+\end{center}
+
+
+\subsubsection{Discretization: Hold and Sample}\label{disc::hold_and_sample}
+
+To discretize the $A, B, C, D$ matrices of a time continuous system one has to apply the following transformations:
+\begin{align*}
+    A_d & :=e^{AT} & B_d & :=\left(\int_0^T {e^{A\theta}}d\theta\right)B \overset{A \text{ invert.}}{=} A^{-1}\left(A_d-I\right)B \\
+    C_d & :=C      & D_d & :=D
+\end{align*}
+Alternatively the DT state space matrices $A_d, B_d, C_d, D_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform.
+
+\subsubsection{Discretization: Frequency Domain}\label{disc::tustin}
+\ptitle{Tustin's Method}
+\begin{equation*}
+    G_{d}(z)=G\left(s=\frac2T\frac{z-1}{z+1}\right)
+\end{equation*}
+which corresponds to a rearranged Padé approximation for $z$.
+
+\subsubsection{Discretization: Time Domain}
+
+\paragraph{Forward Difference}
+\noindent\begin{align*}
+    x(t)-x(t-T) & \approx T\cdot\dot{x}(t-T) =T\cdot(Ax(t-T)+Bu(t-T)) \\
+                & \text{yields}                                       \\
+    x(t)        & \approx(I+AT)x(t-T)+BTu(t-T)
+\end{align*}
+
+\begin{tabularx}{\linewidth}{@{}m{0.6\linewidth}X@{}}
+    which is simple but can result in an unstable compensator as $s=\lambda \rightarrow z=1+\lambda T$.
+     &
+    \includegraphics[width=0.9\linewidth, align=m]{disc_approx_forward.pdf}
+\end{tabularx}
+
+\paragraph{Backward Difference}
+\noindent\begin{align*}
+    x(t)-x(t-T) & \approx T\cdot\dot{x}(T) =T\cdot(Ax(t)+Bu(t))  \\
+                & \text{yields}                                  \\
+    x(t)        & \approx{(I-AT)}^{-1}x(t-T)+{(I-AT)}^{-1}BTu(t)
+\end{align*}
+
+\begin{tabularx}{\linewidth}{@{}m{0.6\linewidth}X@{}}
+    which avoids instability as $s=\lambda \rightarrow z={(1-\lambda T)}^{-1}$. This transforms poles into a disk smaller than the unit disk. DT poles cannot get negative real part.
+     &
+    \includegraphics[width=0.9\linewidth, align=m]{disc_approx_backwards.pdf}
+\end{tabularx}
+
+\paragraph{Trapezoidal Rule}\label{disc::trapezoid}
+\noindent\begin{align*}
+    x(t)-x(t-T) & \approx \frac T2\left(\dot{x}(t)+\dot{x}(t-T)\right)                       \\
+                & \text{yields}                                                              \\
+    x(t)        & \approx{\left(I-\frac{AT}{2}\right)}^{-1}\left(I+\frac{AT}{2}\right)x(t-T) \\
+                & +{\left(I-\frac{AT}{2}\right)}^{-1}BT\frac{u(t)+u(t-T)}2
+\end{align*}
+
+\begin{tabularx}{\linewidth}{@{}m{0.6\linewidth}X@{}}
+    which maps the left half plane to the unit disk. This discretization method corresponds to Tustin's method in frequency domain.
+     &
+    \includegraphics[width=0.9\linewidth, align=m]{disc_approx_trapezoid.pdf}
+\end{tabularx}
+
+\subsection{Design and Implementation of DT Control Systems}
+There are two main design paradigms for DT control systems:
+\begin{enumerate}
+    \item DT:\ The CT system is converted to a DT system and the design process happens in DT
+    \item Emulation:\ the design process happens in CT and the result is transferred to DT
+\end{enumerate}
+
+\begin{center}
+    \includegraphics[width=0.9\linewidth]{digit_controller_design.pdf}
+\end{center}
+
+\subsubsection{DT}
+\begin{enumerate}
+    \item First the CT model of the plant is transformed into a DT model (use the ``Hold and Sample'' discretization method as shown in~\ref{disc::hold_and_sample}).
+    \item Then the discrete compensator can be designed.
+\end{enumerate}
+
+\subsubsection{Emulation}
+\begin{enumerate}
+    \item First the compensator is design in the CT domain.
+    \item This compensator is then transformed into a discrete compensator with one of the following methods:
+          \begin{itemize}
+              \item Frequency domain \textrightarrow{} Tustin's method (\ref{disc::tustin})
+              \item Time domain \textrightarrow{} Trapezoid method (\ref{disc::trapezoid})
+          \end{itemize}
+\end{enumerate}

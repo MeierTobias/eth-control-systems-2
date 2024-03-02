@@ -8,3 +8,6 @@ build/
 
 # ignore latexindent log
 src/indent.log
+
+# draw.io temp files
+*.drawio.bkp
