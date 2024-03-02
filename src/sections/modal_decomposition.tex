@@ -1,0 +1,106 @@
+\section{Modal Decomposition}
+
+\subsection{Recall: Eigendecomposition}
+Let $\lambda_i$ and $v_i$ be an eigenvalue and an eigenvector of $A$.
+\begin{align*}
+    A \vec{v_i} & = \lambda_i \vec{v_i}                    \\
+    A \begin{bmatrix}
+          \vdots &        & \vdots \\
+          v_1    & \cdots & v_n    \\
+          \vdots &        & \vdots
+      \end{bmatrix}
+                & = \begin{bmatrix}
+                        \vdots        &        & \vdots        \\
+                        \lambda_1 v_1 & \cdots & \lambda_n v_n \\
+                        \vdots        &        & \vdots
+                    \end{bmatrix} \\
+                & = \underbrace{\begin{bmatrix}
+                                        \vdots &        & \vdots \\
+                                        v_1    & \cdots & v_n    \\
+                                        \vdots &        & \vdots
+                                    \end{bmatrix}}_{V}
+    \underbrace{\begin{bmatrix}
+                        \lambda_1 & 0      & 0         \\
+                        0         & \ddots & 0         \\
+                        0         & 0      & \lambda_n
+                    \end{bmatrix}}_{\Lambda}             \\
+    AV          & = V\Lambda                               \\
+    \Lambda     & = V^{-1}AV
+\end{align*}
+As shown $\Lambda$ is a diagonal matrix containing the eigenvalues of $A$ and $V$ is a column stack of the eigenvectors.
+
+\subsection{Similarity Transformation}
+The state space representation is not unique. This can be used to transform the model into a more \flqq{}useful/readable\frqq{} representation.
+\begin{align*}
+    \tilde{x} & = Px       \\
+    \tilde{A} & = PAP^{-1} \\
+    \tilde{B} & = PB       \\
+    \tilde{C} & = CP^{-1}  \\
+    \tilde{D} & = D
+\end{align*}
+If $P$ is set to the inverse of the eigenvector matrix of $A$ we get:
+\begin{align*}
+    P         & = V^{-1}             \\
+    \tilde{x} & = V^{-1}x            \\
+    \tilde{A} & = V^{-1}AV = \Lambda \\
+    \tilde{B} & = V^{-1}B            \\
+    \tilde{C} & = CV                 \\
+    \tilde{D} & = D
+\end{align*}
+Where $\tilde{A}$ is a diagonal matrix consisting of the eigenvalues of $A$.
+
+\subsection{Modal coordinates}
+\begin{itemize}
+    \item The eigenvector $v_i$ defines the shape of the $i$-th mode.
+    \item The modal coordinate $\tilde{x}_i=Vx$ scales the mode (e.g., at the initial condition)
+    \item The eigenvalue $\lambda_i$ defines how the amplitude of the mode evolves over time.
+
+          \begin{tabularx}{\linewidth}{@{}p{0.5\linewidth}X@{}}
+              \quad Real $\lambda_i$                            & \textrightarrow{} $e^{\lambda_i t}x_0$                          \\
+              \quad Complex $\lambda_i = \sigma_i + j \omega_i$ & \textrightarrow{} $e^{\sigma_i t}\sin(\omega_i t ++ \phi_0)x_0$ \\
+              \quad Repeated $\lambda_i$                        & \textrightarrow{} $t^p e^{\lambda_i t}$
+          \end{tabularx}
+\end{itemize}
+
+\begin{examplesection}[Example: Simple Pendulum]
+    For a simple pendulum with no damping and no input the state model is given by:
+    \begin{equation*}
+        \dot{x}=\underbrace{\begin{bmatrix}
+                0            & 1 \\
+                -\frac{g}{l} & 0
+            \end{bmatrix}}_{A}x
+    \end{equation*}
+    where
+    \begin{equation*}
+        x=\begin{bmatrix}
+            \varphi \\
+            \dot{\varphi}
+        \end{bmatrix}
+    \end{equation*}
+
+    The eigenvalues and eigenvectors of $A$ are
+    \begin{equation*}
+        \lambda_{1,2} = \pm j \sqrt{\frac{g}{l}} \qquad v_{1,2}=\begin{bmatrix}
+            1 \\
+            \pm j \sqrt{\frac{g}{l}}
+        \end{bmatrix}
+    \end{equation*}
+
+    With the initial condition $x(0) = {[1, 0]}^T$ the eigenvectors can be visualized as following:
+
+    \includegraphics[width=\linewidth]{images/mode_shapes_pendulum.png}
+
+    Due to the purely complex eigenvalues, the eigenvectors only rotate when evolving over time.
+
+    Combining the two modes, we get
+    \begin{align*}
+        x(t) = \begin{bmatrix}
+                   \varphi \\
+                   \textcolor{red}{\dot{\varphi}}
+               \end{bmatrix}
+        = \begin{bmatrix}
+              \cos(\omega t) \\
+              \textcolor{red}{-\omega\sin(\omega t)}
+          \end{bmatrix}
+    \end{align*}
+\end{examplesection}
