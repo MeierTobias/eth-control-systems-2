@@ -64,23 +64,6 @@ where $\omega_{c,LP}$ must be high enough to capture system dynamics.
 \renewcommand{\arraystretch}{1}
 \setlength{\tabcolsep}{\oldtabcolsep}
 
-% \ptitle{General Case}
-
-% A finite-dimensional, DT, causal system can be modelled by
-% \begin{align*}
-%     x[k+1] & =f(t,x[k],u[k]), \; x[0]=x_0 \\
-%     y[t]   & =h(t,x[k],u[k])
-% \end{align*}
-% If the system is additionally linear it can be modelled by
-% \begin{align*}
-%     x[k+1] & =A[k]x[k]+B[k]u[k], \; x[0]=x_0 \\
-%     y[k]   & =C[k]x[k]+D[k]u[k]
-% \end{align*}
-% A LTI system can be modelled by
-% \begin{align*}
-%     x[k+1] & =Ax[k]+Bu[k], \; x[0]=x_0 \\
-%     y[k]   & =Cx[k]+Du[k]
-% \end{align*}
 As in CT, the system is \textbf{strictly causal} iff $D=0$.
 
 \subsubsection{Time Response}
@@ -91,7 +74,7 @@ As in CT, the system is \textbf{strictly causal} iff $D=0$.
 \subsubsection{Internal Stability for DT Systems}
 \ptitle{If A is Diagonalizable}
 
-For diagonalizable matrices A:
+For diagonalizable matrices A:\
 \begin{equation*}
     A^k ={(T\Lambda T^{-1})}^k=T\Lambda^{k}T^{-1}=T
     \begin{bmatrix}
@@ -185,8 +168,7 @@ If $G(z)$ is asymptotically stable and $A$ is invertible, i.e.\ has no eigenvalu
 
 \ptitle{Realizations of DT TF}
 
-All methods to create (state space) realizations of CT TF as LTI models can be adapted to DT TF.
-
+All methods to create (state space) realizations of CT TF as LTI models can be adapted to DT TF.\
 
 \subsection{System Discretization}
 
