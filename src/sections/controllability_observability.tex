@@ -56,3 +56,54 @@ The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i 
 \end{itemize}
 
 \subsection{Kalman Decomposition}
+
+\ptitle{Diagonalizable system}
+\begin{align*}
+    \dot{x} & = \begin{bmatrix}
+                    \Lambda_{r\bar{o}} & 0            & 0                        & 0                  \\
+                    0                  & \Lambda_{ro} & 0                        & 0                  \\
+                    0                  & 0            & \Lambda_{\bar{r}\bar{o}} & 0                  \\
+                    0                  & 0            & 0                        & \Lambda_{\bar{r}o} \\
+                \end{bmatrix}
+    x + \begin{bmatrix}
+            B_{r\bar{o}} \\
+            B_{ro}       \\
+            0            \\
+            0            \\
+        \end{bmatrix}
+    u                                                                                                                          \\
+    y       & = \begin{bmatrix}
+                    0 & C_{ro} & 0 & C_{r\bar{o}}
+                \end{bmatrix}
+    + Du
+\end{align*}
+
+\ptitle{General case}
+\begin{align*}
+    \dot{x} & = \begin{bmatrix}
+                    A_{r\bar{o}} & A_{12} & A_{13}             & A_{14}       \\
+                    0            & A_{ro} & 0                  & A_{24}       \\
+                    0            & 0      & A_{\bar{r}\bar{o}} & A_{34}       \\
+                    0            & 0      & 0                  & A_{\bar{r}o} \\
+                \end{bmatrix}
+    x + \begin{bmatrix}
+            B_{r\bar{o}} \\
+            B_{ro}       \\
+            0            \\
+            0            \\
+        \end{bmatrix}
+    u                                                                                                   \\
+    y       & = \begin{bmatrix}
+                    0 & C_{ro} & 0 & C_{r\bar{o}}
+                \end{bmatrix}
+    + Du
+\end{align*}
+
+\newpar{}
+
+\begin{tabularx}{\linewidth}{@{}ll@{}}
+    $r$       & reachable      \\
+    $\bar{r}$ & not reachable  \\
+    $o$       & observable     \\
+    $\bar{o}$ & not observable \\
+\end{tabularx}
