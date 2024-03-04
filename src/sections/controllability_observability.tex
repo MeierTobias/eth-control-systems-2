@@ -21,9 +21,18 @@ The $i$-th mode of a system in diagonal form is reachable only if $\tilde{b}_i \
 
 \ptitle{Controllability}
 
-An LTI system is controllable if, for any initial condition $x_0$, there exists a control input that brings the state $x$ to $0$ in finite time.
+\begin{itemize}
+    \item An LTI system is controllable if, for any initial condition $x_0$, there exists a control input that brings the state $x$ to $0$ in finite time.
+    \item For \textbf{continuous-time systems} controllability and reachability are the same.
+    \item However, a unreachable \textbf{discrete-time system} with non-invertible $A$ could be controllable (Eigenvalues at 0). E.g.:
+    \begin{itemize}
+        \item $x[k+1] = 0x[k] + 0u[k]$ is controllable but unreachable.
+    \end{itemize}
+\end{itemize}
 
-For continuous-time systems controllability and reachability are the same. However, for a discrete-time system with a non-invertible $A$ matrix there is a subtle difference. For example the DT system $x[k+1] = 0x[k] + 0u[k]$ is contr but unreachable.
+% An LTI system is controllable if, for any initial condition $x_0$, there exists a control input that brings the state $x$ to $0$ in finite time.
+
+% For continuous-time systems controllability and reachability are the same. However, for a discrete-time system with a non-invertible $A$ matrix there is a subtle difference. For example the DT system $x[k+1] = 0x[k] + 0u[k]$ is contr but unreachable.
 
 \subsection{Observability}
 
@@ -50,8 +59,8 @@ The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i 
 
 \subsection{Stabilizability and Detectability}
 \begin{itemize}
-    \item A system is stabilizable if all unstable modes are reachable.
-    \item A system is detectable if all unstable modes are observable.
+    \item A system is stabilizable if all \textbf{unstable modes are reachable}.
+    \item A system is detectable if all \textbf{unstable modes are observable}.
     \item In a system that is stabilizable and detectable all the modes that cannot be controlled and/or observed must behaving ``nicely'' on their own.
 \end{itemize}
 
