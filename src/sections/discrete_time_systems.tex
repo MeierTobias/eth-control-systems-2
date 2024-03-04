@@ -67,8 +67,11 @@ where $\omega_{c,LP}$ must be high enough to capture system dynamics.
 As in CT, the system is \textbf{strictly causal} iff $D=0$.
 
 \subsubsection{Time Response}
+% \noindent\begin{equation*}
+%     y[k]=\underbrace{CA^{k}x_0}_{\textsf{homogeneous r.}} + \underbrace{C\sum_{i=0}^{k-1}A^{k-i-1}Bu[i]+Du[k]}_{\textsf{forced response}}
+% \end{equation*}
 \noindent\begin{equation*}
-    y[k]=\underbrace{CA^{k}x_0}_{\textsf{homogeneous r.}} + \underbrace{C\sum_{i=0}^{k-1}A^{k-i-1}Bu[i]+Du[k]}_{\textsf{forced response}}
+    y[k]=\underbrace{\textbf{CA}^{k}\textbf{x}_0}_{\textsf{homogeneous r.}} + \underbrace{\textbf{C}\sum_{i=0}^{k-1}\textbf{A}^{k-i-1}\textbf{B} u[i]+\textbf{D} u[k]}_{\textsf{forced response}}
 \end{equation*}
 
 \subsubsection{Internal Stability for DT Systems}
