@@ -52,12 +52,12 @@ Where $\tilde{A}$ is a diagonal matrix consisting of the eigenvalues of $A$.
 \subsection{Modal coordinates}
 \begin{itemize}
     \item The eigenvector $v_i$ defines the shape of the $i$-th mode.
-    \item The modal coordinate $\tilde{x}_i=Vx$ scales the mode (e.g., at the initial condition)
+    \item The modal coordinate $\tilde{x}_i=V^{-1}x$ scales the mode (e.g., at the initial condition)
     \item The eigenvalue $\lambda_i$ defines how the amplitude of the mode evolves over time.
 
           \begin{tabularx}{\linewidth}{@{}p{0.5\linewidth}X@{}}
-              \quad Real $\lambda_i$                            & \textrightarrow{} $e^{\lambda_i t}x_0$                          \\
-              \quad Complex $\lambda_i = \sigma_i + j \omega_i$ & \textrightarrow{} $e^{\sigma_i t}\sin(\omega_i t ++ \phi_0)x_0$ \\
+              \quad Real $\lambda_i$                            & \textrightarrow{} $e^{\lambda_i t}x_0$                         \\
+              \quad Complex $\lambda_i = \sigma_i + j \omega_i$ & \textrightarrow{} $e^{\sigma_i t}\sin(\omega_i t + \phi_0)x_0$ \\
               \quad Repeated $\lambda_i$                        & \textrightarrow{} $t^p e^{\lambda_i t}$
           \end{tabularx}
 \end{itemize}
