@@ -49,9 +49,10 @@ If $P$ is set to the inverse of the eigenvector matrix of $A$ we get:
 \end{align*}
 Where $\tilde{A}$ is a diagonal matrix consisting of the eigenvalues of $A$.
 
-\subsection{Modal coordinates}
+\subsection{Modal Time Response}
+\subsubsection{Modal Coordinates}
 \begin{itemize}
-    \item The eigenvector $v_i$ defines the shape of the $i$-th mode.
+    \item The eigenvector $v_i$ defines the shape of the $i$-th mode i.e. the ratio of the different states to each other. Therefore, applying the properties of eigenvalues and eigenvectors yields that when setting $x_0=v_i$, $v_i$ will be scaled over time but the ratio of the system's states will stay constant.
     \item The modal coordinate $\tilde{x}_i=Vx$ scales the mode (e.g., at the initial condition)
     \item The eigenvalue $\lambda_i$ defines how the amplitude of the mode evolves over time.
 
@@ -61,6 +62,24 @@ Where $\tilde{A}$ is a diagonal matrix consisting of the eigenvalues of $A$.
               \quad Repeated $\lambda_i$                        & \textrightarrow{} $t^p e^{\lambda_i t}$
           \end{tabularx}
 \end{itemize}
+
+\subsubsection{Homogeneous Response}
+For a given initial condition $x(0)=x_0$ the homogeneous response can be computed as follows:\\
+\ptitle{In Modal Coordinates}
+\begin{align*}
+    \tilde{x}(t)   & =e^{\tilde{A}t}\tilde{x}(0)     \\
+    \tilde{x}_i(t) & =e^{\lambda_{i}t}\tilde{x}_i(0)
+\end{align*}
+which means that each mode evolves inependently (of other modes) over time.\\
+\ptitle{In Standard Coordinates}
+\begin{equation*}
+    x(t)=\sum_{i=1}^ne^{\lambda_it}\tilde{x}_i(0)v_i
+\end{equation*}
+because for an initial condition $x_0 = v_i$ the time response is given by
+\begin{equation*}
+    x(t)=e^{At}v_i=e^{\lambda_it}v_i
+\end{equation*}
+and $v_i$ form a basis of the corresponding state space.
 
 \begin{examplesection}[Example: Simple Pendulum]
     For a simple pendulum with no damping and no input the state model is given by:

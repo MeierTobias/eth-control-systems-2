@@ -2,7 +2,7 @@
 
 \subsection{Reachability/Controllability}
 
-An LTI system is reachable if there exists a control signal that takes the system from an initial condition $x_0 = 0$ to any desired final state $x_f$, in finite time.
+An LTI system is reachable if there exists a control signal that takes the system from an initial condition $x_0 = 0$ to any desired final state $x_f$, in finite time. This means that each state can be influenced by the input.
 
 \begin{equation*}
     R:= \begin{bmatrix}
@@ -17,17 +17,23 @@ Mathematically expressed, a system is reachable if and only if the reachability 
 
 \ptitle{SISO diagonal systems}
 
-The $i$-th mode of a system in diagonal form is reachable only if $\tilde{b}_i \neq 0$
+The $i$-th mode of a system in diagonal form is reachable only if $\tilde{b}_i \neq 0$ because
+\begin{equation*}
+    \tilde{x}_i^+ =\lambda_i\tilde{x}_i+\tilde{b}_i u
+\end{equation*}
+where $\tilde{x}_i^+$ includes $\dot{\tilde{x}}$ and $\tilde{x}[k+1]$. This is a necessary but not sufficient condition for reachability of the whole system.
 
-\ptitle{Controllability}
+\ptitle{DT Systems: Controllability}
 
 \begin{itemize}
-    \item An LTI system is controllable if, for any initial condition $x_0$, there exists a control input that brings the state $x$ to $0$ in finite time.
+    \item A DT LTI system is controllable if, for any initial condition $x_0$, there exists a control input that brings the state $x$ to $0$ in finite time.
+    \item Reachability always implies controllability
+    \item Controllability only implies reachability if $A_d$ is invertible
+    \item An unreachable DT system with non-invertible $A_d$ could be controllable (Eigenvalues at 0). E.g.:
+          \begin{itemize}
+              \item $x[k+1] = 0x[k] + 0u[k]$ is controllable (state goes to $0$) but unreachable as $\det(R)=0$.
+          \end{itemize}
     \item For \textbf{continuous-time systems} controllability and reachability are the same.
-    \item However, a unreachable \textbf{discrete-time system} with non-invertible $A$ could be controllable (Eigenvalues at 0). E.g.:
-    \begin{itemize}
-        \item $x[k+1] = 0x[k] + 0u[k]$ is controllable but unreachable.
-    \end{itemize}
 \end{itemize}
 
 % An LTI system is controllable if, for any initial condition $x_0$, there exists a control input that brings the state $x$ to $0$ in finite time.
@@ -36,7 +42,7 @@ The $i$-th mode of a system in diagonal form is reachable only if $\tilde{b}_i \
 
 \subsection{Observability}
 
-An LTI system is observable if, for any initial condition $x_0$, this initial condition can be reconstructed uniquely based on the knowledge of the input and output signal over a finite time interval.
+An LTI system is observable if, for any initial condition $x_0$, this initial condition can be reconstructed uniquely based on the knowledge of the input and output signal over a finite time interval. This means that each state must influence the output.
 
 \begin{equation*}
     O:= \begin{bmatrix}
@@ -55,7 +61,11 @@ Mathematically expressed, a system is observable if and only if the observabilit
 
 \ptitle{SISO diagonal systems}
 
-The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i \neq 0$
+The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i \neq 0$ because
+\begin{equation*}
+    y=\tilde{c}_1\tilde{x}_1+\ldots+\tilde{c}_n\tilde{x}_n+Du
+\end{equation*}
+This is a necessary but not sufficient condition for observability of the whole system.
 
 \subsection{Stabilizability and Detectability}
 \begin{itemize}
@@ -80,7 +90,7 @@ The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i 
             0            \\
             0            \\
         \end{bmatrix}
-    u                                                                                                                          \\
+    u                                                                                                                           \\
     y       & = \begin{bmatrix}
                     0 & C_{ro} & 0 & C_{r\bar{o}}
                 \end{bmatrix}
@@ -116,3 +126,9 @@ The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i 
     $o$       & observable     \\
     $\bar{o}$ & not observable \\
 \end{tabularx}
+
+\ptitle{Remarks}
+\begin{itemize}
+    \item In the transfer function $u \rightarrow y$ only the modes corresponding to the reachable and observable modes will appear (others will be cancelled by a zero).
+    \item A minimal realization of a transfer function is a state-space model that is both reachable and observable.
+\end{itemize}
