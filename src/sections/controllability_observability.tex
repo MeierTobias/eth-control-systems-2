@@ -1,0 +1,130 @@
+\section{Reachability/Controllability and Observability}
+
+\subsection{Reachability/Controllability}
+
+An LTI system is reachable if there exists a control signal that takes the system from an initial condition $x_0 = 0$ to any desired final state $x_f$, in finite time. This means that each state can be influenced by the input.
+\noindent\begin{align*}
+    \mathbf{R} :=   & \begin{bmatrix}
+                          \mathbf{B} & \mathbf{AB} & \mathbf{A}^2\mathbf{B} & \mathbf{A}^3\mathbf{B} & \cdots & \mathbf{A}^{n-1}\mathbf{B}
+                      \end{bmatrix} \\
+    \mathbf{x}[n] = & \; \mathbf{RU},\quad \mathbf{U}={\bigl[\mathbf{u}[0],\ldots, \mathbf{u}[n]\bigr]}^T
+\end{align*}
+Mathematically expressed, a system is reachable if and only if the reachability matrix $\mathbf{R}$ has \textbf{full row rank} $n$.
+\begin{align*}
+    \text{rank}(\mathbf{R}) & = n    \\
+    \det(\mathbf{R})        & \neq 0
+\end{align*}
+
+\ptitle{SISO diagonal systems}
+
+The $i$-th mode of a system in diagonal form is reachable only if $\tilde{b}_i \neq 0$ because
+\begin{equation*}
+    \dot{\tilde{x}}_i =\lambda_i\tilde{x}_i+\tilde{b}_i u
+\end{equation*}
+This is a necessary but not sufficient condition for reachability of the whole system.
+
+\ptitle{DT Systems: Controllability}
+
+\begin{itemize}
+    \item A DT LTI system is controllable if, for any initial condition $\mathbf{x}_0$, there exists a control input that brings the state $x$ to $0$ in finite time.
+    \item Reachability always implies controllability
+    \item Controllability only implies reachability if $\mathbf{A}_d$ is invertible
+    \item An unreachable DT system with non-invertible $\mathbf{A}_d$ could be controllable (Eigenvalues at 0). E.g.:
+          \begin{itemize}
+              \item $\mathbf{x}[k+1] = 0\mathbf{x}[k] + 0\mathbf{u}[k]$ is controllable (state goes to $0$) but unreachable as $\det(\mathbf{R})=0$.
+          \end{itemize}
+    \item For \textbf{continuous-time systems} controllability and reachability are the same.
+\end{itemize}
+
+\subsection{Observability}
+
+An LTI system is observable if, for any initial condition $\mathbf{x}_0$, this initial condition can be reconstructed uniquely based on the knowledge of the input and output signal over a finite time interval. This means that each state must influence the output.
+\noindent\begin{align*}
+    \mathbf{O} := & \begin{bmatrix}
+                        \mathbf{C}    \\
+                        \mathbf{CA}   \\
+                        \mathbf{CA}^2 \\
+                        \vdots        \\
+                        \mathbf{CA}^{n-1}
+                    \end{bmatrix}                                                                        \\
+    \mathbf{Y} =  & \; \mathbf{Ox}[n],\quad \mathbf{Y}={\left[\mathbf{y}[0],\ldots, \mathbf{y}[n]\right]}^T
+\end{align*}
+Mathematically expressed, a system is observable if and only if the observability matrix $\mathbf{O}$ has \textbf{full column rank} $n$.
+\begin{align*}
+    \text{rank}(\mathbf{O}) & = n    \\
+    \det(\mathbf{O})        & \neq 0
+\end{align*}
+
+\ptitle{SISO diagonal systems}
+
+The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i \neq 0$ because
+\begin{equation*}
+    y=\tilde{c}_1\tilde{x}_1+\ldots+\tilde{c}_n\tilde{x}_n+\mathbf{Du} %chktex 11
+\end{equation*}
+This is a necessary but not sufficient condition for observability of the whole system.
+
+\subsection{Stabilizability and Detectability}
+\begin{itemize}
+    \item A system is stabilizable if all \textbf{unstable modes are reachable}.
+    \item A system is detectable if all \textbf{unstable modes are observable}.
+    \item In a system that is stabilizable and detectable all the modes that cannot be controlled and/or observed must behaving ``nicely'' on their own.
+\end{itemize}
+
+\subsection{Kalman Decomposition}
+
+\ptitle{Diagonalizable system}
+\begin{align*}
+    \dot{\mathbf{x}} & = \begin{bmatrix}
+                             \bm{\Lambda}_{r\bar{o}} & 0                 & 0                             & 0                       \\
+                             0                       & \bm{\Lambda}_{ro} & 0                             & 0                       \\
+                             0                       & 0                 & \bm{\Lambda}_{\bar{r}\bar{o}} & 0                       \\
+                             0                       & 0                 & 0                             & \bm{\Lambda}_{\bar{r}o} \\
+                         \end{bmatrix}
+    \mathbf{x} + \begin{bmatrix}
+                     \mathbf{B}_{r\bar{o}} \\
+                     \mathbf{B}_{ro}       \\
+                     0                     \\
+                     0                     \\
+                 \end{bmatrix}
+    \mathbf{u}                                                                                                                 \\
+    \mathbf{y}       & = \begin{bmatrix}
+                             0 & \mathbf{C}_{ro} & 0 & \mathbf{C}_{r\bar{o}}
+                         \end{bmatrix}
+    + \mathbf{Du}
+\end{align*}
+
+\ptitle{General case}
+\begin{align*}
+    \dot{\mathbf{x}} & = \begin{bmatrix}
+                             \mathbf{A}_{r\bar{o}} & \mathbf{A}_{12} & \mathbf{A}_{13}             & \mathbf{A}_{14}       \\
+                             0                     & \mathbf{A}_{ro} & 0                           & \mathbf{A}_{24}       \\
+                             0                     & 0               & \mathbf{A}_{\bar{r}\bar{o}} & \mathbf{A}_{34}       \\
+                             0                     & 0               & 0                           & \mathbf{A}_{\bar{r}o} \\
+                         \end{bmatrix}
+    \mathbf{x} + \begin{bmatrix}
+                     \mathbf{B}_{r\bar{o}} \\
+                     \mathbf{B}_{ro}       \\
+                     0                     \\
+                     0                     \\
+                 \end{bmatrix}
+    \mathbf{u}                                                                                                         \\
+    \mathbf{y}       & = \begin{bmatrix}
+                             0 & \mathbf{C}_{ro} & 0 & \mathbf{C}_{r\bar{o}}
+                         \end{bmatrix}
+    + \mathbf{Du}
+\end{align*}
+
+\newpar{}
+
+\begin{tabularx}{\linewidth}{@{}ll@{}}
+    $r$       & reachable      \\
+    $\bar{r}$ & not reachable  \\
+    $o$       & observable     \\
+    $\bar{o}$ & not observable \\
+\end{tabularx}
+
+\ptitle{Remarks}
+\begin{itemize}
+    \item In the transfer function $u \rightarrow y$ only the modes corresponding to the reachable and observable modes will appear (others will be cancelled by a zero).
+    \item A minimal realization of a transfer function is a state-space model that is both reachable and observable.
+\end{itemize}
