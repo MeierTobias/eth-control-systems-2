@@ -32,13 +32,13 @@ As shown $\bm{\Lambda}$ is a diagonal matrix containing the eigenvalues of $\mat
 \subsection{Similarity Transformation}
 The state space representation is not unique. This can be used to transform the model into a more \flqq{}useful/readable\frqq{} representation.
 \begin{align*}
-    \tilde{\mathbf{x}} & = \mathbf{Px}       \\
-    \tilde{\mathbf{A}} & = \mathbf{PAP}^{-1} \\
-    \tilde{\mathbf{B}} & = \mathbf{PB}       \\
-    \tilde{\mathbf{C}} & = \mathbf{CP}^{-1}  \\
+    \tilde{\mathbf{x}} & = \mathbf{Tx}       \\
+    \tilde{\mathbf{A}} & = \mathbf{TAT}^{-1} \\
+    \tilde{\mathbf{B}} & = \mathbf{TB}       \\
+    \tilde{\mathbf{C}} & = \mathbf{CT}^{-1}  \\
     \tilde{\mathbf{D}} & = \mathbf{D}
 \end{align*}
-If $\mathbf{P}$ is set to the inverse of the eigenvector matrix of $\mathbf{A}$ we get:
+If $\mathbf{T}$ is set to the inverse of the eigenvector matrix of $\mathbf{A}$ we get:
 \begin{align*}
     \mathbf{P}         & = \mathbf{V}^{-1}                           \\
     \tilde{\mathbf{x}} & = \mathbf{V}^{-1}\mathbf{x}                 \\
@@ -57,8 +57,8 @@ Where $\tilde{\mathbf{A}}$ is a diagonal matrix consisting of the eigenvalues of
     \item The eigenvalue $\lambda_i$ defines how the amplitude of the mode evolves over time.
 
           \begin{tabularx}{\linewidth}{@{}p{0.5\linewidth}X@{}}
-              \quad Real $\lambda_i$                            & \textrightarrow{} $e^{\lambda_i t}x_0$                         \\
-              \quad Complex $\lambda_i = \sigma_i + j \omega_i$ & \textrightarrow{} $e^{\sigma_i t}\sin(\omega_i t + \phi_0)x_0$ \\
+              \quad Real $\lambda_i$                            & \textrightarrow{} $e^{\lambda_i t}x_i(0)$                         \\
+              \quad Complex $\lambda_i = \sigma_i + j \omega_i$ & \textrightarrow{} $e^{\sigma_i t}\sin(\omega_i t + \phi_0)x_i(0)$ \\
               \quad Repeated $\lambda_i$                        & \textrightarrow{} $t^p e^{\lambda_i t}$
           \end{tabularx}
 \end{itemize}
