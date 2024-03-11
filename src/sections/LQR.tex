@@ -1,1 +1,119 @@
 \section{LQR}
+\subsection{Cost Functional}
+LQR can be used to sytematically optimize the \textbf{static gain vector K} based on \textit{tracking errors} and \textit{control effort}.
+
+For th   e reference input $r(t) = 0$ the cost functional $J$ is defined as
+\noindent\begin{equation*}
+    J(\mathbf{x,t})=\int_0^{+\infty} \Bigl[\underbrace{{\mathbf{x}(t)}^T\mathbf{Qx}(t)}_{\textsf{tracking error}} + \underbrace{{\mathbf{u}(t)}^T \mathbf{Ru}(t)}_{\textsf{control effort}} \Bigr]dt
+\end{equation*}
+\textbf{Remarks:}
+\begin{itemize}
+    \item $\mathbf{Q}$ is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^T$
+    \item $\mathbf{Q}$ is positive semidefinite i.e. $\mathbf{x}^T \mathbf{Qx} \geq 0$
+    \item $\mathbf{Q}$ must give positive weights to unstable modes ($\mathbf{A}, \sqrt{\mathbf{Q}}$ are detectable)
+    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^T \mathbf{Ru} >0\; \forall u\neq 0$
+    \item The pair $\mathbf{A,B}$ must be stabilizable
+\end{itemize}
+
+\subsubsection{Bryson's Rule}
+Bryson's rule can be used as a \textit{baseline guess} for $\mathbf{Q,R}$:
+\noindent\begin{align*}
+    \mathbf{Q} =
+     & \begin{bmatrix}\frac{q_1^2}{|x_{1,\max}|^2} &                              &  &        &                              & \\
+                                            & \frac{q_2^2}{|x_{2,\max}|^2} &  &        &                              & \\
+                                            &                              &  & \ddots &                              & \\
+                                            &                              &  &        & \frac{q_n^2}{|x_{n,\max}|^2}
+       \end{bmatrix} \\
+    \mathbf{R} = \rho
+     & \begin{bmatrix}\frac{r_1^2}{|u_{1,\max}|^2} &                              &  &        &                              & \\
+                                            & \frac{r_2^2}{|u_{2,\max}|^2} &  &        &                              & \\
+                                            &                              &  & \ddots &                              & \\
+                                            &                              &  &        & \frac{r_n^2}{|u_{n,\max}|^2}
+       \end{bmatrix}
+\end{align*}
+where
+\noindent\begin{equation*}
+    \sum_{i=1}^n q_i^2=1\text{ and }\sum_{i=1}^m r_i^2=1
+\end{equation*}
+
+\subsection{Continous Time}
+In continous time, first the positive definite solution $\mathbf{P}$ of the \textit{algebraic Riccati equation} has to be found
+\noindent\begin{equation*}
+    \mathbf{A}^\mathbf{TP}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^T \mathbf{P}=0
+\end{equation*}
+then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\mathbf{u} = -\mathbf{Kx}$:
+\noindent\begin{equation*}
+    \mathbf{K}=\mathbf{R}^{-1}\mathbf{B}^T \mathbf{P}
+\end{equation*}
+
+\textbf{\code{Matlab:}} \code{[K,P]=lqr(A,B,Q,R)}
+\textbf{Remarks:}
+\begin{itemize}
+    \item LQR guarantees a phase margin of at least 60°
+    \item LQR applies directly to MIMO-systems
+\end{itemize}
+
+\subsection{Discrete Time}
+In discrete time, the cost functional is
+\noindent\begin{equation*}
+    J(\mathbf{x,u})=\sum_{k=0}^{+\infty}\left({\mathbf{x}[k]}^T \mathbf{Qx}[k]+{\mathbf{u}[k]}^T \mathbf{Ru}[k]\right),
+\end{equation*}
+the positive definite solution $\mathbf{P}$ to the \textit{algebraic Riccati equation}
+\noindent\begin{equation*}
+    \mathbf{P}=\mathbf{A}^T \mathbf{PA}-(\mathbf{A}^T \mathbf{PB})(\mathbf{B}^{\prime}\mathbf{PB}+\mathbf{R})^{-1}(\mathbf{B}^T \mathbf{PA})+\mathbf{Q}
+\end{equation*}
+and the \textit{static gain matrix} is
+\noindent\begin{equation*}
+    \mathbf{K}=(\mathbf{R}+\mathbf{B}^T \mathbf{PB})^{-1}\mathbf{B}^T \mathbf{PA}
+\end{equation*}
+
+\textbf{\code{Matlab:}} \code{[K\_d,P\_d]=dlqr(A,B,Q,R)}
+
+\subsection{Integrator}
+If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs.
+This simply done by adding the integral of the error to the state space model
+\noindent\begin{align*}
+    e & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + \mathbf{I}r \\
+    \frac d{dt}
+    \begin{bmatrix}
+        \mathbf{x} \\
+        e
+    \end{bmatrix}
+      & =\begin{bmatrix}
+             \mathbf{A}  & 0 \\
+             -\mathbf{C} & 0
+         \end{bmatrix}
+    \begin{bmatrix}x \\
+        e
+    \end{bmatrix}
+    +\begin{bmatrix}
+         \mathbf{B} \\
+         \mathbf{D}
+     \end{bmatrix}
+    \mathbf{u}+
+    \begin{bmatrix}
+        0 \\
+        \mathbf{I}
+    \end{bmatrix}
+    r,
+\end{align*}
+then apply LQR to the modified state space model.
+
+\subsection{Symmetric Root Locus}
+The symmetric root locus can be used to understand the influence of $\rho$ on the poles of a closed loop LQR feedback system.
+By using $\mathbf{Q}=\mathbf{C}^T \mathbf{C}$ and $\mathbf{R}=\rho \mathbf{I}$, the symmetric root locus condition simplifies to
+\noindent\begin{equation*}
+    \rho D(s)D(-s)+N(s)N(-s)=0
+\end{equation*}
+
+\ptitle{Symmetric Root Locus Rules}
+
+\begin{itemize}
+    \item $2n$ branches, where $n$ is the size of $\mathbf{A}$
+    \item symmetric to the real and imaginary axis
+    \item LQR closed-loop polkes are all in the LHP
+    \item $\rho \rightarrow \infty$ (epensive control):\newline
+          cl.\ poles approach stable ol.\ poles and the mirror-images of the unstable ol.\ poles (all on LHP)
+    \item $\rho \rightarrow 0$ (cheap control):\newline
+          cl poles approach mp.\ ol.\ zeros and the mirror-images of the nmp\. ol.\ zeros or go to infinity along the LHP asymptotes (all on LHP)
+\end{itemize}
