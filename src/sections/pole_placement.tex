@@ -60,12 +60,13 @@ If the system is \textbf{controllable} but not in reachable canonical form, the 
           \end{align*}
 \end{enumerate}
 \textbf{Remark}
-
-Controllability is a \textbf{necessary and sufficient condition} for arbitrary pole placement. If the system is
-uncontrollable and diagonalizable, the uncontrollable poles can't be moved.
+\begin{itemize}
+    \item Controllability is a \textbf{necessary and sufficient condition} for arbitrary pole placement. 
+    \item If the system is diagonalizable but not controllable, the uncontrollable poles can't be moved.
+\end{itemize}
 
 \subsubsection{Ackermann's Formula}
-Assuming that the system is \textbf{controllable}, Ackermann's formula can be used to calculate $\mathbf{K}$ for both \textbf{CT} and \textbf{DT} systems:
+Assuming that the system is \textbf{controllable}, Ackermann's formula can be used to calculate $\mathbf{K}$ for both \textbf{\textit{CT}} and \textbf{\textit{DT}} systems:
 \noindent\begin{align*}
     \mathbf{K}      & =\begin{bmatrix}
                            0, & \ldots, & 0, & 1
@@ -76,11 +77,12 @@ Assuming that the system is \textbf{controllable}, Ackermann's formula can be us
 \end{align*}
 
 \subsubsection{Reference Scaling}
-TO ensure that the closed-loop systems follows unit steps with zero stedy state error, the scaling vector $\mathbf{S}$ has to be chosen accordingly
+To ensure that the closed-loop systems follows unit steps with zero stedy state error, the scaling vector $\mathbf{S}$ has to be chosen accordingly
 \noindent\begin{align*}
     G_{y\rightarrow r}^{cl}(s) & =\mathbf{C}{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}\bar{N}r, & \bar{N}=\mathbf{KS} \\
     G_{y\rightarrow r}^{cl}(0) & \overset{!}{=} 1                                                                                \\
-    \bar{N}                    & =-{\left[\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}\right]}^{-1}
+    \bar{N}                    & =-{\left[\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}\right]}^{-1}\\\\
+    \bar{N}                    & =\underbrace{\left[\mathbf{CA}^{-1}\mathbf{B}\right]}_{\text{DC ol.}}\cdot\underbrace{{\left[\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}\right]}^{-1}}_{\text{DC cl.}}
 \end{align*}
 In other words, the scaling vector $\mathbf{S}$ has to be chosen such that $\mathbf{KS}=\bar{N}$.
 
