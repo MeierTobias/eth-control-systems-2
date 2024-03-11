@@ -60,11 +60,11 @@ In discrete time, the cost functional is
 \end{equation*}
 the positive definite solution $\mathbf{P}$ to the \textit{algebraic Riccati equation}
 \noindent\begin{equation*}
-    \mathbf{P}=\mathbf{A}^T \mathbf{PA}-(\mathbf{A}^T \mathbf{PB})(\mathbf{B}^{\prime}\mathbf{PB}+\mathbf{R})^{-1}(\mathbf{B}^T \mathbf{PA})+\mathbf{Q}
+    \mathbf{P}=\mathbf{A}^T \mathbf{PA}-(\mathbf{A}^T \mathbf{PB}){(\mathbf{B}^{\prime}\mathbf{PB}+\mathbf{R})}^{-1}(\mathbf{B}^T \mathbf{PA})+\mathbf{Q}
 \end{equation*}
 and the \textit{static gain matrix} is
 \noindent\begin{equation*}
-    \mathbf{K}=(\mathbf{R}+\mathbf{B}^T \mathbf{PB})^{-1}\mathbf{B}^T \mathbf{PA}
+    \mathbf{K}={(\mathbf{R}+\mathbf{B}^T \mathbf{PB})}^{-1}\mathbf{B}^T \mathbf{PA}
 \end{equation*}
 
 \textbf{\code{Matlab:}} \code{[K\_d,P\_d]=dlqr(A,B,Q,R)}
@@ -115,5 +115,19 @@ By using $\mathbf{Q}=\mathbf{C}^T \mathbf{C}$ and $\mathbf{R}=\rho \mathbf{I}$, 
     \item $\rho \rightarrow \infty$ (epensive control):\newline
           cl.\ poles approach stable ol.\ poles and the mirror-images of the unstable ol.\ poles (all on LHP)
     \item $\rho \rightarrow 0$ (cheap control):\newline
-          cl poles approach mp.\ ol.\ zeros and the mirror-images of the nmp\. ol.\ zeros or go to infinity along the LHP asymptotes (all on LHP)
+          cl poles approach mp.\ ol.\ zeros and the mirror-images of the nmp.\ ol.\ zeros or go to infinity along the LHP asymptotes (all on LHP)
 \end{itemize}
+
+\begin{examplesection}[Example: Symmetric Root Locus]
+    Consider the LTI system 
+    \noindent\begin{equation*}
+        G = \frac{s-1}{(s-0.5)(s^2+2s+s)}
+    \end{equation*}
+    the corresponding root-loci are
+    \begin{center}
+        \includegraphics[width = \linewidth]{symm_rlocus.png}
+    \end{center}
+    Here the open-loop system features both a nonminimum-phase zero and an unstable pole. 
+    When looking at the left halfof the \textit{symmetric root locus}, the mirrored nmp.\ zero and unstable pole stabilize the system such that
+    for any $\rho$ the closed loop poles will stay on the LHP.
+\end{examplesection}
