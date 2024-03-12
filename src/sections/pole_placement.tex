@@ -61,27 +61,28 @@ If the system is \textbf{controllable} but not in reachable canonical form, the 
 \end{enumerate}
 \textbf{Remark}
 \begin{itemize}
-    \item Controllability is a \textbf{necessary and sufficient condition} for arbitrary pole placement. 
+    \item Controllability is a \textbf{necessary and sufficient condition} for arbitrary pole placement.
     \item If the system is diagonalizable but not controllable, the uncontrollable poles can't be moved.
+    \item $\mathbf{A'},\mathbf{A}$ share their eigenvalues, therefore a comparison of coefficients can be used.
 \end{itemize}
 
 \subsubsection{Ackermann's Formula}
 Assuming that the system is \textbf{controllable}, Ackermann's formula can be used to calculate $\mathbf{K}$ for both \textbf{\textit{CT}} and \textbf{\textit{DT}} systems:
 \noindent\begin{align*}
-    \mathbf{K}      & =\begin{bmatrix}
-                           0, & \ldots, & 0, & 1
-                       \end{bmatrix}
-    \mathbf{R}^{-1}\varphi_{cl}(\mathbf{A})                                                     \\
-    \varphi_{cl}(s) & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n) \\
-                    & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 I
+    \mathbf{K}               & =\begin{bmatrix}
+                                    0, & \ldots, & 0, & 1
+                                \end{bmatrix}
+    \mathbf{R}^{-1}\varphi_{cl}(\mathbf{A})                                                              \\
+    \varphi_{cl}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n) \\
+    \varphi_{cl}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 I
 \end{align*}
 
 \subsubsection{Reference Scaling}
 To ensure that the closed-loop systems follows unit steps with zero stedy state error, the scaling vector $\mathbf{S}$ has to be chosen accordingly
 \noindent\begin{align*}
-    G_{y\rightarrow r}^{cl}(s) & =\mathbf{C}{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}\bar{N}r, & \bar{N}=\mathbf{KS} \\
-    G_{y\rightarrow r}^{cl}(0) & \overset{!}{=} 1                                                                                \\
-    \bar{N}                    & =-{\left[\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}\right]}^{-1}\\\\
+    G_{y\rightarrow r}^{cl}(s) & =\mathbf{C}{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}\bar{N}r,                                                                                                      & \bar{N}=\mathbf{KS} \\
+    G_{y\rightarrow r}^{cl}(0) & \overset{!}{=} 1                                                                                                                                                                                     \\
+    \bar{N}                    & =-{\left[\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}\right]}^{-1}                                                                                                                            \\\\
     \bar{N}                    & =\underbrace{\left[\mathbf{CA}^{-1}\mathbf{B}\right]}_{\text{DC ol.}}\cdot\underbrace{{\left[\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}\right]}^{-1}}_{\text{DC cl.}}
 \end{align*}
 In other words, the scaling vector $\mathbf{S}$ has to be chosen such that $\mathbf{KS}=\bar{N}$.

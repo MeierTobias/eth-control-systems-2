@@ -37,9 +37,9 @@ where
 \end{equation*}
 
 \subsection{Continous Time}
-In continous time, first the positive definite solution $\mathbf{P}$ of the \textit{algebraic Riccati equation} has to be found
+In continous time, first the positive definite solution $\mathbf{P}$ of the \textit{continous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
 \noindent\begin{equation*}
-    \mathbf{A}^\mathbf{TP}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^T \mathbf{P}=0
+    \mathbf{A}^T \mathbf{P}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^T \mathbf{P}=0
 \end{equation*}
 then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\mathbf{u} = -\mathbf{Kx}$:
 \noindent\begin{equation*}
@@ -58,11 +58,11 @@ In discrete time, the cost functional is
 \noindent\begin{equation*}
     J(\mathbf{x,u})=\sum_{k=0}^{+\infty}\left({\mathbf{x}[k]}^T \mathbf{Qx}[k]+{\mathbf{u}[k]}^T \mathbf{Ru}[k]\right),
 \end{equation*}
-the positive definite solution $\mathbf{P}$ to the \textit{algebraic Riccati equation}
+the positive definite solution $\mathbf{P}$ to the \textit{discrete algebraic Riccati equation} (\textbf{\textit{DARE}})
 \noindent\begin{equation*}
     \mathbf{P}=\mathbf{A}^T \mathbf{PA}-(\mathbf{A}^T \mathbf{PB}){(\mathbf{B}^{\prime}\mathbf{PB}+\mathbf{R})}^{-1}(\mathbf{B}^T \mathbf{PA})+\mathbf{Q}
 \end{equation*}
-and the \textit{static gain matrix} is
+and the \textit{static gain matrix} obtained with $\mathbf{u} = -\mathbf{Kx}$ is
 \noindent\begin{equation*}
     \mathbf{K}={(\mathbf{R}+\mathbf{B}^T \mathbf{PB})}^{-1}\mathbf{B}^T \mathbf{PA}
 \end{equation*}
@@ -73,17 +73,18 @@ and the \textit{static gain matrix} is
 If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs.
 This simply done by adding the integral of the error to the state space model
 \noindent\begin{align*}
-    e & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + \mathbf{I}r \\
+    \dot{e} & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + r \\
     \frac d{dt}
     \begin{bmatrix}
         \mathbf{x} \\
         e
     \end{bmatrix}
-      & =\begin{bmatrix}
-             \mathbf{A}  & 0 \\
-             -\mathbf{C} & 0
-         \end{bmatrix}
-    \begin{bmatrix}x \\
+            & =\begin{bmatrix}
+                   \mathbf{A}  & \mathbf{0} \\
+                   -\mathbf{C} & 0
+               \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{x} \\
         e
     \end{bmatrix}
     +\begin{bmatrix}
@@ -93,9 +94,25 @@ This simply done by adding the integral of the error to the state space model
     \mathbf{u}+
     \begin{bmatrix}
         0 \\
-        \mathbf{I}
+        1
     \end{bmatrix}
-    r,
+    r                                                 \\
+            & =\begin{bmatrix}
+                   \mathbf{A}  & \mathbf{0} \\
+                   -\mathbf{C} & 0
+               \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{x} \\
+        e
+    \end{bmatrix}
+    +\begin{bmatrix}
+         \mathbf{B} & \mathbf{0} \\
+         \mathbf{D} & 1
+     \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{u} \\
+        r
+    \end{bmatrix},
 \end{align*}
 then apply LQR to the modified state space model.
 
@@ -119,7 +136,7 @@ By using $\mathbf{Q}=\mathbf{C}^T \mathbf{C}$ and $\mathbf{R}=\rho \mathbf{I}$, 
 \end{itemize}
 
 \begin{examplesection}[Example: Symmetric Root Locus]
-    Consider the LTI system 
+    Consider the LTI system
     \noindent\begin{equation*}
         G = \frac{s-1}{(s-0.5)(s^2+2s+s)}
     \end{equation*}
@@ -127,7 +144,7 @@ By using $\mathbf{Q}=\mathbf{C}^T \mathbf{C}$ and $\mathbf{R}=\rho \mathbf{I}$, 
     \begin{center}
         \includegraphics[width = \linewidth]{symm_rlocus.png}
     \end{center}
-    Here the open-loop system features both a nonminimum-phase zero and an unstable pole. 
-    When looking at the left halfof the \textit{symmetric root locus}, the mirrored nmp.\ zero and unstable pole stabilize the system such that
+    Here the open-loop system features both a nonminimum-phase zero and an unstable pole.
+    When looking at the left half of the \textit{symmetric root locus}, the mirrored nmp.\ zero and unstable pole stabilize the system such that
     for any $\rho$ the closed loop poles will stay on the LHP.
 \end{examplesection}
