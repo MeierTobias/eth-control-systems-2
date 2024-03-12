@@ -2,9 +2,10 @@
 
 \subsection{Full State Feedback}
 Assuming the internal state of a sytem can be accessed completely, the system can be controlled
-with a \textit{reference signal} $r$ (scalar) \textit{scaling vector} $S$ (column vector) and a static gain $\mathbf{K}$ (row vector):
+with a \textit{reference signal} $r$ (scalar) \textit{scaling vector} $\mathbf{S}$ (column vector) and a static gain $\mathbf{K}$ (row vector):
 \begin{center}
-    \includegraphics[width = \linewidth]{full_state.png}
+    % \includegraphics[width = \linewidth]{full_state.png}
+    \input{BSB/state_feedback.tex}
 \end{center}
 %TBD: tikz image with bold vectors to show the dimensions better
 The corresponding closed-looop system is
