@@ -1,6 +1,6 @@
 \section{Observers}
 \subsection{Luenberger Observer}
-Assuming we desire full-state feedback but there are no sensors available to measure each state we could try to simulate the system (with it's states).
+In case we desire full-state feedback but there are no sensors available to measure each state, we could try to simulate the system (with it's states).
 \subsubsection{State Estimation Without Observer}
 \begin{itemize}
     \item we choose $\hat{x_0}=0$
@@ -22,7 +22,7 @@ Assuming we desire full-state feedback but there are no sensors available to mea
 We don't have to fully rely on our state estimation but can instead, use the available sensory information to improve it.
 \begin{itemize}
     \item the signal $y-\hat{y}=C(x-\hat{x})$ is called \textbf{innovation} and is the input to the Luenberger \textbf{observer gain} $L$
-    \item the Luenberger Observer corrects the estimated state by a linear feedback on the innovation
+    \item the Luenberger observer corrects the estimated state by a linear feedback on the innovation
     \item in other words we design a controller to get a good estimate of the physical plant's state
 \end{itemize}
 \begin{center}
@@ -41,7 +41,7 @@ Hence,
 \end{equation*}
 
 \subsubsection{Observer Pole Placement}
-For state feedback we obtained the CL Eigenvalues $A-BK$. For the Luenberger observer we can state the \textbf{dual} problem of placing the poles of
+For state feedback we obtained the CL Eigenvalues $A-BK$. For the Luenberger observer we can state the \textbf{dual} problem, namely placing the poles of
 \begin{equation*}
     A-LC
 \end{equation*}
@@ -81,7 +81,7 @@ Assumptions:
 Then, if for example $\tilde{c_n}=0$,
 \begin{itemize}
     \item $\eta_n^+$ cannot affect any of the other $\eta_j^+$
-    \item $\lambda_i$ will remain a pole of the estimation error dynamics for any choice of $L$
+    \item $\lambda_n$ will remain a pole of the estimation error dynamics for any choice of $L$
 \end{itemize}
 Conclusions:
 \begin{itemize}
