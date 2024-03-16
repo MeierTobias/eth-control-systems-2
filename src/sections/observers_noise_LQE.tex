@@ -13,7 +13,7 @@ Assuming we desire full-state feedback but there are no sensors available to mea
 \ptitle{Estimation Error Dynamics}
 
 \begin{itemize}
-    \item the estimation error $\mathbf{\eta}:=\mathbf{x}-\mathbf{\hat{x}}$ shares the dynamics of the OL system $\mathbf{\dot{\eta}}=\mathbf{A\eta}$!
+    \item the estimation error $\eta:=X-\hat{X}$ shares the dynamics of the OL system $\dot{\eta}=\mathbf{A}\eta$!
     \item this can lead to undesirable estimation error dynamics (slow convergence, oscillations, divergence in case of unstable OL system)
     \item control basically dissapears for the estimation error as we try to control the plant
 \end{itemize}
@@ -32,7 +32,7 @@ We don't have to fully rely on our state estimation but can instead use the avai
 
 The states evolve as follows:
 \begin{align*}
-    \mathbf{x}^+       & =\mathbf{Ax}+\mathbf{Bu}                     \\
+    \mathbf{x}^+       & =\mathbf{Ax}+\mathbf{Bu}                              \\
     \mathbf{\hat{x}^+} & =\mathbf{A}\hat{x}+\mathbf{Bu}+\mathbf{LC(x-\hat{x})}
 \end{align*}
 Hence,
@@ -41,13 +41,43 @@ Hence,
 \end{equation*}
 
 \subsubsection{Observer Pole Placement}
+For state feedback we obtained the CL Eigenvalues $A-BK$. For the Luenberger observer we can state the \textbf{dual} problem of placing the poles of
+\begin{equation*}
+    A-LC
+\end{equation*}
+respectively
+\begin{equation*}
+    A^T-C^T L^T\text{ (same Eigenvalues)}
+\end{equation*}
+using the methods learned for state feedback.
 
 \ptitle{Ackermann Observer Design}
-%
 
+The \textbf{Observability Matrix}
+\begin{equation*}
+    \mathcal{O}:=\begin{bmatrix}C\\CA\\\vdots\\CA^{n-1}\end{bmatrix}
+\end{equation*}
+must be invertible which is the case for observable SISO LTI systems.\\
+Then, similarly to state feedback we get
+\begin{align*}
+    L                        & =\varphi_{\mathrm{cl}}(A)\mathcal{O}^{-1}\begin{bmatrix}0,&\ldots,&0,&1\end{bmatrix}^T \\
+    \varphi_{\mathrm{cl}}(s) & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n)              \\
+    \varphi_{\mathrm{cl}}(A) & =A^n+\alpha_{n-1}A^{n-1}+\ldots+\alpha_0I
+\end{align*}
+Remark: $\alpha_0$ must be multiplied by the identity matrix and not just added to every single matrix element.
 
 \ptitle{Observer Pole Placement for Unobservable Systems}
-%
+Assumptions:
+\begin{itemize}
+    \item system is not observable
+    \item system is diagonalizable and given in modal coordinates
+\end{itemize}
+\begin{align*}
+    \eta_1^+ & =\quad\lambda_1\eta_1-I_1\sum_{j=1}^n\left(\tilde{c}_j\eta_j\right) \\
+    \vdots                                                                         \\
+    \eta_n^+ & =\quad\lambda_n\eta_n-I_n\sum_{j=1}^n\left(\tilde{c}_j\eta_j\right)
+\end{align*}
+
 
 
 \subsection{Noise Models}
