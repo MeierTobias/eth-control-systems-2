@@ -10,7 +10,7 @@ For th   e reference input $r(t) = 0$ the cost functional $J$ is defined as
 \begin{itemize}
     \item $\mathbf{Q}$ is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^T$
     \item $\mathbf{Q}$ is positive semidefinite i.e. $\mathbf{x}^T \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
-    \item $\mathbf{Q}$ must give positive weights to unstable modes ($\mathbf{A}, \sqrt{\mathbf{Q}}$ are detectable)
+    \item $\mathbf{Q}$ must give positive weights to unstable modes to penalize them in the cost function ($\mathbf{A}, \sqrt{\mathbf{Q}}$ are detectable)
     \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^T \mathbf{Ru} >0\; \forall u\neq 0$ or $eig(\mathbf{R}) > 0$
     \item The pair $\mathbf{A,B}$ must be stabilizable
 \end{itemize}
@@ -119,7 +119,7 @@ This simply done by adding the integral of the error to the state space model
         r
     \end{bmatrix},
 \end{align*}
-then apply LQR to the modified state space model.
+then apply LQR to the modified state space model. This method is an alternative to open-loop, feed-forward reference scaling. Feedforward is more dynamic than an integrator but not robust.
 
 \subsection{Symmetric Root Locus}
 The symmetric root locus can be used to understand the influence of $\rho$ on the poles of a closed loop LQR feedback system.
@@ -128,7 +128,7 @@ By using $\mathbf{Q}=\mathbf{C}^T \mathbf{C}$ and $\mathbf{R}=\rho \mathbf{I}$, 
     \rho \mathbf{I}+G(s)G(-s) & =0 \qquad \Leftrightarrow \\
     \rho D(s)D(-s)+N(s)N(-s)  & =0
 \end{align*}
-
+where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
 \ptitle{Symmetric Root Locus Rules}
 
 \begin{itemize}

@@ -106,13 +106,13 @@ We model noise as a stochastic process with a \textbf{noise signal}
 \end{equation*}where each $w(t)$ is the realization of a random variable.
 
 \subsubsection{White Noise}
-"Perfect" but unphysical (values change instantaneously) noise can be modeled as follows:
+``Perfect'' but unphysical (values change instantaneously) noise can be modeled as follows:
 \begin{enumerate}
     \item $\mathbb{E}[w(t)]=0$: the signal has zero mean.
-    \item $\mathbb{E}[w(t)w(t)^T]=W$: the signal value at each time instance has covariance $W$, for some positive definite matrix $W.$
-    \item $\mathbb{E}[w(t)w(\tau)^T]=0$: the signal values at two different times are not correlated. In fact, we will assume that signal values at two different times are \textbf{independent}.
+    \item $\mathbb{E}[w(t){w(t)}^T]=W$: the signal value at each time instance has covariance $W$, for some positive definite matrix $W$.
+    \item $\mathbb{E}[w(t){w(\tau)}^T]=0$: the signal values at two different times are not correlated. In fact, we will assume that signal values at two different times are \textbf{independent}.
 \end{enumerate}
-If such a signal additionally is Gaussian-distributed it is called "zero mean Gaussian white noise".
+If such a signal additionally is Gaussian-distributed it is called ``zero mean Gaussian white noise``.
 
 \subsubsection{Colored Noise}
 To simulate physical noise we let a white noise input $w$ propagate through a LTI system model (filter) and use the system's output as noise signal:
@@ -148,8 +148,8 @@ with the Gaussian white noise signals
 \end{itemize}
 We model the errors with the covariance matrices
 \begin{align*}
-    Q & =\mathbb{E}[w(t)w(t)^T]                 & \text{ (process)} \\
-    R & =\mathbb{E}[n(t)n(t)^T], \forall t\geq0 & \text{ (sensor)}
+    Q & =\mathbb{E}[w(t){w(t)}^T]                 & \text{ (process)} \\
+    R & =\mathbb{E}[n(t){n(t)}^T], \forall t\geq0 & \text{ (sensor)}
 \end{align*}
 The (Luenberger) observer is given by
 \begin{align*}
@@ -161,11 +161,11 @@ The (Luenberger) observer is given by
 
 The steady-state covariance of the state estimation error
 \begin{equation*}
-    \lim_{t\to+\infty}\mathbb{E}\left[(x(t)-\hat{x}(t))(x(t)-\hat{x}(t))^T\right]
+    \lim_{t\to+\infty}\mathbb{E}\left[(x(t)-\hat{x}(t)){(x(t)-\hat{x}(t))}^T\right]
 \end{equation*}
 is minimized by solving the Riccati equation
 \begin{equation*}
-    AY+YA^T-YC^TR^{-1}CY+Q=0
+    AY+YA^T-YC^T R^{-1}CY+Q=0
 \end{equation*}
 for the positive-definite matrix $Y$ and choosing the \textbf{optimal estimation gain} as
 \begin{equation*}

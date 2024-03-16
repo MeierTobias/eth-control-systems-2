@@ -13,6 +13,11 @@ The corresponding closed-looop system is
     \dot{\mathbf{x}} & =(\mathbf{A}-\mathbf{BK})\mathbf{x}+\mathbf{B}\bar{N}r, & \bar{N}=\mathbf{KS} \\
     y                & =(\mathbf{C}-\mathbf{DK})\mathbf{x} +\mathbf{D}\bar{N}r
 \end{align*}
+Remarks:
+\begin{itemize}
+    \item $(\mathbf{A}-\mathbf{BK})$ determines the closed-loop dynamics
+    \item zeros are not affected by feedback
+\end{itemize}
 
 \subsection{Pole Placement}
 Pole placement can be used to tune $\mathbf{K}$ and $\mathbf{S}$ to achieve the desired closed loop poles $\lambda_i$.
@@ -23,7 +28,7 @@ The desired characteristic equation is
 \end{align*}
 
 \subsubsection{Reachable Canonical Form}
-If the system is in \textbf{reachable canonical form} and $\mathbf{K} = \left[k0,k1,\ldots,k_{n-1}\right]$, then
+If the system is in \textbf{reachable canonical form} and $\mathbf{K} = \left[k_0,k_1,\ldots,k_{n-1}\right]$, then
 
     {\footnotesize
         \noindent\begin{equation*}
@@ -51,6 +56,12 @@ If the system is \textbf{controllable} but not in reachable canonical form, the 
                                  \mathbf{B}' & \mathbf{A}'\mathbf{B}' & \ldots & {(\mathbf{A}')}^{n-1}\mathbf{B}'
                              \end{bmatrix}
               =\mathbf{TR}                                                                                                \\
+                          & =\begin{bmatrix}
+                                 0      & 0        & \dots               & 1     \\
+                                 \vdots &          & \ddots              &       \\
+                                 0      & 1        & -a_{n-1}            & \dots \\
+                                 1      & -a_{n-1} & a_{n-1}^2 - a_{n-2} & \dots \\
+                             \end{bmatrix}                                              \\
               \mathbf{T}  & = \mathbf{R'R}^{-1}
           \end{align*}
     \item Apply method for reachable canonical form
@@ -59,10 +70,16 @@ If the system is \textbf{controllable} but not in reachable canonical form, the 
               \mathbf{K}^{\prime} & =\left[\alpha_{0}-a_{0},\quad\alpha_{1}-a_{1},\quad\ldots,\quad\alpha_{n-1}-a_{n-1}\right] \\
               \mathbf{K}          & = \mathbf{K'RR}^{-1}
           \end{align*}
+          which is possible if $\mathbf{R}$ is invertible (corresponds to controllability).
 \end{enumerate}
 \textbf{Remark}
 \begin{itemize}
     \item Controllability is a \textbf{necessary and sufficient condition} for arbitrary pole placement.
+    \item Conversely, in an uncontrollable but reachable system in modal coordinates there will be at least one state
+          \begin{equation*}
+              \dot{\tilde{x}}_i\quad=\quad\lambda_i\tilde{x}_i+\tilde{b}_iu
+          \end{equation*}
+          for which $b_i=0$. Hence, no matter how we choose $K$, the pole $\lambda_i$ will remain in it's original location.
     \item If the system is diagonalizable but not controllable, the uncontrollable poles can't be moved.
     \item $\mathbf{A'},\mathbf{A}$ share their eigenvalues, therefore a comparison of coefficients can be used.
 \end{itemize}
@@ -77,6 +94,7 @@ Assuming that the system is \textbf{controllable}, Ackermann's formula can be us
     \varphi_{cl}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n) \\
     \varphi_{cl}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 I
 \end{align*}
+Note: $\alpha_0$ must be multiplied by the corresponding identity matrix.
 
 \subsubsection{Reference Scaling}
 To ensure that the closed-loop systems follows unit steps with zero stedy state error, the scaling vector $\mathbf{S}$ has to be chosen accordingly
@@ -90,6 +108,6 @@ In other words, the scaling vector $\mathbf{S}$ has to be chosen such that $\mat
 
 \subsubsection{MIMO}
 \begin{itemize}
-    \item If the system is controllable from any one of the inputs, pole placement works.
+    \item If the system is controllable from any one of the inputs, pole placement works even though we might not use the full potential of all the inputs
     \item In addition to the poles, the closed-loop eigenvectors (modal shapes) can be placed
 \end{itemize}
