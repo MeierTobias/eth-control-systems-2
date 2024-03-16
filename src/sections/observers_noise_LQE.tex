@@ -67,9 +67,10 @@ Then, similarly to state feedback we get
 Remark: $\alpha_0$ must be multiplied by the identity matrix and not just added to every single matrix element.
 
 \ptitle{Observer Pole Placement for Unobservable Systems}
+
 Assumptions:
 \begin{itemize}
-    \item system is not observable
+    \item system is not observable (so at least one $c_j=0$)
     \item system is diagonalizable and given in modal coordinates
 \end{itemize}
 \begin{align*}
@@ -77,13 +78,44 @@ Assumptions:
     \vdots                                                                         \\
     \eta_n^+ & =\quad\lambda_n\eta_n-I_n\sum_{j=1}^n\left(\tilde{c}_j\eta_j\right)
 \end{align*}
+Then, if for example $\tilde{c_n}=0$,
+\begin{itemize}
+    \item $\eta_n^+$ cannot affect any of the other $\eta_j^+$
+    \item $\lambda_i$ will remain a pole of the estimation error dynamics for any choice of $L$
+\end{itemize}
+Conclusions:
+\begin{itemize}
+    \item unobservable poles cannot be moved (cannot assign these poles)
+    \item \textbf{observability} is a \textbf{necessary and sufficient} condition for arbitrary pole placement
+    \item \textbf{detectability} is \textbf{necessary} for stable observer dynamics (as we need to observe the unstable poles)
+\end{itemize}
 
+\ptitle{Noise Sensitivity}
+
+\begin{itemize}
+    \item in the case of state feedback control, we could not choose arbitrarly large values for our control matrix $K$
+    \item similary, very large values for $L$ make our measurements more \textbf{sensitive to noise}
+    \item hence, we need to find a trade-off between estimation dynamics and robustness to noise
+\end{itemize}
 
 
 \subsection{Noise Models}
+We model noise as a stochastic process with a \textbf{noise signal}
+\begin{equation*}
+    w:t\mapsto w(t)\in\mathbb{R}^n
+\end{equation*}where each $w(t)$ is the realization of a random variable.
+
 \subsubsection{White Noise}
+"Perfect" but unphysical (values change instantaneously) noise can be modelled as follows:
+\begin{enumerate}
+    \item $\mathbb{E}[w(t)]=0$: the signal has zero mean.
+    \item $\mathbb{E}[w(t)w(t)^T]=W$: the signal value at each time instance has covariance $W$, for some positive definite matrix $W.$
+    \item $\mathbb{E}[w(t)w(\tau)^T]=0$: the signal values at two different times are not correlated. In fact we will assume that signal values at two different times are \textbf{independent}.
+\end{enumerate}
+If such a signal additionally is Gaussian-distributed it is called "zero mean Gaussian white noise".
 
 \subsubsection{Colored Noise}
+To simulate physical noise we let it propagate through a LTI system model (filter) and use the system's output as noise signal:
 
 
 
