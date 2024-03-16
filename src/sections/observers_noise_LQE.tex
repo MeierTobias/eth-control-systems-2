@@ -13,15 +13,15 @@ Assuming we desire full-state feedback but there are no sensors available to mea
 \ptitle{Estimation Error Dynamics}
 
 \begin{itemize}
-    \item the estimation error $\eta:=X-\hat{X}$ shares the dynamics of the OL system $\dot{\eta}=\mathbf{A}\eta$!
+    \item the estimation error $\eta:=X-\hat{X}$ shares the dynamics of the OL system $\dot{\eta}=A\eta$!
     \item this can lead to undesirable estimation error dynamics (slow convergence, oscillations, divergence in case of unstable OL system)
-    \item control basically dissapears for the estimation error as we try to control the plant
+    \item control basically disapears for the estimation error as we try to control the plant
 \end{itemize}
 
 \subsubsection{The Luenberger Observer}
-We don't have to fully rely on our state estimation but can instead use the available sensory information to improve it.
+We don't have to fully rely on our state estimation but can instead, use the available sensory information to improve it.
 \begin{itemize}
-    \item the signal $y-\hat{y}=\mathbf{C}(x-\hat{x})$ is called \textbf{innovation} and is the input to the Luenberger \textbf{observer gain} $\mathbf{L}$
+    \item the signal $y-\hat{y}=C(x-\hat{x})$ is called \textbf{innovation} and is the input to the Luenberger \textbf{observer gain} $L$
     \item the Luenberger Observer corrects the estimated state by a linear feedback on the innovation
     \item in other words we design a controller to get a good estimate of the physical plant's state
 \end{itemize}
@@ -32,12 +32,12 @@ We don't have to fully rely on our state estimation but can instead use the avai
 
 The states evolve as follows:
 \begin{align*}
-    \mathbf{x}^+       & =\mathbf{Ax}+\mathbf{Bu}                              \\
-    \mathbf{\hat{x}^+} & =\mathbf{A}\hat{x}+\mathbf{Bu}+\mathbf{LC(x-\hat{x})}
+    x^+       & =Ax+Bu                     \\
+    \hat{x}^+ & =A\hat{x}+Bu+LC(x-\hat{x})
 \end{align*}
 Hence,
 \begin{equation*}
-    \mathbf{\eta^+}=\mathbf{x^+}-\mathbf{\hat{x}^+}=\mathbf{A}(\mathbf{x}-\mathbf{\hat{x}})-\mathbf{LC}(\mathbf{x}-\mathbf{\hat{x}})=(\mathbf{A}-\mathbf{LC})\mathbf{\eta}
+    \eta^+=x^+-\hat{x}^+=A(x-\hat{x})-LC(x-\hat{x})=(A-LC)\eta
 \end{equation*}
 
 \subsubsection{Observer Pole Placement}
@@ -93,8 +93,8 @@ Conclusions:
 \ptitle{Noise Sensitivity}
 
 \begin{itemize}
-    \item in the case of state feedback control, we could not choose arbitrarly large values for our control matrix $K$
-    \item similary, very large values for $L$ make our measurements more \textbf{sensitive to noise}
+    \item in the case of state feedback control, we could not choose arbitrarily large values for our control matrix $K$
+    \item similarly, very large values for $L$ make our measurements more \textbf{sensitive to noise}
     \item hence, we need to find a trade-off between estimation dynamics and robustness to noise
 \end{itemize}
 
@@ -106,11 +106,11 @@ We model noise as a stochastic process with a \textbf{noise signal}
 \end{equation*}where each $w(t)$ is the realization of a random variable.
 
 \subsubsection{White Noise}
-"Perfect" but unphysical (values change instantaneously) noise can be modelled as follows:
+"Perfect" but unphysical (values change instantaneously) noise can be modeled as follows:
 \begin{enumerate}
     \item $\mathbb{E}[w(t)]=0$: the signal has zero mean.
     \item $\mathbb{E}[w(t)w(t)^T]=W$: the signal value at each time instance has covariance $W$, for some positive definite matrix $W.$
-    \item $\mathbb{E}[w(t)w(\tau)^T]=0$: the signal values at two different times are not correlated. In fact we will assume that signal values at two different times are \textbf{independent}.
+    \item $\mathbb{E}[w(t)w(\tau)^T]=0$: the signal values at two different times are not correlated. In fact, we will assume that signal values at two different times are \textbf{independent}.
 \end{enumerate}
 If such a signal additionally is Gaussian-distributed it is called "zero mean Gaussian white noise".
 
@@ -136,7 +136,7 @@ Noise affects our state estimation adversely. The LQE aims at an optimal trade-o
 
 
 \subsubsection{Optimal LQE Design}
-For the LQE problem we get the following LTI Model
+For the LQE problem, we get the following LTI Model
 \begin{align*}
     \dot{x}(t) & = Ax(t)+Bu(t)+w(t) \\
     y(t)       & = Cx(t)+n(t)
@@ -167,7 +167,7 @@ is minimized by solving the Riccati equation
 \begin{equation*}
     AY+YA^T-YC^TR^{-1}CY+Q=0
 \end{equation*}
-for the positive-definite matrix $Y$ and chosing the \textbf{optimal estimation gain} as
+for the positive-definite matrix $Y$ and choosing the \textbf{optimal estimation gain} as
 \begin{equation*}
     L=-YC^T R^{-1}
 \end{equation*}
@@ -176,7 +176,7 @@ for the positive-definite matrix $Y$ and chosing the \textbf{optimal estimation 
 
 \begin{itemize}
     \item as expected from duality, $L$ is the transpose of $K$, obtained for the pair $(A^T, C^T)$, and for weight matrices $Q$ and $R$.
-    \item in practise, we can measure the noise to get a first estimate of $Q$, $R$
+    \item in practice, we can measure the noise to get a first estimate of $Q$, $R$
     \item as a guideline, one should make the innovations as white as possible
     \item for large $Q$ w.r.t. $R$ we assume large process noise and hence, trust the sensors more than our model
     \item for large $R$ w.r.t. $Q$ we assume large sensor noise and hence, trust the model more than our sensors
