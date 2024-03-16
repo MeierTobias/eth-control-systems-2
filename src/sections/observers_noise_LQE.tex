@@ -115,18 +115,69 @@ We model noise as a stochastic process with a \textbf{noise signal}
 If such a signal additionally is Gaussian-distributed it is called "zero mean Gaussian white noise".
 
 \subsubsection{Colored Noise}
-To simulate physical noise we let it propagate through a LTI system model (filter) and use the system's output as noise signal:
-
+To simulate physical noise we let a white noise input $w$ propagate through a LTI system model (filter) and use the system's output as noise signal:
+\begin{align*}
+    \dot{x} & =Ax+Bw \\
+    y       & = Cx
+\end{align*}
+The LTI system usually acts as low-pass filter in this case.
 
 
 \subsection{Linear Quadratic Estimation (LQE) Kalman Filter}
-Note: this method can be applied only to LTI systems.
+Note: this method can be applied only to \textbf{LTI systems}.\\
+Noise affects our state estimation adversely. The LQE aims at an optimal trade-off between
+\begin{itemize}
+    \item trusting the sensory information and hence, having higher observer gains in $L$ (increases noise-sensitivity, left image)
+    \item trusting the state-space model and hence, having lower observer gains in $L$ (decreases noise-sensitivity, right image)
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{images/trade_off_noise.png}
+\end{center}
+
 
 \subsubsection{Optimal LQE Design}
-For the LQE problem we get the following LTI Models
+For the LQE problem we get the following LTI Model
+\begin{align*}
+    \dot{x}(t) & = Ax(t)+Bu(t)+w(t) \\
+    y(t)       & = Cx(t)+n(t)
+\end{align*}
+with the Gaussian white noise signals
+\begin{itemize}
+    \item $w(t)$: process noise
+    \item $n(t)$: sensor noise
+\end{itemize}
+We model the errors with the covariance matrices
+\begin{align*}
+    Q & =\mathbb{E}[w(t)w(t)^T]                 & \text{ (process)} \\
+    R & =\mathbb{E}[n(t)n(t)^T], \forall t\geq0 & \text{ (sensor)}
+\end{align*}
+The (Luenberger) observer is given by
+\begin{align*}
+    \dot{\hat{x}}(t) & =(A-LC)\hat{x}(t)+Bu(t)+Ly(t) \\
+    \hat{y}(t)       & =C\hat{x}(t)
+\end{align*}
+
+\ptitle{Minimization Problem}
+
+The steady-state covariance of the state estimation error
+\begin{equation*}
+    \lim_{t\to+\infty}\mathbb{E}\left[(x(t)-\hat{x}(t))(x(t)-\hat{x}(t))^T\right]
+\end{equation*}
+is minimized by solving the Riccati equation
+\begin{equation*}
+    AY+YA^T-YC^TR^{-1}CY+Q=0
+\end{equation*}
+for the positive-definite matrix $Y$ and chosing the \textbf{optimal estimation gain} as
+\begin{equation*}
+    L=-YC^T R^{-1}
+\end{equation*}
 
 \ptitle{Remarks}
-%
+
 \begin{itemize}
-    \item a
+    \item as expected from duality, $L$ is the transpose of $K$, obtained for the pair $(A^T, C^T)$, and for weight matrices $Q$ and $R$.
+    \item in practise, we can measure the noise to get a first estimate of $Q$, $R$
+    \item as a guideline, one should make the innovations as white as possible
+    \item for large $Q$ w.r.t. $R$ we assume large process noise and hence, trust the sensors more than our model
+    \item for large $R$ w.r.t. $Q$ we assume large sensor noise and hence, trust the model more than our sensors
 \end{itemize}
