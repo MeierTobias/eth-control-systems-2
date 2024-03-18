@@ -19,7 +19,7 @@ Remarks:
     \item zeros are not affected by feedback
 \end{itemize}
 
-\subsection{Pole Placement}
+\subsection{Pole Placement}\label{sec:pole_placement}
 Pole placement can be used to tune $\mathbf{K}$ and $\mathbf{S}$ to achieve the desired closed loop poles $\lambda_i$.
 The desired characteristic equation is
 \noindent\begin{align*}
@@ -72,12 +72,12 @@ If the system is \textbf{controllable} but not in reachable canonical form, the 
           \end{align*}
           which is possible if $\mathbf{R}$ is invertible (corresponds to controllability).
 \end{enumerate}
-\textbf{Remark}
+\textbf{Remarks}:
 \begin{itemize}
     \item Controllability is a \textbf{necessary and sufficient condition} for arbitrary pole placement.
     \item Conversely, in an uncontrollable but reachable system in modal coordinates there will be at least one state
           \begin{equation*}
-              \dot{\tilde{x}}_i\quad=\quad\lambda_i\tilde{x}_i+\tilde{b}_iu
+              \dot{\tilde{x}}_i\quad=\quad\lambda_i\tilde{x}_i+\tilde{b}_i u
           \end{equation*}
           for which $b_i=0$. Hence, no matter how we choose $K$, the pole $\lambda_i$ will remain in it's original location.
     \item If the system is diagonalizable but not controllable, the uncontrollable poles can't be moved.
