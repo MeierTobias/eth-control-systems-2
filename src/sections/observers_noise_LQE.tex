@@ -147,7 +147,7 @@ For the LQE problem, we get the following LTI Model
     \dot{\mathbf{x}}(t) & = \mathbf{Ax}(t)+\mathbf{Bu}(t)+\mathbf{w}(t) \\
     \mathbf{y}(t)       & = \mathbf{Cx}(t)+\mathbf{n}(t)
 \end{align*}
-with the Gaussian white noise signals
+with the \textbf{Gaussian white noise} signals
 \begin{itemize}
     \item $\mathbf{w}(t)$: process noise
     \item $\mathbf{n}(t)$: sensor noise
@@ -173,7 +173,7 @@ is minimized by solving the Riccati equation (\textit{ARE})
 \begin{equation*}
     \mathbf{AY}+\mathbf{YA}^T-\mathbf{YC}^T \mathbf{R}^{-1}\mathbf{CY}+\mathbf{Q}=0
 \end{equation*}
-for the positive-definite matrix $\mathbf{Y}$ and choosing the \textit{optimal estimation gain} $\mathbf{L}$ as
+for the \textbf{positive definite} matrix $\mathbf{Y}$ and choosing the \textit{optimal estimation gain} $\mathbf{L}$ as
 \begin{equation*}
     \mathbf{L}=\mathbf{YC}^T \mathbf{R}^{-1}
 \end{equation*}

@@ -13,6 +13,7 @@ For th   e reference input $r(t) = 0$ the cost functional $J$ is defined as
     \item $\mathbf{Q}$ must give positive weights to unstable modes to penalize them in the cost function ($\mathbf{A}, \sqrt{\mathbf{Q}}$ are detectable)
     \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^T \mathbf{Ru} >0\; \forall u\neq 0$ or $eig(\mathbf{R}) > 0$
     \item The pair $\mathbf{A,B}$ must be stabilizable
+    \item In general, there is an additional cross-coupling term $\mathbf{x}^T\mathbf{Nu}$ in $J$ which is often neglected i.e. equal to $0$
 \end{itemize}
 
 \subsubsection{Bryson's Rule}
@@ -38,7 +39,7 @@ where
 and $x_{i,\max}$, $u_{j,\max}$ are the maximum deviations that we are willing to tolerate for the $i$-th state and $j$-th input, respectively.
 
 \subsection{Continuous Time}
-In continuous time, first the positive definite solution $\mathbf{P}$ of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
+In continuous time, first the \textbf{positive definite} solution $\mathbf{P}$ of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
 \noindent\begin{equation*}
     \mathbf{A}^T \mathbf{P}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^T \mathbf{P}=0
 \end{equation*}
