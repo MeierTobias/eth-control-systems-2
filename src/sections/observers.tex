@@ -1,15 +1,18 @@
 \section{Observers}
-\subsection{Luenberger Observer}
-In case we desire full-state feedback but there are no sensors available to measure each state, we could try to simulate the system (with it's states).
-\subsubsection{State Estimation Without Observer}
+
+In case we desire full-state feedback but there are no sensors available to measure each state, we could try to simulate the system with its states $\hat{\mathbf{x}}$.
+
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{images/state_estimation.png}
+\end{center}
+
 \begin{itemize}
-    \item we choose $\hat{\mathbf{x}_0}=0$
+    \item we choose $\hat{\mathbf{x}}_0=0$
     \item the control input $u$ is computed from the simulated state
     \item both the simulated model and the physical plant receive the same control input
 \end{itemize}
-\begin{center}
-    \includegraphics[width=0.8\linewidth]{images/state_feedback.png}\\
-\end{center}
+
+\newpar{}
 \ptitle{Estimation Error Dynamics}
 
 \begin{itemize}
@@ -17,26 +20,30 @@ In case we desire full-state feedback but there are no sensors available to meas
     \item this can lead to undesirable estimation error dynamics (slow convergence, oscillations, divergence in case of unstable OL system)
 \end{itemize}
 
-\subsubsection{The Luenberger Observer}
+\subsection{The Luenberger Observer}
 We don't have to fully rely on our state estimation but can instead, use the available sensory information to improve it.
 \begin{itemize}
     \item the signal $\mathbf{y}-\hat{\mathbf{y}}=\mathbf{C}(\mathbf{x}-\hat{\mathbf{x}}) = \mathbf{C}\mathbf{\eta}$ is called \textbf{innovation} and is the input to the Luenberger \textbf{observer gain} $\mathbf{L}$
     \item the Luenberger observer corrects the estimated state by a linear feedback on the innovation
     \item in other words we design a controller to get a good estimate of the physical plant's state
 \end{itemize}
+
 \begin{center}
     \includegraphics[width=0.8\linewidth]{images/Luenberger.png}
 \end{center}
+
+\newpar{}
+
 \ptitle{Estimation Error Dynamics}
 
 The states evolve as follows:
 \begin{align*}
     \dot{\mathbf{x}}       & =\mathbf{Ax}+\mathbf{Bu}                                                         \\
-    \dot{\hat{\mathbf{x}}} & =\mathbf{A}\hat{\mathbf{x}}+\mathbf{Bu}+\mathbf{LC}(\mathbf{x}-\hat{\mathbf{x}})
+    \dot{\hat{\textbf{x}}} & =\mathbf{A}\hat{\mathbf{x}}+\mathbf{Bu}+\mathbf{LC}(\mathbf{x}-\hat{\mathbf{x}})
 \end{align*}
 Hence,
 \begin{equation*}
-    \dot{\eta}=\dot{\mathbf{x}}-\dot{\hat{\mathbf{x}}}=\mathbf{A}(\mathbf{x}-\hat{\mathbf{x}})-\mathbf{LC}(\mathbf{x}-\hat{\mathbf{x}})=(\mathbf{A}-\mathbf{LC})\eta
+    \dot{\eta}=\dot{\mathbf{x}}-\dot{\hat{\textbf{x}}}=\mathbf{A}(\mathbf{x}-\hat{\mathbf{x}})-\mathbf{LC}(\mathbf{x}-\hat{\mathbf{x}})=(\mathbf{A}-\mathbf{LC})\eta
 \end{equation*}
 
 \ptitle{Remarks:}
@@ -58,6 +65,7 @@ respectively
 \end{equation*}
 using the methods mentioned in Section\ \ref{sec:pole_placement} (Pole Placement).
 
+\newpar{}
 \ptitle{Eigenvalues}
 
 $\mathbf{L}={\left[\ell_0,\cdots,\ell_{n-1}\right]}^T$ can be obtained by comparing the eigenvalues of the observer with the desired ones:
@@ -92,6 +100,8 @@ Similarly to state feedback we get
           \end{align*}
           then the unobservable poles cannot be moved (cannot assign these poles)
 \end{itemize}
+
+\newpar{}
 
 \ptitle{Noise Sensitivity}
 
@@ -128,7 +138,7 @@ To simulate physical noise we let a white noise input $w$ propagate through a LT
 The LTI system usually acts as low-pass filter in this case.
 
 
-\subsection{Linear Quadratic Estimation (LQE) Kalman Filter}
+\subsection{Linear Quadratic Estimation (LQE)}
 
 Noise affects our state estimation adversely. The LQE aims at an optimal trade-off between
 \begin{itemize}
@@ -159,7 +169,7 @@ We model the errors with the covariance matrices
 \end{align*}
 The (Luenberger) observer is given by
 \begin{align*}
-    \dot{\hat{\mathbf{x}}}(t) & =(\mathbf{A}-\mathbf{LC})\hat{\mathbf{c}}(t)+\mathbf{Bu}(t)+\mathbf{Ly}(t) \\
+    \dot{\hat{\textbf{x}}}(t) & =(\mathbf{A}-\mathbf{LC})\hat{\mathbf{c}}(t)+\mathbf{Bu}(t)+\mathbf{Ly}(t) \\
     \hat{\mathbf{y}}(t)       & =\mathbf{C}\hat{\mathbf{x}}(t)
 \end{align*}
 
