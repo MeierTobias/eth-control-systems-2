@@ -77,7 +77,7 @@ and the \textit{static gain matrix} obtained with $\mathbf{u} = -\mathbf{Kx}$ is
 
 \subsection{Integrator}
 If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs.
-This simply done by adding the integral of the error to the state space model
+This is simply done by adding the integral of the error to the state space model
 \noindent\begin{align*}
     \dot{e} & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + r \\
     \frac d{dt}
@@ -120,7 +120,7 @@ This simply done by adding the integral of the error to the state space model
         r
     \end{bmatrix},
 \end{align*}
-then apply LQR to the modified state space model. This method is an alternative to open-loop, feed-forward reference scaling. Feedforward is more dynamic than an integrator but not robust.
+then apply LQR to the modified state space model.
 
 \subsection{Symmetric Root Locus}
 The symmetric root locus can be used to understand the influence of $\rho$ on the poles of a closed loop LQR feedback system.
@@ -155,3 +155,6 @@ where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
     When looking at the left half of the \textit{symmetric root locus}, the mirrored nmp.\ zero and unstable pole stabilize the system such that
     for any $\rho$ the closed loop poles will stay on the LHP.
 \end{examplesection}
+
+\subsection{Margins}
+The \textit{Kalman Frequency Domain Equality} shows, that the \textbf{phase margin} is at least $60^\circ$ and the \textbf{gain margin} is within $(1/2, +\infty)$.

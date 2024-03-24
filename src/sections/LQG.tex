@@ -1,0 +1,267 @@
+\section{Linear-Quadratic Gaussian Compensator (LQG)}
+
+The combination of the LQR and the LQE is referred to as a Linear-Quadratic Gaussian Compensator.
+
+\newpar{}
+
+\begin{center}
+    \input{BSB/LQG.tex}
+\end{center}
+
+The closed-loop system is given by
+\begin{align*}
+    \begin{bmatrix}
+        \dot{\textbf{x}} \\
+        \dot{\hat{\textbf{x}}}
+    \end{bmatrix}
+      & =
+    \begin{bmatrix}
+        \mathbf{A}  & - \mathbf{BK}                        \\
+        \mathbf{LC} & (\mathbf{A}-\mathbf{LC}-\mathbf{BK})
+    \end{bmatrix}
+    \begin{bmatrix}
+        \textbf{x} \\
+        \hat{\textbf{x}}
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+        \mathbf{BKS} \\
+        \mathbf{BKS}
+    \end{bmatrix}
+    r                    \\
+    y & = \begin{bmatrix}
+              \mathbf{C} & 0
+          \end{bmatrix}
+    \begin{bmatrix}
+        \textbf{x} \\
+        \hat{\textbf{x}}
+    \end{bmatrix}
+\end{align*}
+
+If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we get
+
+\begin{align*}
+    \begin{bmatrix}
+        \dot{\mathbf{x}} \\
+        \dot{\bm{\eta}}
+    \end{bmatrix}
+      & =
+    \underbrace{
+        \begin{bmatrix}
+            \mathbf{A}-\mathbf{BK} & \mathbf{BK}              \\
+            0                      & (\mathbf{A}-\mathbf{LC})
+        \end{bmatrix}
+    }_{A_{cl}}
+    \begin{bmatrix}
+        \mathbf{x} \\
+        \bm{\eta}
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+        \mathbf{BKS} \\
+        \mathbf{0}
+    \end{bmatrix}
+    r                    \\
+    y & = \begin{bmatrix}
+              \mathbf{C} & 0
+          \end{bmatrix}
+    \begin{bmatrix}
+        \textbf{x} \\
+        \bm{\eta}
+    \end{bmatrix}
+\end{align*}
+
+The determinant of the closed-loop dynamic output feedback system $A_{cl}$ is
+\begin{equation*}
+    \det(A_{cl})=\det(A-BK)\det(A-LC)
+\end{equation*}
+Therefor the eigenvalues of the closed-loop system are given by the \textbf{union of the eigenvalues} of $A-BK$ and of $A-LC$.
+% Hence the closed-loop poles are completely driven by the natural dynamics of the full-state feedback system \textbf{and} of the closed-loop estimator error.
+
+\newpar{}
+\ptitle{Remark:}
+
+The estimation error is uncontrollable from the reference input. (The estimation error is not influenced by the reference)
+
+\newpar{}
+\ptitle{Recall:}
+
+The determinant of a $2\times2$ block matrix
+
+if $M$ is invertible
+\begin{align*}
+    \det\begin{bmatrix}
+            M & N \\
+            P & Q
+        \end{bmatrix}
+    = \det(M)\det(Q-PM^{-1}N)
+\end{align*}
+
+if $Q$ is invertible
+\begin{align*}
+    \det\begin{bmatrix}
+            M & N \\
+            P & Q
+        \end{bmatrix}
+    = \det(Q)\det(M-NQ^{-1}P)
+\end{align*}
+
+In particular
+\begin{align*}
+    \det\begin{bmatrix}
+            M & N \\
+            0 & Q
+        \end{bmatrix}
+    = \det(M)\det(Q) =
+    \det\begin{bmatrix}
+            M & 0 \\
+            P & Q
+        \end{bmatrix}
+\end{align*}
+
+\subsection{Transfer Function}
+The transfer function of the LQG from $r$ to $y$ is
+\begin{equation*}
+    G_{yr}^{cl} = \mathbf{C}{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{BKS}
+\end{equation*}
+and form $u$ to $y$
+\begin{equation*}
+    G_{uy} = -\mathbf{K}{(s\mathbf{I}-\mathbf{A}+\mathbf{LC}+\mathbf{BK})}^{-1}\mathbf{L}
+\end{equation*}
+
+\ptitle{Reference scaling}
+
+To ensure a DC-Gain of $1$ we need the reference scaling matrix $S$ to satisfy
+
+in the \textbf{time-continuous} case
+\begin{align*}
+    \lim_{s\to0}G_{yr}^{cl}(s)                             & = \mathbf{I} \\
+    -\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{BKS} & = \mathbf{I}
+\end{align*}
+for a SISO system
+\begin{equation*}
+    \bar{\mathbf{N}}=\mathbf{KS}=-\frac{1}{\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}}
+\end{equation*}
+
+in the \textbf{time-discrete} case
+\begin{align*}
+    \lim_{z\to1}G_{yr}^{cl}(z)                                       & = \mathbf{I} \\
+    \mathbf{C}{(\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{BKS} & = \mathbf{I}
+\end{align*}
+for a SISO system
+\begin{equation*}
+    \bar{\mathbf{N}}=\mathbf{KS}=\frac{1}{\mathbf{C}{(\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}}
+\end{equation*}
+
+\subsection{LQG with Integrator}
+Like with the LQR compensator an integrator can be added by augmenting the state vector with new states $\mathbf{x}_I$ and calculating the new $\mathbf{K'}$ matrix.
+\begin{align*}
+    \dot{\mathbf{x}}_I & = r - y                     \\
+    \mathbf{K'}        & = \begin{bmatrix}
+                               \mathbf{K} & \mathbf{K}_I
+                           \end{bmatrix}
+\end{align*}
+The closed-loop system is then given by
+\begin{align*}
+    \begin{bmatrix}
+        \dot{\mathbf{x}}   \\
+        \dot{\mathbf{x}}_I \\
+        \dot{\hat{\textbf{x}}}
+    \end{bmatrix}
+      & =
+    \begin{bmatrix}
+        \mathbf{A}  & \mathbf{-BK}_I & \mathbf{-BK}     \\
+        \mathbf{-C} & 0              & 0                \\
+        \mathbf{LC} & \mathbf{-BK}_I & \mathbf{A-BK-LC}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{x}   \\
+        \mathbf{x}_I \\
+        \hat{\textbf{x}}
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+        \mathbf{BKS} \\
+        \mathbf{I}   \\
+        \mathbf{BKS}
+    \end{bmatrix}
+    r                        \\
+    y & = \begin{bmatrix}
+              \mathbf{C} & 0 & 0 \\
+          \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{x}   \\
+        \mathbf{x}_I \\
+        \hat{\textbf{x}}
+    \end{bmatrix}
+\end{align*}
+
+If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we get
+
+\begin{align*}
+    \begin{bmatrix}
+        \dot{\mathbf{x}}   \\
+        \dot{\mathbf{x}}_I \\
+        \dot{\bm{\eta}}
+    \end{bmatrix}
+      & =
+    \begin{bmatrix}
+        \mathbf{A-BK} & \mathbf{-BK}_I & \mathbf{-BK}  \\
+        \mathbf{-C}   & 0              & 0             \\
+        0             & 0              & \mathbf{A-LC}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{x}   \\
+        \mathbf{x}_I \\
+        \bm{\eta}
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+        \mathbf{BKS} \\
+        \mathbf{I}   \\
+        \mathbf{0}
+    \end{bmatrix}
+    r                        \\
+    y & = \begin{bmatrix}
+              \mathbf{C} & 0 & 0 \\
+          \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{x}   \\
+        \mathbf{x}_I \\
+        \bm{\eta}
+    \end{bmatrix}
+\end{align*}
+
+\newpar{}
+\ptitle{Remarks:}
+\begin{itemize}
+    \item The integrator states don't have to be estimated.
+    \item The closed-loop eigenvalues are a union of the eigenvalues of $\mathbf{A-LC}$ (the observer's) and of the eigenvalues of the augmented controller \begin{equation*}
+              \begin{bmatrix}
+                  \mathbf{A-BK} & \mathbf{-BK}_I \\
+                  \mathbf{-C}   & 0
+              \end{bmatrix}
+              = \mathbf{A'-B'K'}
+          \end{equation*}
+\end{itemize}
+
+\subsubsection{Transfer Function}
+
+The transfer function from $y$ to $u$ is
+\begin{equation*}
+    G_{uy} = -\begin{bmatrix}
+        \mathbf{K}_I & \mathbf{K}
+    \end{bmatrix}
+    {\left(s\mathbf{I}-\begin{bmatrix}
+        0              & 0                \\
+        \mathbf{-BK}_I & \mathbf{A-BK-LC}
+    \end{bmatrix}\right)}^{-1}
+    \begin{bmatrix}
+        \mathbf{-I} \\
+        \mathbf{L}
+    \end{bmatrix}
+\end{equation*}
+
+
+\subsection{Margins}
+While LQG ensures the closed-loop stability of the nominal system, the stability margins can be \textbf{arbitrarily small}.

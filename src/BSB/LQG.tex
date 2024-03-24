@@ -1,0 +1,18 @@
+\begin{tikzpicture}[auto, node distance=2cm, >=latex']
+    \node [input, name=rinput]                                  (rinput)        {};
+    \node [block, right of=rinput, node distance=1.4cm]         (scale_vec)     {$\mathbf{S}$};
+    \node [sum, right of=scale_vec, node distance=1.4cm]        (sum1)          {};
+    \node [block, right of=sum1, node distance=1.4cm]           (compensator)   {$\mathbf{K}$};
+    \node [block, right of=compensator, node distance=2.5cm]    (sys)           {\shortstack[l]{$\dot{\mathbf{x}} = \mathbf{Ax} + \mathbf{Bu}$ \\ $\mathbf{y} = \mathbf{Cx}$}};
+    \node [output, right of=sys]                                (output)        {};
+
+    \draw [->] (rinput)         --  node{$r$}                   (scale_vec);
+    \draw [->] (scale_vec)      --  node{$\bar{\mathbf{r}}$}    (sum1);
+    \draw [->] (sum1)           --                              (compensator);
+    \draw [->] (compensator)    --  node[name=u]{$\mathbf{u}$}  (sys);
+    \draw [->] (sys)            --  node[name=y]{$y$}           (output);
+    \node [block, below of=u]                                   (observer)      {$\dot{\hat{\textbf{x}}} = (\mathbf{A}-\mathbf{LC})\hat{\textbf{x}}+\mathbf{Bu}+\mathbf{L}y$};
+    \draw [->] (y)              |-                              (observer);
+    \draw [->] (u)              --                              (observer);
+    \draw [->] (observer)       -|  node[pos=0.99] {$-$} node[pos=0.8] {$\hat{\textbf{x}}$} (sum1);
+\end{tikzpicture}
