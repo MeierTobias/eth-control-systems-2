@@ -16,7 +16,7 @@ The closed-loop system is given by
     \end{bmatrix}
       & =
     \begin{bmatrix}
-        \mathbf{A}  & - \mathbf{BK}                        \\
+        \mathbf{A}  & - \mathbf{BK}                         \\
         \mathbf{LC} & (\mathbf{A}-\mathbf{LC}-\mathbf{BK})
     \end{bmatrix}
     \begin{bmatrix}
@@ -28,9 +28,9 @@ The closed-loop system is given by
         \mathbf{BKS} \\
         \mathbf{BKS}
     \end{bmatrix}
-    r                    \\
+    r                            \\
     y & = \begin{bmatrix}
-              \mathbf{C} & 0
+              \mathbf{C} & \mathbf{0}
           \end{bmatrix}
     \begin{bmatrix}
         \textbf{x} \\
@@ -48,7 +48,7 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
       & =
     \underbrace{
         \begin{bmatrix}
-            \mathbf{A}-\mathbf{BK} & \mathbf{BK}              \\
+            \mathbf{A}-\mathbf{BK} & \mathbf{BK}               \\
             0                      & (\mathbf{A}-\mathbf{LC})
         \end{bmatrix}
     }_{A_{cl}}
@@ -61,9 +61,9 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
         \mathbf{BKS} \\
         \mathbf{0}
     \end{bmatrix}
-    r                    \\
+    r                            \\
     y & = \begin{bmatrix}
-              \mathbf{C} & 0
+              \mathbf{C} & \mathbf{0}
           \end{bmatrix}
     \begin{bmatrix}
         \textbf{x} \\
@@ -73,10 +73,19 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
 
 The determinant of the closed-loop dynamic output feedback system $A_{cl}$ is
 \begin{equation*}
-    \det(A_{cl})=\det(A-BK)\det(A-LC)
+    \det(\mathbf{A}_{cl})=\det(\mathbf{A}-\mathbf{BK})\det(\mathbf{A}-\mathbf{LC})
 \end{equation*}
-Therefor the eigenvalues of the closed-loop system are given by the \textbf{union of the eigenvalues} of $A-BK$ and of $A-LC$.
+Therefor the eigenvalues of the closed-loop system are given by the \textbf{union of the eigenvalues} of $\mathbf{A}-\mathbf{BK}$ and of $\mathbf{A}-\mathbf{LC}$.
 % Hence the closed-loop poles are completely driven by the natural dynamics of the full-state feedback system \textbf{and} of the closed-loop estimator error.
+
+\ptitle{Separation Principle}
+
+Based on the independence of the Eigenvalues of the observer and controller and the assumption of a \textbf{LTI System with Gaussian noise}, the \textit{separation principle} states that 
+both the observer and the controller can be designed individually i.e.\
+\begin{itemize}
+    \item choose $\mathbf{K}$ as the solution of the LQR problem
+    \item choose $\mathbf{L}$ as the solution of the LQE problem
+\end{itemize}
 
 \newpar{}
 \ptitle{Remark:}
@@ -91,43 +100,50 @@ The determinant of a $2\times2$ block matrix
 if $M$ is invertible
 \begin{align*}
     \det\begin{bmatrix}
-            M & N \\
-            P & Q
+            \mathbf{M} & \mathbf{N} \\
+            \mathbf{P} & \mathbf{Q}
         \end{bmatrix}
-    = \det(M)\det(Q-PM^{-1}N)
+    = \det(\mathbf{M})\det(\mathbf{Q}-\mathbf{PM}^{-1}\mathbf{N})
 \end{align*}
 
-if $Q$ is invertible
+if $\mathbf{Q}$ is invertible
 \begin{align*}
     \det\begin{bmatrix}
-            M & N \\
-            P & Q
+            \mathbf{M} & \mathbf{N} \\
+            \mathbf{P} & \mathbf{Q}
         \end{bmatrix}
-    = \det(Q)\det(M-NQ^{-1}P)
+    = \det(\mathbf{Q})\det(\mathbf{M}-\mathbf{NQ}^{-1}\mathbf{P})
 \end{align*}
 
 In particular
 \begin{align*}
     \det\begin{bmatrix}
-            M & N \\
-            0 & Q
+            \mathbf{M} & \mathbf{N} \\
+            \mathbf{0} & \mathbf{Q}
         \end{bmatrix}
-    = \det(M)\det(Q) =
+    = \det(\mathbf{M})\det(\mathbf{Q}) =
     \det\begin{bmatrix}
-            M & 0 \\
-            P & Q
+            \mathbf{M} & \mathbf{0} \\
+            \mathbf{P} & \mathbf{Q}
         \end{bmatrix}
 \end{align*}
 
 \subsection{Transfer Function}
-The transfer function of the LQG from $r$ to $y$ is
+The \textbf{closed-loop} transfer function of the LQG from $r$ to $y$ is
 \begin{equation*}
     G_{yr}^{cl} = \mathbf{C}{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{BKS}
 \end{equation*}
-and form $u$ to $y$
+and form $u$ to $y$ (\textbf{open-loop})
 \begin{equation*}
     G_{uy} = -\mathbf{K}{(s\mathbf{I}-\mathbf{A}+\mathbf{LC}+\mathbf{BK})}^{-1}\mathbf{L}
 \end{equation*}
+
+\textbf{Remarks}
+\begin{itemize}
+    \item In $G_{yr}^{cl}$, only the closed-loop poles of the controller are retained (observer and system are cancelled) and opne-loop zeros are retained.
+    \item $G_{uy}$, has the same order as the plant and the number of closed-loop poles is doubled (all stable)
+\end{itemize}
+
 
 \ptitle{Reference scaling}
 
@@ -140,7 +156,7 @@ in the \textbf{time-continuous} case
 \end{align*}
 for a SISO system
 \begin{equation*}
-    \bar{\mathbf{N}}=\mathbf{KS}=-\frac{1}{\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}}
+    \bar{N}=\mathbf{KS}=-\frac{1}{\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}}
 \end{equation*}
 
 in the \textbf{time-discrete} case
@@ -150,33 +166,34 @@ in the \textbf{time-discrete} case
 \end{align*}
 for a SISO system
 \begin{equation*}
-    \bar{\mathbf{N}}=\mathbf{KS}=\frac{1}{\mathbf{C}{(\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}}
+    \bar{N}=\mathbf{KS}=\frac{1}{\mathbf{C}{(\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}}
 \end{equation*}
 
+
 \subsection{LQG with Integrator}
-Like with the LQR compensator an integrator can be added by augmenting the state vector with new states $\mathbf{x}_I$ and calculating the new $\mathbf{K'}$ matrix.
+Like with the LQR compensator an integrator can be added by augmenting the state vector with new states $x_I$ and calculating the new $\mathbf{K'}$ matrix.
 \begin{align*}
-    \dot{\mathbf{x}}_I & = r - y                     \\
+    \dot{x}_I & = r - y                      \\
     \mathbf{K'}        & = \begin{bmatrix}
-                               \mathbf{K} & \mathbf{K}_I
+                               \mathbf{K} & K_I
                            \end{bmatrix}
 \end{align*}
 The closed-loop system is then given by
 \begin{align*}
     \begin{bmatrix}
         \dot{\mathbf{x}}   \\
-        \dot{\mathbf{x}}_I \\
+        \dot{x}_I \\
         \dot{\hat{\textbf{x}}}
     \end{bmatrix}
       & =
     \begin{bmatrix}
         \mathbf{A}  & \mathbf{-BK}_I & \mathbf{-BK}     \\
-        \mathbf{-C} & 0              & 0                \\
+        \mathbf{-C} & 0              & \mathbf{0}                \\
         \mathbf{LC} & \mathbf{-BK}_I & \mathbf{A-BK-LC}
     \end{bmatrix}
     \begin{bmatrix}
         \mathbf{x}   \\
-        \mathbf{x}_I \\
+        x_I \\
         \hat{\textbf{x}}
     \end{bmatrix}
     +
@@ -185,13 +202,13 @@ The closed-loop system is then given by
         \mathbf{I}   \\
         \mathbf{BKS}
     \end{bmatrix}
-    r                        \\
+    r                           \\
     y & = \begin{bmatrix}
-              \mathbf{C} & 0 & 0 \\
+              \mathbf{C} & 0 & \mathbf{0} \\
           \end{bmatrix}
     \begin{bmatrix}
         \mathbf{x}   \\
-        \mathbf{x}_I \\
+        x_I \\
         \hat{\textbf{x}}
     \end{bmatrix}
 \end{align*}
@@ -201,18 +218,18 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
 \begin{align*}
     \begin{bmatrix}
         \dot{\mathbf{x}}   \\
-        \dot{\mathbf{x}}_I \\
+        \dot{x}_I \\
         \dot{\bm{\eta}}
     \end{bmatrix}
       & =
     \begin{bmatrix}
         \mathbf{A-BK} & \mathbf{-BK}_I & \mathbf{-BK}  \\
-        \mathbf{-C}   & 0              & 0             \\
-        0             & 0              & \mathbf{A-LC}
+        \mathbf{-C}   & 0              & \mathbf{0}             \\
+        \mathbf{0}             & 0              & \mathbf{A-LC}
     \end{bmatrix}
     \begin{bmatrix}
         \mathbf{x}   \\
-        \mathbf{x}_I \\
+        x_I \\
         \bm{\eta}
     \end{bmatrix}
     +
@@ -221,13 +238,13 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
         \mathbf{I}   \\
         \mathbf{0}
     \end{bmatrix}
-    r                        \\
+    r                           \\
     y & = \begin{bmatrix}
-              \mathbf{C} & 0 & 0 \\
+              \mathbf{C} & 0 & \mathbf{0} \\
           \end{bmatrix}
     \begin{bmatrix}
         \mathbf{x}   \\
-        \mathbf{x}_I \\
+        x_I \\
         \bm{\eta}
     \end{bmatrix}
 \end{align*}
@@ -236,6 +253,7 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
 \ptitle{Remarks:}
 \begin{itemize}
     \item The integrator states don't have to be estimated.
+    \item The error dynamics are uncontrollable form the reference (good)
     \item The closed-loop eigenvalues are a union of the eigenvalues of $\mathbf{A-LC}$ (the observer's) and of the eigenvalues of the augmented controller \begin{equation*}
               \begin{bmatrix}
                   \mathbf{A-BK} & \mathbf{-BK}_I \\
@@ -262,6 +280,41 @@ The transfer function from $y$ to $u$ is
     \end{bmatrix}
 \end{equation*}
 
+% \textbf{Remark}
+% $u_0=\mathbf{KS}r = \tilde{N}r$ can be considered a \textit{feedforward} control input.
 
-\subsection{Margins}
+
+\subsection{Kalman Frequency Domain Equality}
+Considering a SISO LTI system
+\noindent\begin{align*}
+    \dot{\mathbf{x}} &= \mathbf{Ax} + \mathbf{Bu}\\
+    y &= \mathbf{Cx} \\
+    \mathbf{Q} &= \mathbf{C}^T \mathbf{C}, \quad \mathbf{R}=\rho
+\end{align*}
+and 
+\noindent\begin{align*}
+    G(s) &= \mathbf{C}(s \mathbf{I}-\mathbf{A})^{-1}\mathbf{B}\\
+    L(s) &= \mathbf{K}(s \mathbf{I}-\mathbf{A})^{-1}\mathbf{B}
+\end{align*}
+the \textit{Kalman Frequency Domain Equality}
+\noindent\begin{equation*}
+    (1+L(-s))(1+L(s)) = 1+\frac{1}{\rho}G(-s)G(s)
+\end{equation*}
+holds.
+
+\subsubsection{Margins}
+\ptitle{LQR}
+
+In the frequency domain ($s=j\omega$)
+\noindent\begin{equation*}
+    \left|1+L(j\omega)\right|^2=1+\frac1\rho\left|G(j\omega)\right|^2\geq1
+\end{equation*}
+In the Nyquist plot, the transfer function using the LQR-gain is always outside of a unit circle centered at -1 i.e.
+\begin{itemize}
+    \item The phase margin is at least 60°
+    \item The gain margin is ($\frac{1}{2}, +\infty$)
+\end{itemize}
+
+\ptitle{LQG}
+
 While LQG ensures the closed-loop stability of the nominal system, the stability margins can be \textbf{arbitrarily small}.

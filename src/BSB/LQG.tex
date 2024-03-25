@@ -5,7 +5,7 @@
     \node [block, right of=sum1, node distance=1.4cm]           (compensator)   {$\mathbf{K}$};
     \node [block, right of=compensator, node distance=2.5cm]    (sys)           {\shortstack[l]{$\dot{\mathbf{x}} = \mathbf{Ax} + \mathbf{Bu}$ \\ $\mathbf{y} = \mathbf{Cx}$}};
     \node [output, right of=sys]                                (output)        {};
-
+    
     \draw [->] (rinput)         --  node{$r$}                   (scale_vec);
     \draw [->] (scale_vec)      --  node{$\bar{\mathbf{r}}$}    (sum1);
     \draw [->] (sum1)           --                              (compensator);
@@ -15,4 +15,8 @@
     \draw [->] (y)              |-                              (observer);
     \draw [->] (u)              --                              (observer);
     \draw [->] (observer)       -|  node[pos=0.99] {$-$} node[pos=0.8] {$\hat{\textbf{x}}$} (sum1);
+
+    \node [below of = observer, node distance = 0.8cm]          (obs_name)      {\color{gray}Observer} ;
+    \node [above of = compensator, node distance = 0.8cm]       (comp_name)     {\color{gray}Compensator} ;
+    \node [above of = sys, node distance = 0.8cm]               (sys_name)      {\color{gray}System} ;
 \end{tikzpicture}
