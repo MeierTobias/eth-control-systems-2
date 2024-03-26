@@ -187,7 +187,7 @@ The closed-loop system is then given by
     \end{bmatrix}
       & =
     \begin{bmatrix}
-        \mathbf{A}  & \mathbf{-BK}_I & \mathbf{BK}     \\
+        \mathbf{A}  & \mathbf{-BK}_I & \mathbf{-BK}     \\
         \mathbf{-C} & 0              & \mathbf{0}                \\
         \mathbf{LC} & \mathbf{-BK}_I & \mathbf{A-BK-LC}
     \end{bmatrix}
@@ -223,7 +223,7 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
     \end{bmatrix}
       & =
     \begin{bmatrix}
-        \mathbf{A-BK} & \mathbf{-BK}_I & \mathbf{-BK}  \\
+        \mathbf{A-BK} & \mathbf{-BK}_I & \mathbf{BK}  \\
         \mathbf{-C}   & 0              & \mathbf{0}             \\
         \mathbf{0}             & 0              & \mathbf{A-LC}
     \end{bmatrix}
