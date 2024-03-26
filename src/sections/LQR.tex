@@ -133,7 +133,16 @@ This is simply done by adding the integral of the error to the state space model
         r
     \end{bmatrix},
 \end{align*}
-then apply LQR to the modified state space model.
+then apply LQR to the modified state space model which yields a controller
+\begin{align*}
+    \mathbf{K}' & =\begin{bmatrix}
+                       K & K_I
+                   \end{bmatrix}                            \\
+    \mathbf{u}  & =-\mathbf{K}'\begin{bmatrix}
+                                   \mathbf{x} \\
+                                   e
+                               \end{bmatrix} + \mathbf{K'S}r
+\end{align*}
 
 \subsection{Symmetric Root Locus}
 The symmetric root locus can be used to understand the influence of $\rho$ on the poles of a closed loop LQR feedback system.
