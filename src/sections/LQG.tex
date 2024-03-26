@@ -75,7 +75,7 @@ The determinant of the closed-loop dynamic output feedback system $A_{cl}$ is
 \begin{equation*}
     \det(\mathbf{A}_{cl})=\det(\mathbf{A}-\mathbf{BK})\det(\mathbf{A}-\mathbf{LC})
 \end{equation*}
-Therefor the eigenvalues of the closed-loop system are given by the \textbf{union of the eigenvalues} of $\mathbf{A}-\mathbf{BK}$ and of $\mathbf{A}-\mathbf{LC}$.
+Therefore the eigenvalues of the closed-loop system are given by the \textbf{union of the eigenvalues} of $\mathbf{A}-\mathbf{BK}$ and of $\mathbf{A}-\mathbf{LC}$.
 % Hence the closed-loop poles are completely driven by the natural dynamics of the full-state feedback system \textbf{and} of the closed-loop estimator error.
 
 \ptitle{Separation Principle}
@@ -133,7 +133,7 @@ The \textbf{closed-loop} transfer function of the LQG from $r$ to $y$ is
 \begin{equation*}
     G_{yr}^{cl} = \mathbf{C}{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{BKS}
 \end{equation*}
-and form $u$ to $y$ (\textbf{open-loop})
+and from $u$ to $y$ (\textbf{open-loop})
 \begin{equation*}
     G_{uy} = -\mathbf{K}{(s\mathbf{I}-\mathbf{A}+\mathbf{LC}+\mathbf{BK})}^{-1}\mathbf{L}
 \end{equation*}
@@ -149,7 +149,7 @@ and form $u$ to $y$ (\textbf{open-loop})
 
 To ensure a DC-Gain of $1$ we need the reference scaling matrix $S$ to satisfy
 
-in the \textbf{time-continuous} case
+in the \textbf{continuous-time} case
 \begin{align*}
     \lim_{s\to0}G_{yr}^{cl}(s)                             & = \mathbf{I} \\
     -\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{BKS} & = \mathbf{I}
@@ -159,7 +159,7 @@ for a SISO system
     \bar{N}=\mathbf{KS}=-\frac{1}{\mathbf{C}{(\mathbf{A}-\mathbf{BK})}^{-1}\mathbf{B}}
 \end{equation*}
 
-in the \textbf{time-discrete} case
+in the \textbf{discrete-time} case
 \begin{align*}
     \lim_{z\to1}G_{yr}^{cl}(z)                                       & = \mathbf{I} \\
     \mathbf{C}{(\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{BKS} & = \mathbf{I}
@@ -187,7 +187,7 @@ The closed-loop system is then given by
     \end{bmatrix}
       & =
     \begin{bmatrix}
-        \mathbf{A}  & \mathbf{-BK}_I & \mathbf{-BK}     \\
+        \mathbf{A}  & \mathbf{-BK}_I & \mathbf{BK}     \\
         \mathbf{-C} & 0              & \mathbf{0}                \\
         \mathbf{LC} & \mathbf{-BK}_I & \mathbf{A-BK-LC}
     \end{bmatrix}
