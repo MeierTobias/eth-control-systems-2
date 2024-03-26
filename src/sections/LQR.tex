@@ -39,7 +39,20 @@ where
 and $x_{i,\max}$, $u_{j,\max}$ are the maximum deviations that we are willing to tolerate for the $i$-th state and $j$-th input, respectively.
 
 \subsection{Continuous Time}
-In continuous time, first the \textbf{symmetric, positive definite} solution $\mathbf{P}$ of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
+In continuous time, first the \textbf{symmetric, positive definite} solution
+\begin{equation*}
+    \mathbf{P}=\begin{bmatrix} p_{1,1} & \dots  & p_{1,n} \\
+                        & \ddots &         \\
+                p_{1,n} & \dots  & p_{n,n}
+    \end{bmatrix}
+\end{equation*}
+with
+\begin{align*}
+    p_{1,1}                   & >0 \\
+    p_{1,1}p_{2,2} -p_{1,2}^2 & >0 \\
+    \vdots
+\end{align*}
+of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
 \noindent\begin{equation*}
     \mathbf{A}^T \mathbf{P}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^T \mathbf{P}=0
 \end{equation*}
