@@ -1,0 +1,55 @@
+\section{Appendix}
+\subsection{Matrices}
+\subsubsection{Transpose, Adjoint and Inverse}
+\noindent\begin{align*}
+    \mathbf{A}^\mathsf{H}                  & = {(\mathbf{A}^\mathsf{T})}^*                   \\[.75em]
+    {({\mathbf{A}}^\mathsf{T})}^\mathsf{T} & = \mathbf{A}                                    \\
+    {({\mathbf{A}}^\mathsf{H})}^\mathsf{H} & = \mathbf{A}                                    \\
+    {({\mathbf{A}}^{-1})}^{-1}             & = \mathbf{A}                                    \\[.75em]
+    {(\lambda\mathbf{A})}^\mathsf{T}       & = \lambda\mathbf{A}^\mathsf{T}                  \\
+    {(\lambda\mathbf{A})}^\mathsf{H}       & = \lambda\mathbf{A}^\mathsf{H}                  \\
+    {(\lambda\mathbf{A})}^{-1}             & = \lambda^{-1}\mathbf{A}^{-1}                   \\[.75em]
+    {(\mathbf{A}+\mathbf{B})}^\mathsf{T}   & = \mathbf{A}^\mathsf{T} + \mathbf{B}^\mathsf{T} \\
+    {(\mathbf{A}+\mathbf{B})}^\mathsf{H}   & = \mathbf{A}^\mathsf{H} + \mathbf{B}^\mathsf{H} \\[.75em]
+    {(\mathbf{A}\mathbf{B})}^\mathsf{T}    & = \mathbf{B}^\mathsf{T}\mathbf{A}^\mathsf{T}    \\
+    {(\mathbf{A}\mathbf{B})}^\mathsf{H}    & = \mathbf{B}^\mathsf{H}\mathbf{A}^\mathsf{H}    \\
+    {(\mathbf{A}\mathbf{B})}^{-1}          & = \mathbf{B}^{-1} \mathbf{A}^{-1}               \\[.75em]
+    \det(\mathbf{A}^\mathsf{T})            & = \det(\mathbf{A})                              \\
+    \det(\mathbf{A}^\mathsf{H})            & = {\det(\mathbf{A})}^*                          \\
+    \det(\mathbf{A}^{-1})                  & = {\det(\mathbf{A})}^{-1}                       \\[.75em]
+    \mathrm{rank}{(\mathbf{A}^\mathsf{H})} & = \mathrm{rank}(\mathbf{A})                     \\
+    \mathrm{rank}{(\mathbf{A}^{-1} )}      & = \mathrm{rank}(\mathbf{A})
+\end{align*}
+
+\ptitle{\textbf{A} is symmetric}
+\noindent\begin{align*}
+    {\mathbf{A}}^\mathsf{T} & = \mathbf{A}   \\
+    {\mathbf{A}}^\mathsf{H} & = \mathbf{A}^*
+\end{align*}
+
+\ptitle{\textbf{A} is invertible}
+\noindent\begin{align*}
+    {(\mathbf{A}^\mathsf{T})}^{-1} & = {(\mathbf{A}^{-1})}^\mathsf{T} \\
+    {(\mathbf{A}^\mathsf{H})}^{-1} & = {(\mathbf{A}^{-1})}^\mathsf{H}
+\end{align*}
+
+\ptitle{\textbf{A} is square}
+\noindent\begin{align*}
+    \mathrm{eigvals}(\mathbf{A}^\mathsf{T}) & = \mathrm{eigvals}(\mathbf{A})        \\
+    \mathrm{eigvals}(\mathbf{A}^\mathsf{H}) & = \mathrm{eigvals}{(\mathbf{A})}^*    \\
+    \mathrm{eigvals}(\mathbf{A}^{-1})       & = \mathrm{eigvals}{(\mathbf{A})}^{-1}
+\end{align*}
+
+\ptitle{Blocks}
+\noindent\begin{equation*}
+    \begin{pmatrix}
+        A_{11} & \cdots & A_{1n} \\
+        \vdots &        & \vdots \\
+        A_{m1} & \cdots & A_{mn}
+    \end{pmatrix}^\mathsf{H}=
+    \begin{pmatrix}
+        A_{11}^\mathsf{H} & \cdots & A_{m1}^\mathsf{H} \\
+        \vdots            &        & \vdots            \\
+        A_{1n}^\mathsf{H} & \cdots & A_{nm}^\mathsf{H}
+    \end{pmatrix}
+\end{equation*}
