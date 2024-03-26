@@ -39,7 +39,7 @@ where
 and $x_{i,\max}$, $u_{j,\max}$ are the maximum deviations that we are willing to tolerate for the $i$-th state and $j$-th input, respectively.
 
 \subsection{Continuous Time}
-In continuous time, first the \textbf{positive definite} solution $\mathbf{P}$ of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
+In continuous time, first the \textbf{symmetric, positive definite} solution $\mathbf{P}$ of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
 \noindent\begin{equation*}
     \mathbf{A}^T \mathbf{P}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^T \mathbf{P}=0
 \end{equation*}
@@ -64,7 +64,7 @@ In discrete time, the cost functional is
 \noindent\begin{equation*}
     J(\mathbf{x,u})=\sum_{k=0}^{+\infty}\left({\mathbf{x}[k]}^T \mathbf{Qx}[k]+{\mathbf{u}[k]}^T \mathbf{Ru}[k]\right),
 \end{equation*}
-the positive definite solution $\mathbf{P}$ to the \textit{discrete algebraic Riccati equation} (\textbf{\textit{DARE}})
+the \textbf{symmetric, positive definite} solution $\mathbf{P}$ to the \textit{discrete algebraic Riccati equation} (\textbf{\textit{DARE}})
 \noindent\begin{equation*}
     \mathbf{P}=\mathbf{A}^T \mathbf{PA}-(\mathbf{A}^T \mathbf{PB}){(\mathbf{B}^{\prime}\mathbf{PB}+\mathbf{R})}^{-1}(\mathbf{B}^T \mathbf{PA})+\mathbf{Q}
 \end{equation*}
