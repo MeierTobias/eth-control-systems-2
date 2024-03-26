@@ -1,4 +1,5 @@
 \section{Linear-Quadratic Gaussian Compensator (LQG)}
+\subsection{LQG State Space Description}
 
 The combination of the LQR and the LQE is referred to as a Linear-Quadratic Gaussian Compensator.
 
@@ -83,9 +84,7 @@ The determinant of the closed-loop dynamic output feedback system $A_{cl}$ is
 \end{equation*}
 Therefore the eigenvalues of the closed-loop system are given by the \textbf{union of the eigenvalues} of $\mathbf{A}-\mathbf{BK}$ and of $\mathbf{A}-\mathbf{LC}$.
 % Hence the closed-loop poles are completely driven by the natural dynamics of the full-state feedback system \textbf{and} of the closed-loop estimator error.
-
-\newpar{}
-\ptitle{Separation Principle}
+\subsubsection{Separation Principle}
 
 Based on the independence of the Eigenvalues of the observer and controller and the assumption of a \textbf{LTI System with Gaussian noise}, the \textit{separation principle} states that
 both the observer and the controller can be designed individually i.e.\
@@ -94,13 +93,6 @@ both the observer and the controller can be designed individually i.e.\
     \item choose $\mathbf{L}$ as the solution of the LQE problem \newline(approx. 10$\times$ faster than poles of $\mathbf{K}$)
 \end{itemize}
 
-\newpar{}
-\ptitle{Remark:}
-
-\begin{itemize}
-    \item The estimation error is uncontrollable from the reference input (The estimation error is not influenced by the reference).
-    \item The LQG is often referred to as dynamic output feedback compensator (\textbf{DOFC}) as the control is not just based on a static gain but on a dynamic state estimation.
-\end{itemize}
 \newpar{}
 \ptitle{Recall:}
 
@@ -137,6 +129,13 @@ In particular
         \end{bmatrix}
 \end{align*}
 
+\subsubsection{Properties of LQG}
+
+\begin{itemize}
+    \item The estimation error is uncontrollable from the reference input (The estimation error is not influenced by the reference).
+    \item The LQG is often referred to as dynamic output feedback compensator (\textbf{DOFC}) as the control is not just based on a static gain but on a dynamic state estimation.
+\end{itemize}
+
 \subsection{Transfer Function}
 The \textbf{closed-loop} transfer function of the LQG from $r$ to $y$ is
 \begin{equation*}
@@ -152,6 +151,22 @@ and from $u$ to $y$ (\textbf{open-loop})
     \item In $G_{yr}^{cl}$, only the closed-loop poles of the controller are retained (observer and system are cancelled) and opne-loop zeros are retained.
     \item $G_{uy}$, has the same order as the plant and the number of closed-loop poles is doubled (all stable)
 \end{itemize}
+
+\ptitle{Transmission Zeros}
+
+\begin{align*}
+    \left.\left|\det\begin{bmatrix}sI-A+BK & -BK     & -BKS \\
+               0       & sI-A+LC & 0    \\
+               C       & 0       & 0\end{bmatrix}\right.\right| \\
+    \left.=|\det(sI-A+LC)|\cdot\left|\det\begin{bmatrix}sI-A+BK & -BKS \\
+               C       & 0\end{bmatrix}\right.\right|
+\end{align*}
+
+\begin{itemize}
+    \item The eigenvalues of $(A-LC)$ are also zeros
+    \item In the closed loop, only observer poles are eliminated due to pole zero cancellation
+\end{itemize}
+
 
 
 \ptitle{Reference scaling}
@@ -178,8 +193,12 @@ for a SISO system
     \bar{N}=\mathbf{KS}=\frac{1}{\mathbf{C}{(\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}}
 \end{equation*}
 
-
 \subsection{LQG with Integrator}
+
+\begin{center}
+    \includegraphics[width = \linewidth]{DOFC.png}
+\end{center}
+
 Like with the LQR compensator an integrator can be added by augmenting the state vector with new states $x_I$ and calculating the new $\mathbf{K'}$ matrix.
 \begin{align*}
     \dot{x}_I   & = r - y            \\
@@ -261,7 +280,7 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
 \newpar{}
 \ptitle{Remarks:}
 \begin{itemize}
-    \item The integrator states don't have to be estimated.
+    \item The integrator states don't have to be estimated as they are calculated separately and are not part of the observer or the physical plant.
     \item The error dynamics are uncontrollable form the reference (good)
     \item The closed-loop eigenvalues are a union of the eigenvalues of $\mathbf{A-LC}$ (the observer's) and of the eigenvalues of the augmented controller \begin{equation*}
               \begin{bmatrix}
@@ -270,7 +289,7 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
               \end{bmatrix}
               = \mathbf{A'-B'K'}
           \end{equation*}
-    \item The term $\mathbf{u_0}=\mathbf{KS}r=\mathbf{\overline{N}}r$ (scaled for the reference) can be considered a feedforward control input.
+    \item The controller output with integrator becomes $\newline \mathbf{u}=-\mathbf{Kx}-\mathbf{K_{I}}x_{I}+\mathbf{KS}r$. Hence, the term $\mathbf{u_0}=\mathbf{KS}r=\mathbf{\overline{N}}r$ (scaled for the reference) can be considered a feedforward control input.
 \end{itemize}
 
 \subsubsection{Transfer Function}
