@@ -92,19 +92,19 @@ and the \textit{static gain matrix} obtained with $\mathbf{u} = -\mathbf{Kx}$ is
 If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs.
 This is simply done by adding the integral of the error to the state space model
 \noindent\begin{align*}
-    \dot{e} & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + r \\
+    \dot{x_I} & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + r \\
     \frac d{dt}
     \begin{bmatrix}
         \mathbf{x} \\
-        e
+        x_I
     \end{bmatrix}
-            & =\begin{bmatrix}
-                   \mathbf{A}  & \mathbf{0} \\
-                   -\mathbf{C} & 0
-               \end{bmatrix}
+              & =\begin{bmatrix}
+                     \mathbf{A}  & \mathbf{0} \\
+                     -\mathbf{C} & 0
+                 \end{bmatrix}
     \begin{bmatrix}
         \mathbf{x} \\
-        e
+        x_I
     \end{bmatrix}
     +\begin{bmatrix}
          \mathbf{B} \\
@@ -115,14 +115,14 @@ This is simply done by adding the integral of the error to the state space model
         0 \\
         1
     \end{bmatrix}
-    r                                                 \\
-            & =\begin{bmatrix}
-                   \mathbf{A}  & \mathbf{0} \\
-                   -\mathbf{C} & 0
-               \end{bmatrix}
+    r                                                   \\
+              & =\begin{bmatrix}
+                     \mathbf{A}  & \mathbf{0} \\
+                     -\mathbf{C} & 0
+                 \end{bmatrix}
     \begin{bmatrix}
         \mathbf{x} \\
-        e
+        x_I
     \end{bmatrix}
     +\begin{bmatrix}
          \mathbf{B} & \mathbf{0} \\
@@ -140,7 +140,7 @@ then apply LQR to the modified state space model which yields a controller
                    \end{bmatrix}                            \\
     \mathbf{u}  & =-\mathbf{K}'\begin{bmatrix}
                                    \mathbf{x} \\
-                                   e
+                                   x_I
                                \end{bmatrix} + \mathbf{K'S}r
 \end{align*}
 
