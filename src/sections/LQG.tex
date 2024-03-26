@@ -84,13 +84,14 @@ The determinant of the closed-loop dynamic output feedback system $A_{cl}$ is
 Therefore the eigenvalues of the closed-loop system are given by the \textbf{union of the eigenvalues} of $\mathbf{A}-\mathbf{BK}$ and of $\mathbf{A}-\mathbf{LC}$.
 % Hence the closed-loop poles are completely driven by the natural dynamics of the full-state feedback system \textbf{and} of the closed-loop estimator error.
 
+\newpar{}
 \ptitle{Separation Principle}
 
 Based on the independence of the Eigenvalues of the observer and controller and the assumption of a \textbf{LTI System with Gaussian noise}, the \textit{separation principle} states that
 both the observer and the controller can be designed individually i.e.\
 \begin{itemize}
     \item choose $\mathbf{K}$ as the solution of the LQR problem
-    \item choose $\mathbf{L}$ as the solution of the LQE problem
+    \item choose $\mathbf{L}$ as the solution of the LQE problem \newline(approx. 10$\times$ faster than poles of $\mathbf{K}$)
 \end{itemize}
 
 \newpar{}
@@ -98,7 +99,7 @@ both the observer and the controller can be designed individually i.e.\
 
 \begin{itemize}
     \item The estimation error is uncontrollable from the reference input (The estimation error is not influenced by the reference).
-    \item The LQG is often referred to as dynamic output feedback compensator as the control is not just based on a static gain but on a dynamic state estimation.
+    \item The LQG is often referred to as dynamic output feedback compensator (\textbf{DOFC}) as the control is not just based on a static gain but on a dynamic state estimation.
 \end{itemize}
 \newpar{}
 \ptitle{Recall:}
@@ -292,37 +293,7 @@ The transfer function from $y$ to $u$ is
 % \textbf{Remark}
 % $u_0=\mathbf{KS}r = \tilde{N}r$ can be considered a \textit{feedforward} control input.
 
-
-\subsection{Kalman Frequency Domain Equality}
-Considering a SISO LTI system
-\noindent\begin{align*}
-    \dot{\mathbf{x}} & = \mathbf{Ax} + \mathbf{Bu}                      \\
-    y                & = \mathbf{Cx}                                    \\
-    \mathbf{Q}       & = \mathbf{C}^T \mathbf{C}, \quad \mathbf{R}=\rho
-\end{align*}
-and
-\noindent\begin{align*}
-    G(s) & = \mathbf{C}(s \mathbf{I}-\mathbf{A})^{-1}\mathbf{B} \text{ (reference to output)}        \\
-    L(s) & = \mathbf{K}(s \mathbf{I}-\mathbf{A})^{-1}\mathbf{B} \text{ (reference to control input)}
-\end{align*}
-the \textit{Kalman Frequency Domain Equality}
-\noindent\begin{equation*}
-    (1+L(-s))(1+L(s)) = 1+\frac{1}{\rho}G(-s)G(s)
-\end{equation*}
-holds.
-
-\subsubsection{Margins}
-\ptitle{LQR}
-
-In the frequency domain ($s=j\omega$)
-\noindent\begin{equation*}
-    \left|1+L(j\omega)\right|^2=1+\frac1\rho\left|G(j\omega)\right|^2\geq1
-\end{equation*}
-In the Nyquist plot, the transfer function using the LQR-gain is always outside of a unit circle centered at -1 i.e.
-\begin{itemize}
-    \item The phase margin is at least 60°
-    \item The gain margin is ($6\text{ dB}, +\infty \text{ dB}$)
-\end{itemize}
+\subsection{Margins}
 
 \ptitle{LQG}
 

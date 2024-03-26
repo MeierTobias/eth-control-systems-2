@@ -39,6 +39,8 @@ where
 and $x_{i,\max}$, $u_{j,\max}$ are the maximum deviations that we are willing to tolerate for the $i$-th state and $j$-th input, respectively.
 
 \subsection{Continuous Time}
+First, check $\mathbf{A,B}$ for reachability!
+
 In continuous time, first the \textbf{symmetric, positive definite} solution
 \begin{equation*}
     \mathbf{P}=\begin{bmatrix} p_{1,1} & \dots  & p_{1,n} \\
@@ -178,5 +180,31 @@ where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
     for any $\rho$ the closed loop poles will stay on the LHP.
 \end{examplesection}
 
-\subsection{Margins}
-The \textit{Kalman Frequency Domain Equality} shows, that the \textbf{phase margin} is at least $60^\circ$ and the \textbf{gain margin} is within $(1/2, +\infty)$.
+\subsection{Kalman Frequency Domain Equality}
+Considering a SISO LTI system
+\noindent\begin{align*}
+    \dot{\mathbf{x}} & = \mathbf{Ax} + \mathbf{Bu}                      \\
+    y                & = \mathbf{Cx}                                    \\
+    \mathbf{Q}       & = \mathbf{C}^T \mathbf{C}, \quad \mathbf{R}=\rho
+\end{align*}
+and
+\noindent\begin{align*}
+    G(s) & = \mathbf{C}(s \mathbf{I}-\mathbf{A})^{-1}\mathbf{B} &r\to y        \\
+    L(s) & = \mathbf{K}(s \mathbf{I}-\mathbf{A})^{-1}\mathbf{B} &r\to u
+\end{align*}
+the \textit{Kalman Frequency Domain Equality}
+\noindent\begin{equation*}
+    (1+L(-s))(1+L(s)) = 1+\frac{1}{\rho}G(-s)G(s)
+\end{equation*}
+holds.
+
+\subsubsection{Margins}
+In the frequency domain ($s=j\omega$)
+\noindent\begin{equation*}
+    \left|1+L(j\omega)\right|^2=1+\frac1\rho\left|G(j\omega)\right|^2\geq1
+\end{equation*}
+In the Nyquist plot, the transfer function using the LQR-gain is always outside of a unit circle centered at -1 i.e.
+\begin{itemize}
+    \item The phase margin is at least 60°
+    \item The gain margin is ($6\text{ dB}, +\infty \text{ dB}$) because the loop function will never cross the real axis between ($-2, 0$)\newline $\to -\frac{1}{k} = (\frac{1}{2}, \infty)$
+\end{itemize}
