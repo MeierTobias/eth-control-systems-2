@@ -38,16 +38,17 @@ The state space representation is not unique. This can be used to transform the 
     \tilde{\mathbf{C}} & = \mathbf{CT}^{-1}  \\
     \tilde{\mathbf{D}} & = \mathbf{D}
 \end{align*}
+\subsubsection{Modal Transformation}
 If $\mathbf{T}$ is set to the inverse of the eigenvector matrix of $\mathbf{A}$ we get:
 \begin{align*}
-    \mathbf{P}         & = \mathbf{V}^{-1}                           \\
+    \mathbf{T}         & = \mathbf{V}^{-1}                           \\
     \tilde{\mathbf{x}} & = \mathbf{V}^{-1}\mathbf{x}                 \\
     \tilde{\mathbf{A}} & = \mathbf{V}^{-1}\mathbf{AV} = \bm{\Lambda} \\
     \tilde{\mathbf{B}} & = \mathbf{V}^{-1}\mathbf{B}                 \\
     \tilde{\mathbf{C}} & = \mathbf{CV}                               \\
     \tilde{\mathbf{D}} & = \mathbf{D}
 \end{align*}
-Where $\tilde{\mathbf{A}}$ is a diagonal matrix consisting of the eigenvalues of $\mathbf{A}$.
+Where $\tilde{\mathbf{A}}$ is a diagonal matrix with the eigenvalues of $\mathbf{A}$ on its main diagonal.
 
 \subsection{Modal Time Response}
 \subsubsection{Modal Coordinates}
@@ -66,7 +67,7 @@ Where $\tilde{\mathbf{A}}$ is a diagonal matrix consisting of the eigenvalues of
 \begin{examplesection}[Example: Interpretation of Modal Decomposition]
     The modal decomposition gives valuable insight regarding the behavior of a system. The modes (eigenvalues and corresponding eigenvectors) are analyzed one at a time.
     \begin{enumerate}
-        \item The magnitude of the eigenvalues describe the influence of the mode.
+        \item The magnitude of the eigenvalue describes the influence of the corresponding mode.
         \item The property (real, complex or repeated) of the eigenvalue describes the behavior over time of that mode.
         \item The corresponding eigenvector describes the states/dimensions the mode is acting on. For example $x,y,z$ or $\varphi, \dot{\varphi}$
     \end{enumerate}

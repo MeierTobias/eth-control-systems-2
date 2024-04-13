@@ -1,15 +1,18 @@
 \section{Observers}
-\subsection{Luenberger Observer}
-In case we desire full-state feedback but there are no sensors available to measure each state, we could try to simulate the system (with it's states).
-\subsubsection{State Estimation Without Observer}
+
+In case we desire full-state feedback but there are no sensors available to measure each state, we could try to simulate the system with its states $\hat{\mathbf{x}}$.
+
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{images/state_estimation.png}
+\end{center}
+
 \begin{itemize}
-    \item we choose $\hat{\mathbf{x}_0}=0$
+    \item we choose $\hat{\mathbf{x}}_0=0$
     \item the control input $u$ is computed from the simulated state
     \item both the simulated model and the physical plant receive the same control input
 \end{itemize}
-\begin{center}
-    \includegraphics[width=0.8\linewidth]{images/state_feedback.png}\\
-\end{center}
+
+\newpar{}
 \ptitle{Estimation Error Dynamics}
 
 \begin{itemize}
@@ -17,26 +20,30 @@ In case we desire full-state feedback but there are no sensors available to meas
     \item this can lead to undesirable estimation error dynamics (slow convergence, oscillations, divergence in case of unstable OL system)
 \end{itemize}
 
-\subsubsection{The Luenberger Observer}
+\subsection{The Luenberger Observer}
 We don't have to fully rely on our state estimation but can instead, use the available sensory information to improve it.
 \begin{itemize}
     \item the signal $\mathbf{y}-\hat{\mathbf{y}}=\mathbf{C}(\mathbf{x}-\hat{\mathbf{x}}) = \mathbf{C}\mathbf{\eta}$ is called \textbf{innovation} and is the input to the Luenberger \textbf{observer gain} $\mathbf{L}$
     \item the Luenberger observer corrects the estimated state by a linear feedback on the innovation
     \item in other words we design a controller to get a good estimate of the physical plant's state
 \end{itemize}
+
 \begin{center}
     \includegraphics[width=0.8\linewidth]{images/Luenberger.png}
 \end{center}
+
+\newpar{}
+
 \ptitle{Estimation Error Dynamics}
 
 The states evolve as follows:
 \begin{align*}
     \dot{\mathbf{x}}       & =\mathbf{Ax}+\mathbf{Bu}                                                         \\
-    \dot{\hat{\mathbf{x}}} & =\mathbf{A}\hat{\mathbf{x}}+\mathbf{Bu}+\mathbf{LC}(\mathbf{x}-\hat{\mathbf{x}})
+    \dot{\hat{\textbf{x}}} & =\mathbf{A}\hat{\mathbf{x}}+\mathbf{Bu}+\mathbf{LC}(\mathbf{x}-\hat{\mathbf{x}})
 \end{align*}
 Hence,
 \begin{equation*}
-    \dot{\eta}=\dot{\mathbf{x}}-\dot{\hat{\mathbf{x}}}=\mathbf{A}(\mathbf{x}-\hat{\mathbf{x}})-\mathbf{LC}(\mathbf{x}-\hat{\mathbf{x}})=(\mathbf{A}-\mathbf{LC})\eta
+    \dot{\eta}=\dot{\mathbf{x}}-\dot{\hat{\textbf{x}}}=\mathbf{A}(\mathbf{x}-\hat{\mathbf{x}})-\mathbf{LC}(\mathbf{x}-\hat{\mathbf{x}})=(\mathbf{A}-\mathbf{LC})\eta
 \end{equation*}
 
 \ptitle{Remarks:}
@@ -58,7 +65,8 @@ respectively
 \end{equation*}
 using the methods mentioned in Section\ \ref{sec:pole_placement} (Pole Placement).
 
-\ptitle{Eigenvalues}
+\newpar{}
+\ptitle{Observer Pole Placement}
 
 $\mathbf{L}={\left[\ell_0,\cdots,\ell_{n-1}\right]}^T$ can be obtained by comparing the eigenvalues of the observer with the desired ones:
 \noindent\begin{equation*}
@@ -71,9 +79,10 @@ Similarly to state feedback we get
 \begin{align*}
     \mathbf{L}                        & =\varphi_{\mathrm{cl}}(\mathbf{A})\mathbf{O}^{-1}\begin{bmatrix}
                                                                                              0, & \ldots, & 0, & 1
-                                                                                         \end{bmatrix}^T    \\
-    \varphi_{\mathrm{cl}}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n) \\
-    \varphi_{\mathrm{cl}}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 \mathbf{I}
+                                                                                         \end{bmatrix}^T     \\
+    \varphi_{\mathrm{cl}}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n)  \\
+    \varphi_{\mathrm{cl}}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 \mathbf{I}      \\
+                                      & = (\mathbf{A}-\lambda_1 \mathbf{I})\ldots(\mathbf{A}-\lambda_n \mathbf{I})
 \end{align*}
 
 \textbf{Remarks:}
@@ -91,6 +100,8 @@ Similarly to state feedback we get
           \end{align*}
           then the unobservable poles cannot be moved (cannot assign these poles)
 \end{itemize}
+
+\newpar{}
 
 \ptitle{Noise Sensitivity}
 
@@ -127,7 +138,7 @@ To simulate physical noise we let a white noise input $w$ propagate through a LT
 The LTI system usually acts as low-pass filter in this case.
 
 
-\subsection{Linear Quadratic Estimation (LQE) Kalman Filter}
+\subsection{Linear Quadratic Estimation (LQE)}
 
 Noise affects our state estimation adversely. The LQE aims at an optimal trade-off between
 \begin{itemize}
@@ -146,7 +157,7 @@ For the LQE problem, we get the following LTI Model
     \dot{\mathbf{x}}(t) & = \mathbf{Ax}(t)+\mathbf{Bu}(t)+\mathbf{w}(t) \\
     \mathbf{y}(t)       & = \mathbf{Cx}(t)+\mathbf{n}(t)
 \end{align*}
-with the Gaussian white noise signals
+with the \textbf{Gaussian white noise} signals
 \begin{itemize}
     \item $\mathbf{w}(t)$: process noise
     \item $\mathbf{n}(t)$: sensor noise
@@ -158,7 +169,7 @@ We model the errors with the covariance matrices
 \end{align*}
 The (Luenberger) observer is given by
 \begin{align*}
-    \dot{\hat{\mathbf{x}}}(t) & =(\mathbf{A}-\mathbf{LC})\hat{\mathbf{c}}(t)+\mathbf{Bu}(t)+\mathbf{Ly}(t) \\
+    \dot{\hat{\textbf{x}}}(t) & =(\mathbf{A}-\mathbf{LC})\hat{\mathbf{c}}(t)+\mathbf{Bu}(t)+\mathbf{Ly}(t) \\
     \hat{\mathbf{y}}(t)       & =\mathbf{C}\hat{\mathbf{x}}(t)
 \end{align*}
 
@@ -172,7 +183,7 @@ is minimized by solving the Riccati equation (\textit{ARE})
 \begin{equation*}
     \mathbf{AY}+\mathbf{YA}^T-\mathbf{YC}^T \mathbf{R}^{-1}\mathbf{CY}+\mathbf{Q}=0
 \end{equation*}
-for the positive-definite matrix $\mathbf{Y}$ and choosing the \textit{optimal estimation gain} $\mathbf{L}$ as
+for the \textbf{positive definite} matrix $\mathbf{Y}$ and choosing the \textit{optimal estimation gain} $\mathbf{L}$ as
 \begin{equation*}
     \mathbf{L}=\mathbf{YC}^T \mathbf{R}^{-1}
 \end{equation*}
@@ -180,7 +191,7 @@ for the positive-definite matrix $\mathbf{Y}$ and choosing the \textit{optimal e
 \ptitle{Remarks}:
 
 \begin{itemize}
-    \item the system has to be observable and ($\mathbf{A,Q}$) reachable\newline
+    \item the system has to be detectable (check for observability) and ($\mathbf{A,Q}$) stabilizable (check for reachability)\newline
           (e.g. $n=2: \mathbf{R}= \left[\mathbf{Q}\quad \mathbf{AQ}\right]$)
     \item $\mathbf{Y}$ is \textit{symmetric}, \textit{positive definite} ($\mathrm{Re}(\lambda_i) > 0, \mathrm{Im}(\lambda_i) = 0$) and has to fulfil the \textit{Sylvester criterion} e.g.\ for $n=2$:
           \noindent\begin{equation*}

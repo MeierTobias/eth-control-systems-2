@@ -10,9 +10,10 @@ For th   e reference input $r(t) = 0$ the cost functional $J$ is defined as
 \begin{itemize}
     \item $\mathbf{Q}$ is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^T$
     \item $\mathbf{Q}$ is positive semidefinite i.e. $\mathbf{x}^T \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
-    \item $\mathbf{Q}$ must give positive weights to unstable modes to penalize them in the cost function ($\mathbf{A}, \sqrt{\mathbf{Q}}$ are detectable)
+    \item $\mathbf{Q}$ must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
     \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^T \mathbf{Ru} >0\; \forall u\neq 0$ or $eig(\mathbf{R}) > 0$
     \item The pair $\mathbf{A,B}$ must be stabilizable
+    \item In general, there is an additional cross-coupling term $\mathbf{x}^T\mathbf{Nu}$ in $J$ which is often neglected i.e.\ equal to $0$
 \end{itemize}
 
 \subsubsection{Bryson's Rule}
@@ -38,7 +39,22 @@ where
 and $x_{i,\max}$, $u_{j,\max}$ are the maximum deviations that we are willing to tolerate for the $i$-th state and $j$-th input, respectively.
 
 \subsection{Continuous Time}
-In continuous time, first the positive definite solution $\mathbf{P}$ of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
+First, check $\mathbf{A,B}$ for reachability!
+
+In continuous time, first the \textbf{symmetric, positive definite} solution
+\begin{equation*}
+    \mathbf{P}=\begin{bmatrix} p_{1,1} & \dots  & p_{1,n} \\
+                        & \ddots &         \\
+                p_{1,n} & \dots  & p_{n,n}
+    \end{bmatrix}
+\end{equation*}
+with
+\begin{align*}
+    p_{1,1}                   & >0 \\
+    p_{1,1}p_{2,2} -p_{1,2}^2 & >0 \\
+    \vdots
+\end{align*}
+of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
 \noindent\begin{equation*}
     \mathbf{A}^T \mathbf{P}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^T \mathbf{P}=0
 \end{equation*}
@@ -63,7 +79,7 @@ In discrete time, the cost functional is
 \noindent\begin{equation*}
     J(\mathbf{x,u})=\sum_{k=0}^{+\infty}\left({\mathbf{x}[k]}^T \mathbf{Qx}[k]+{\mathbf{u}[k]}^T \mathbf{Ru}[k]\right),
 \end{equation*}
-the positive definite solution $\mathbf{P}$ to the \textit{discrete algebraic Riccati equation} (\textbf{\textit{DARE}})
+the \textbf{symmetric, positive definite} solution $\mathbf{P}$ to the \textit{discrete algebraic Riccati equation} (\textbf{\textit{DARE}})
 \noindent\begin{equation*}
     \mathbf{P}=\mathbf{A}^T \mathbf{PA}-(\mathbf{A}^T \mathbf{PB}){(\mathbf{B}^{\prime}\mathbf{PB}+\mathbf{R})}^{-1}(\mathbf{B}^T \mathbf{PA})+\mathbf{Q}
 \end{equation*}
@@ -76,21 +92,21 @@ and the \textit{static gain matrix} obtained with $\mathbf{u} = -\mathbf{Kx}$ is
 
 \subsection{Integrator}
 If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs.
-This simply done by adding the integral of the error to the state space model
+This is simply done by adding the integral of the error to the state space model
 \noindent\begin{align*}
-    \dot{e} & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + r \\
+    \dot{x_I} & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + r \\
     \frac d{dt}
     \begin{bmatrix}
         \mathbf{x} \\
-        e
+        x_I
     \end{bmatrix}
-            & =\begin{bmatrix}
-                   \mathbf{A}  & \mathbf{0} \\
-                   -\mathbf{C} & 0
-               \end{bmatrix}
+              & =\begin{bmatrix}
+                     \mathbf{A}  & \mathbf{0} \\
+                     -\mathbf{C} & 0
+                 \end{bmatrix}
     \begin{bmatrix}
         \mathbf{x} \\
-        e
+        x_I
     \end{bmatrix}
     +\begin{bmatrix}
          \mathbf{B} \\
@@ -101,14 +117,14 @@ This simply done by adding the integral of the error to the state space model
         0 \\
         1
     \end{bmatrix}
-    r                                                 \\
-            & =\begin{bmatrix}
-                   \mathbf{A}  & \mathbf{0} \\
-                   -\mathbf{C} & 0
-               \end{bmatrix}
+    r                                                   \\
+              & =\begin{bmatrix}
+                     \mathbf{A}  & \mathbf{0} \\
+                     -\mathbf{C} & 0
+                 \end{bmatrix}
     \begin{bmatrix}
         \mathbf{x} \\
-        e
+        x_I
     \end{bmatrix}
     +\begin{bmatrix}
          \mathbf{B} & \mathbf{0} \\
@@ -119,7 +135,16 @@ This simply done by adding the integral of the error to the state space model
         r
     \end{bmatrix},
 \end{align*}
-then apply LQR to the modified state space model. This method is an alternative to open-loop, feed-forward reference scaling. Feedforward is more dynamic than an integrator but not robust.
+then apply LQR to the modified state space model which yields a controller
+\begin{align*}
+    \mathbf{K}' & =\begin{bmatrix}
+                       K & K_I
+                   \end{bmatrix}                            \\
+    \mathbf{u}  & =-\mathbf{K}'\begin{bmatrix}
+                                   \mathbf{x} \\
+                                   x_I
+                               \end{bmatrix} + \mathbf{K'S}r
+\end{align*}
 
 \subsection{Symmetric Root Locus}
 The symmetric root locus can be used to understand the influence of $\rho$ on the poles of a closed loop LQR feedback system.
@@ -154,3 +179,32 @@ where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
     When looking at the left half of the \textit{symmetric root locus}, the mirrored nmp.\ zero and unstable pole stabilize the system such that
     for any $\rho$ the closed loop poles will stay on the LHP.
 \end{examplesection}
+
+\subsection{Kalman Frequency Domain Equality}
+Considering a SISO LTI system
+\noindent\begin{align*}
+    \dot{\mathbf{x}} & = \mathbf{Ax} + \mathbf{Bu}                      \\
+    y                & = \mathbf{Cx}                                    \\
+    \mathbf{Q}       & = \mathbf{C}^T \mathbf{C}, \quad \mathbf{R}=\rho
+\end{align*}
+and
+\noindent\begin{align*}
+    G(s) & = \mathbf{C}{(s \mathbf{I}-\mathbf{A})}^{-1}\mathbf{B} & r\to y \\
+    L(s) & = \mathbf{K}{(s \mathbf{I}-\mathbf{A})}^{-1}\mathbf{B} & r\to u
+\end{align*}
+the \textit{Kalman Frequency Domain Equality}
+\noindent\begin{equation*}
+    (1+L(-s))(1+L(s)) = 1+\frac{1}{\rho}G(-s)G(s)
+\end{equation*}
+holds.
+
+\subsubsection{Margins}
+In the frequency domain ($s=j\omega$)
+\noindent\begin{equation*}
+    \left|1+L(j\omega)\right|^2=1+\frac1\rho\left|G(j\omega)\right|^2\geq1
+\end{equation*}
+In the Nyquist plot, the transfer function using the LQR-gain is always outside of a unit circle centered at -1 i.e.
+\begin{itemize}
+    \item The phase margin is at least 60° because the Nyquist curve cannot enter a unit circe centered at $-1$ (property of LQR)
+    \item The gain margin is ($\frac{1}{2},\infty$) because the loop transfer function (Nyquist curve) will never cross the real axis between ($-2, 0$) (unit circle argument again)\newline $\to -\frac{1}{k} = (\frac{1}{2}, \infty)$
+\end{itemize}

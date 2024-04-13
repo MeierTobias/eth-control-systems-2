@@ -11,14 +11,17 @@
     % create the title section
     \input{\templatePath/summary_title.tex} % ChkTex 27
 
+    \input{BSB/bsb_header.tex}
+
     \input{sections/discrete_time_systems.tex}
     \input{sections/modal_decomposition.tex}
     \input{sections/controllability_observability.tex}
     \input{sections/pole_placement.tex}
     \input{sections/LQR.tex}
-
-    \input{sections/observers_noise_LQE.tex}
-    
+    \input{sections/observers.tex}
+    \input{sections/LQG.tex}
+    \newpage
+    \input{sections/Appendix.tex}
     
 \end{multicols*}
 \end{document}
