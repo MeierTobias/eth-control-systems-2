@@ -1,25 +1,89 @@
 \section{Introduction to MIMO Systems}
 \subsection{Fundamentals of MIMO Systems}
 
-\ptitle{Overview}
+\ptitle{Comparison to SISO}
+MIMO Systems:
 \begin{itemize}
-    \item 
+    \item have TF matrices
+    \item impose the concept of directionality
+    \item can adapt many SISO ideas but not all (poles, zeros, system response phase measurement)
 \end{itemize}
 
 \subsubsection{MIMO State Space Representation}
-
+\begin{align*}
+    \dot{x} & =\underbrace{\overbrace{A}^{n\times n}\overbrace{x}^{n\times1}}_{n\times1}+\underbrace{\overbrace{B}^{n\times m}\overbrace{u}^{m\times1}}_{n\times1}             \\
+    y\quad  & =\underbrace{\overbrace{C}^{\ell\times n}\overbrace{x}^{n\times1}}_{\ell\times1}+\underbrace{\overbrace{D}^{\ell\times m}\overbrace{u}^{m\times1}}_{\ell\times1}
+\end{align*}
+with
+\begin{itemize}
+    \item $x\in\mathbb{R}^n$, where $n$ is the order of the system.
+    \item $u\in\mathbb{R}^m$, where $m$ is the number of inputs.
+    \item $y\in\mathbb{R}^\ell$, where $\ell$ is the number of outputs.
+\end{itemize}
 
 \subsubsection{MIMO TF Matrix}
 
 \ptitle{Remarks}
 \begin{itemize}
     \item Diagonal TF matrices represent \textbf{decoupled} systems
+    \item non-diagonal entries describe the of a certain input and a certain output
 \end{itemize}
 
-\paragraph{Continous Time}
-\paragraph{Discrete Time}
+\ptitle{Continuous Time}
+
+For an elementary input vector
+\begin{equation*}
+    u(t)=\underbrace{\begin{bmatrix}u_{1}  \\
+            \vdots \\
+            u_{m}
+        \end{bmatrix}}_{direction} e^{st}
+\end{equation*}
+we get the output vector
+\begin{equation*}
+    y_{{\mathrm{ss}}}(t)=G(s)u(t)=
+    \begin{bmatrix}G_{11}(s)    & \ldots & G_{1m}(s)     \\
+               \vdots       & \ddots & \vdots        \\
+               G_{\ell1}(s) & \ldots & G_{\ell m}(s)
+    \end{bmatrix}
+    \begin{bmatrix}u_{1}  \\
+        \vdots \\
+        u_{m}
+    \end{bmatrix}e^{st}
+\end{equation*}
+where $G(s)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $s\in \mathbb{C}$
+
+\ptitle{Discrete Time}
+
+For an elementary input vector
+\begin{equation*}
+    u[k]=\underbrace{\begin{bmatrix}u_{1}  \\
+            \vdots \\
+            u_{m}
+        \end{bmatrix}}_{direction} z^k
+\end{equation*}
+we get the output vector
+\begin{equation*}
+    y_{{\mathrm{ss}}}[k]=G(z)u[k]=
+    \begin{bmatrix}G_{11}(z)    & \ldots & G_{1m}(z)     \\
+               \vdots       & \ddots & \vdots        \\
+               G_{\ell1}(z) & \ldots & G_{\ell m}(z)
+    \end{bmatrix}
+    \begin{bmatrix}u_{1}  \\
+        \vdots \\
+        u_{m}
+    \end{bmatrix}z^k
+\end{equation*}
+where $G(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $z\in \mathbb{C}$
+
 \paragraph{Interconnections}
 
+\begin{itemize}
+    \item matrix multiplication is non-commutative: $G_1G_2 \ne G_2G_1$
+    \item one cannote divide by matrices: instead multiply by inverse
+    \item to find the interconnection start at output $y$ and procceed against signal flow towards the input $u$
+    \item series interconnection ($G_1$ closer to input): $y=G_2G_1u$
+    \item feedback interconnection ($G_2$ in FB path, $(I+G_1G_2)$ invertible, $G_1G_2\ne -I$): $y={(I+G_1G_2)}^{-1}G_1u$
+\end{itemize}
 \subsection{MIMO Poles and Zeros}
 \subsubsection{MIMO Poles}
 \paragraph{MIMO Stability}
