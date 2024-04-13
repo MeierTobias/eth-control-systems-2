@@ -212,8 +212,6 @@ Compute realization of each component of $G$ and assemble them to a new state sp
 
 \subsubsection{Gilbert's Realization}
 
-\ptitle{Calculation}
-
 Given
 \begin{equation*}
     G(s)=\frac{H(s)}{d(s)}+D
@@ -224,23 +222,89 @@ where
     \item $D=\lim_{s\to\infty}G(s)$ is the feed-through term.
 \end{itemize}
 
-Then, if $d(s)$ has no repeated roots, one can use Gilbert's method
+Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}
 
+\begin{enumerate}
+    \item Write a (matrix) partial fraction expansion of $H(s)=d(s$)
+          \begin{equation*}
+              G(s)=\frac{R_1}{s-p_1}+\frac{R_2}{s-p_2}+\ldots+\frac{R_{n_d}}{s-p_{n_d}}+D
+          \end{equation*} with the residues
+          \begin{equation*}
+              R_i=\lim_{s\to p_i}(s-p_i)G(s)
+          \end{equation*}
+          \begin{itemize}
+              \item The ranks $r_i$ of $R_i$ indicate the number of poles at location $p_i$ that are needed for the realization.
+              \item The order of the resulting state space model will be $n=\sum_{i=1}^{n_d}r_i\geq n_d$
+          \end{itemize}
+    \item Write $R_i=C_i B_i$ for some $B_i$, $C_i$ so that
+          \begin{itemize}
+              \item $B_i$ has $m$ (\# inputs) columns
+              \item $C_i$ has $l$ (\# outputs) rows
+              \item $B_i$ and $C_i$ have $r_i$ independent rows/columns
+          \end{itemize}
+    \item Assemble the state space model as
+          \begin{align*}
+              A & =\begin{bmatrix}
+                       p_1 I_{r_1\times r_1} &                       &        &                                   \\
+                                             & p_1 I_{r_2\times r_2} &        &                                   \\
+                                             &                       & \ddots &                                   \\
+                                             &                       &        & p_{n_d} I_{r_{n_d}\times r_{n_d}} \\
+                   \end{bmatrix},\quad
+              B =\begin{bmatrix}
+                     B_1     \\
+                     B_2     \\
+                     \vdots  \\
+                     B_{n_d} \\
+                 \end{bmatrix}                                                                                                                             \\
+              C & =\begin{bmatrix}
+                       C_1 & C_2 & \dots & C_{n_d} \\
+                   \end{bmatrix}, \quad
+              D = D                                                                                                                                         \\
+          \end{align*}
+\end{enumerate}
 
 \ptitle{Remarks}
 
 \begin{itemize}
     \item Figures out the minimum number of ``copies'' of each pole that we need to construct a realization of a MIMO transfer function.
+    \item For non-minimal realizations invariant zeros can give additional zeros (correspond to uncontrollable/unobservable modes)
 \end{itemize}
 
 \subsection{MIMO Signal Amplification}
+
+\ptitle{Key Points}
+
+\begin{itemize}
+    \item Different input directions can generate wildly different outputs, even if they have the same entries (at different locations)
+    \item Directionality depends on frequency as well
+    \item We need ways to measure ``sizes'' in order to compare effects in different directions.
+\end{itemize}
+
 \subsubsection{Norms}
 
 \ptitle{Properties}
+\begin{align*}
+     & \begin{Vmatrix}ax\end{Vmatrix}  =\begin{vmatrix}a\end{vmatrix}\begin{Vmatrix}x\end{Vmatrix},\quad\forall a\in\mathbb{R},x\in V & \text{(homogenity)}          \\
+     & \|x+y\|                         \leq\|x\|+\|y\|                                                                                & \text{(triangle inequality)} \\
+     & \left\|x\right\|                >0 \text{ for } x\neq0, \left\|x\right\|=0\leftrightarrow x=0                                  & \text{(positivity)}
+\end{align*}
 
 \ptitle{Example Norms}
+\begin{itemize}
+    \item Euclidian norm: $\left\|x\right\|=\sqrt{x^{\prime}x}$
+    \item For Hermitian, pos. definite matrices: $\left\|x\right\|=\sqrt{x^{\prime}Qx}$
+    \item p-norm: $\|x\|_p=\left(\sum_{i=1}^nx_i^p\right)^{1/p}$ with the important cases
+          \begin{align*}
+               & \|x\|_1=\sum_1^n\left|x_i\right|,               \\
+               & \|x\|_2=\sqrt{\sum_{i=1}^nx_i^2}                \\
+               & \left\|x\right\|_\infty=\max_i\left|x_i\right|.
+          \end{align*}
+\end{itemize}
 
 \subsubsection{Matrix Norms}
+
+
+
 Matrix norms are incuced by the norms of the vector spaces they operate on.
 
 \ptitle{Properties of Induced Norms}
