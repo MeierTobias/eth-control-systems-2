@@ -1,7 +1,8 @@
-\section{Introduction to MIMO Systems}
+u\section{Introduction to MIMO Systems}
 \subsection{Fundamentals of MIMO Systems}
 
 \ptitle{Comparison to SISO}
+
 MIMO Systems:
 \begin{itemize}
     \item have TF matrices
@@ -11,14 +12,14 @@ MIMO Systems:
 
 \subsubsection{MIMO State Space Representation}
 \begin{align*}
-    \dot{x} & =\underbrace{\overbrace{A}^{n\times n}\overbrace{x}^{n\times1}}_{n\times1}+\underbrace{\overbrace{B}^{n\times m}\overbrace{u}^{m\times1}}_{n\times1}             \\
-    y\quad  & =\underbrace{\overbrace{C}^{\ell\times n}\overbrace{x}^{n\times1}}_{\ell\times1}+\underbrace{\overbrace{D}^{\ell\times m}\overbrace{u}^{m\times1}}_{\ell\times1}
+    \dot{\mathbf{x}} & =\underbrace{\overbrace{\mathbf{A}}^{n\times n}\overbrace{\mathbf{x}}^{n\times1}}_{n\times1}+\underbrace{\overbrace{B}^{n\times m}\overbrace{\mathbf{u}}^{m\times1}}_{n\times1}                      \\
+    \mathbf{y}\quad  & =\underbrace{\overbrace{\mathbf{C}}^{\ell\times n}\overbrace{\mathbf{x}}^{n\times1}}_{\ell\times1}+\underbrace{\overbrace{\mathbf{D}}^{\ell\times m}\overbrace{\mathbf{u}}^{m\times1}}_{\ell\times1}
 \end{align*}
 with
 \begin{itemize}
-    \item $x\in\mathbb{R}^n$, where $n$ is the order of the system.
-    \item $u\in\mathbb{R}^m$, where $m$ is the number of inputs.
-    \item $y\in\mathbb{R}^\ell$, where $\ell$ is the number of outputs.
+    \item $\mathbf{x}\in\mathbb{R}^n$, where $n$ is the order of the system.
+    \item $\mathbf{u}\in\mathbb{R}^m$, where $m$ is the number of inputs.
+    \item $\mathbf{y}\in\mathbb{R}^\ell$, where $\ell$ is the number of outputs.
 \end{itemize}
 
 \subsubsection{MIMO TF Matrix}
@@ -33,14 +34,14 @@ with
 
 For an elementary input vector
 \begin{equation*}
-    u(t)=\underbrace{\begin{bmatrix}u_{1}  \\
+    \mathbf{u}(t)=\underbrace{\begin{bmatrix}u_{1}  \\
             \vdots \\
             u_{m}
         \end{bmatrix}}_{direction} e^{st}
 \end{equation*}
 we get the output vector
 \begin{equation*}
-    y_{{\mathrm{ss}}}(t)=G(s)u(t)=
+    \mathbf{y}_{{\mathrm{ss}}}(t)=\mathbf{G}(s)\mathbf{u}(t)=
     \begin{bmatrix}G_{11}(s)    & \ldots & G_{1m}(s)     \\
                \vdots       & \ddots & \vdots        \\
                G_{\ell1}(s) & \ldots & G_{\ell m}(s)
@@ -50,20 +51,20 @@ we get the output vector
         u_{m}
     \end{bmatrix}e^{st}
 \end{equation*}
-where $G(s)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $s\in \mathbb{C}$
+where $\mathbf{G}(s)\in\mathbb{\mathbf{C}}^{\ell\times m}$ is a complex-valued matrix for $s\in \mathbb{C}$
 
 \ptitle{Discrete Time}
 
 For an elementary input vector
 \begin{equation*}
-    u[k]=\underbrace{\begin{bmatrix}u_{1}  \\
+    \mathbf{u}[k]=\underbrace{\begin{bmatrix}u_{1}  \\
             \vdots \\
             u_{m}
         \end{bmatrix}}_{direction} z^k
 \end{equation*}
 we get the output vector
 \begin{equation*}
-    y_{{\mathrm{ss}}}[k]=G(z)u[k]=
+    y_{{\mathrm{ss}}}[k]=\mathbf{G}(z)\mathbf{u}[k]=
     \begin{bmatrix}G_{11}(z)    & \ldots & G_{1m}(z)     \\
                \vdots       & \ddots & \vdots        \\
                G_{\ell1}(z) & \ldots & G_{\ell m}(z)
@@ -73,33 +74,33 @@ we get the output vector
         u_{m}
     \end{bmatrix}z^k
 \end{equation*}
-where $G(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $z\in \mathbb{C}$
+where $\mathbf{G}(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $z\in \mathbb{C}$
 
 \paragraph{Interconnections}
 
 \begin{itemize}
-    \item matrix multiplication is non-commutative: $G_1G_2 \ne G_2G_1$
+    \item matrix multiplication is non-commutative: $\mathbf{G_1G_2} \ne \mathbf{G_2G_1}$
     \item one cannote divide by matrices: instead multiply by inverse
-    \item to find the interconnection start at output $y$ and procceed against signal flow towards the input $u$
-    \item series interconnection ($G_1$ closer to input): $y=G_2G_1u$
-    \item feedback interconnection ($G_2$ in FB path, $(I+G_1G_2)$ invertible, $G_1G_2\ne -I$): $y={(I+G_1G_2)}^{-1}G_1u$
+    \item to find the interconnection start at output $\mathbf{y}$ and procceed against signal flow towards the input $\mathbf{u}$
+    \item series interconnection ($\mathbf{G_1}$ closer to input): $\mathbf{y}=\mathbf{G_2G_1u}$
+    \item feedback interconnection ($\mathbf{G_2}$ in FB path, $(\mathbf{I}+\mathbf{G_1G_2})$ invertible, $\mathbf{G_1G_2}\ne -\mathbf{I}$): $\mathbf{y}={(\mathbf{I}+\mathbf{G_1G_2})}^{-1}\mathbf{G_1u}$
 \end{itemize}
 \subsection{MIMO Poles and Zeros}
 
 \ptitle{SISO Poles and Zeros}
 
 \begin{itemize}
-    \item A pole with frequency $p$ is a generated frequency i.e. even if the excitation signal does not contain the frequency $p$ the output signal will contain this frequency as the initial condition response $x(t)=e^{At}x_0$ in modal form contains $p$
+    \item A pole with frequency $p$ is a generated frequency i.e. even if the excitation signal does not contain the frequency $p$ the output signal will contain this frequency as the initial condition response $\mathbf{x}(t)=e^{\mathbf{A}t}x_0$ in modal form contains $p$
     \item A (transmission) zero with frequency $z$ is an absorbed frequency i.e. even if the excitation signal contains a term $e^{zt}$ it will not be visible in the output.
 \end{itemize}
 
 \subsubsection{MIMO Poles}
 \begin{itemize}
-    \item Also in MIMO system the poles are the eigenvalues of $A$.
+    \item Also in MIMO system the poles are the eigenvalues of $\mathbf{A}$.
     \item A MIMO system described by $\mathbf{G}(s)$ has a pole at $p$ if at least one of its entries has a pole at p.
-    \item The characteristic polynomial of a minimal realization of $G(s)$ is the least common multiple (LCM) of the denominators of all possible minors of $G(s)$.
-    \item The minors are all single entries of the $G(s)$ matrix as well as all possible square matrices (of all sizes!) in $G(s)$.
-    \item The poles of $G(s)$ are the roots of the aforementioned LCM term.
+    \item The characteristic polynomial of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors of $\mathbf{G}(s)$.
+    \item The minors are all single entries of the $\mathbf{G}(s)$ matrix as well as all possible square matrices (of all sizes!) in $\mathbf{G}(s)$.
+    \item The poles of $\mathbf{G}(s)$ are the roots of the aforementioned LCM term.
 \end{itemize}
 
 
@@ -123,26 +124,26 @@ Same condition as in SISO sytems:
 
 $s = z_0$ is a transmission zero if there exists a non-zero, rational function $u_0(s)$ s.t.
 \begin{equation*}
-    \lim_{s\to z_0}\left[G(s)u_0(s)\right]e^{st}=0,\quad\forall t\geq0
+    \lim_{s\to z_0}\left[\mathbf{G}(s)u_0(s)\right]e^{st}=0,\quad\forall t\geq0
 \end{equation*}
-which means that $\mathbf{G}(s)$ \textbf{loses rank} for $s\rightarrow z_0$.
+which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\rightarrow z_0$.
 
 \ptitle{Remarks}
 
 \begin{itemize}
-    \item A memo transmission zero is a pair of frequency $z0$ and direction $u_0(z_0)$.
-    \item It can happen that a zero of $G$ is not visible in any of it's entries $G_{ij}(s)$.
+    \item A MIMO transmission zero is a pair of frequency $z0$ and direction $u_0(z_0)$.
+    \item It can happen that a zero of $\mathbf{G}$ is not visible in any of it's entries $G_{ij}(s)$.
     \item The direction of the zero decides whether a MIMO pole and zero at the same frequency \textbf{cancel} (i.e. there can be a pole and a zero at same frequency without cancellation!).
-    \item A zero means not just one entry of $y$ is zero but that given an input vector $u \ne 0$, $y$ becomes the zero vector.
+    \item A zero means not just one entry of $\mathbf{y}$ is zero but that given an input vector $\mathbf{u} \ne \mathbf{0}$, $\mathbf{y}$ becomes the zero vector.
 \end{itemize}
 
 \paragraph{Invariant Zeros}
 
-Using the system response to elementary inputs $x(t)=(sI-A)^{-1}Bu_0e^{st}$ and $y(t)=Cx_0e^{st}+Du_0e^{st}$ we must find the solution to
+Using the system response to elementary inputs $\mathbf{x}(t)=(sI-\mathbf{A})^{-1}Bu_0e^{st}$ and $\mathbf{y}(t)=Cx_0e^{st}+Du_0e^{st}$ we must find the solution to
 \begin{equation*}
     \begin{bmatrix}
-        sI-A & -B \\
-        C    & D
+        s\mathbf{I}-\mathbf{A} & -B         \\
+        \mathbf{C}             & \mathbf{D}
     \end{bmatrix}
     \begin{bmatrix}
         x_i \\
@@ -157,16 +158,16 @@ Using the system response to elementary inputs $x(t)=(sI-A)^{-1}Bu_0e^{st}$ and 
     \item A non-trivial solution
           \begin{equation*}
               \begin{bmatrix}
-                  x_i \\
-                  u_i
+                  \mathbf{x_i} \\
+                  \mathbf{u_i}
               \end{bmatrix}=\mathbf{0}
           \end{equation*}
-          means $\mathbf{y}=\mathbf{0}$ even though input and state are not zero!
+          means $\mathbf{\mathbf{y}}=\mathbf{0}$ even though input and state are not zero!
     \item $s_i$ for which the aforementioned matrix becomes singular are called invariant zeros.
     \item An invariant zero is associated with a vector.
-    \item Given zero initial condition and $u(t)=u_i e^{s_i t}$ (zero direction and zero frequency) we get
+    \item Given zero initial condition and $\mathbf{u}(t)=u_i e^{s_i t}$ (zero direction and zero frequency) we get
           \begin{equation*}
-              y(t)=-Ce^{At}x_i
+              \mathbf{y}(t)=-\mathbf{C}e^{\mathbf{A}t}\mathbf{x_i}
           \end{equation*} which is independent of the input and becomes $0$ for a corresponding non-zero initial condition.
     \item
 \end{itemize}
@@ -174,33 +175,33 @@ Using the system response to elementary inputs $x(t)=(sI-A)^{-1}Bu_0e^{st}$ and 
 
 \subsection{Realizations of MIMO Systems}
 \subsubsection{Naive Realization}
-Compute realization of each component of $G$ and assemble them to a new state space model.
+Compute realization of each component of $\mathbf{G}$ and assemble them to a new state space model.
 \begin{align*}
-    A & =\begin{bmatrix}
-             A_{11} &        &        &        \\
-                    & A_{12} &        &        \\
-                    &        & \ddots &        \\
-                    &        &        & A_{lm} \\
-         \end{bmatrix},
-    \quad B  =\begin{bmatrix}
-                  b_{11} &        &        \\
-                         & b_{12} &        \\
-                         &        & \ddots \\
-                  b_{21} &        &        \\
-                         & \ddots &        \\
-                         &        & b_{lm} \\
-              \end{bmatrix}                                                  \\
-    C & =\begin{bmatrix}
-              & c_{11} & c_{12} & \dots &        &       &        &        &       &        \\
-              &        &        &       & c_{21} & \dots &        &        &       &        \\
-              &        &        &       &        &       & \ddots &        &       &        \\
-              &        &        &       &        &       &        & c_{l1} & \dots & c_{lm} \\
-         \end{bmatrix} \\
-    D & = \begin{bmatrix}
-              d_{11} & \dots  & d_{1m}   \\
-              \vdots & \ddots & \vdots & \\
-              d_{l1} & \dots  & d_{lm} & \\
-          \end{bmatrix}
+    \mathbf{A} & =\begin{bmatrix}
+                      \mathbf{A}_{11} &                 &        &                 \\
+                                      & \mathbf{A}_{12} &        &                 \\
+                                      &                 & \ddots &                 \\
+                                      &                 &        & \mathbf{A}_{lm} \\
+                  \end{bmatrix},
+    \quad \mathbf{B}  =\begin{bmatrix}
+                           \mathbf{b}_{11} &                 &                 \\
+                                           & \mathbf{b}_{12} &                 \\
+                                           &                 & \ddots          \\
+                           \mathbf{b}_{21} &                 &                 \\
+                                           & \ddots          &                 \\
+                                           &                 & \mathbf{b}_{lm} \\
+                       \end{bmatrix}                                                                    \\
+    \mathbf{C} & =\begin{bmatrix}
+                       & \mathbf{c}_{11} & \mathbf{c}_{12} & \dots &                 &       &        &                 &       &                 \\
+                       &                 &                 &       & \mathbf{c}_{21} & \dots &        &                 &       &                 \\
+                       &                 &                 &       &                 &       & \ddots &                 &       &                 \\
+                       &                 &                 &       &                 &       &        & \mathbf{c}_{l1} & \dots & \mathbf{c}_{lm} \\
+                  \end{bmatrix} \\
+    \mathbf{D} & = \begin{bmatrix}
+                       \mathbf{d}_{11} & \dots  & \mathbf{d}_{1m}   \\
+                       \vdots          & \ddots & \vdots          & \\
+                       \mathbf{d}_{l1} & \dots  & \mathbf{d}_{lm} & \\
+                   \end{bmatrix}
 \end{align*}
 
 \ptitle{Problems}
@@ -214,12 +215,12 @@ Compute realization of each component of $G$ and assemble them to a new state sp
 
 Given
 \begin{equation*}
-    G(s)=\frac{H(s)}{d(s)}+D
+    \mathbf{G}(s)=\frac{\mathbf{H}(s)}{d(s)}+\mathbf{D}
 \end{equation*}
 where
 \begin{itemize}
-    \item $d(s)$ is the least common denominator of all entries in $G(s)$
-    \item $D=\lim_{s\to\infty}G(s)$ is the feed-through term.
+    \item $d(s)$ is the least common denominator of all entries in $\mathbf{G}(s)$
+    \item $\mathbf{D}=\lim_{s\to\infty}\mathbf{G}(s)$ is the feed-through term.
 \end{itemize}
 
 Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}
@@ -227,39 +228,39 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}
 \begin{enumerate}
     \item Write a (matrix) partial fraction expansion of $H(s)=d(s$)
           \begin{equation*}
-              G(s)=\frac{R_1}{s-p_1}+\frac{R_2}{s-p_2}+\ldots+\frac{R_{n_d}}{s-p_{n_d}}+D
+              \mathbf{G}(s)=\frac{\mathbf{R_1}}{s-p_1}+\frac{\mathbf{R_2}}{s-p_2}+\ldots+\frac{\mathbf{R_{n_d}}}{s-p_{n_d}}+\mathbf{D}
           \end{equation*} with the residues
           \begin{equation*}
-              R_i=\lim_{s\to p_i}(s-p_i)G(s)
+              \mathbf{R_i}=\lim_{s\to p_i}(s-p_i)\mathbf{G}(s)
           \end{equation*}
           \begin{itemize}
-              \item The ranks $r_i$ of $R_i$ indicate the number of poles at location $p_i$ that are needed for the realization.
+              \item The ranks $r_i$ of $\mathbf{R_i}$ indicate the number of poles at location $p_i$ that are needed for the realization.
               \item The order of the resulting state space model will be $n=\sum_{i=1}^{n_d}r_i\geq n_d$
           \end{itemize}
-    \item Write $R_i=C_i B_i$ for some $B_i$, $C_i$ so that
+    \item Write $\mathbf{R_i}=\mathbf{C_i B_i}$ for some $\mathbf{B_i}$, $\mathbf{C_i}$ so that
           \begin{itemize}
-              \item $B_i$ has $m$ (\# inputs) columns
-              \item $C_i$ has $l$ (\# outputs) rows
-              \item $B_i$ and $C_i$ have $r_i$ independent rows/columns
+              \item $\mathbf{B_i}$ has $m$ (\# inputs) columns
+              \item $\mathbf{C_i}$ has $l$ (\# outputs) rows
+              \item $\mathbf{B_i}$ and $\mathbf{C_i}$ have $r_i$ independent rows/columns
           \end{itemize}
     \item Assemble the state space model as
           \begin{align*}
-              A & =\begin{bmatrix}
-                       p_1 I_{r_1\times r_1} &                       &        &                                   \\
-                                             & p_1 I_{r_2\times r_2} &        &                                   \\
-                                             &                       & \ddots &                                   \\
-                                             &                       &        & p_{n_d} I_{r_{n_d}\times r_{n_d}} \\
-                   \end{bmatrix},\quad
-              B =\begin{bmatrix}
-                     B_1     \\
-                     B_2     \\
-                     \vdots  \\
-                     B_{n_d} \\
-                 \end{bmatrix}                                                                                                                             \\
-              C & =\begin{bmatrix}
-                       C_1 & C_2 & \dots & C_{n_d} \\
-                   \end{bmatrix}, \quad
-              D = D                                                                                                                                         \\
+              \mathbf{A} & =\begin{bmatrix}
+                                p_1 I_{r_1\times r_1} &                       &        &                                   \\
+                                                      & p_1 I_{r_2\times r_2} &        &                                   \\
+                                                      &                       & \ddots &                                   \\
+                                                      &                       &        & p_{n_d} I_{r_{n_d}\times r_{n_d}} \\
+                            \end{bmatrix},\quad
+              \mathbf{B} =\begin{bmatrix}
+                              \mathbf{B_1}     \\
+                              \mathbf{B_2}     \\
+                              \vdots           \\
+                              \mathbf{B_{n_d}} \\
+                          \end{bmatrix}                                                                                                    \\
+              \mathbf{C} & =\begin{bmatrix}
+                                \mathbf{C_1} & \mathbf{C_2} & \dots & C_{n_d} \\
+                            \end{bmatrix}, \quad
+              \mathbf{D} = \mathbf{D}                                                                                                                                \\
           \end{align*}
 \end{enumerate}
 
@@ -284,45 +285,45 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}
 
 \ptitle{Properties}
 \begin{align*}
-     & \begin{Vmatrix}ax\end{Vmatrix}  =\begin{vmatrix}a\end{vmatrix}\begin{Vmatrix}x\end{Vmatrix},\quad\forall a\in\mathbb{R},x\in V & \text{(homogenity)}          \\
-     & \|x+y\|                         \leq\|x\|+\|y\|                                                                                & \text{(triangle inequality)} \\
-     & \left\|x\right\|                >0 \text{ for } x\neq0, \left\|x\right\|=0\leftrightarrow x=0                                  & \text{(positivity)}
+     & \begin{Vmatrix}a\mathbf{x}\end{Vmatrix}  =\begin{vmatrix}a\end{vmatrix}\begin{Vmatrix}\mathbf{x}\end{Vmatrix},\quad\forall a\in\mathbb{R},\mathbf{x}\in V & \text{(homogenity)}          \\
+     & \|\mathbf{x}+\mathbf{y}\|                         \leq\|\mathbf{x}\|+\|\mathbf{y}\|                                                                       & \text{(triangle inequality)} \\
+     & \left\|\mathbf{x}\right\|                >0 \text{ for } \mathbf{x}\neq0, \left\|\mathbf{x}\right\|=0\leftrightarrow \mathbf{x}=0                         & \text{(positivity)}
 \end{align*}
 
 \ptitle{Example Norms}
 \begin{itemize}
-    \item Euclidian norm: $\left\|x\right\|=\sqrt{x^{\prime}x}$
-    \item For Hermitian, pos. definite matrices: $\left\|x\right\|=\sqrt{x^{\prime}Qx}$
-    \item p-norm: $\|x\|_p=\left(\sum_{i=1}^nx_i^p\right)^{1/p}$ with the important cases
+    \item Euclidian norm: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\prime}\mathbf{x}}$
+    \item For Hermitian, pos. definite matrices: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\prime}Qx}$
+    \item p-norm: $\|\mathbf{x}\|_p=\left(\sum_{i=1}^nx_i^p\right)^{1/p}$ with the important cases
           \begin{align*}
-               & \|x\|_1=\sum_1^n\left|x_i\right|,               \\
-               & \|x\|_2=\sqrt{\sum_{i=1}^nx_i^2}                \\
-               & \left\|x\right\|_\infty=\max_i\left|x_i\right|.
+               & \|\mathbf{x}\|_1=\sum_1^n\left|x_i\right|,               \\
+               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^nx_i^2}                \\
+               & \left\|\mathbf{x}\right\|_\infty=\max_i\left|x_i\right|.
           \end{align*}
 \end{itemize}
 
 \subsubsection{Matrix Norms}
 A $m\times n$ complex matrix can be sen as an operator between the vector-spaces $\mathbb{C}^n$ and $\mathbb{C}^m$ i.e.
 \begin{equation*}
-    A^{m\times n}:\mathbb{C}^n\to\mathbb{C}^m,x\mapsto Ax
+    \mathbf{A}^{m\times n}:\mathbb{C}^n\to\mathbb{C}^m,\mathbf{x}\mapsto Ax
 \end{equation*}
 If we then provide the vector spaces with a norm, a \textbf{matrix norm is incuced} by the norms of the vector spaces it operates on.
 
 \begin{equation*}
-    \|A\|_p:=\sup_{x\neq0}\frac{\|Ax\|_p}{\|x\|_p}=\max_{\|x\|_p=1}\|Ax\|_p
+    \|\mathbf{A}\|_p:=\sup_{\mathbf{x}\neq0}\frac{\|\mathbf{Ax}\|_p}{\|\mathbf{x}\|_p}=\max_{\|\mathbf{x}\|_p=1}\|Ax\|_p
 \end{equation*}
-which means that the induced p-norm of A measures how much multiplication by $A$ amplifies the p-norm of a vector. In other words, $\|A\|_p$ is the \textbf{gain} of the operator $A$.
+which means that the induced p-norm of $\mathbf{A}$ measures how much multiplication by $\mathbf{A}$ amplifies the p-norm of a vector. In other words, $\|\mathbf{A}\|_p$ is the \textbf{gain} of the operator $\mathbf{A}$.
 
 
 \ptitle{Properties of Induced Norms}
 
 As for vectors, homogenity, triangle inequality and positivity hold for matrix norms too. Additionally we have:
 \begin{itemize}
-    \item $\left\|Ax\right\|_p\leq\left\|a\right\|_p\left\|x\right\|_p$ (from the definition)
+    \item $\left\|\mathbf{Ax}\right\|_p\leq\left\|a\right\|_p\left\|\mathbf{x}\right\|_p$ (from the definition)
           \begin{align*}
-              \|AB\|_p                  & \leq\|A\|_p\|B\|_p                           \\
-              \|ABx\|_p                 & \leq\|A\|_p\|Bx\|_p\leq\|A\|_p\|B\|_p\|x\|_p \\
-              \frac{\|ABx\|_p}{\|x\|_p} & \leq\|A\|_p\|B\|_p
+              \|\mathbf{AB}\|_p                                     & \leq\|\mathbf{A}\|_p\|\mathbf{B}\|_p                                                      \\
+              \|\mathbf{AB} \mathbf{x}\|_p                          & \leq\|\mathbf{A}\|_p\|\mathbf{Bx}\|_p\leq\|\mathbf{A}\|_p\|\mathbf{B}\|_p\|\mathbf{x}\|_p \\
+              \frac{\|\mathbf{AB} \mathbf{x}\|_p}{\|\mathbf{x}\|_p} & \leq\|\mathbf{A}\|_p\|\mathbf{B}\|_p
           \end{align*} (submultiplicative property)
 \end{itemize}
 
@@ -330,20 +331,20 @@ As for vectors, homogenity, triangle inequality and positivity hold for matrix n
 
 For the $p = 1$ norm we get
 \begin{equation*}
-    \|A\|_1=\max_j\sum_{i=1}^m|a_{ij}|
+    \|\mathbf{A}\|_1=\max_j\sum_{i=1}^m|a_{ij}|
 \end{equation*}
-and is achieved choosing $x$ as a vector of all zeros, except for $1$ (or $-1$) in the component corresponding to the maximum-sum column.\\
+and is achieved choosing $\mathbf{x}$ as a vector of all zeros, except for $1$ (or $-1$) in the component corresponding to the maximum-sum column.\\
 
 For the $p = \infty$ norm we get
 \begin{equation*}
-    \|A\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|
+    \|\mathbf{A}\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|
 \end{equation*}
-and is achieved choosing $x$ as a vector whose entries are all $+1$ or $-1$.
+and is achieved choosing $\mathbf{x}$ as a vector whose entries are all $+1$ or $-1$.
 
 \ptitle{Frobenius Norm}
 
 \begin{equation*}
-    \|A\|_F:=\left(\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2\right)^{1/2}=\text{Trace}(A^{\prime}A))^{1/2}
+    \|\mathbf{A}\|_F:=\left(\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2\right)^{1/2}=\text{Trace}(\mathbf{A}^{\prime}\mathbf{A}))^{1/2}
 \end{equation*}
 
 \begin{itemize}
