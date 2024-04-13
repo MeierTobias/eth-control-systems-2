@@ -85,17 +85,153 @@ where $G(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $z\in \m
     \item feedback interconnection ($G_2$ in FB path, $(I+G_1G_2)$ invertible, $G_1G_2\ne -I$): $y={(I+G_1G_2)}^{-1}G_1u$
 \end{itemize}
 \subsection{MIMO Poles and Zeros}
+
+\ptitle{SISO Poles and Zeros}
+
+\begin{itemize}
+    \item A pole with frequency $p$ is a generated frequency i.e. even if the excitation signal does not contain the frequency $p$ the output signal will contain this frequency as the initial condition response $x(t)=e^{At}x_0$ in modal form contains $p$
+    \item A (transmission) zero with frequency $z$ is an absorbed frequency i.e. even if the excitation signal contains a term $e^{zt}$ it will not be visible in the output.
+\end{itemize}
+
 \subsubsection{MIMO Poles}
-\paragraph{MIMO Stability}
+\begin{itemize}
+    \item Also in MIMO system the poles are the eigenvalues of $A$.
+    \item A MIMO system described by $\mathbf{G}(s)$ has a pole at $p$ if at least one of its entries has a pole at p.
+    \item The characteristic polynomial of a minimal realization of $G(s)$ is the least common multiple (LCM) of the denominators of all possible minors of $G(s)$.
+    \item The minors are all single entries of the $G(s)$ matrix as well as all possible square matrices (of all sizes!) in $G(s)$.
+    \item The poles of $G(s)$ are the roots of the aforementioned LCM term.
+\end{itemize}
+
+
+\ptitle{MIMO Stability}
+
+Same condition as in SISO sytems:
+\begin{itemize}
+    \item Stable if $Re(p_i \le 0)$ and the algebraic multiplicity of poles with zero real part is equal to their geometric multiplicity
+    \item Asymptotically stable if $Re(p_i<0)$
+\end{itemize}
+
 
 \subsubsection{MIMO Zeros}
-One can find MIMO zeros either from ...
+\begin{itemize}
+    \item One can find MIMO zeros either from $\mathbf{G}(s)$ (transmission zeros) or from state space representation (invariant zeros).
+    \item For minimal realizations they are the same.
+    \item Similar to eigenvalues and their eigenvectors (as known from poles) we have zero frequencies an associated zero vectors.
+\end{itemize}
+
+\ptitle{Transmission Zeros}
+
+$s = z_0$ is a transmission zero if there exists a non-zero, rational function $u_0(s)$ s.t.
+\begin{equation*}
+    \lim_{s\to z_0}\left[G(s)u_0(s)\right]e^{st}=0,\quad\forall t\geq0
+\end{equation*}
+which means that $\mathbf{G}(s)$ \textbf{loses rank} for $s\rightarrow z_0$.
+
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item A memo transmission zero is a pair of frequency $z0$ and direction $u_0(z_0)$.
+    \item It can happen that a zero of $G$ is not visible in any of it's entries $G_{ij}(s)$.
+    \item The direction of the zero decides whether a MIMO pole and zero at the same frequency \textbf{cancel} (i.e. there can be a pole and a zero at same frequency without cancellation!).
+    \item A zero means not just one entry of $y$ is zero but that given an input vector $u \ne 0$, $y$ becomes the zero vector.
+\end{itemize}
+
 \paragraph{Invariant Zeros}
+
+Using the system response to elementary inputs $x(t)=(sI-A)^{-1}Bu_0e^{st}$ and $y(t)=Cx_0e^{st}+Du_0e^{st}$ we must find the solution to
+\begin{equation*}
+    \begin{bmatrix}
+        sI-A & -B \\
+        C    & D
+    \end{bmatrix}
+    \begin{bmatrix}
+        x_i \\
+        u_i
+    \end{bmatrix}=0
+\end{equation*}
+
+
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item A non-trivial solution
+          \begin{equation*}
+              \begin{bmatrix}
+                  x_i \\
+                  u_i
+              \end{bmatrix}=\mathbf{0}
+          \end{equation*}
+          means $\mathbf{y}=\mathbf{0}$ even though input and state are not zero!
+    \item $s_i$ for which the aforementioned matrix becomes singular are called invariant zeros.
+    \item An invariant zero is associated with a vector.
+    \item Given zero initial condition and $u(t)=u_i e^{s_i t}$ (zero direction and zero frequency) we get
+          \begin{equation*}
+              y(t)=-Ce^{At}x_i
+          \end{equation*} which is independent of the input and becomes $0$ for a corresponding non-zero initial condition.
+    \item
+\end{itemize}
+
 
 \subsection{Realizations of MIMO Systems}
 \subsubsection{Naive Realization}
+Compute realization of each component of $G$ and assemble them to a new state space model.
+\begin{align*}
+    A & =\begin{bmatrix}
+             A_{11} &        &        &        \\
+                    & A_{12} &        &        \\
+                    &        & \ddots &        \\
+                    &        &        & A_{lm} \\
+         \end{bmatrix},
+    \quad B  =\begin{bmatrix}
+                  b_{11} &        &        \\
+                         & b_{12} &        \\
+                         &        & \ddots \\
+                  b_{21} &        &        \\
+                         & \ddots &        \\
+                         &        & b_{lm} \\
+              \end{bmatrix}                                                  \\
+    C & =\begin{bmatrix}
+              & c_{11} & c_{12} & \dots &        &       &        &        &       &        \\
+              &        &        &       & c_{21} & \dots &        &        &       &        \\
+              &        &        &       &        &       & \ddots &        &       &        \\
+              &        &        &       &        &       &        & c_{l1} & \dots & c_{lm} \\
+         \end{bmatrix} \\
+    D & = \begin{bmatrix}
+              d_{11} & \dots  & d_{1m}   \\
+              \vdots & \ddots & \vdots & \\
+              d_{l1} & \dots  & d_{lm} & \\
+          \end{bmatrix}
+\end{align*}
+
+\ptitle{Problems}
+
+\begin{itemize}
+    \item non-minimal
+    \item redundant poles (sum of entrie's poles)
+\end{itemize}
+
 \subsubsection{Gilbert's Realization}
 
+\ptitle{Calculation}
+
+Given
+\begin{equation*}
+    G(s)=\frac{H(s)}{d(s)}+D
+\end{equation*}
+where
+\begin{itemize}
+    \item $d(s)$ is the least common denominator of all entries in $G(s)$
+    \item $D=\lim_{s\to\infty}G(s)$ is the feed-through term.
+\end{itemize}
+
+Then, if $d(s)$ has no repeated roots, one can use Gilbert's method
+
+
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item Figures out the minimum number of ``copies'' of each pole that we need to construct a realization of a MIMO transfer function.
+\end{itemize}
 
 \subsection{MIMO Signal Amplification}
 \subsubsection{Norms}
