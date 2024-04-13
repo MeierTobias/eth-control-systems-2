@@ -302,13 +302,51 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}
 \end{itemize}
 
 \subsubsection{Matrix Norms}
+A $m\times n$ complex matrix can be sen as an operator between the vector-spaces $\mathbb{C}^n$ and $\mathbb{C}^m$ i.e.
+\begin{equation*}
+    A^{m\times n}:\mathbb{C}^n\to\mathbb{C}^m,x\mapsto Ax
+\end{equation*}
+If we then provide the vector spaces with a norm, a \textbf{matrix norm is incuced} by the norms of the vector spaces it operates on.
 
+\begin{equation*}
+    \|A\|_p:=\sup_{x\neq0}\frac{\|Ax\|_p}{\|x\|_p}=\max_{\|x\|_p=1}\|Ax\|_p
+\end{equation*}
+which means that the induced p-norm of A measures how much multiplication by $A$ amplifies the p-norm of a vector. In other words, $\|A\|_p$ is the \textbf{gain} of the operator $A$.
 
-
-Matrix norms are incuced by the norms of the vector spaces they operate on.
 
 \ptitle{Properties of Induced Norms}
 
+As for vectors, homogenity, triangle inequality and positivity hold for matrix norms too. Additionally we have:
+\begin{itemize}
+    \item $\left\|Ax\right\|_p\leq\left\|a\right\|_p\left\|x\right\|_p$ (from the definition)
+          \begin{align*}
+              \|AB\|_p                  & \leq\|A\|_p\|B\|_p                           \\
+              \|ABx\|_p                 & \leq\|A\|_p\|Bx\|_p\leq\|A\|_p\|B\|_p\|x\|_p \\
+              \frac{\|ABx\|_p}{\|x\|_p} & \leq\|A\|_p\|B\|_p
+          \end{align*} (submultiplicative property)
+\end{itemize}
 
-\ptitle{Example Norms}
+\ptitle{Calculations of Specific Induced Norms}
 
+For the $p = 1$ norm we get
+\begin{equation*}
+    \|A\|_1=\max_j\sum_{i=1}^m|a_{ij}|
+\end{equation*}
+and is achieved choosing $x$ as a vector of all zeros, except for $1$ (or $-1$) in the component corresponding to the maximum-sum column.\\
+
+For the $p = \infty$ norm we get
+\begin{equation*}
+    \|A\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|
+\end{equation*}
+and is achieved choosing $x$ as a vector whose entries are all $+1$ or $-1$.
+
+\ptitle{Frobenius Norm}
+
+\begin{equation*}
+    \|A\|_F:=\left(\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2\right)^{1/2}=\text{Trace}(A^{\prime}A))^{1/2}
+\end{equation*}
+
+\begin{itemize}
+    \item non-induced
+    \item still has submultiplicative property
+\end{itemize}
