@@ -11,7 +11,7 @@ MIMO Systems:
 \end{itemize}
 
 \subsubsection{MIMO State Space Representation}
-\begin{align*}
+\noindent\begin{align*}
     \dot{\mathbf{x}} & =\underbrace{\overbrace{\mathbf{A}}^{n\times n}\overbrace{\mathbf{x}}^{n\times1}}_{n\times1}+\underbrace{\overbrace{B}^{n\times m}\overbrace{\mathbf{u}}^{m\times1}}_{n\times1}                      \\
     \mathbf{y}\quad  & =\underbrace{\overbrace{\mathbf{C}}^{\ell\times n}\overbrace{\mathbf{x}}^{n\times1}}_{\ell\times1}+\underbrace{\overbrace{\mathbf{D}}^{\ell\times m}\overbrace{\mathbf{u}}^{m\times1}}_{\ell\times1}
 \end{align*}
@@ -23,12 +23,6 @@ with
 \end{itemize}
 
 \subsubsection{MIMO TF Matrix}
-
-\ptitle{Remarks}
-\begin{itemize}
-    \item Diagonal TF matrices represent \textbf{decoupled} systems
-    \item non-diagonal entries describe the of a certain input and a certain output
-\end{itemize}
 
 \ptitle{Continuous Time}
 
@@ -76,6 +70,12 @@ we get the output vector
 \end{equation*}
 where $\mathbf{G}(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $z\in \mathbb{C}$
 
+\ptitle{Remarks}
+\begin{itemize}
+    \item Diagonal TF matrices represent \textbf{decoupled} systems
+    \item non-diagonal entries describe the of a certain input and a certain output
+\end{itemize}
+
 \paragraph{Interconnections}
 
 \begin{itemize}
@@ -83,24 +83,25 @@ where $\mathbf{G}(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for
     \item one cannote divide by matrices: instead multiply by inverse
     \item to find the interconnection start at output $\mathbf{y}$ and procceed against signal flow towards the input $\mathbf{u}$
     \item series interconnection ($\mathbf{G_1}$ closer to input): $\mathbf{y}=\mathbf{G_2G_1u}$
-    \item feedback interconnection ($\mathbf{G_2}$ in FB path, $(\mathbf{I}+\mathbf{G_1G_2})$ invertible, $\mathbf{G_1G_2}\ne -\mathbf{I}$): $\mathbf{y}={(\mathbf{I}+\mathbf{G_1G_2})}^{-1}\mathbf{G_1u}$
+    \item feedback interconnection ($\mathbf{G_2}$ in FB path, $(\mathbf{I}+\mathbf{G_1G_2})$ invertible, $\mathbf{G_1G_2}\ne -\mathbf{I}$):\newline $\mathbf{y}={(\mathbf{I}+\mathbf{G_1G_2})}^{-1}\mathbf{G_1u}$
 \end{itemize}
 \subsection{MIMO Poles and Zeros}
 
+% Is this really necessary?
 \ptitle{SISO Poles and Zeros}
 
 \begin{itemize}
-    \item A pole with frequency $p$ is a generated frequency i.e. even if the excitation signal does not contain the frequency $p$ the output signal will contain this frequency as the initial condition response $\mathbf{x}(t)=e^{\mathbf{A}t}x_0$ in modal form contains $p$
-    \item A (transmission) zero with frequency $z$ is an absorbed frequency i.e. even if the excitation signal contains a term $e^{zt}$ it will not be visible in the output.
+    \item A pole with frequency $p$ is a generated frequency i.e.\ even if the excitation signal does not contain the frequency $p$ the output signal will contain this frequency as the initial condition response $\mathbf{x}(t)=e^{\mathbf{A}t}x_0$ in modal form contains $p$
+    \item A (transmission) zero with frequency $z$ is an absorbed frequency i.e.\ even if the excitation signal contains a term $e^{zt}$ it will not be visible in the output.
 \end{itemize}
 
 \subsubsection{MIMO Poles}
 \begin{itemize}
-    \item Also in MIMO system the poles are the eigenvalues of $\mathbf{A}$.
+    \item In MIMO system the poles are the eigenvalues of $\mathbf{A}$.
     \item A MIMO system described by $\mathbf{G}(s)$ has a pole at $p$ if at least one of its entries has a pole at p.
-    \item The characteristic polynomial of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors of $\mathbf{G}(s)$.
-    \item The minors are all single entries of the $\mathbf{G}(s)$ matrix as well as all possible square matrices (of all sizes!) in $\mathbf{G}(s)$.
-    \item The poles of $\mathbf{G}(s)$ are the roots of the aforementioned LCM term.
+    \item The \textbf{minors} are all single entries of the $\mathbf{G}(s)$ matrix as well as all possible square matrices (of all sizes!) in $\mathbf{G}(s)$.
+    \item The \textbf{characteristic polynomial} $d(s)$ of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors $G_{ij}$.
+    \item The \textbf{poles} of $\mathbf{G}(s)$ are the roots of the aforementioned LCM term.
 \end{itemize}
 
 
@@ -108,8 +109,8 @@ where $\mathbf{G}(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for
 
 Same condition as in SISO sytems:
 \begin{itemize}
-    \item Stable if $Re(p_i \le 0)$ and the algebraic multiplicity of poles with zero real part is equal to their geometric multiplicity
-    \item Asymptotically stable if $Re(p_i<0)$
+    \item \textbf{Stable} if $\mathrm{Re}(p_i \le 0)$ and the algebraic multiplicity of poles with zero real part is equal to their geometric multiplicity.
+    \item \textbf{Asymptotically stable}\ if $\mathrm{Re}(p_i<0)$
 \end{itemize}
 
 
@@ -117,12 +118,12 @@ Same condition as in SISO sytems:
 \begin{itemize}
     \item One can find MIMO zeros either from $\mathbf{G}(s)$ (transmission zeros) or from state space representation (invariant zeros).
     \item For minimal realizations they are the same.
-    \item Similar to eigenvalues and their eigenvectors (as known from poles) we have zero frequencies an associated zero vectors.
+          % \item Similar to eigenvalues and their eigenvectors (as known from poles) we have zero frequencies and associated zero vectors.
 \end{itemize}
 
-\ptitle{Transmission Zeros}
+\paragraph{Transmission Zeros}
 
-$s = z_0$ is a transmission zero if there exists a non-zero, rational function $u_0(s)$ s.t.
+$s = z_0$ is a transmission zero if there exists a non-zero, rational function $\mathbf{u}_0(s)$ s.t.
 \begin{equation*}
     \lim_{s\to z_0}\left[\mathbf{G}(s)u_0(s)\right]e^{st}=0,\quad\forall t\geq0
 \end{equation*}
@@ -131,45 +132,37 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\rightarrow 
 \ptitle{Remarks}
 
 \begin{itemize}
-    \item A MIMO transmission zero is a pair of frequency $z0$ and direction $u_0(z_0)$.
+    \item A MIMO transmission zero is a pair of frequency $z_0$ and direction $u_0(z_0)$.
     \item It can happen that a zero of $\mathbf{G}$ is not visible in any of it's entries $G_{ij}(s)$.
-    \item The direction of the zero decides whether a MIMO pole and zero at the same frequency \textbf{cancel} (i.e. there can be a pole and a zero at same frequency without cancellation!).
+    \item The direction of the zero decides whether a MIMO pole and zero at the same frequency \textbf{cancel} (i.e.\ there can be a pole and a zero at same frequency without cancellation!).
     \item A zero means not just one entry of $\mathbf{y}$ is zero but that given an input vector $\mathbf{u} \ne \mathbf{0}$, $\mathbf{y}$ becomes the zero vector.
 \end{itemize}
 
 \paragraph{Invariant Zeros}
 
-Using the system response to elementary inputs $\mathbf{x}(t)=(sI-\mathbf{A})^{-1}Bu_0e^{st}$ and $\mathbf{y}(t)=Cx_0e^{st}+Du_0e^{st}$ we must find the solution to
+Using the system response to elementary inputs $\mathbf{x}(t)={(sI-\mathbf{A})}^{-1}\mathbf{Bu}_i e^{st}$ and $\mathbf{y}(t)=\mathbf{Cx}_i e^{st}+\mathbf{Du}_i e^{st}$ we must find the solution to
 \begin{equation*}
     \begin{bmatrix}
-        s\mathbf{I}-\mathbf{A} & -B         \\
+        s\mathbf{I}-\mathbf{A} & -\mathbf{B} \\
         \mathbf{C}             & \mathbf{D}
     \end{bmatrix}
     \begin{bmatrix}
-        x_i \\
-        u_i
-    \end{bmatrix}=0
+        \mathbf{x}_i \\
+        \mathbf{u}_i
+    \end{bmatrix}=\mathbf{0}
 \end{equation*}
 
 
 \ptitle{Remarks}
 
 \begin{itemize}
-    \item A non-trivial solution
-          \begin{equation*}
-              \begin{bmatrix}
-                  \mathbf{x_i} \\
-                  \mathbf{u_i}
-              \end{bmatrix}=\mathbf{0}
-          \end{equation*}
-          means $\mathbf{\mathbf{y}}=\mathbf{0}$ even though input and state are not zero!
-    \item $s_i$ for which the aforementioned matrix becomes singular are called invariant zeros.
-    \item An invariant zero is associated with a vector.
-    \item Given zero initial condition and $\mathbf{u}(t)=u_i e^{s_i t}$ (zero direction and zero frequency) we get
+    \item A non-trivial solution ${\left[\mathbf{x_i}, \mathbf{u_i}\right]}^\mathcal{T}\neq0$ means $\mathbf{\mathbf{y}}=\mathbf{0}$ even though input and state are not zero.
+    \item $s_i$ for which the aforementioned matrix becomes singular are called \textbf{invariant zeros}.
+    \item An invariant zero $z_i$ is associated with a vector $\mathbf{u}_i$.
+    \item Given zero initial condition and $\mathbf{u}(t)=\mathbf{u}_i e^{s_i t}$ (zero direction and zero frequency) we get
           \begin{equation*}
               \mathbf{y}(t)=-\mathbf{C}e^{\mathbf{A}t}\mathbf{x_i}
           \end{equation*} which is independent of the input and becomes $0$ for a corresponding non-zero initial condition.
-    \item
 \end{itemize}
 
 
@@ -223,8 +216,10 @@ where
     \item $\mathbf{D}=\lim_{s\to\infty}\mathbf{G}(s)$ is the feed-through term.
 \end{itemize}
 
-Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}
+\newpar{}
+Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
 
+\newpar{}
 \begin{enumerate}
     \item Write a (matrix) partial fraction expansion of $H(s)=d(s$)
           \begin{equation*}
@@ -246,21 +241,21 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}
     \item Assemble the state space model as
           \begin{align*}
               \mathbf{A} & =\begin{bmatrix}
-                                p_1 I_{r_1\times r_1} &                       &        &                                   \\
-                                                      & p_1 I_{r_2\times r_2} &        &                                   \\
-                                                      &                       & \ddots &                                   \\
-                                                      &                       &        & p_{n_d} I_{r_{n_d}\times r_{n_d}} \\
+                                p_1 \mathbf{I}_{r_1\times r_1} &                                &        &                                            \\
+                                                               & p_1 \mathbf{I}_{r_2\times r_2} &        &                                            \\
+                                                               &                                & \ddots &                                            \\
+                                                               &                                &        & p_{n_d} \mathbf{I}_{r_{n_d}\times r_{n_d}} \\
                             \end{bmatrix},\quad
-              \mathbf{B} =\begin{bmatrix}
-                              \mathbf{B_1}     \\
-                              \mathbf{B_2}     \\
-                              \vdots           \\
-                              \mathbf{B_{n_d}} \\
-                          \end{bmatrix}                                                                                                    \\
+              \mathbf{B} & =\begin{bmatrix}
+                                \mathbf{B_1}     \\
+                                \mathbf{B_2}     \\
+                                \vdots           \\
+                                \mathbf{B_{n_d}} \\
+                            \end{bmatrix}                                                                               \\
               \mathbf{C} & =\begin{bmatrix}
-                                \mathbf{C_1} & \mathbf{C_2} & \dots & C_{n_d} \\
+                                \mathbf{C_1} & \mathbf{C_2} & \dots & \mathbf{C}_{n_d} \\
                             \end{bmatrix}, \quad
-              \mathbf{D} = \mathbf{D}                                                                                                                                \\
+              \mathbf{D} & = \mathbf{D}                                                                                                           \\
           \end{align*}
 \end{enumerate}
 
@@ -276,55 +271,59 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}
 \ptitle{Key Points}
 
 \begin{itemize}
-    \item Different input directions can generate wildly different outputs, even if they have the same entries (at different locations)
+    \item Different input directions can generate wildly different outputs, even if they have the same entries (at different locations) and frequency
     \item Directionality depends on frequency as well
-    \item We need ways to measure ``sizes'' in order to compare effects in different directions.
+    \item Norms are a way to measure ``sizes'' in order to compare effects in different directions.
 \end{itemize}
 
 \subsubsection{Norms}
 
 \ptitle{Properties}
 \begin{align*}
-     & \begin{Vmatrix}a\mathbf{x}\end{Vmatrix}  =\begin{vmatrix}a\end{vmatrix}\begin{Vmatrix}\mathbf{x}\end{Vmatrix},\quad\forall a\in\mathbb{R},\mathbf{x}\in V & \text{(homogenity)}          \\
-     & \|\mathbf{x}+\mathbf{y}\|                         \leq\|\mathbf{x}\|+\|\mathbf{y}\|                                                                       & \text{(triangle inequality)} \\
-     & \left\|\mathbf{x}\right\|                >0 \text{ for } \mathbf{x}\neq0, \left\|\mathbf{x}\right\|=0\leftrightarrow \mathbf{x}=0                         & \text{(positivity)}
+     & \left\| a\mathbf{x}\right\|  =\left|a\right|\left\|\mathbf{x}\right\|,\quad\forall a\in\mathbb{R},\mathbf{x}\in V                 & \text{(homogenity)}          \\
+     & \|\mathbf{x}+\mathbf{y}\|                         \leq\|\mathbf{x}\|+\|\mathbf{y}\|                                               & \text{(triangle inequality)} \\
+     & \left\|\mathbf{x}\right\|                >0 \text{ for } \mathbf{x}\neq0, \left\|\mathbf{x}\right\|=0\leftrightarrow \mathbf{x}=0 & \text{(positivity)}
 \end{align*}
 
 \ptitle{Example Norms}
 \begin{itemize}
-    \item Euclidian norm: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\prime}\mathbf{x}}$
-    \item For Hermitian, pos. definite matrices: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\prime}Qx}$
-    \item p-norm: $\|\mathbf{x}\|_p=\left(\sum_{i=1}^nx_i^p\right)^{1/p}$ with the important cases
+    \item Euclidian norm: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}}\mathbf{x}}$
+    \item For Hermitian, pos.\ definite matrices: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}} Qx}$
+    \item p-norm: $\|\mathbf{x}\|_p{=\left(\sum_{i=1}^n x_i^p\right)}^{1/p}$ with the important cases
           \begin{align*}
                & \|\mathbf{x}\|_1=\sum_1^n\left|x_i\right|,               \\
-               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^nx_i^2}                \\
+               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^n {x_i}^2}             \\
                & \left\|\mathbf{x}\right\|_\infty=\max_i\left|x_i\right|.
           \end{align*}
 \end{itemize}
 
 \subsubsection{Matrix Norms}
-A $m\times n$ complex matrix can be sen as an operator between the vector-spaces $\mathbb{C}^n$ and $\mathbb{C}^m$ i.e.
+A $m\times n$ complex matrix can be seen as an operator between the vector-spaces $\mathbb{C}^n$ and $\mathbb{C}^m$ i.e.
 \begin{equation*}
     \mathbf{A}^{m\times n}:\mathbb{C}^n\to\mathbb{C}^m,\mathbf{x}\mapsto Ax
 \end{equation*}
 If we then provide the vector spaces with a norm, a \textbf{matrix norm is incuced} by the norms of the vector spaces it operates on.
 
 \begin{equation*}
-    \|\mathbf{A}\|_p:=\sup_{\mathbf{x}\neq0}\frac{\|\mathbf{Ax}\|_p}{\|\mathbf{x}\|_p}=\max_{\|\mathbf{x}\|_p=1}\|Ax\|_p
+    \|\mathbf{A}\|_p:=\sup_{\mathbf{x}\neq0}\frac{\|\mathbf{Ax}\|_p}{\|\mathbf{x}\|_p}=\max_{\|\mathbf{x}\|_p=1}\|\mathbf{Ax}\|_p
 \end{equation*}
 which means that the induced p-norm of $\mathbf{A}$ measures how much multiplication by $\mathbf{A}$ amplifies the p-norm of a vector. In other words, $\|\mathbf{A}\|_p$ is the \textbf{gain} of the operator $\mathbf{A}$.
 
-
+\newpar{}
 \ptitle{Properties of Induced Norms}
 
 As for vectors, homogenity, triangle inequality and positivity hold for matrix norms too. Additionally we have:
 \begin{itemize}
-    \item $\left\|\mathbf{Ax}\right\|_p\leq\left\|a\right\|_p\left\|\mathbf{x}\right\|_p$ (from the definition)
+    \item
+          \noindent\begin{equation*}
+              \left\|\mathbf{Ax}\right\|_p\leq\left\|a\right\|_p\left\|\mathbf{x}\right\|_p
+          \end{equation*}
+    \item submultiplicative property:
           \begin{align*}
               \|\mathbf{AB}\|_p                                     & \leq\|\mathbf{A}\|_p\|\mathbf{B}\|_p                                                      \\
               \|\mathbf{AB} \mathbf{x}\|_p                          & \leq\|\mathbf{A}\|_p\|\mathbf{Bx}\|_p\leq\|\mathbf{A}\|_p\|\mathbf{B}\|_p\|\mathbf{x}\|_p \\
               \frac{\|\mathbf{AB} \mathbf{x}\|_p}{\|\mathbf{x}\|_p} & \leq\|\mathbf{A}\|_p\|\mathbf{B}\|_p
-          \end{align*} (submultiplicative property)
+          \end{align*}
 \end{itemize}
 
 \ptitle{Calculations of Specific Induced Norms}
@@ -344,7 +343,7 @@ and is achieved choosing $\mathbf{x}$ as a vector whose entries are all $+1$ or 
 \ptitle{Frobenius Norm}
 
 \begin{equation*}
-    \|\mathbf{A}\|_F:=\left(\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2\right)^{1/2}=\text{Trace}(\mathbf{A}^{\prime}\mathbf{A}))^{1/2}
+    \|\mathbf{A}\|_F:={\left(\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2\right)}^{1/2}=\text{Trace}{(\mathbf{A}^{\mathsf{H}}\mathbf{A})}^{1/2}
 \end{equation*}
 
 \begin{itemize}
