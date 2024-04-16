@@ -45,7 +45,11 @@ we get the output vector
         u_{m}
     \end{bmatrix}e^{st}
 \end{equation*}
-where $\mathbf{G}(s)\in\mathbb{\mathbf{C}}^{\ell\times m}$ is a complex-valued matrix for $s\in \mathbb{C}$
+where $\mathbf{G}(s)\in\mathbb{\mathbf{C}}^{\ell\times m}$ is a complex-valued matrix for $s\in \mathbb{C}$:
+
+\begin{equation*}
+    \mathbf{G}(s)=\mathbf{C}\cdot(s\cdot\mathbf{I}-\mathbf{A})^{-1}\cdot \mathbf{B}+\mathbf{D}
+\end{equation*}
 
 \ptitle{Discrete Time}
 
@@ -68,7 +72,10 @@ we get the output vector
         u_{m}
     \end{bmatrix}z^k
 \end{equation*}
-where $\mathbf{G}(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $z\in \mathbb{C}$
+where $\mathbf{G}(z)\in\mathbb{C}^{\ell\times m}$ is a complex-valued matrix for $z\in \mathbb{C}$:
+\begin{equation*}
+    \mathbf{G}(z)=\mathbf{C}\cdot(z\cdot\mathbf{I}-\mathbf{A})^{-1}\cdot \mathbf{B}+\mathbf{D}
+\end{equation*}
 
 \ptitle{Remarks}
 \begin{itemize}
@@ -234,7 +241,7 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
               \item Ensure that $d(s)$ has no repeated roots (otherwise one has to use the generalized Gilbert's method).
               \item Check $n\le n_d$ after calculating $r_i$.
           \end{itemize}
-    \item Write $\mathbf{R_i}=\mathbf{\overbrace{\mathbf{C}_i}^{l\times r_i}\overbrace{ \mathbf{B}_i}^{r_i \times m}}$ for some $\mathbf{B_i}$, $\mathbf{C_i}$ so that
+    \item Write $\overbrace{\mathbf{R_i}}^{l\times m}=\mathbf{\overbrace{\mathbf{C}_i}^{l\times r_i}\overbrace{ \mathbf{B}_i}^{r_i \times m}}$ for some $\mathbf{B_i}$, $\mathbf{C_i}$ so that
           \begin{itemize}
               \item $\mathbf{B_i}$ has $m$ (\# inputs) columns
               \item $\mathbf{C_i}$ has $l$ (\# outputs) rows
@@ -257,7 +264,7 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
               \mathbf{C} & =\begin{bmatrix}
                                 \mathbf{C_1} & \mathbf{C_2} & \dots & \mathbf{C}_{n_d} \\
                             \end{bmatrix}, \quad
-              \mathbf{D} & = \mathbf{D}                                                                                                           
+              \mathbf{D} & = \mathbf{D}
           \end{align*}
 \end{enumerate}
 
