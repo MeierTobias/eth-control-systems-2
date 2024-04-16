@@ -7,7 +7,7 @@ An LTI system is reachable if there exists a control signal that takes the syste
     \mathbf{R} :=   & \begin{bmatrix}
                           \mathbf{B} & \mathbf{AB} & \mathbf{A}^2\mathbf{B} & \mathbf{A}^3\mathbf{B} & \cdots & \mathbf{A}^{n-1}\mathbf{B}
                       \end{bmatrix} \\
-    \mathbf{x}[n] = & \; \mathbf{RU},\quad \mathbf{U}={\bigl[\mathbf{u}[0],\ldots, \mathbf{u}[n]\bigr]}^T
+    \mathbf{x}[n] = & \; \mathbf{RU},\quad \mathbf{U}={\bigl[\mathbf{u}[0],\ldots, \mathbf{u}[n]\bigr]}^{\mathsf{T}}
 \end{align*}
 Mathematically expressed, a system is reachable if and only if the reachability matrix $\mathbf{R}$ has \textbf{full row rank} $n$.
 \begin{align*}
@@ -47,7 +47,7 @@ An LTI system is observable if, for any initial condition $\mathbf{x}_0$, this i
                         \vdots        \\
                         \mathbf{CA}^{n-1}
                     \end{bmatrix}                                                                        \\
-    \mathbf{Y} =  & \; \mathbf{Ox}[n],\quad \mathbf{Y}={\left[\mathbf{y}[0],\ldots, \mathbf{y}[n]\right]}^T
+    \mathbf{Y} =  & \; \mathbf{Ox}[n],\quad \mathbf{Y}={\left[\mathbf{y}[0],\ldots, \mathbf{y}[n]\right]}^{\mathsf{T}}
 \end{align*}
 Mathematically expressed, a system is observable if and only if the observability matrix $\mathbf{O}$ has \textbf{full column rank} $n$.
 \begin{align*}
