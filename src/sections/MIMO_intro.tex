@@ -31,7 +31,7 @@ For an elementary input vector
     \mathbf{u}(t)=\underbrace{\begin{bmatrix}u_{1}  \\
             \vdots \\
             u_{m}
-        \end{bmatrix}}_{direction} e^{st}
+        \end{bmatrix}}_{\mathsf{direction}} e^{st}
 \end{equation*}
 we get the output vector
 \begin{equation*}
@@ -58,7 +58,7 @@ For an elementary input vector
     \mathbf{u}[k]=\underbrace{\begin{bmatrix}u_{1}  \\
             \vdots \\
             u_{m}
-        \end{bmatrix}}_{direction} z^k
+        \end{bmatrix}}_{\mathsf{direction}} z^k
 \end{equation*}
 we get the output vector
 \begin{equation*}
@@ -159,12 +159,20 @@ Using the system response to elementary inputs $\mathbf{x}(t)={(sI-\mathbf{A})}^
     \end{bmatrix}=\mathbf{0}
 \end{equation*}
 
+Subsequently, the \textbf{invariant zeros} are the values of $s$ for which the aforementioned matrix becomes singular:
+
+\noindent\begin{equation*}
+    \det \left(\begin{bmatrix}
+            s\mathbf{I}-\mathbf{A} & -\mathbf{B} \\
+            \mathbf{C}             & \mathbf{D}
+        \end{bmatrix}\right) \overset{!}{=}0
+\end{equation*}
+
 
 \ptitle{Remarks}
 
 \begin{itemize}
-    \item A non-trivial solution ${\left[\mathbf{x_i}, \mathbf{u_i}\right]}^\mathcal{T}\neq0$ means $\mathbf{\mathbf{y}}=\mathbf{0}$ even though input and state are not zero.
-    \item $s_i$ for which the aforementioned matrix becomes singular are called \textbf{invariant zeros}.
+    \item A non-trivial solution ${\left[\mathbf{x_i}, \mathbf{u_i}\right]}^\mathsf{T}\neq0$ means $\mathbf{\mathbf{y}}=\mathbf{0}$ even though input and state are not zero.
     \item An invariant zero $z_i$ is associated with a vector $\mathbf{u}_i$.
     \item Given zero initial condition and $\mathbf{u}(t)=\mathbf{u}_i e^{s_i t}$ (zero direction and zero frequency) we get
           \begin{equation*}
@@ -255,16 +263,16 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
                                                                &                                & \ddots &                                            \\
                                                                &                                &        & p_{n_d} \mathbf{I}_{r_{n_d}\times r_{n_d}} \\
                             \end{bmatrix},\quad
-              \mathbf{B} & =\begin{bmatrix}
-                                \mathbf{B_1}     \\
-                                \mathbf{B_2}     \\
-                                \vdots           \\
-                                \mathbf{B_{n_d}} \\
-                            \end{bmatrix}                                                                               \\                                                                             \\
+              \mathbf{B}  =\begin{bmatrix}
+                               \mathbf{B_1}     \\
+                               \mathbf{B_2}     \\
+                               \vdots           \\
+                               \mathbf{B_{n_d}} \\
+                           \end{bmatrix}                                                                                \\                                                                             \\
               \mathbf{C} & =\begin{bmatrix}
                                 \mathbf{C_1} & \mathbf{C_2} & \dots & \mathbf{C}_{n_d} \\
                             \end{bmatrix}, \quad
-              \mathbf{D} & = \mathbf{D}
+              \mathbf{D}  = \mathbf{D}
           \end{align*}
 \end{enumerate}
 
