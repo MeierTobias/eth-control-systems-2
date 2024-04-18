@@ -117,14 +117,24 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
 
 \subsubsection{Invariant Zeros}
 
-Invariant zeros are the values of $s$ for which the following matrix becomes singular and there for the determinant is zero:
+Invariant zeros are the values of $s$ for which the following matrix becomes singular and therefor the determinant of the matrix is zero:
 \begin{equation*}
     \det \left(\begin{bmatrix}
             s\mathbf{I}-\mathbf{A} & -\mathbf{B} \\
             \mathbf{C}             & \mathbf{D}
         \end{bmatrix}\right) \overset{!}{=}0
 \end{equation*}
-
+The corresponding input vectors can then be determined by plugging the invariant zeros into the equation below:
+\begin{equation*}
+    \begin{bmatrix}
+        s\mathbf{I}-\mathbf{A} & -\mathbf{B} \\
+        \mathbf{C}             & \mathbf{D}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{x}_i \\
+        \mathbf{u}_i
+    \end{bmatrix}=\mathbf{0}
+\end{equation*}
 
 \ptitle{Remarks}
 
@@ -265,7 +275,7 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
 
 \ptitle{Properties}
 \begin{align*}
-     & \left\| a\mathbf{x}\right\|  =\left|a\right|\left\|\mathbf{x}\right\|,\quad\forall a\in\mathbb{R},\mathbf{x}\in V                 & \text{(homogeneity)}          \\
+     & \left\| a\mathbf{x}\right\|  =\left|a\right|\left\|\mathbf{x}\right\|,\quad\forall a\in\mathbb{R},\mathbf{x}\in V                 & \text{(homogeneity)}         \\
      & \left\|\mathbf{x}+\mathbf{y}\right\|                         \leq\|\mathbf{x}\|+\|\mathbf{y}\|                                    & \text{(triangle inequality)} \\
      & \left\|\mathbf{x}\right\|                >0 \text{ for } \mathbf{x}\neq0, \left\|\mathbf{x}\right\|=0\leftrightarrow \mathbf{x}=0 & \text{(positivity)}
 \end{align*}
