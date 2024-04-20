@@ -36,7 +36,7 @@ where $\mathbf{G}(s)\in\mathbb{\mathbb{C}}^{\ell\times m}$ is a complex-valued m
 
 \ptitle{Discrete Time}
 
-The same holds for the discrete time case where $s^{st}$ is replaced by $z^k$ and $s$ by $z$. For further details see~\ref{disc:tf}.
+The same holds for the discrete time case where $e^{st}$ is replaced by $z^k$ and $s$ by $z$. For further details see~\ref{disc:tf}.
 
 \newpar{}
 \ptitle{Remarks}
@@ -76,10 +76,12 @@ To find the interconnection start at output $\mathbf{y}$ and proceed against sig
 
 \begin{itemize}
     \item In MIMO systems the poles are the eigenvalues of $\mathbf{A}$.
-    \item The \textbf{minors} are all single entries of the $\mathbf{G}(s)$ matrix as well as all possible square matrices (of all sizes!) in $\mathbf{G}(s)$. % TODO: what does that mean?
+    \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as all possible square matrices (of all sizes!) in $\mathbf{G}(s)$.
     \item The \textbf{characteristic polynomial} $d(s)$ of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors $G_{ij}$.
     \item The \textbf{poles} of $\mathbf{G}(s)$ are the roots of the aforementioned LCM term.
 \end{itemize}
+
+% TODO: Example?
 
 \newpar{}
 \ptitle{Stability}
