@@ -1,5 +1,31 @@
 \section{Appendix}
 \subsection{Matrices}
+\subsubsection{Matrix Properties}\label{app:mat_prop}
+
+\ptitle{Orthogonal Matrix}
+\noindent\begin{equation*}
+    \mathbf{U}^{\mathsf{T}}\mathbf{U}=\mathbf{UU}^{\mathsf{T}}=\mathbf{I}\quad \mathbf{U}\in \mathbb{R}^{n\times n}
+\end{equation*}
+
+\ptitle{Unitary Matrix}
+\noindent\begin{equation*}
+    \mathbf{U}^{\mathsf{H}}\mathbf{U}=\mathbf{UU}^{\mathsf{H}}=\mathbf{I}\quad \mathbf{U}\in \mathbb{R}^{n\times n}
+\end{equation*}
+\begin{itemize}
+    \item preserves the euclidian norm:
+          \noindent\begin{equation*}
+              \|\mathbf{Ux}\| _2=\|\mathbf{x}\|_2 \quad \forall \mathbf{x} \in \mathbb{C}^n
+          \end{equation*}
+\end{itemize}
+
+\ptitle{Hermitian Matrix}
+\noindent\begin{equation*}
+    \mathbf{S}=\mathbf{S}^{\mathsf{H}}
+\end{equation*}
+\begin{itemize}
+    \item For every hermitian matrix $\mathbf{S}$ exists a unitary matrix $\mathbf{U}$ s.t. $\mathbf{U}^{\mathsf{H}}\mathbf{SU}$ is a diagonal matrix.
+\end{itemize}
+
 \subsubsection{Transpose, Adjoint and Inverse}
 \noindent\begin{align*}
     \mathbf{A}^\mathsf{H}                  & = {(\mathbf{A}^\mathsf{T})}^*                   \\[.75em]
@@ -69,3 +95,4 @@
     \det(A)=\sum_{j=1}^n \underbrace{{(-1)}^{i+j}}_{\textsf{checkboard pattern}}\cdot a_{i,j}\cdot\underbrace{m_{i,j}}_{\textsf{minor: |submatrix of }\mathbf{A}|}
 \end{equation*}
 \textbf{Remark} Any row or column can be chosen (choose wisely: 0)
+

@@ -396,3 +396,93 @@ For the $p = \infty$ norm we get the \textbf{max-sum row}:
     \item non-induced
     \item still has submultiplicative property
 \end{itemize}
+
+\subsubsection{Singular Value Decomposition (SVD)}
+
+Any matrix $\mathbf{A}\in \mathbb{C}^{m\times n}$ can be decomposed as
+\noindent\begin{equation*}
+    \mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{\mathsf{H}}\quad \begin{cases}
+        \mathbf{U}\in \mathbb{C}^{m\times m} & \text{left singular vectors}                          \\
+        \Sigma\in \mathbb{C}^{m\times n}     & \text{singular values }\sigma_i \text{, desc.\ order} \\\
+        \mathbf{V}\in \mathbb{C}^{n\times n} & \text{right singular vectors}\
+    \end{cases}
+\end{equation*}
+
+\ptitle{$2\times 3$ Example}
+
+\noindent\begin{equation*}
+    \mathbf{A}=
+    \underbrace{\begin{bmatrix}
+            \vert        & \vert        \\
+            \mathbf{u}_1 & \mathbf{u}_2 \\
+            \vert        & \vert
+        \end{bmatrix}}_{\textsf{Rotation}}
+    \underbrace{\begin{bmatrix}
+            \sigma_1 & 0        & 0 \\
+            0        & \sigma_2 & 0
+        \end{bmatrix}}_{\textsf{Scaling \& Dimensions}}
+    \underbrace{\begin{bmatrix}
+            \text{---} & \mathbf{v_1} & \text{---} \\
+            \text{---} & \mathbf{v_2} & \text{---} \\
+            \text{---} & \mathbf{v_3} & \text{---}
+        \end{bmatrix}}_{\textsf{Rotation}}
+\end{equation*}
+with eigenvalues
+\noindent\begin{gather*}
+    \lambda_{u_1}=\lambda_{v_1}={\sigma_1}^2\\
+    \lambda_{u_2}=\lambda_{v_2}={\sigma_2}^2\\
+    \lambda_{v_3}=0
+\end{gather*}
+
+
+\paragraph{Procedure}
+Assuming $\mathbf{A}$ has rank = smaller dimension:
+\begin{enumerate}
+    \item calculate eigenvalues (start with smaller matrix, pad with 0)
+          \noindent\begin{align*}
+               & \lambda_{\mathbf{U}}\in \mathbb{R}^(m): & \det\left(\lambda \mathbf{I}-\mathbf{AA}^{\mathsf{H}}\right)\overset{!}{=}0          \\
+               & \lambda_{\mathbf{V}}\in \mathbb{R}^(n): & \det\left(\lambda \mathbf{I}-\mathbf{A}^{\mathsf{H}}\mathbf{A}\right)\overset{!}{=}0
+          \end{align*}
+    \item calculate eigenvectors of $\mathbf{U},\mathbf{V}$
+          \noindent\begin{align*}
+               & \mathbf{U}: & \left(\lambda_{\mathbf{U}} \mathbf{I} -\mathbf{AA}^{\mathsf{H}}\right)\mathbf{x}           & \overset{!}{=}\mathbf{x} \\
+               & \mathbf{V}: & \left(\lambda_{\mathbf{V}} \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{x} & \overset{!}{=}\mathbf{x}
+          \end{align*}
+    \item calculate singular values $\sigma\in \mathbb{R}^{\min(m,n)}$ and compose $\Sigma$
+          \noindent\begin{align*}
+              \sigma_i & = \sqrt{\lambda_{u_i}} = \sqrt{\lambda_{v_i}}\quad i=0,1,\cdots, \min(m,n) \\
+              \Sigma   & = \begin{bmatrix}
+                               \sigma_1 & \cdots & 0          & \mathbf{0} \\
+                               \vdots   & \ddots & \vdots     & \mathbf{0} \\
+                               0        & \cdots & \sigma_{m} & \mathbf{0}
+                           \end{bmatrix}\text{ or }
+              \begin{bmatrix}
+                  \sigma_1   & \cdots & 0          \\
+                  \vdots     & \ddots & \vdots     \\
+                  0          & \cdots & \sigma_{n} \\
+                  \mathbf{0} & \cdots & \mathbf{0}
+              \end{bmatrix}
+          \end{align*}
+    \item \noindent\begin{equation*}
+              \mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{\mathsf{H}}
+          \end{equation*}
+\end{enumerate}
+
+\paragraph{Interpetation}
+When looking at the columns of $\mathbf{A}$ separatly
+\noindent\begin{equation*}
+    \mathbf{Av}_i=\sigma_i \mathbf{u}_i
+\end{equation*}
+shows that a input in direction $\mathbf{u}_i$ results in an output in direction $\mathbf{v}_i$ with amplification $\sigma_i$.
+
+\newpar{}
+\ptitle{Condition Number}
+\noindent\begin{equation*}
+    \kappa(\mathbf{A})=\frac{\sigma_{\max}(\mathbf{A})}{\sigma_{\min}(\mathbf{A})}
+\end{equation*}
+
+\textbf{Remarks}:
+\begin{itemize}
+    \item A high condition number suggests that the system is \textit{strongly directional} i.e.\ \textit{ill-conditioned} and thus difficult to control.
+    \item Often, considering only the \textit{strong} singular values is sufficient.
+\end{itemize}
