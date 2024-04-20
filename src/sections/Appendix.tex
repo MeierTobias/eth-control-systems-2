@@ -53,3 +53,19 @@
         A_{1n}^\mathsf{H} & \cdots & A_{nm}^\mathsf{H}
     \end{pmatrix}
 \end{equation*}
+
+\subsubsection{Specific Solutions}
+\ptitle{Adjoint}
+\noindent\begin{equation*}
+    \mathrm{adj}(\mathbf{A})\begin{bmatrix}
+        +\begin{vmatrix}a_{22}&a_{23}\\a_{32}&a_{33}\end{vmatrix} & -\begin{vmatrix}a_{12}&a_{13}\\a_{32}&a_{33}\end{vmatrix} & +\begin{vmatrix}a_{12}&a_{13}\\a_{22}&a_{23}\end{vmatrix} \\\\
+        -\begin{vmatrix}a_{21}&a_{23}\\a_{31}&a_{33}\end{vmatrix} & +\begin{vmatrix}a_{11}&a_{13}\\a_{31}&a_{33}\end{vmatrix} & -\begin{vmatrix}a_{11}&a_{13}\\a_{21}&a_{23}\end{vmatrix} \\\\
+        +\begin{vmatrix}a_{21}&a_{22}\\a_{31}&a_{32}\end{vmatrix} & -\begin{vmatrix}a_{11}&a_{12}\\a_{31}&a_{32}\end{vmatrix} & +\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}
+    \end{bmatrix}
+\end{equation*}
+
+\ptitle{Determinant}
+\noindent\begin{equation*}
+    \det(A)=\sum_{j=1}^n \underbrace{{(-1)}^{i+j}}_{\textsf{checkboard pattern}}\cdot a_{i,j}\cdot\underbrace{m_{i,j}}_{\textsf{minor: |submatrix of }\mathbf{A}|}
+\end{equation*}
+\textbf{Remark} Any row or column can be chosen (choose wisely: 0)

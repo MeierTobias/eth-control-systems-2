@@ -4,16 +4,16 @@ LQR can be used to systematically optimize the \textbf{static gain vector K} bas
 
 For th   e reference input $r(t) = 0$ the cost functional $J$ is defined as
 \noindent\begin{equation*}
-    J(\mathbf{x,t})=\int_0^{+\infty} \Bigl[\underbrace{{\mathbf{x}(t)}^T\mathbf{Qx}(t)}_{\textsf{tracking error}} + \underbrace{{\mathbf{u}(t)}^T \mathbf{Ru}(t)}_{\textsf{control effort}} \Bigr]dt
+    J(\mathbf{x,t})=\int_0^{+\infty} \Bigl[\underbrace{{\mathbf{x}(t)}^{\mathsf{T}}\mathbf{Qx}(t)}_{\textsf{tracking error}} + \underbrace{{\mathbf{u}(t)}^{\mathsf{T}} \mathbf{Ru}(t)}_{\textsf{control effort}} \Bigr]dt
 \end{equation*}
 \textbf{Remarks:}
 \begin{itemize}
-    \item $\mathbf{Q}$ is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^T$
-    \item $\mathbf{Q}$ is positive semidefinite i.e. $\mathbf{x}^T \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
+    \item $\mathbf{Q}$ is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^{\mathsf{T}}$
+    \item $\mathbf{Q}$ is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
     \item $\mathbf{Q}$ must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
-    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^T \mathbf{Ru} >0\; \forall u\neq 0$ or $eig(\mathbf{R}) > 0$
+    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall u\neq 0$ or $eig(\mathbf{R}) > 0$
     \item The pair $\mathbf{A,B}$ must be stabilizable
-    \item In general, there is an additional cross-coupling term $\mathbf{x}^T\mathbf{Nu}$ in $J$ which is often neglected i.e.\ equal to $0$
+    \item In general, there is an additional cross-coupling term $\mathbf{x}^{\mathsf{T}}\mathbf{Nu}$ in $J$ which is often neglected i.e.\ equal to $0$
 \end{itemize}
 
 \subsubsection{Bryson's Rule}
@@ -56,11 +56,11 @@ with
 \end{align*}
 of the \textit{continuous algebraic Riccati equation} (\textbf{\textit{CARE}}) has to be found
 \noindent\begin{equation*}
-    \mathbf{A}^T \mathbf{P}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^T \mathbf{P}=0
+    \mathbf{A}^{\mathsf{T}} \mathbf{P}+\mathbf{PA}+\mathbf{Q}-\mathbf{PBR}^{-1}\mathbf{B}^{\mathsf{T}} \mathbf{P}=0
 \end{equation*}
 then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\mathbf{u} = -\mathbf{Kx}$:
 \noindent\begin{equation*}
-    \mathbf{K}=\mathbf{R}^{-1}\mathbf{B}^T \mathbf{P}
+    \mathbf{K}=\mathbf{R}^{-1}\mathbf{B}^{\mathsf{T}} \mathbf{P}
 \end{equation*}
 
 \textbf{Remarks:}
@@ -77,15 +77,15 @@ then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\m
 \subsection{Discrete Time}
 In discrete time, the cost functional is
 \noindent\begin{equation*}
-    J(\mathbf{x,u})=\sum_{k=0}^{+\infty}\left({\mathbf{x}[k]}^T \mathbf{Qx}[k]+{\mathbf{u}[k]}^T \mathbf{Ru}[k]\right),
+    J(\mathbf{x,u})=\sum_{k=0}^{+\infty}\left({\mathbf{x}[k]}^{\mathsf{T}} \mathbf{Qx}[k]+{\mathbf{u}[k]}^{\mathsf{T}} \mathbf{Ru}[k]\right),
 \end{equation*}
 the \textbf{symmetric, positive definite} solution $\mathbf{P}$ to the \textit{discrete algebraic Riccati equation} (\textbf{\textit{DARE}})
 \noindent\begin{equation*}
-    \mathbf{P}=\mathbf{A}^T \mathbf{PA}-(\mathbf{A}^T \mathbf{PB}){(\mathbf{B}^{\prime}\mathbf{PB}+\mathbf{R})}^{-1}(\mathbf{B}^T \mathbf{PA})+\mathbf{Q}
+    \mathbf{P}=\mathbf{A}^{\mathsf{T}} \mathbf{PA}-(\mathbf{A}^{\mathsf{T}} \mathbf{PB}){(\mathbf{B}^{\prime}\mathbf{PB}+\mathbf{R})}^{-1}(\mathbf{B}^{\mathsf{T}} \mathbf{PA})+\mathbf{Q}
 \end{equation*}
 and the \textit{static gain matrix} obtained with $\mathbf{u} = -\mathbf{Kx}$ is
 \noindent\begin{equation*}
-    \mathbf{K}={(\mathbf{R}+\mathbf{B}^T \mathbf{PB})}^{-1}\mathbf{B}^T \mathbf{PA}
+    \mathbf{K}={(\mathbf{R}+\mathbf{B}^{\mathsf{T}} \mathbf{PB})}^{-1}\mathbf{B}^{\mathsf{T}} \mathbf{PA}
 \end{equation*}
 
 \textbf{\code{Matlab:}} \code{[K\_d,P\_d]=dlqr(A,B,Q,R)}
@@ -148,7 +148,7 @@ then apply LQR to the modified state space model which yields a controller
 
 \subsection{Symmetric Root Locus}
 The symmetric root locus can be used to understand the influence of $\rho$ on the poles of a closed loop LQR feedback system.
-By using $\mathbf{Q}=\mathbf{C}^T \mathbf{C}$ and $\mathbf{R}=\rho \mathbf{I}$, the symmetric root locus condition simplifies to
+By using $\mathbf{Q}=\mathbf{C}^{\mathsf{T}} \mathbf{C}$ and $\mathbf{R}=\rho \mathbf{I}$, the symmetric root locus condition simplifies to
 \noindent\begin{align*}
     \rho \mathbf{I}+G(s)G(-s) & =0 \qquad \Leftrightarrow \\
     \rho D(s)D(-s)+N(s)N(-s)  & =0
@@ -185,7 +185,7 @@ Considering a SISO LTI system
 \noindent\begin{align*}
     \dot{\mathbf{x}} & = \mathbf{Ax} + \mathbf{Bu}                      \\
     y                & = \mathbf{Cx}                                    \\
-    \mathbf{Q}       & = \mathbf{C}^T \mathbf{C}, \quad \mathbf{R}=\rho
+    \mathbf{Q}       & = \mathbf{C}^{\mathsf{T}} \mathbf{C}, \quad \mathbf{R}=\rho
 \end{align*}
 and
 \noindent\begin{align*}

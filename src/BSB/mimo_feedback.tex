@@ -1,0 +1,14 @@
+\begin{tikzpicture}[auto, node distance=1.5cm,>=latex']
+    \node [input, name=uinput]          (uinput)        {};
+    \node [sum, right of=uinput]        (sum1)          {};
+    \node [block, right of=sum1]        (G1)            {$\mathbf{G_1}$};
+    \node [block, below of=G1]          (G2)            {$\mathbf{G_2}$};
+    \node [tmp, right of=G1]            (yt)            {};
+    \node [output, right of=yt]         (output)        {};
+
+
+    \draw [->] (rinput) -- node{$\mathbf{u}$} (sum1);
+    \draw [->] (sum1) -- node{} (G1);
+    \draw [->] (G1) -- node{$\mathbf{y}$} (output);
+    \draw [->] (yt) |-(G2) -| node[pos=0.99] {$-$} (sum1);
+\end{tikzpicture}

@@ -1,0 +1,10 @@
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+    \node [input, name=uinput]          (uinput)        {};
+    \node [block, right of=uinput]      (G1)            {$\mathbf{G_1}$};
+    \node [block, right of=G1]          (G2)            {$\mathbf{G_2}$};
+    \node [output, right of=G2]         (output)        {};
+
+    \draw [->] (rinput) -- node{$\mathbf{u}$} (G1);
+    \draw [->] (G1) -- node{} (G2);
+    \draw [->] (G2) -- node{$\mathbf{y}$} (output);
+\end{tikzpicture}
