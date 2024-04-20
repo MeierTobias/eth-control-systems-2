@@ -132,14 +132,14 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
     Given TF matrix:
     \begin{equation*}
         \mathbf{G}(s)=\begin{pmatrix}
-            \frac1{s+1} & \frac1{s+2}         & \frac{2\cdot(s+1)}{(s+2)\cdot(s+3)} \\
+            \frac1{s+1} & \frac1{s+2}           & \frac{2\cdot(s+1)}{(s+2)\cdot(s+3)} \\
             0           & \frac{s+3}{{(s+1)}^2} & \frac{s+4}{s+1}
         \end{pmatrix}
     \end{equation*}
     1. Minors (already simplifed determinants):
     \begin{align*}
         \frac{1}{s+1},\frac{1}{s+2},\frac{2\cdot(s+1)}{(s+2)\cdot(s+3)},0,\frac{s+3}{{(s+1)}^{2}},\frac{s+4}{s+1} & \text{ (1st order)} \\
-        \frac{s+3}{{(s+1)}^3},\frac{1}{s+1},-\frac{s+4}{{(s+1)}^2}                                                  & \text{ (2nd order)}
+        \frac{s+3}{{(s+1)}^3},\frac{1}{s+1},-\frac{s+4}{{(s+1)}^2}                                                & \text{ (2nd order)}
     \end{align*}
     2. Find $d_{\min}(s)$:
     \begin{equation*}
@@ -147,8 +147,8 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
     \end{equation*}
     3. Normalize highest order (here 2nd order) minors:
     \begin{align*}
-         & \frac{{(s+3)}^2\cdot(s+2)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}                    \\
-         & \frac{{(s+1)}^2\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}          \\
+         & \frac{{(s+3)}^2\cdot(s+2)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}                  \\
+         & \frac{{(s+1)}^2\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}        \\
          & -\frac{(s+4)\cdot(s+1)\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}
     \end{align*}
     4. Find $n_{\max}(s)$:
@@ -461,7 +461,7 @@ and the submultiplicative property:
 
 \paragraph{Specific Norms}
 
-\ptitle{Induced $\bf{p}$-norms}
+\ptitle{Induced $p$-norms}
 
 For the $p = 1$ norm we get the \textbf{max-sum column}:
 \begin{equation*}
@@ -500,3 +500,104 @@ For the $p = \infty$ norm we get the \textbf{max-sum row}:
 \end{itemize}
 
 \textbf{Remarks}: $x_k$ describes the elements of the vector $\mathbf{x}$ for which the norm-specific maximum amplification happens.
+
+\subsubsection{Signal Norms}
+Signals are functions and functions are vectors.
+\noindent\begin{equation*}
+    w:\mathbb{T}\rightarrow \mathbb{R}^n, \quad w(t)=(w_1(t), w_2(t), \ldots w_n(t))
+\end{equation*}
+\ptitle{p-norms}
+
+\textbf{1-norm}: Action
+\noindent\begin{equation*}
+    \|w\|_1=\begin{cases}
+        \sum\limits_{k\in\mathbb{Z}}\|w[k]\|_1 & (\mathsf{DT}) \\
+        \int_{-\infty}^\infty\|w(t)\|_1 dt     & (\mathsf{CT})
+    \end{cases}
+\end{equation*}
+\newpar{}
+\textbf{2-norm:} Square of the Energy
+\noindent\begin{equation*}
+    \|w\|_2^2=
+    \begin{cases}
+        \sum\limits_{k\in\mathbb{Z}}w[k]'w[k] = \sum\limits_{k\in\mathbb{Z}}\|w[k]\|_2^2 & \mathsf{(DT)} \\
+        \int_{-\infty}^\infty w(t)'w(t) dt = \int_{-\infty}^\infty\|w(t)\|_2^2 dt        & \mathsf{(CT)}
+    \end{cases}
+\end{equation*}
+
+\newpar{}
+\textbf{$\infty$-norm:} Peak Magnitude
+\noindent\begin{equation*}
+    \|w\|_\infty=\sup_{t\in\mathbb{T}}\|w(t)\|_\infty=\sup_{t\in\mathbb{T}}\max_{i=1\ldots n}|w_i(t)
+\end{equation*}
+
+\ptitle{Power} (not a norm)
+\noindent\begin{equation*}
+    \mathrm{pow}{(w)}^2=
+    \begin{cases}
+        \lim\limits_{N\to+\infty}\frac{1}{2N}\sum\limits_{k=-N}^N\|w[k]\|_2^2 & \mathsf{(DT)} \\
+        \lim\limits_{T\to+\infty}\frac{1}{2T}\int_{-T}^T\|w(t)\|_2^2 dt       & \mathsf{(CT)}
+    \end{cases}
+\end{equation*}
+
+\paragraph{Relationships}
+\noindent\begin{align*}
+    \|w\|_2<\infty                                         & \Rightarrow \mathrm{pow}{(w)}=0                         \\
+    \mathsf{DT}:\;\;\|w\|_2<\infty                         & \Rightarrow \|w\|_\infty<\infty                         \\
+    \mathsf{CT}:\;\;\|w\|_2<\infty                         & \;\cancel{\Leftrightarrow}\; \|w\|_\infty<\infty        \\
+    (\mathrm{pow}{(w)}<\infty) \land (\|w\|_\infty<\infty) & \Rightarrow \mathrm{pow}{(w)} < \|w\|_\infty^2          \\
+    (\|w\|_1<\infty) \land (\|w\|_\infty<\infty)           & \Rightarrow \|w\|_2<\sqrt{\|w\|_1\|w\|_\infty} < \infty
+\end{align*}
+
+\begin{center}
+    \includegraphics[width = 0.7\linewidth]{signal_norm.png}
+\end{center}
+
+\newpar{}
+\subsubsection{System Norms}
+A system maps an input $u$ to an output $y$:
+\noindent\begin{equation*}
+    y=Su
+\end{equation*}
+
+The induced norm is defined as
+\noindent\begin{equation*}
+    \|S\|_{p,\mathrm{ind}}:=\sup_{u\neq0}\frac{\|Su\|_p}{\|u\|_p}=\sup_{u\neq0}\frac{\|y\|_p}{\|u\|_p}
+\end{equation*}
+
+\newpar{}
+\paragraph{Parseval's Identity}
+\noindent\begin{equation*}
+    \underbrace{\|y\|_{\mathcal{L}_2}^2}_{\textsf{Time}}=\int_0^\infty\|y(t)\|_2^2 dt=\frac1{2\pi}\int_{-\infty}^{+\infty}\|Y(j\omega)\|_2^2 d\omega=\underbrace{\|Y(s)\|_{\mathcal{H}_2}^2}_{\textsf{Freq.} (s=j\omega)}
+\end{equation*}
+
+\paragraph[L2-induced Norm]{$\mathcal{L}_2$-induced Norm}
+\noindent\begin{equation*}
+    \sup_{u\neq0}\frac{\|y\|_{\mathcal{L}_2}}{\|u\|_{\mathcal{L}_2}}=\sup_{\omega\in\mathbb{R}}\sigma_{\max}[G(j\omega)]=:\|G\|_{\mathcal{H}_\infty}
+\end{equation*}
+\textbf{Remarks}:
+\begin{itemize}
+    \item In SISO systems, the $\mathcal{H}_\infty$ norm corresponds to the peak value of the Bode plot.
+    \item The submultiplicative property for $\mathcal{H}_\infty$ holds.
+\end{itemize}
+
+\paragraph[H_2-induced Norm]{$\mathcal{H}_2$-norm}
+
+The $\mathcal{H}_2$-norm measures
+\begin{enumerate}
+    \item The energy of the impulse response:
+          \noindent\begin{equation*}
+              \|g\|_{\mathcal{L}_2}^2:= \|G\|_{\mathcal{H}_2}^2
+          \end{equation*}
+    \item The energy of the response to initial conditions of the form $x(0)=\mathbf{B}u_0$ for $u_0={(1,1,\ldots, 1)}^{\mathsf{T}}$
+    \item The (expected) power of the response to white noise:
+          \noindent\begin{equation*}
+              \mathbb{E}\left[\lim_{T\to+\infty}\frac{1}{T}\text{Tr}\left(\int_0^T y(t){y(t)}^{\mathsf{H}} dt\right)\right] =  \|g\|_{\mathcal{L}_2}^2:= \|G\|_{\mathcal{H}_2}^2
+          \end{equation*}
+\end{enumerate}
+\textbf{Remarks}:
+\begin{itemize}
+    \item The LGR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
+    \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|G\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}G(j\omega)=0$
+    \item The submultiplicative property for $\mathcal{H}_\infty$ does not hold.
+\end{itemize}
