@@ -47,7 +47,7 @@ The same holds for the discrete time case where $e^{st}$ is replaced by $z^k$ an
 
 \subsubsection{Interconnections}
 
-To find the interconnection start at output $\mathbf{y}$ and proceed against signal flow towards the input $\mathbf{u}$
+To find the interconnection start at output $\mathbf{y}$ and proceed against signal flow towards the input $\mathbf{u}$.
 
 \newpar{}
 \ptitle{Series Interconnection}
@@ -76,9 +76,10 @@ To find the interconnection start at output $\mathbf{y}$ and proceed against sig
 
 \begin{itemize}
     \item In MIMO systems the poles are the eigenvalues of $\mathbf{A}$.
-    \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as all possible square matrices (of all sizes!) in $\mathbf{G}(s)$.
+    \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as the determinants of all possible square submatrices (of all sizes!) in $\mathbf{G}(s)$.
     \item The \textbf{characteristic polynomial} $d(s)$ of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors $G_{ij}$.
     \item The \textbf{poles} of $\mathbf{G}(s)$ are the roots of the aforementioned LCM term.
+    \item Reminder: Even if the excitation signal does not contain frequency $p$ the output signal will contain this frequency as the initial condition response $x(t) = e^{\mathbf{A}t}x_0$ in modal form contains oscillations with frequency $p$.
 \end{itemize}
 
 % TODO: Example?
@@ -249,6 +250,7 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
 
 \begin{itemize}
     \item Figures out the minimum number of ``copies'' of each pole that we need to construct a realization of a MIMO transfer function.
+    \item $\mathbf{A}$ simply contains diagonal matrices of dimension $r_i \times r_i$ with $p_i$ on their diagonals.
 \end{itemize}
 
 % TODO: Add an example?
@@ -272,6 +274,14 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
 % \end{examplesection}
 
 \subsection{Signal Amplification}
+
+\ptitle{Usage of Norms}
+
+\begin{itemize}
+    \item Inputs vectors with same but permuted entries can generate wildly different outputs due to directionality.
+    \item Directionality depends on frequency as well.
+    \item Norms are a way to measure “sizes” in order to compare effects in different directions.
+\end{itemize}
 
 \subsubsection{Norms}
 
@@ -322,7 +332,7 @@ and the submultiplicative property:
 
 
 \paragraph{Specific Induced Norms}
-
+Remark: $x_k$ describes the vector for which the norm-specific maximum amplification happens.\\
 For the $p = 1$ norm we get the \textbf{max-sum column}:
 \begin{equation*}
     \|\mathbf{A}\|_1=\max_j\sum_{i=1}^m|a_{ij}|,\qquad x_k=\begin{cases}
