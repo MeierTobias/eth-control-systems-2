@@ -323,14 +323,17 @@ and the submultiplicative property:
 
 \paragraph{Specific Induced Norms}
 
-For the $p = 1$ norm we get
+For the $p = 1$ norm we get the \textbf{max-sum column}:
 \begin{equation*}
-    \|\mathbf{A}\|_1=\max_j\sum_{i=1}^m|a_{ij}|
+    \|\mathbf{A}\|_1=\max_j\sum_{i=1}^m|a_{ij}|,\qquad x_k=\begin{cases}
+        1 & k=j         \\
+        0 & \text{else}
+    \end{cases}
 \end{equation*}
 
-For the $p = \infty$ norm we get
+For the $p = \infty$ norm we get the \textbf{max-sum row}:
 \begin{equation*}
-    \|\mathbf{A}\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|
+    \|\mathbf{A}\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|\qquad x_k=\pm 1
 \end{equation*}
 
 \ptitle{Frobenius Norm}
