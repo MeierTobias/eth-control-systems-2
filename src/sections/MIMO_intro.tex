@@ -115,7 +115,7 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
     \item Calculate all minors (of all orders) of $\mathbf{G}(s)$
     \item Find the least common denominator $d_{\min}(s)$ of the minors
     \item Normalize highest order minors s.t.\ they have $d_{\min}(s)$ as denominator
-    \item Find largest common numerator $n_{\max}(s)$ (usually product of $(s-z_i)$ terms) of the normalized minors from 4.
+    \item Find largest common numerator $n_{\max}(s)$ (usually product of $(s-z_i)$ terms) of the normalized minors from 3.
     \item The roots of $n_{\max}(s)$ are the MIMO zeros with their multiplicities
 \end{enumerate}
 
@@ -354,17 +354,18 @@ with eigenvalues
 
 
 \subsubsection{Procedure}
-Assuming $\mathbf{A}$ has rank = smaller dimension:
+Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
 \begin{enumerate}
     \item calculate eigenvalues (start with smaller matrix, pad with 0)
           \noindent\begin{align*}
-               & \lambda_{\mathbf{U}}\in \mathbb{R}^(m): & \det\left(\lambda \mathbf{I}-\mathbf{AA}^{\mathsf{H}}\right)\overset{!}{=}0          \\
-               & \lambda_{\mathbf{V}}\in \mathbb{R}^(n): & \det\left(\lambda \mathbf{I}-\mathbf{A}^{\mathsf{H}}\mathbf{A}\right)\overset{!}{=}0
+               & \lambda_{\mathbf{V}}\in \mathbb{R}^n: & \det\left(\lambda \mathbf{I}-\mathbf{A}^{\mathsf{H}}\mathbf{A}\right)\overset{!}{=}0 \\
+               & \lambda_{\mathbf{U}}\in \mathbb{R}^m: & \det\left(\lambda \mathbf{I}-\mathbf{AA}^{\mathsf{H}}\right)\overset{!}{=}0
           \end{align*}
     \item calculate eigenvectors of $\mathbf{U},\mathbf{V}$
           \noindent\begin{align*}
-               & \mathbf{U}: & \left(\lambda_{\mathbf{U}} \mathbf{I} -\mathbf{AA}^{\mathsf{H}}\right)\mathbf{x}           & \overset{!}{=}\mathbf{x} \\
-               & \mathbf{V}: & \left(\lambda_{\mathbf{V}} \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{x} & \overset{!}{=}\mathbf{x}
+               & \mathbf{V}:                & \left(\lambda_{\mathbf{v}_i} \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{x} & \overset{!}{=}\mathbf{0}          \\
+               & \mathbf{U}:                & \mathbf{u}_i                                                                                 & = \frac{1}{\sigma_i}\mathbf{Av}_i \\
+               & \mathrm{if}~\sigma_i = 0 : & \left(\lambda_{\mathbf{u}_i} \mathbf{I} -\mathbf{AA}^{\mathsf{H}}\right)\mathbf{x}           & \overset{!}{=}\mathbf{0}
           \end{align*}
     \item calculate singular values $\sigma\in \mathbb{R}^{\min(m,n)}$ and compose $\Sigma$
           \noindent\begin{align*}
@@ -392,6 +393,20 @@ When looking at the columns of $\mathbf{A}$ separatly
     \mathbf{Av}_i=\sigma_i \mathbf{u}_i
 \end{equation*}
 shows that a input in direction $\mathbf{u}_i$ results in an output in direction $\mathbf{v}_i$ with amplification $\sigma_i$.
+
+\newpar{}
+\ptitle{Zeros and Poles}
+
+If the matrix $\mathbf{A}$ contains $s$, the directions of poles and zeros can be found with SVD:
+\begin{enumerate}
+    \item Set $s=z, p+0.0001$
+    \item Calculate SVD of $\mathbf{A}(s)$
+    \item Evaluate singular values:
+          \begin{enumerate}
+              \item The input direction $\mathbf{u_i}$ with correspoding $\sigma_i=0$ is the \textbf{direction of the zero}.
+              \item The input direction $\mathbf{u_i}$ of the largest $\sigma_i$ is the \textbf{direction of the pole}.
+          \end{enumerate}
+\end{enumerate}
 
 \newpar{}
 \ptitle{Condition Number}
@@ -528,7 +543,7 @@ Signals are functions and functions are vectors.
 \newpar{}
 \textbf{$\infty$-norm:} Peak Magnitude
 \noindent\begin{equation*}
-    \|w\|_\infty=\sup_{t\in\mathbb{T}}\|w(t)\|_\infty=\sup_{t\in\mathbb{T}}\max_{i=1\ldots n}|w_i(t)
+    \|w\|_\infty=\sup_{t\in\mathbb{T}}\|w(t)\|_\infty=\sup_{t\in\mathbb{T}}\max_{i=1\ldots n}|w_i(t)|
 \end{equation*}
 
 \ptitle{Power} (not a norm)
@@ -597,7 +612,7 @@ The $\mathcal{H}_2$-norm measures
 \end{enumerate}
 \textbf{Remarks}:
 \begin{itemize}
-    \item The LGR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
+    \item The LQR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
     \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|G\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}G(j\omega)=0$
     \item The submultiplicative property for $\mathcal{H}_\infty$ does not hold.
 \end{itemize}
