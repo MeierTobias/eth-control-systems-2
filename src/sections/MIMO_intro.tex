@@ -367,6 +367,7 @@ Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
                & \mathbf{U}:                & \mathbf{u}_i                                                                                 & = \frac{1}{\sigma_i}\mathbf{Av}_i \\
                & \mathrm{if}~\sigma_i = 0 : & \left(\lambda_{\mathbf{u}_i} \mathbf{I} -\mathbf{AA}^{\mathsf{H}}\right)\mathbf{x}           & \overset{!}{=}\mathbf{0}
           \end{align*}
+          where $\lambda_{\mathbf{u}i}=0$ if $\mathbf{V}$ has smaller dimensions than $\mathbf{U}$ and vice versa.
     \item calculate singular values $\sigma\in \mathbb{R}^{\min(m,n)}$ and compose $\Sigma$
           \noindent\begin{align*}
               \sigma_i & = \sqrt{\lambda_{u_i}} = \sqrt{\lambda_{v_i}}\quad i=0,1,\cdots, \min(m,n) \\
@@ -410,8 +411,10 @@ If the matrix $\mathbf{A}$ contains $s$, the directions of poles and zeros can b
     \item Calculate SVD of $\mathbf{A}(s)$
     \item Evaluate singular values:
           \begin{enumerate}
-              \item The input direction $\mathbf{u_i}$ with correspoding $\sigma_i=0$ is the \textbf{direction of the zero}.
-              \item The input direction $\mathbf{u_i}$ of the largest $\sigma_i$ is the \textbf{direction of the pole}.
+              \item The \textbf{input zero direction} is the column $\mathbf{v_i}$ with corresponding $\sigma_i=0$.
+              \item The output zero direction is the column $\mathbf{u_i}$ with corresponding $\sigma_i=0$.
+              \item The \textbf{input pole direction} is the column $\mathbf{v_i}$ with largest $\sigma_i$.
+              \item The output pole direction is the column $\mathbf{u_i}$ with largest $\sigma_i$.
           \end{enumerate}
 \end{enumerate}
 
@@ -552,6 +555,7 @@ Signals are functions and functions are vectors.
 \noindent\begin{equation*}
     \|w\|_\infty=\sup_{t\in\mathbb{T}}\|w(t)\|_\infty=\sup_{t\in\mathbb{T}}\max_{i=1\ldots n}|w_i(t)|
 \end{equation*}
+where the absolute value of the signal must be taken because the maximum could be negative.
 
 \ptitle{Power} (not a norm)
 \noindent\begin{equation*}
