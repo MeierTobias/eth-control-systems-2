@@ -352,6 +352,12 @@ with eigenvalues
     \lambda_{v_3}=0
 \end{gather*}
 
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item $\mathbf{U},\:\mathbf{V}$ are unitary i.e. $\mathbf{U}^H \mathbf{U}=\mathbf{U}\mathbf{U}^H=\mathbf{I}$
+    \item Unitary implies positive semi-definite and real, non-negative eigenvalues.
+\end{itemize}
 
 \subsubsection{Procedure}
 Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
@@ -392,7 +398,8 @@ Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
 
 \begin{itemize}
     \item Write out the dimensions of $\mathbf{U}$, $\Sigma$ and $\mathbf{V}$ directly
-    \item One can normalize the columns of $\mathbf{U}$ and $\mathbf{V}$ separately
+    \item Each column of $\mathbf{U}$ and $\mathbf{V}$ must be normalized (unitary!).
+    \item Hence, one can normalize the $\mathbf{v}_i$ separately (same for $\mathbf{u}_i$).
 \end{itemize}
 
 \subsubsection{Interpetation}
@@ -467,7 +474,7 @@ If we then provide the vector spaces with a norm, a \textbf{matrix norm is induc
 \begin{equation*}
     \|\mathbf{A}\|_p:=\sup_{\mathbf{x}\neq0}\frac{\|\mathbf{Ax}\|_p}{\|\mathbf{x}\|_p}=\max_{\|\mathbf{x}\|_p=1}\|\mathbf{Ax}\|_p
 \end{equation*}
-which means that the induced p-norm of $\mathbf{A}$ measures how much multiplication by $\mathbf{A}$ amplifies the p-norm of a vector. In other words, $\|\mathbf{A}\|_p$ is the \textbf{gain} of the operator $\mathbf{A}$.
+which means that the induced p-norm of $\mathbf{A}$ measures how much multiplication by $\mathbf{A}$ amplifies the p-norm of a vector. In other words, $\|\mathbf{A}\|_p$ is the \textbf{gain} of the operator $\mathbf{A}$. The p-norm finds the maximum possible amplification of a vector with length 1.
 
 \newpar{}
 \ptitle{Properties of Induced Norms}
