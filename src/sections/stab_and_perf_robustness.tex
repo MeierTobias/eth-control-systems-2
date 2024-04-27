@@ -1,6 +1,239 @@
 \subsection{Stability and Performance Robustness}
-\subsubsection{The Small Gain Theorem}
-\subsubsection{Robust Stability}
-\subsubsection{Robust Performance}
+One main achievement of computing the $\mathcal{H}_\infty$ norm is to access stability and performance robustness and achieve robust control.
+\subsubsection{The Small Gain Theorem (SGT)}
+The (unstructured) SGT attempts to access interconnection stability. In contrast to the structured SGT, the SGT does not make any assumptions on the structure of the uncertainty matrix.
 
+\paragraph{Sufficient Condition}
+
+The interconnection of two stable (MIMO) systems, with transfer functions $\mathbf{G_1}(s)$ and $\mathbf{G_2}(s)$, is stable if
+\begin{equation*}
+    \left\|\mathbf{G_1}\right\|_{\mathcal{H}_\infty}\cdot\left\|\mathbf{G_2}\right\|_{\mathcal{H}_\infty}<1
+\end{equation*}
+
+\ptitle{Remarks}
+\begin{itemize}
+    \item There could be some systems that violate this condition but still lead to a stable feedback interconnection.
+    \item The small-gain theorem also applies to non-linear, time-varying systems.
+    \item To have sufficiency, $(\mathbf{I}-\mathbf{G_1G_2})$ must not have zeros in the RHP.
+\end{itemize}
+
+\paragraph{Necessary and Sufficient Condition}
+Given a feedback interconnection of $\mathbf{G}$ and an unknown system $\Delta$ where
+\begin{itemize}
+    \item $\Delta$ is stable
+    \item and $\left\|\Delta\right\|_{\mathcal{H}_\infty}<1$
+\end{itemize}
+the FB interconnection of $\mathbf{G}$ and $\mathbf{\Delta}$ is \textbf{stable iff}
+\begin{equation*}
+    \left\|\mathbf{G}\right\|_{\mathcal{H}_\infty}<1
+\end{equation*}
+Otherways, one can find a $\Delta$ so that $(\mathbf{I}-\mathbf{G\Delta})$ singular.\\
+
+\subsubsection{Modelling Uncertainty}
+\begin{center}
+    \includegraphics[width = 0.5\linewidth]{uncertainty.png}
+\end{center}
+To take uncertainty into account, one first defines an \textbf{uncertainty model}, consisting of
+\begin{enumerate}
+    \item A nominal model $P$
+    \item A set of models that is guaranteed to contain the system uncertainty, and is easier to handle
+\end{enumerate}
+and then designs a control system that meets the stability and performance specifications not only for $P$, but also for all other possible models in the uncertainty model.
+
+\ptitle{Assumptions on Uncertainty}
+
+In the following uncertainty models one assumes that $\Delta$
+\begin{itemize}
+    \item is minimum-phase
+    \item does not cancle unstable poles of the nominal system
+    \item $|\Delta(j\omega)|<1,\quad\forall\omega$
+\end{itemize}
+and that there is a high-pass transfer function $W$ called \textbf{frequency weight} so that the total uncertainty is given by
+\begin{equation*}
+    W(s)\Delta(s)
+\end{equation*}
+
+\paragraph{Common Uncertainty Models}
+\ptitle{Additive Uncertainty}
+\begin{equation*}
+    \tilde{P}(s)=P(s)+W(s)\Delta(s)
+\end{equation*}
+\begin{center}
+    \includegraphics[width = 0.75\linewidth]{additive_uncertainty.png}
+\end{center}
+
+\ptitle{Multiplicative Uncertainty}
+\begin{equation*}
+    \tilde{P}(s)=P(s)(1+W(s)\Delta(s))
+\end{equation*}
+\begin{center}
+    \includegraphics[width = 0.75\linewidth]{multiplicative_uncertainty.png}
+\end{center}
+\ptitle{Feedback Uncertainty}
+\begin{equation*}
+    \tilde{P}(s)=(I-P(s)W(s)\Delta(s))^{-1}P(s)
+\end{equation*}
+\begin{center}
+    \includegraphics[width = 0.75\linewidth]{fb_uncertainty.png}
+\end{center}
+
+\subsubsection{Robust Stability}
+\begin{itemize}
+    \item Equivalent to SISO bode plot obstacles (now obstacles are given by singular values)
+    \item Now we impose constraints on the $\mathcal{H}_{\infty}$ norm
+\end{itemize}
+
+\ptitle{Additive Uncertainty}
+\begin{center}
+    \includegraphics[width = 0.75\linewidth]{robust_additive.png}
+\end{center}
+Given an additive uncertainty and a controller designed for the nominal plant $\mathbf{P}$ one computes the transfer function without $\Delta$ and applies the SGT. The CL system is then robustly stable iff
+\begin{equation*}
+    \|\mathbf{G}(s)\|_{\mathcal{H}_\infty}=\|-{(\mathbf{I}+\mathbf{C}(s)\mathbf{P}(s))}^{-1}\mathbf{C}(s)\mathbf{W}(s)\|_{\mathcal{H}_\infty}<1
+\end{equation*}
+Remember: this is a necessary and sufficient condition.
+
+\ptitle{Multiplicative Uncertainty}
+%%% TBD %%%
+% @Tobi: hesch du chöne mitschribe vo de Wandtafle?
+%%% TBD %%%
+
+\subsubsection{Robust Performance}
+The “robust performance” problem can be formulated in a way that matches the “robust stability” problem.
+\begin{itemize}
+    \item Isolate the two signals between which amplification is unwanted.
+    \item Apply the SGT to the rest of the system as done for robust control.
+\end{itemize}
+
+\ptitle{Disturbance at Output}
+
+\begin{center}
+    \includegraphics[width = 0.75\linewidth]{robust_performance_fb.png}
+\end{center}
+\begin{itemize}
+    \item We don't want the energy of disturbance $\xi$ to be amplified at the output
+    \item Therefore we want to limit the gain from $\xi$ to $y$
+\end{itemize}
+
+Applying the SGT (assuming $\Delta=G_{y\xi}$) yields
+\begin{equation*}
+    \|G_{y\xi}\|_{\mathcal{H}_\infty}=\|(I+PC)^{-1}W\|_{\mathcal{H}_\infty}<1
+\end{equation*}
+
+\subsubsection{Combined Robustness}
+\begin{center}
+    \includegraphics[width = 0.75\linewidth]{combined_robustness.png}
+\end{center}
+We want to consider robust stability and robust performance simultaneously. Hence, we model an \textbf{uncertainty block}
+\begin{equation*}
+    \begin{bmatrix}
+        w_1 \\
+        w_2
+    \end{bmatrix}
+    =\underbrace{\begin{bmatrix}
+            \Delta_1 & 0        \\
+            0        & \Delta_2
+        \end{bmatrix}}_{\mathbf{\Delta}}
+    \begin{bmatrix}z_1 \\
+        z_2
+    \end{bmatrix}
+\end{equation*}
+
+\paragraph{Applying the SGT}
+
+The transfer function matrix for the SGT is given by
+\begin{align*}
+    \mathbf{M} & =
+    \begin{bmatrix}
+        G_{{z_{1}w_{1}}} & G_{{z_{1}w_{2}}} \\
+        G_{{z_{2}w_{1}}} & G_{{z_{2}w_{2}}}
+    \end{bmatrix}                     \\
+               & =\begin{bmatrix}
+                      -W_1PK(I+P_0K)^{-1} & -W_1PK(I+P_0K)^{-1} \\
+                      W_2(I+P_0K)^{-1}    & W_2(I+P_0K)^{-1}
+                  \end{bmatrix}
+\end{align*}
+%%% TBD %%%
+% Why are the delta blocks of the "other" BSB parts not in the TF matrix?
+%%% TBD %%%
+Therefore, we impose
+\begin{equation*}
+    \left\|\mathbf{M}\right\|_{\mathcal{H}_\infty}<1
+\end{equation*}
+However, this is a conservative assumption as the SGT could be applied to an arbitrary $\mathbf{\Delta}$. Therefore, we adjust condition to more specific uncertainty matrices.
+
+\paragraph{Applying the Structured Singular Value (SSV)}
+
+\ptitle{Definition of SSV}
+
+The SSV is defined with respect to a \textbf{class of perturbations} $\mathrm{D}$ as
+\begin{equation*}
+    \mu(\mathbf{M}):=\frac1{\inf\{\sigma_{\max}(\Delta):\det(1-M\Delta)=0\}},\quad\Delta\in\mathbb{D}
+\end{equation*}
+\begin{itemize}
+    \item By convention, if $\det(I-M\Delta)\neq0,\forall\Delta\in\mathbb{D}\text{, then }\mu(M)=0$.
+    \item If $\Delta$ is diagonal and $M$ has rank one the SSV can be computed analytically.
+\end{itemize}
+
+\ptitle{Properties of the SSV}
+\begin{itemize}
+    \item $\mu(\mathbf{M})\geq0$
+    \item If $\mathbb{D}$ is arbitrary: $\mu(\mathbf{M})=\|\mathbf{M}\|_{\mathcal{H}_\infty}$ (unstructured case)
+    \item If $\mathbb{D}=\{\lambda I:\lambda\in\mathbb{C}\}$: $\mu(\mathbf{M})=\rho(\mathbf{M})$ (spectral radius, largest eigenvalue)
+    \item If $\mathbb{D}$ diagonal (complex): $\mu(\mathbf{M})=\mu(\mathbf{D}^{-1}\mathbf{MD})$ for any invertible $\mathbf{D}$ and
+    \item \begin{equation*}
+              \rho(\mathbf{M})\leq\mu(\mathbf{M})\leq\inf_{\mathbf{D}}\sigma_{\max}(\mathbf{D}^{-1}\mathbf{MD})\leq\sigma_{\max}(\mathbf{M})
+          \end{equation*}
+\end{itemize}
+
+
+\ptitle{Stability Condition}
+
+The $\mathbf{M}-\Delta$ FB system is stable for all $\Delta\in D$, $\left\|\Delta\right\|_{\mathcal{H}_\infty}<1$ iff
+\begin{equation*}
+    \mu(\mathbf{M}(j\omega))\leq1,\quad\forall\omega\in\mathbb{R}
+\end{equation*}
+
+\ptitle{Scalar Combined Robustness}
+
+\begin{equation*}
+    \mathbf{M}=\begin{bmatrix}
+        -\frac{W_1P_0K}{1+P_0K} \\
+        \frac{W_2}{1+P_0K}
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & 1
+    \end{bmatrix}
+\end{equation*}
+yields
+
+\begin{align*}
+    \mu(\mathbf{M}(j\omega)) & =\left|\frac{W_1PK}{1+P_0K}(j\omega)\right|+\left|\frac{W_2}{1+P_0K}(j\omega)\right|\leq1 \\
+                             & =|W_1L(j\omega)|+|W_2(j\omega)|\leq|1+L(j\omega)|\quad\forall\omega\in\mathrm{R}
+\end{align*}
+where
+\begin{itemize}
+    \item $L=P_0K$
+    \item $W_1$ is a high-pass
+    \item $W_2$ is a low-pass
+    \item $|L|$ is a low-pass (low-pass assumption for physical systems)
+\end{itemize}
+Therefore, one has for low frequencies
+\begin{equation*}
+    |W_1(j\omega)|+\frac{|W_2(j\omega)|}{|L(j\omega)|}\leq1
+\end{equation*}
+\begin{equation*}
+    |L(j\omega)|\geq\frac{|W_2(j\omega)|}{1-|W_1(j\omega)|}\approx|W_2(j\omega)|
+\end{equation*}
+and for high frequencies
+\begin{equation*}
+    |W_1(j\omega)||L(j\omega)|+|W_2(j\omega)|\leq1
+\end{equation*}
+\begin{equation*}
+    |L(j\omega)|\leq\frac{1-|W_2(j\omega)|}{|W_1(j\omega)|}\approx\frac1{|W_1(j\omega)|}
+\end{equation*}
+One can look at the condition with an advanced Nyquist condition.
+\begin{center}
+    \includegraphics[width = 0.5\linewidth]{chad_nyquist.png}
+\end{center}
 
