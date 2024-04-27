@@ -615,6 +615,27 @@ The induced norm is defined as
 \end{itemize}
 
 \paragraph[H2-induced Norm]{$\mathcal{H}_2$-norm}
+\ptitle{Computation}
+
+The $\mathcal{H}_2$ norm of a system is given by
+\begin{equation*}
+    \|\mathbf{G}\|_{\mathcal{H}_2}^2=\|g\|_{\mathcal{L}_2}^2=\mathrm{Tr}\left[\mathbf{C\mathcal{R}C}^{\prime}\right]=\mathrm{Tr}\left[\mathbf{B^{\prime}\mathcal{O}B}\right]
+\end{equation*}
+where the \textbf{symmetric} matrices $\mathbf{\mathcal{R}}$ or $\mathbf{\mathcal{O}}$ are computed by solving the Lyapunov (matrix) equation
+\begin{equation*}
+    \mathbf{ A\mathcal{R}}+\mathbf{\mathcal{R}A}^{\prime}=-\mathbf{BB}^{\prime}
+\end{equation*}
+or\begin{equation*}
+    \mathbf{A^{\prime}\mathcal{O}}+\mathbf{\mathcal{O}A}=-\mathbf{C^{\prime}C}
+\end{equation*}
+respectively.\\
+$\mathbf{\mathcal{R}}$ and $\mathbf{\mathcal{O}}$ are called Reachability and Observability \textbf{Gramians} and can also be computed by:
+\begin{align*}
+    \mathbf{\mathcal{R}} & :=\int_{0}^{\infty}e^{\mathbf{A}t}\mathbf{BB}^{\prime}e^{A^{\prime}t}\mathrm{~}dt          \\
+    \mathbf{\mathcal{O}} & :=\int_{0}^{\infty}e^{\mathbf{A}^{\prime}t}\mathbf{C^{\prime}C}e^{\mathbf{A}t}\mathrm{~}dt
+\end{align*}
+
+\ptitle{Significance}
 
 The $\mathcal{H}_2$-norm measures
 \begin{enumerate}
@@ -633,4 +654,35 @@ The $\mathcal{H}_2$-norm measures
     \item The LQR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
     \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|G\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}G(j\omega)=0$
     \item The submultiplicative property for $\mathcal{H}_\infty$ does not hold.
+    \item Lyapunov equations are linear in the unknown matrices whereas Riccati equations have order 2 in the unknown matrices.
+    \item Solve Lyapunov equations in MATLAB: \texttt{lyap}.
+    \item Note the duality in the gramians as we had in for reachability and observability with $A,B$ and $A^H,C^H$.
+    \item The $\mathcal{H}_2$ norm is a quantity in frequency domain. Note that we found a method to compute them \textbf{in state space} by solving linear equations.
+\end{itemize}
+
+\paragraph[Hinf-induced Norm]{$\mathcal{H}_{\infty}$-norm}
+\ptitle{Computation}
+
+Again one wants to compute the norm in state space (instead of frequency domain) by using \textbf{bisection}:
+\begin{enumerate}
+    \item Define a lower and an upper bound for $\|G\|_{\mathcal{H}_{\infty}}$ (0 is a good lower bound as it is the minimum for any norm)
+    \item Compute the \textbf{Hamiltonian matrix}
+          \begin{equation*}
+              \mathbf{H}_{\gamma}=
+              \begin{bmatrix}
+                  \mathbf{A}                                & \frac{1}{\gamma}\mathbf{BB}^{T} \\
+                  -\frac{1}{\gamma}\mathbf{C}^{T}\mathbf{C} & -\mathbf{A}^{T}
+              \end{bmatrix}
+          \end{equation*}
+          where $\gamma$ is an estimate of $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$. $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$ iff $H_{\gamma}$ has no eigenvalues on the imaginary axis.
+    \item Does $H_{\gamma}$ have eigenvalues on the imaginary axis?
+          \subitem{Yes:} $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}>\gamma$, choose lower gamma.
+          \subitem{No:} $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$, choose larger gamma.
+    \item Go back to 2.\ until enough precision is reached. The final $\gamma$ is $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$
+\end{enumerate}
+
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item There is no easy analytical way to compute $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$
 \end{itemize}
