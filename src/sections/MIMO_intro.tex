@@ -617,6 +617,14 @@ The induced norm is defined as
 \end{itemize}
 
 \paragraph[H2-induced Norm]{$\mathcal{H}_2$-norm}
+\ptitle{Properties}
+\begin{itemize}
+    \item Measure of system's energy
+    \item Average direction and frequency
+    \item Not induced
+    \item The submultiplicative property for $\mathcal{H}_\infty$ does not hold.
+\end{itemize}
+
 \ptitle{Computation}
 
 The $\mathcal{H}_2$ norm of a system is given by
@@ -630,7 +638,7 @@ where the \textbf{symmetric} matrices $\mathbf{\mathcal{R}}$ or $\mathbf{\mathca
 or\begin{equation*}
     \mathbf{A^{\prime}\mathcal{O}}+\mathbf{\mathcal{O}A}=-\mathbf{C^{\prime}C}
 \end{equation*}
-respectively.\\
+respectively. Note that there are $m\times n$ equations to solve.\\
 $\mathbf{\mathcal{R}}$ and $\mathbf{\mathcal{O}}$ are called Reachability and Observability \textbf{Gramians} and can also be computed by:
 \begin{align*}
     \mathbf{\mathcal{R}} & :=\int_{0}^{\infty}e^{\mathbf{A}t}\mathbf{BB}^{\prime}e^{A^{\prime}t}\mathrm{~}dt          \\
@@ -655,11 +663,11 @@ The $\mathcal{H}_2$-norm measures
 \begin{itemize}
     \item The LQR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
     \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}\mathbf{G}(j\omega)=0$
-    \item The submultiplicative property for $\mathcal{H}_\infty$ does not hold.
     \item Lyapunov equations are linear in the unknown matrices whereas Riccati equations have order 2 in the unknown matrices.
-    \item Solve Lyapunov equations in MATLAB: \texttt{lyap}.
+    \item MATLAB: \texttt{lyap}.
     \item Note the duality in the gramians as we had in for reachability and observability with $A,B$ and $A^H,C^H$.
     \item The $\mathcal{H}_2$ norm is a quantity in frequency domain. Note that we found a method to compute them \textbf{in state space} by solving linear equations.
+    \item The gramians are (if they are not singular) equivalent conditions to the reachability and observability matrices.
 \end{itemize}
 
 \paragraph[Hinf-induced Norm]{$\mathcal{H}_{\infty}$-norm}
