@@ -641,18 +641,18 @@ The $\mathcal{H}_2$-norm measures
 \begin{enumerate}
     \item The energy of the impulse response:
           \noindent\begin{equation*}
-              \|g\|_{\mathcal{L}_2}^2:= \|G\|_{\mathcal{H}_2}^2
+              \|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2
           \end{equation*}
     \item The energy of the response to initial conditions of the form $x(0)=\mathbf{B}u_0$ for $u_0={(1,1,\ldots, 1)}^{\mathsf{T}}$
     \item The (expected) power of the response to white noise:
           \noindent\begin{equation*}
-              \mathbb{E}\left[\lim_{T\to+\infty}\frac{1}{T}\text{Tr}\left(\int_0^T y(t){y(t)}^{\mathsf{H}} dt\right)\right] =  \|g\|_{\mathcal{L}_2}^2:= \|G\|_{\mathcal{H}_2}^2
+              \mathbb{E}\left[\lim_{T\to+\infty}\frac{1}{T}\text{Tr}\left(\int_0^T y(t){y(t)}^{\mathsf{H}} dt\right)\right] =  \|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2
           \end{equation*}
 \end{enumerate}
 \textbf{Remarks}:
 \begin{itemize}
     \item The LQR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
-    \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|G\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}G(j\omega)=0$
+    \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}\mathbf{G}(j\omega)=0$
     \item The submultiplicative property for $\mathcal{H}_\infty$ does not hold.
     \item Lyapunov equations are linear in the unknown matrices whereas Riccati equations have order 2 in the unknown matrices.
     \item Solve Lyapunov equations in MATLAB: \texttt{lyap}.
@@ -665,7 +665,7 @@ The $\mathcal{H}_2$-norm measures
 
 Again one wants to compute the norm in state space (instead of frequency domain) by using \textbf{bisection}:
 \begin{enumerate}
-    \item Define a lower and an upper bound for $\|G\|_{\mathcal{H}_{\infty}}$ (0 is a good lower bound as it is the minimum for any norm)
+    \item Define a lower and an upper bound for $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$ (0 is a good lower bound as it is the minimum for any norm)
     \item Compute the \textbf{Hamiltonian matrix}
           \begin{equation*}
               \mathbf{H}_{\gamma}=
@@ -674,7 +674,7 @@ Again one wants to compute the norm in state space (instead of frequency domain)
                   -\frac{1}{\gamma}\mathbf{C}^{T}\mathbf{C} & -\mathbf{A}^{T}
               \end{bmatrix}
           \end{equation*}
-          where $\gamma$ is an estimate of $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$. $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$ iff $H_{\gamma}$ has no eigenvalues on the imaginary axis.
+          where $\gamma$ is an estimate of $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$. Then, $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$ iff $\mathbf{H}_{\gamma}$ has no eigenvalues on the imaginary axis.
     \item Does $H_{\gamma}$ have eigenvalues on the imaginary axis?
           \subitem{Yes:} $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}>\gamma$, choose lower gamma.
           \subitem{No:} $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$, choose larger gamma.
