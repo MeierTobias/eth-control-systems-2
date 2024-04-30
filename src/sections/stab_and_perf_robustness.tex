@@ -13,6 +13,7 @@ The interconnection of two \textbf{stable} (MIMO) systems, with transfer functio
 \ptitle{Remarks}
 \begin{itemize}
     \item There could be some systems that violate this condition but still lead to a stable feedback interconnection.
+    \item \textbf{Any} norm fulfilling the submultiplicative property can be used for the SGT!
     \item The small-gain theorem also applies to non-linear, time-varying systems.
     \item To have sufficiency, $(\mathbf{I}-\mathbf{G_1G_2})$ must not have zeros in the RHP.
 \end{itemize}
@@ -81,22 +82,46 @@ and that there is a high-pass transfer function $W$ called \textbf{frequency wei
 \begin{itemize}
     \item Equivalent to SISO bode plot obstacles (now obstacles are given by singular values)
     \item Now we impose constraints on the $\mathcal{H}_{\infty}$ norm
+    \item \textbf{Caution}: depending on the convention the block diagrams vary and some matrices in a specific $\mathbf{G}$ will be permuted to the forms shown below.
 \end{itemize}
+
+\ptitle{General Procedure}
+
+\begin{center}
+    \includegraphics[width = 0.35\linewidth]{general_robust_fb.png}
+\end{center}
+Given an uncertainty and a controller designed for the nominal plant $\mathbf{P}$ one computes the transfer function without the system $\boldsymbol{\Delta}$ and then applies the SGT. The transfer function $\mathbf{G}$ to be found is from the output of $\boldsymbol{\Delta}$ to it's input i.e.\ find:
+\begin{equation*}
+    \mathbf{G}_{AB}=\mathbf{BA}^{-1}
+\end{equation*}
 
 \ptitle{Additive Uncertainty}
 \begin{center}
     \includegraphics[width = 0.75\linewidth]{robust_additive.png}
 \end{center}
-Given an additive uncertainty and a controller designed for the nominal plant $\mathbf{P}$ one computes the transfer function without $\Delta$ and applies the SGT. The CL system is then robustly stable iff
+The CL system is robustly stable iff
 \begin{equation*}
-    \|\mathbf{G}(s)\|_{\mathcal{H}_\infty}=\|-{(\mathbf{I}+\mathbf{C}(s)\mathbf{P}(s))}^{-1}\mathbf{C}(s)\mathbf{W}(s)\|_{\mathcal{H}_\infty}<1
+    \|\mathbf{G}(s)\|_{\mathcal{H}_\infty}=\|-{(\mathbf{I}+\mathbf{C}\mathbf{P})}^{-1}\mathbf{C}\mathbf{W}\|_{\mathcal{H}_\infty}<1
 \end{equation*}
 Remember: this is a necessary and sufficient condition.
 
 \ptitle{Multiplicative Uncertainty}
-%%% TBD %%%
-% @Tobi: hesch du chöne mitschribe vo de Wandtafle?
-%%% TBD %%%
+\begin{center}
+    \includegraphics[width = 0.75\linewidth]{robust_multiplicative.png}
+\end{center}
+The CL system is robustly stable iff
+\begin{equation*}
+    \|\mathbf{G}(s)\|_{\mathcal{H}_\infty}=\|-{(\mathbf{I}+\mathbf{CP})}^{-1}\mathbf{CPW}\|_{\mathcal{H}_\infty}<1
+\end{equation*}
+
+\ptitle{Feedback Uncertainty}
+\begin{center}
+    \includegraphics[width = 0.75\linewidth]{robust_feedback.png}
+\end{center}
+The CL system is robustly stable iff
+\begin{equation*}
+    \|\mathbf{G}(s)\|_{\mathcal{H}_\infty}=\|\mathbf{W}{(\mathbf{I}+\mathbf{PC})}^{-1}\mathbf{P}\|_{\mathcal{H}_\infty}<1
+\end{equation*}
 
 \subsubsection{Robust Performance}
 The “robust performance” problem can be formulated in a way that matches the “robust stability” problem.
