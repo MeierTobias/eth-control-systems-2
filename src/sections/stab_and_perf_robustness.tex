@@ -23,7 +23,7 @@ Given a feedback interconnection of $\mathbf{G}$ and an unknown system $\Delta$ 
     \item $\Delta$ is stable
     \item and $\left\|\Delta\right\|_{\mathcal{H}_\infty}<1$
 \end{itemize}
-the FB interconnection of $\mathbf{G}$ and $\mathbf{\Delta}$ is \textbf{stable iff}
+the FB interconnection of $\mathbf{G}$ and $\Delta$ is \textbf{stable iff}
 \begin{equation*}
     \left\|\mathbf{G}\right\|_{\mathcal{H}_\infty}<1
 \end{equation*}
@@ -133,7 +133,7 @@ We want to consider robust stability and robust performance simultaneously. Henc
     =\underbrace{\begin{bmatrix}
             \Delta_1 & 0        \\
             0        & \Delta_2
-        \end{bmatrix}}_{\mathbf{\Delta}}
+        \end{bmatrix}}_{\boldsymbol{\Delta}}
     \begin{bmatrix}z_1 \\
         z_2
     \end{bmatrix}
@@ -160,7 +160,7 @@ Therefore, we impose
 \begin{equation*}
     \left\|\mathbf{M}\right\|_{\mathcal{H}_\infty}<1
 \end{equation*}
-However, this is a conservative assumption as the SGT could be applied to an arbitrary $\mathbf{\Delta}$. Therefore, we adjust condition to more specific uncertainty matrices.
+However, this is a conservative assumption as the SGT could be applied to an arbitrary $\boldsymbol{\Delta}$. Therefore, we adjust the condition to more specific uncertainty matrices.
 
 \paragraph{Applying the Structured Singular Value (SSV)}
 
@@ -168,11 +168,11 @@ However, this is a conservative assumption as the SGT could be applied to an arb
 
 The SSV is defined with respect to a \textbf{class of perturbations} $\mathrm{D}$ as
 \begin{equation*}
-    \mu(\mathbf{M}):=\frac1{\inf\{\sigma_{\max}(\Delta):\det(1-M\Delta)=0\}},\quad\Delta\in\mathbb{D}
+    \mu(\mathbf{M}):=\frac1{\inf\{\sigma_{\max}(\boldsymbol{\Delta}):\det(1-M\boldsymbol{\Delta})=0\}},\quad\boldsymbol{\Delta}\in\mathbb{D}
 \end{equation*}
 \begin{itemize}
-    \item By convention, if $\det(I-M\Delta)\neq0,\forall\Delta\in\mathbb{D}\text{, then }\mu(M)=0$.
-    \item If $\Delta$ is diagonal and $M$ has rank one the SSV can be computed analytically.
+    \item By convention, if $\det(I-M\boldsymbol{\Delta})\neq0,\forall\boldsymbol{\Delta}\in\mathbb{D}\text{, then }\mu(M)=0$.
+    \item If $\boldsymbol{\Delta}$ is diagonal and $M$ has rank one the SSV can be computed analytically.
 \end{itemize}
 
 \ptitle{Properties of the SSV}
