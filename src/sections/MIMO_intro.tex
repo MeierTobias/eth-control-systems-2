@@ -47,7 +47,7 @@ The same holds for the discrete time case where $e^{st}$ is replaced by $z^k$ an
 
 \subsubsection{Interconnections}
 
-To find the interconnection start at output $\mathbf{y}$ and proceed against signal flow towards the input $\mathbf{u}$
+To find the interconnection start at output $\mathbf{y}$ and proceed against signal flow towards the input $\mathbf{u}$.
 
 \newpar{}
 \ptitle{Series Interconnection}
@@ -76,9 +76,10 @@ To find the interconnection start at output $\mathbf{y}$ and proceed against sig
 
 \begin{itemize}
     \item In MIMO systems the poles are the eigenvalues of $\mathbf{A}$.
-    \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as all possible square matrices (of all sizes!) in $\mathbf{G}(s)$.
+    \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as the determinants of all possible square submatrices (of all sizes!) in $\mathbf{G}(s)$.
     \item The \textbf{characteristic polynomial} $d(s)$ of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors $G_{ij}$.
     \item The \textbf{poles} of $\mathbf{G}(s)$ are the roots of the aforementioned LCM term.
+    \item Reminder: Even if the excitation signal does not contain frequency $p$ the output signal will contain this frequency as the initial condition response $x(t) = e^{\mathbf{A}t}x_0$ in modal form contains oscillations with frequency $p$.
 \end{itemize}
 
 % TODO: Example?
@@ -108,6 +109,16 @@ $z_0$ is a transmission zero if there exists a non-zero, rational function $\mat
 \end{equation*}
 which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
 
+\ptitle{Method to Determine Transmission Zeros}
+
+\begin{enumerate}
+    \item Calculate all minors (of all orders) of $\mathbf{G}(s)$
+    \item Find the least common denominator $d_{\min}(s)$ of the minors
+    \item Normalize highest order minors s.t.\ they have $d_{\min}(s)$ as denominator
+    \item Find largest common numerator $n_{\max}(s)$ (usually product of $(s-z_i)$ terms) of the normalized minors from 3.
+    \item The roots of $n_{\max}(s)$ are the MIMO zeros with their multiplicities
+\end{enumerate}
+
 \ptitle{Remarks}
 
 \begin{itemize}
@@ -116,6 +127,36 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
     \item The direction of the zero decides whether a MIMO pole and zero at the same frequency \textbf{cancel} (i.e.\ there can be a pole and a zero at same frequency without cancellation!).
     \item A zero means not just one entry of $\mathbf{y}$ is zero but that given an input vector $\mathbf{u} \ne \mathbf{0}$, $\mathbf{y}$ becomes the zero vector.
 \end{itemize}
+
+\begin{examplesection}[Example (From Script of Gioele Zardini)]
+    Given TF matrix:
+    \begin{equation*}
+        \mathbf{G}(s)=\begin{pmatrix}
+            \frac1{s+1} & \frac1{s+2}           & \frac{2\cdot(s+1)}{(s+2)\cdot(s+3)} \\
+            0           & \frac{s+3}{{(s+1)}^2} & \frac{s+4}{s+1}
+        \end{pmatrix}
+    \end{equation*}
+    1. Minors (already simplifed determinants):
+    \begin{align*}
+        \frac{1}{s+1},\frac{1}{s+2},\frac{2\cdot(s+1)}{(s+2)\cdot(s+3)},0,\frac{s+3}{{(s+1)}^{2}},\frac{s+4}{s+1} & \text{ (1st order)} \\
+        \frac{s+3}{{(s+1)}^3},\frac{1}{s+1},-\frac{s+4}{{(s+1)}^2}                                                & \text{ (2nd order)}
+    \end{align*}
+    2. Find $d_{\min}(s)$:
+    \begin{equation*}
+        {(s+1)}^3\cdot(s+2)\cdot(s+3)
+    \end{equation*}
+    3. Normalize highest order (here 2nd order) minors:
+    \begin{align*}
+         & \frac{{(s+3)}^2\cdot(s+2)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}                  \\
+         & \frac{{(s+1)}^2\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}        \\
+         & -\frac{(s+4)\cdot(s+1)\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}
+    \end{align*}
+    4. Find $n_{\max}(s)$:
+    \begin{equation*}
+        n_{\max}(s)=(s+3)(s+2)
+    \end{equation*}
+    5. Identify zeros: $z_1=-3,\;z_2=-2$
+\end{examplesection}
 
 \subsubsection{Invariant Zeros}
 
@@ -249,6 +290,7 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
 
 \begin{itemize}
     \item Figures out the minimum number of ``copies'' of each pole that we need to construct a realization of a MIMO transfer function.
+    \item $\mathbf{A}$ simply contains diagonal matrices of dimension $r_i \times r_i$ with $p_i$ on their diagonals.
 \end{itemize}
 
 % TODO: Add an example?
@@ -271,9 +313,138 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
 %     
 % \end{examplesection}
 
-\subsection{Signal Amplification}
+% \subsection{Signal Amplification}
 
-\subsubsection{Norms}
+\subsection{Singular Value Decomposition (SVD)}
+
+Any matrix $\mathbf{A}\in \mathbb{C}^{m\times n}$ can be decomposed as
+\noindent\begin{equation*}
+    \mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{\mathsf{H}}\quad \begin{cases}
+        \mathbf{U}\in \mathbb{C}^{m\times m} & \text{left singular vectors}                          \\
+        \Sigma\in \mathbb{C}^{m\times n}     & \text{singular values }\sigma_i \text{, desc.\ order} \\\
+        \mathbf{V}\in \mathbb{C}^{n\times n} & \text{right singular vectors}\
+    \end{cases}
+\end{equation*}
+
+\ptitle{$2\times 3$ Example}
+
+\noindent\begin{equation*}
+    \mathbf{A}=
+    \underbrace{\begin{bmatrix}
+            \vert        & \vert        \\
+            \mathbf{u}_1 & \mathbf{u}_2 \\
+            \vert        & \vert
+        \end{bmatrix}}_{\textsf{Rotation}}
+    \underbrace{\begin{bmatrix}
+            \sigma_1 & 0        & 0 \\
+            0        & \sigma_2 & 0
+        \end{bmatrix}}_{\textsf{Scaling \& Dimensions}}
+    \underbrace{\begin{bmatrix}
+            \text{---} & \mathbf{v_1} & \text{---} \\
+            \text{---} & \mathbf{v_2} & \text{---} \\
+            \text{---} & \mathbf{v_3} & \text{---}
+        \end{bmatrix}}_{\textsf{Rotation}}
+\end{equation*}
+with eigenvalues
+\noindent\begin{gather*}
+    \lambda_{u_1}=\lambda_{v_1}={\sigma_1}^2\\
+    \lambda_{u_2}=\lambda_{v_2}={\sigma_2}^2\\
+    \lambda_{v_3}=0
+\end{gather*}
+
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item $\mathbf{U},\:\mathbf{V}$ are unitary i.e. $\mathbf{U}^H \mathbf{U}=\mathbf{U}\mathbf{U}^H=\mathbf{I}$
+    \item Unitary implies positive semi-definite and real, non-negative eigenvalues.
+    \item (Upper- and lower-) diagonal matrices have their singular values (or eigenvalues) on the main diagonal.
+\end{itemize}
+
+\subsubsection{Procedure}
+Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
+\begin{enumerate}
+    \item calculate eigenvalues (start with smaller matrix, pad with 0)
+          \noindent\begin{align*}
+               & \lambda_{\mathbf{V}}\in \mathbb{R}^n: & \det\left(\lambda \mathbf{I}-\mathbf{A}^{\mathsf{H}}\mathbf{A}\right)\overset{!}{=}0 \\
+               & \lambda_{\mathbf{U}}\in \mathbb{R}^m: & \det\left(\lambda \mathbf{I}-\mathbf{AA}^{\mathsf{H}}\right)\overset{!}{=}0
+          \end{align*}
+    \item calculate eigenvectors of $\mathbf{U},\mathbf{V}$
+          \noindent\begin{align*}
+               & \mathbf{V}:                & \left(\lambda_{\mathbf{v}_i} \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{x} & \overset{!}{=}\mathbf{0}          \\
+               & \mathbf{U}:                & \mathbf{u}_i                                                                                 & = \frac{1}{\sigma_i}\mathbf{Av}_i \\
+               & \mathrm{if}~\sigma_i = 0 : & \left(\lambda_{\mathbf{u}_i} \mathbf{I} -\mathbf{AA}^{\mathsf{H}}\right)\mathbf{x}           & \overset{!}{=}\mathbf{0}
+          \end{align*}
+          where $\lambda_{\mathbf{u}i}=0$ if $\mathbf{V}$ has smaller dimensions than $\mathbf{U}$ and vice versa.
+    \item calculate singular values $\sigma\in \mathbb{R}^{\min(m,n)}$ and compose $\Sigma$
+          \noindent\begin{align*}
+              \sigma_i & = \sqrt{\lambda_{u_i}} = \sqrt{\lambda_{v_i}}\quad i=0,1,\cdots, \min(m,n) \\
+              \Sigma   & = \begin{bmatrix}
+                               \sigma_1 & \cdots & 0          & \mathbf{0} \\
+                               \vdots   & \ddots & \vdots     & \mathbf{0} \\
+                               0        & \cdots & \sigma_{m} & \mathbf{0}
+                           \end{bmatrix}\text{ or }
+              \begin{bmatrix}
+                  \sigma_1   & \cdots & 0          \\
+                  \vdots     & \ddots & \vdots     \\
+                  0          & \cdots & \sigma_{n} \\
+                  \mathbf{0} & \cdots & \mathbf{0}
+              \end{bmatrix}
+          \end{align*}
+    \item \noindent\begin{equation*}
+              \mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{\mathsf{H}}
+          \end{equation*}
+\end{enumerate}
+
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item Write out the dimensions of $\mathbf{U}$, $\Sigma$ and $\mathbf{V}$ directly
+    \item Each column of $\mathbf{U}$ and $\mathbf{V}$ must be normalized (unitary!).
+    \item Hence, one can normalize the $\mathbf{v}_i$ separately (same for $\mathbf{u}_i$).
+\end{itemize}
+
+\subsubsection{Interpetation}
+When looking at the columns of $\mathbf{A}$ separatly
+\noindent\begin{equation*}
+    \mathbf{Av}_i=\sigma_i \mathbf{u}_i
+\end{equation*}
+shows that a input in direction $\mathbf{v}_i$ results in an output in direction $\mathbf{u}_i$ with amplification $\sigma_i$.
+
+\newpar{}
+\ptitle{Zeros and Poles}
+
+If the matrix $\mathbf{A}$ contains $s$, the directions of poles and zeros can be found with SVD:
+\begin{enumerate}
+    \item Set $s=z, p+0.0001$
+    \item Calculate SVD of $\mathbf{A}(s)$
+    \item Evaluate singular values:
+          \begin{enumerate}
+              \item The \textbf{input zero direction} is the column $\mathbf{v_i}$ with corresponding $\sigma_i=0$.
+              \item The output zero direction is the column $\mathbf{u_i}$ with corresponding $\sigma_i=0$.
+              \item The \textbf{input pole direction} is the column $\mathbf{v_i}$ with largest $\sigma_i$.
+              \item The output pole direction is the column $\mathbf{u_i}$ with largest $\sigma_i$.
+          \end{enumerate}
+\end{enumerate}
+
+\newpar{}
+\ptitle{Condition Number}
+\noindent\begin{equation*}
+    \kappa(\mathbf{A})=\frac{\sigma_{\max}(\mathbf{A})}{\sigma_{\min}(\mathbf{A})}
+\end{equation*}
+
+\textbf{Remarks}:
+\begin{itemize}
+    \item A high condition number suggests that the system is \textit{strongly directional} i.e.\ \textit{ill-conditioned} and thus difficult to control.
+    \item Often, considering only the \textit{strong} singular values is sufficient.
+\end{itemize}
+
+\subsection{Norms}
+% \ptitle{Usage of Norms}
+\begin{itemize}
+    \item Inputs vectors with same but permuted entries can generate wildly different outputs due to directionality.
+    \item Directionality depends on frequency as well.
+    \item Norms are a way to measure ``sizes'' in order to compare effects in different directions.
+\end{itemize}
 
 \ptitle{Properties}
 \begin{align*}
@@ -304,7 +475,7 @@ If we then provide the vector spaces with a norm, a \textbf{matrix norm is induc
 \begin{equation*}
     \|\mathbf{A}\|_p:=\sup_{\mathbf{x}\neq0}\frac{\|\mathbf{Ax}\|_p}{\|\mathbf{x}\|_p}=\max_{\|\mathbf{x}\|_p=1}\|\mathbf{Ax}\|_p
 \end{equation*}
-which means that the induced p-norm of $\mathbf{A}$ measures how much multiplication by $\mathbf{A}$ amplifies the p-norm of a vector. In other words, $\|\mathbf{A}\|_p$ is the \textbf{gain} of the operator $\mathbf{A}$.
+which means that the induced p-norm of $\mathbf{A}$ measures how much multiplication by $\mathbf{A}$ amplifies the p-norm of a vector. In other words, $\|\mathbf{A}\|_p$ is the \textbf{gain} of the operator $\mathbf{A}$. The p-norm finds the maximum possible amplification of a vector with length 1.
 
 \newpar{}
 \ptitle{Properties of Induced Norms}
@@ -321,7 +492,9 @@ and the submultiplicative property:
 \end{align*}
 
 
-\paragraph{Specific Induced Norms}
+\paragraph{Specific Norms}
+
+\ptitle{Induced $p$-norms}
 
 For the $p = 1$ norm we get the \textbf{max-sum column}:
 \begin{equation*}
@@ -331,6 +504,17 @@ For the $p = 1$ norm we get the \textbf{max-sum column}:
     \end{cases}
 \end{equation*}
 
+\newpar{}
+For the $p = 2$ norm we get the \textbf{maximal amplification}:
+\noindent\begin{equation*}
+    \|\mathbf{A}\|_{2,\mathrm{ind}}:=\sup_{x\neq0}\frac{\|\mathbf{Ax}\|_2}{\|\mathbf{x}\|_2}=\sigma_{\max}(\mathbf{A}),\qquad \mathbf{x}=\mathbf{v}_1
+\end{equation*}
+and \textbf{minimal amplification} (assuming rank($\mathbf{A}$)=$n$):
+\noindent\begin{equation*}
+    \inf_{x\neq0}\frac{\|\mathbf{Ax}\|_2}{\|\mathbf{x}\|_2}=\sigma_n(\mathbf{A}),\qquad \mathbf{x}=\mathbf{v}_n
+\end{equation*}
+
+\newpar{}
 For the $p = \infty$ norm we get the \textbf{max-sum row}:
 \begin{equation*}
     \|\mathbf{A}\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|\qquad x_k=\pm 1
@@ -338,11 +522,178 @@ For the $p = \infty$ norm we get the \textbf{max-sum row}:
 
 \ptitle{Frobenius Norm}
 
-\begin{equation*}
-    \|\mathbf{A}\|_F:={\left(\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2\right)}^{1/2}=\text{Trace}{(\mathbf{A}^{\mathsf{H}}\mathbf{A})}^{1/2}
-\end{equation*}
+\noindent\begin{align*}
+    \|\mathbf{A}\|_F: & ={\left(\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2\right)}^{1/2}=\text{Trace}{(\mathbf{A}^{\mathsf{H}}\mathbf{A})}^{1/2} \\
+                      & = {\left(\sum_{i=1}^r\sigma_i{(\mathbf{A})}^2\right)}^{1/2}
+\end{align*}
 
 \begin{itemize}
     \item non-induced
     \item still has submultiplicative property
+\end{itemize}
+
+\textbf{Remarks}: $x_k$ describes the elements of the vector $\mathbf{x}$ for which the norm-specific maximum amplification happens.
+
+\subsubsection{Signal Norms}
+Signals are functions and functions are vectors.
+\noindent\begin{equation*}
+    w:\mathbb{T}\rightarrow \mathbb{R}^n, \quad w(t)=(w_1(t), w_2(t), \ldots w_n(t))
+\end{equation*}
+\ptitle{p-norms}
+
+\textbf{1-norm}: Action
+\noindent\begin{equation*}
+    \|w\|_1=\begin{cases}
+        \sum\limits_{k\in\mathbb{Z}}\|w[k]\|_1 & (\mathsf{DT}) \\
+        \int_{-\infty}^\infty\|w(t)\|_1 dt     & (\mathsf{CT})
+    \end{cases}
+\end{equation*}
+\newpar{}
+\textbf{2-norm:} Square of the Energy
+\noindent\begin{equation*}
+    \|w\|_2^2=
+    \begin{cases}
+        \sum\limits_{k\in\mathbb{Z}}w[k]'w[k] = \sum\limits_{k\in\mathbb{Z}}\|w[k]\|_2^2 & \mathsf{(DT)} \\
+        \int_{-\infty}^\infty w(t)'w(t) dt = \int_{-\infty}^\infty\|w(t)\|_2^2 dt        & \mathsf{(CT)}
+    \end{cases}
+\end{equation*}
+
+\newpar{}
+\textbf{$\infty$-norm:} Peak Magnitude
+\noindent\begin{equation*}
+    \|w\|_\infty=\sup_{t\in\mathbb{T}}\|w(t)\|_\infty=\sup_{t\in\mathbb{T}}\max_{i=1\ldots n}|w_i(t)|
+\end{equation*}
+where the absolute value of the signal must be taken because the maximum could be negative.
+
+\ptitle{Power} (not a norm)
+\noindent\begin{equation*}
+    \mathrm{pow}{(w)}^2=
+    \begin{cases}
+        \lim\limits_{N\to+\infty}\frac{1}{2N}\sum\limits_{k=-N}^N\|w[k]\|_2^2 & \mathsf{(DT)} \\
+        \lim\limits_{T\to+\infty}\frac{1}{2T}\int_{-T}^T\|w(t)\|_2^2 dt       & \mathsf{(CT)}
+    \end{cases}
+\end{equation*}
+
+\paragraph{Relationships}
+\noindent\begin{align*}
+    \|w\|_2<\infty                                         & \Rightarrow \mathrm{pow}{(w)}=0                         \\
+    \mathsf{DT}:\;\;\|w\|_2<\infty                         & \Rightarrow \|w\|_\infty<\infty                         \\
+    \mathsf{CT}:\;\;\|w\|_2<\infty                         & \;\cancel{\Leftrightarrow}\; \|w\|_\infty<\infty        \\
+    (\mathrm{pow}{(w)}<\infty) \land (\|w\|_\infty<\infty) & \Rightarrow \mathrm{pow}{(w)} < \|w\|_\infty^2          \\
+    (\|w\|_1<\infty) \land (\|w\|_\infty<\infty)           & \Rightarrow \|w\|_2<\sqrt{\|w\|_1\|w\|_\infty} < \infty
+\end{align*}
+
+\begin{center}
+    \includegraphics[width = 0.7\linewidth]{signal_norm.png}
+\end{center}
+
+\newpar{}
+\subsubsection{System Norms}
+A system maps an input $u$ to an output $y$:
+\noindent\begin{equation*}
+    y=Su
+\end{equation*}
+
+The induced norm is defined as
+\noindent\begin{equation*}
+    \|S\|_{p,\mathrm{ind}}:=\sup_{u\neq0}\frac{\|Su\|_p}{\|u\|_p}=\sup_{u\neq0}\frac{\|y\|_p}{\|u\|_p}
+\end{equation*}
+
+\newpar{}
+\paragraph{Parseval's Identity}
+\noindent\begin{equation*}
+    \underbrace{\|y\|_{\mathcal{L}_2}^2}_{\textsf{Time}}=\int_0^\infty\|y(t)\|_2^2 dt=\frac1{2\pi}\int_{-\infty}^{+\infty}\|Y(j\omega)\|_2^2 d\omega=\underbrace{\|Y(s)\|_{\mathcal{H}_2}^2}_{\textsf{Freq.} (s=j\omega)}
+\end{equation*}
+
+\paragraph[L2-induced Norm]{$\mathcal{L}_2$-induced Norm}
+\noindent\begin{equation*}
+    \sup_{u\neq0}\frac{\|y\|_{\mathcal{L}_2}}{\|u\|_{\mathcal{L}_2}}=\sup_{\omega\in\mathbb{R}}\sigma_{\max}[G(j\omega)]=:\|G\|_{\mathcal{H}_\infty}
+\end{equation*}
+\textbf{Remarks}:
+\begin{itemize}
+    \item In SISO systems, the $\mathcal{H}_\infty$ norm corresponds to the peak value of the Bode plot.
+    \item The submultiplicative property for $\mathcal{H}_\infty$ holds.
+    \item Note that the singular values are frequency-dependent i.e.\ can be shown in a Bode plot.
+\end{itemize}
+
+\paragraph[H2-induced Norm]{$\mathcal{H}_2$-norm}
+\ptitle{Properties}
+\begin{itemize}
+    \item Measure of system's energy
+    \item Average direction and frequency
+    \item Not induced
+    \item The submultiplicative property for $\mathcal{H}_\infty$ does not hold.
+\end{itemize}
+
+\ptitle{Computation}
+
+The $\mathcal{H}_2$ norm of a system is given by
+\begin{equation*}
+    \|\mathbf{G}\|_{\mathcal{H}_2}^2=\|g\|_{\mathcal{L}_2}^2=\mathrm{Tr}\left[\mathbf{C\mathcal{R}C}^{\prime}\right]=\mathrm{Tr}\left[\mathbf{B^{\prime}\mathcal{O}B}\right]
+\end{equation*}
+where the \textbf{symmetric} matrices $\mathbf{\mathcal{R}}$ or $\mathbf{\mathcal{O}}$ are computed by solving the Lyapunov (matrix) equation
+\begin{equation*}
+    \mathbf{ A\mathcal{R}}+\mathbf{\mathcal{R}A}^{\prime}=-\mathbf{BB}^{\prime}
+\end{equation*}
+or\begin{equation*}
+    \mathbf{A^{\prime}\mathcal{O}}+\mathbf{\mathcal{O}A}=-\mathbf{C^{\prime}C}
+\end{equation*}
+respectively. Note that there are $m\times n$ equations to solve.\\
+$\mathbf{\mathcal{R}}$ and $\mathbf{\mathcal{O}}$ are called Reachability and Observability \textbf{Gramians} and can also be computed by:
+\begin{align*}
+    \mathbf{\mathcal{R}} & :=\int_{0}^{\infty}e^{\mathbf{A}t}\mathbf{BB}^{\prime}e^{A^{\prime}t}\mathrm{~}dt          \\
+    \mathbf{\mathcal{O}} & :=\int_{0}^{\infty}e^{\mathbf{A}^{\prime}t}\mathbf{C^{\prime}C}e^{\mathbf{A}t}\mathrm{~}dt
+\end{align*}
+
+\ptitle{Significance}
+
+The $\mathcal{H}_2$-norm measures
+\begin{enumerate}
+    \item The energy of the impulse response:
+          \noindent\begin{equation*}
+              \|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2
+          \end{equation*}
+    \item The energy of the response to initial conditions of the form $x(0)=\mathbf{B}u_0$ for $u_0={(1,1,\ldots, 1)}^{\mathsf{T}}$
+    \item The (expected) power of the response to white noise:
+          \noindent\begin{equation*}
+              \mathbb{E}\left[\lim_{T\to+\infty}\frac{1}{T}\text{Tr}\left(\int_0^T y(t){y(t)}^{\mathsf{H}} dt\right)\right] =  \|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2
+          \end{equation*}
+\end{enumerate}
+\textbf{Remarks}:
+\begin{itemize}
+    \item The LQR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
+    \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}\mathbf{G}(j\omega)=0$
+    \item Lyapunov equations are linear in the unknown matrices whereas Riccati equations have order 2 in the unknown matrices.
+    \item MATLAB: \texttt{lyap}.
+    \item Note the duality in the gramians as we had in for reachability and observability with $A,B$ and $A^H,C^H$.
+    \item The $\mathcal{H}_2$ norm is a quantity in frequency domain. Note that we found a method to compute them \textbf{in state space} by solving linear equations.
+    \item The gramians are (if they are not singular) equivalent conditions to the reachability and observability matrices.
+\end{itemize}
+
+\paragraph[Hinf-induced Norm]{$\mathcal{H}_{\infty}$-norm}
+\ptitle{Computation}
+
+Again one wants to compute the norm in state space (instead of frequency domain) by using \textbf{bisection}:
+\begin{enumerate}
+    \item Define a lower and an upper bound for $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$ (0 is a good lower bound as it is the minimum for any norm)
+    \item Compute the \textbf{Hamiltonian matrix}
+          \begin{equation*}
+              \mathbf{H}_{\gamma}=
+              \begin{bmatrix}
+                  \mathbf{A}                                & \frac{1}{\gamma}\mathbf{BB}^{T} \\
+                  -\frac{1}{\gamma}\mathbf{C}^{T}\mathbf{C} & -\mathbf{A}^{T}
+              \end{bmatrix}
+          \end{equation*}
+          where $\gamma$ is an estimate of $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$. Then, $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$ iff $\mathbf{H}_{\gamma}$ has no eigenvalues on the imaginary axis.
+    \item Does $H_{\gamma}$ have eigenvalues on the imaginary axis?
+          \subitem{Yes:} $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}>\gamma$, choose larger gamma.
+          \subitem{No:} $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$, choose lower gamma.
+    \item Go back to 2.\ until enough precision is reached. The final $\gamma$ is $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$
+\end{enumerate}
+
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item The system must be \textbf{stable} and \textbf{strictly causal} to use this criterium.
+    \item There is no easy analytical way to compute $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$
 \end{itemize}
