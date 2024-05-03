@@ -1,9 +1,9 @@
-\subsection{Stability and Performance Robustness}
+\section{Stability and Performance Robustness}
 One main achievement of computing the $\mathcal{H}_\infty$ norm is to access stability and performance robustness and achieve robust control.
-\subsubsection{The Small Gain Theorem (SGT)}
+\subsection{The Small Gain Theorem (SGT)}
 The (unstructured) SGT attempts to access interconnection stability. In contrast to the structured SGT, the SGT does not make any assumptions on the structure of the uncertainty matrix.
 
-\paragraph{Sufficient Condition}
+\subsubsection{Sufficient Condition}
 
 The interconnection of two \textbf{stable} (MIMO) systems, with transfer functions $\mathbf{G_1}(s)$ and $\mathbf{G_2}(s)$, is stable if
 \begin{equation*}
@@ -18,7 +18,7 @@ The interconnection of two \textbf{stable} (MIMO) systems, with transfer functio
     \item To have sufficiency, $(\mathbf{I}-\mathbf{G_1G_2})$ must not have zeros in the RHP.
 \end{itemize}
 
-\paragraph{Necessary and Sufficient Condition}
+\subsubsection{Necessary and Sufficient Condition}
 Given a feedback interconnection of $\mathbf{G}$ and an unknown system $\Delta$ where
 \begin{itemize}
     \item $\Delta$ is stable
@@ -31,7 +31,7 @@ the FB interconnection of $\mathbf{G}$ and $\Delta$ is \textbf{stable iff}
 \end{equation*}
 Otherwise, one can find a $\Delta$ so that $(\mathbf{I}-\mathbf{G}\Delta)$ singular.
 
-\subsubsection{Modelling Uncertainty}
+\subsection{Modelling Uncertainty}
 \begin{center}
     \includegraphics[width = 0.5\linewidth]{uncertainty.png}
 \end{center}
@@ -56,7 +56,7 @@ and that there is a high-pass transfer function $W$ called \textbf{frequency wei
     \mathbf{W}(s)\Delta(s)
 \end{equation*}
 
-\paragraph{Common Uncertainty Models}
+\subsubsection{Common Uncertainty Models}
 \ptitle{Additive Uncertainty}
 \begin{equation*}
     \tilde{\mathbf{P}}(s)=\mathbf{P}(s)+\mathbf{W}(s)\Delta(s)
@@ -80,7 +80,7 @@ and that there is a high-pass transfer function $W$ called \textbf{frequency wei
     \includegraphics[width = 0.75\linewidth]{fb_uncertainty.png}
 \end{center}
 
-\subsubsection{Robust Stability}
+\subsection{Robust Stability}
 \begin{itemize}
     \item Equivalent to SISO bode plot obstacles (now obstacles are given by singular values and in time domain)
     \item Now we impose constraints on the $\mathcal{H}_{\infty}$ norm
@@ -125,7 +125,7 @@ The CL system is robustly stable iff
     \|\mathbf{G}(s)\|_{\mathcal{H}_\infty}=\|\mathbf{W}{(\mathbf{I}+\mathbf{PC})}^{-1}\mathbf{P}\|_{\mathcal{H}_\infty}<1
 \end{equation*}
 
-\subsubsection{Robust Performance}
+\subsection{Robust Performance}
 The “robust performance” problem can be formulated in a way that matches the “robust stability” problem.
 \begin{itemize}
     \item Isolate the two signals between which amplification is unwanted.
@@ -147,7 +147,7 @@ Applying the SGT (assuming $\boldsymbol{\Delta}=\mathbf{G}_{y\xi}$) yields
     \|\mathbf{G}_{y\xi}\|_{\mathcal{H}_\infty}=\|{(\mathbf{I}+\mathbf{PC})}^{-1}\mathbf{W}\|_{\mathcal{H}_\infty}<1
 \end{equation*}
 
-\subsubsection{Combined Robustness}
+\subsection{Combined Robustness}
 \begin{center}
     \includegraphics[width = 0.75\linewidth]{combined_robustness.png}
 \end{center}
@@ -170,7 +170,7 @@ We want to consider robust stability and robust performance simultaneously. Henc
     \end{matrix}
 \end{equation*}
 
-\paragraph{Robust Disturbance Rejection}
+\subsubsection{Robust Disturbance Rejection}
 
 The transfer function matrix for the SGT is given by
 \begin{align*}
@@ -191,7 +191,7 @@ Therefore, we impose
 to achieve robust \textbf{disturbance rejection}.
 
 
-\subsubsection{Structured Singular Value (SSV)}
+\subsection{Structured Singular Value (SSV)}
 The condition from the \textit{unstructured SGT} is a conservative assumption as the SGT could be applied to an arbitrary $\boldsymbol{\Delta}$.
 If $\boldsymbol{\Delta}$ has \textbf{block-diagonal structure}, less conservative robustness conditions can be applied.
 
