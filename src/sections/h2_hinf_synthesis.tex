@@ -94,14 +94,14 @@ where process noise and sensor noise are not correlated i.e.
 \end{itemize}
 
 \subsubsection{LQG}
-Due to the separation principle we can design the LQR and LQE controller separately (assuming all technical considerations are fulfilled). This process yields a controller of the form
+Due to the separation principle we can design the LQR and LQE controller separately (assuming all technical considerations are fulfilled). This process yields an optimal controller of the form
 \begin{equation*}   %% cleaner method for the lines? %%
     K=\left[\begin{array}{c|cc}
-        A+B_u F+LC_y & -L & B_u \\
-        \midrule
-        F          & 0  & I   \\
-        -C_y              & I  & 0
-    \end{array}\right]
+            A+B_u F+LC_y & -L & B_u \\
+            \midrule
+            F            & 0  & I   \\
+            -C_y         & I  & 0
+        \end{array}\right]
 \end{equation*}
 with
 \begin{equation*}
@@ -109,15 +109,71 @@ with
 \end{equation*}
 where $X$ is the stabilizing solution to the corresponding ARE and an observer
 \begin{equation*}
-    L=-(YC_y^\prime+B_w D_{yw}^\prime)R_{ww}^{-1}    
+    L=-(YC_y^\prime+B_w D_{yw}^\prime)R_{ww}^{-1}
 \end{equation*}
 where $Y$ is the stabilizing solution to the corresponding ARE.
 
-\subsubsection{\texorpdfstring{$\mathcal{H}_2$}{H2} Optimal Controller}
+\subsection{\texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
+\ptitle{Differentiation from $\mathcal{H}_2$ Synthesis}
+\begin{itemize}
+    \item $\mathcal{H}_2$ is optimal given
+          \begin{enumerate}
+              \item The cost trade-offs between the state error and the control effort
+              \item The expected covariances of the disturbance and sensor noise
+          \end{enumerate}
+    \item $\mathcal{H}_2$ specifications are given in time domain: difficult to handle frequency-domain specifications.
+    \item For $\mathcal{H}_2$ design one could use a “mixed sensitivity” approach, and further augment the plant $P$ with frequency-dependent weigthing functions.
+    \item $\mathcal{H}_\infty$ provides a more direct way to handle \textbf{frequency-domain specifications.}
+\end{itemize}
+
 
 \subsection{\texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
-
-\subsubsection{Optimal \texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
+\ptitle{Optimal $\mathcal{H}_\infty$ Synthesis}
+\begin{itemize}
+    \item In principle, we would like to find a controller K that minimizes the energy ($\mathcal{L}_2$) gain of the CL system i.e.
+          \begin{equation*}
+              \left\|T_{zw}\right\|_{\mathcal{H}_\infty}=\sup_{w\neq0}\frac{\left\|z\right\|_{\mathcal{L}_2}}{\left\|w\right\|_{\mathcal{L}_2}}
+          \end{equation*}
+    \item However, the optimal controller(s) are such that
+          \begin{enumerate}
+              \item $\sigma_{\max}(T_{ZW}(j\omega)$ is a constant over all frequencies, the response does not roll off at high frequencies.
+              \item The controller is not strictly proper. (The optimal controller is not unique.)
+              \item Computing an optimal controller is numerically challenging
+          \end{enumerate}
+\end{itemize}
 
 \subsubsection{Suboptimal \texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
+In practice one pursues a sub-optimal design, i.e., given $\gamma>0$, find a controller $K$ such that
+\begin{equation*}
+    \|T_{zw}\|_{\mathcal{H}_\infty}<\gamma
+\end{equation*}
+if one exists. This can be formulated mathematically as a cost function:
+\begin{equation*}
+    \|z\|_{\mathcal{L}_2}^2-\gamma^2\|w\|_{\mathcal{L}_2}^2
+\end{equation*}
+where we search for the smallest $\gamma$ such that the controller can achieve negative cost. This can be understood as
+\begin{itemize}
+    \item $z$ is the performance output given some disturbance $w$
+    \item We want to damp $z$ given $w$ (remember the definition of the induced $\mathcal{L}_2$ norm above)
+    \item The aforementioned formula becomes negative if the disturbance energy term is larger than the (hopefully damped) performance output $z$. A small $\gamma$ gives an even better controller as it is more difficult to achieve negative cost then.
+\end{itemize}
+
+\ptitle{Bisection Algorithm}
+
+\begin{enumerate}
+    \item Initialize to, e.g, $\gamma_-=0,\gamma_+=$ the $\mathcal{H}_\infty$ norm of the \textbf{$\mathcal{H}_2$ optimal design} (approximation of a reasonable bound). Let $K_+$ be the optimal $\mathcal{H}_2$ controller.
+    \item Let $\gamma\leftarrow(\gamma_-+\gamma_+)/2$. Check whether a controller exists such that $\|T_{zw}\|\mathcal{H}_\infty<\gamma$.
+    \item If yes, set $\gamma_+\leftarrow\gamma$, and set $K_+$ to the controller just designed. Otherwise, set $\gamma_-\leftarrow\gamma$.
+    \item Repeat from step 2 until $\gamma_+-\gamma_-<\epsilon$.
+    \item Return $K_+$.
+\end{enumerate}
+
+\ptitle{Simplified Setup}
+
+Solving the problem is simplified if
+\begin{itemize}
+    \item $C_{z}^{\prime}D_{zu}=0$, i.e.,the cost if of the form $\int_0^{+\infty}x^{\prime}Qx+u^{\prime}Rudt$.
+    \item $B_w D_{yw}^{\prime}=0$, i.e., process noise and sensor noise are uncorrelated.
+    \item $D_{zu}^{\prime}D_{zu}=1,D_{yw}D_{yw}^{\prime}=1$.
+\end{itemize}
 
