@@ -34,7 +34,7 @@ which yields the known LQR problem
           This ensures that any unstable mode of $A$ is detected by the performance output.
     \item $\begin{vmatrix} A- j\omega I& B_u\\ C_z& D_{zu}\end{vmatrix}$ has full column rank for all $\omega\in\mathbb{R}$\\
           Ensures that control effort is penalized at all $\omega$ so that the Hamiltonian does not have purely imaginary eigenvalues.
-    \item $D_{zu}^{\prime}D_{zu}=R$,invertible, i.e., $D_{zu}$ has full column rank\\
+    \item $D_{zu}^{\prime}D_{zu}=R$, invertible, i.e., $D_{zu}$ has full column rank\\
           Is for convenience.
 \end{enumerate}
 
@@ -42,7 +42,7 @@ which yields the known LQR problem
 
 \begin{itemize}
     \item One can show that this control law is optimal to achieve the stated minimization.
-    \item Technical considerations 1.-3. ensure that the Riccati equation admits a solution $Y$ that is positive semi-definite. 
+    \item Technical considerations 1.-3. ensure that the Riccati equation admits a solution $Y$ that is positive semi-definite.
 \end{itemize}
 
 
@@ -52,7 +52,7 @@ In the LQE problem we assume
     \item That $u$ takes the role uf the observer update
     \item Full state updates: $\mathbf{B_u}=\mathbf{\mathbb{I}}$ ($u$ updates the states)
     \item Zero initial conditions: $\tilde{x}(0)=x(0)-\hat{x}(0)=0$
-    \item $B_wD_{yw}^{\prime}=0$
+    \item $B_w D_{yw}^{\prime}=0$
 \end{itemize}
 and try to find an update signal $u(t,\tilde{x})\in \mathcal{L}_2$ that minimizes power in the error signal due to white noise disturbance $w$.
 
@@ -77,23 +77,41 @@ where process noise and sensor noise are not correlated i.e.
 
 \begin{enumerate}
     \item $(C_y,A)$ detectable.\\
-    To observe unstable modes.
+          To observe unstable modes.
     \item $(A,B_w)$ stabilizable\\
-    That unstable modes are affected by disturbance to actually track it.
+          That unstable modes are affected by disturbance to actually track it.
     \item $\begin{bmatrix}A-j\omega I&B_w\\C_y&D_{yw}\end{bmatrix}$ has full row rank for all $\omega\in\mathbb{R}$\\
-    That errors are penalized at all frequencies and condition on Hamiltonian.
+          That errors are penalized at all frequencies and condition on Hamiltonian.
     \item $D_{yw} D_{yw}^{\prime}=R_{ww}$ invertible, i.e., $D_{yw}$ has full row rank.\\
-    For convenience.
+          For convenience.
 \end{enumerate}
 
 \ptitle{Remarks}
 
 \begin{itemize}
     \item One can show that this control law is optimal to achieve the stated minimization.
-    \item Technical considerations 1.-3.\ ensure that the Riccati equation admits a solution $Y$ that is positive semi-definite. 
+    \item Technical considerations 1.-3.\ ensure that the Riccati equation admits a solution $Y$ that is positive semi-definite.
 \end{itemize}
 
 \subsubsection{LQG}
+Due to the separation principle we can design the LQR and LQE controller separately (assuming all technical considerations are fulfilled). This process yields a controller of the form
+\begin{equation*}   %% cleaner method for the lines? %%
+    K=\left[\begin{array}{c|cc}
+        A+B_u F+LC_y & -L & B_u \\
+        \midrule
+        F          & 0  & I   \\
+        -C_y              & I  & 0
+    \end{array}\right]
+\end{equation*}
+with
+\begin{equation*}
+    F=-R_{uu}^{-1}(B_{u}^{\prime}X+D_{zu}^{\prime}C_{z})
+\end{equation*}
+where $X$ is the stabilizing solution to the corresponding ARE and an observer
+\begin{equation*}
+    L=-(YC_y^\prime+B_w D_{yw}^\prime)R_{ww}^{-1}    
+\end{equation*}
+where $Y$ is the stabilizing solution to the corresponding ARE.
 
 \subsubsection{\texorpdfstring{$\mathcal{H}_2$}{H2} Optimal Controller}
 
