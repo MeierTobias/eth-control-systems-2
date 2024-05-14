@@ -1,0 +1,13 @@
+\begin{tikzpicture}[auto, node distance=1.5cm,>=latex']
+    \node [input, name=uinput]          (uinput)        {};
+    \node [tmp, right of=uinput]        (ut)            {};
+    \node [block, right of=ut]          (P)             {$P(s)$};
+    \node [block, above of=P]           (W)             {$W(s)$};
+    \node [output, right of=P]          (y)             {};
+    \node [output, right of=W]          (z)             {};
+
+    \draw [->] (rinput) -- node[pos=0.2]{$u$} (P);
+    \draw [->] (ut) |- node{} (W);
+    \draw [->] (P) -- node{$y$} (y);
+    \draw [->] (W) -- node{$z$} (z);
+\end{tikzpicture}
