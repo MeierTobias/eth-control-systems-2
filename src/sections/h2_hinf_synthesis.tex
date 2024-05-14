@@ -149,7 +149,7 @@ if one exists. This can be formulated mathematically as a cost function:
 \begin{equation*}
     \|z\|_{\mathcal{L}_2}^2-\gamma^2\|w\|_{\mathcal{L}_2}^2
 \end{equation*}
-where we search for the smallest $\gamma$ such that the controller can achieve negative cost. This can be understood as
+where we search for the smallest $\gamma$ such that the controller can achieve negative cost. We \textbf{need} $\boldsymbol{\gamma}\mathbf{\le1}$ for a stabilizing controller as otherways for larger gamma one could easily achieve negative cost even though the energy of the disturbance gets not damped at all! The formula can be understood as
 \begin{itemize}
     \item $z$ is the performance output given some disturbance $w$
     \item We want to damp $z$ given $w$ (remember the definition of the induced $\mathcal{L}_2$ norm above)
