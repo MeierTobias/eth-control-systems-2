@@ -4,26 +4,26 @@ In the LQR problem we assume
 \begin{itemize}
     \item Full state feedback: $\mathbf{C_y}=\mathbf{\mathbb{I}}$
     \item No disturbance input: $w=0$
-    \item $C_z^{\mathsf{T}}D_{zu}=0$
+    \item $\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$
 \end{itemize}
 and try to find a control signal $u(t,x)$ that minimizes
 \begin{equation*}
-    \|z\|_2^2=\int_0^{+\infty}\|C_z x+D_{zu}u\|_2^2 dt
+    \|\mathbf{z}\|_2^2=\int_0^{+\infty}\|\mathbf{C}_z \mathbf{x}+\mathbf{D}_{zu}\mathbf{u}\|_2^2 dt
 \end{equation*}
 where
 \begin{align*}
-    C_z=                       &
+    \mathbf{C}_z=                               &
     \begin{bmatrix}
-        \sqrt{Q} & 0
+        \sqrt{\mathbf{Q}} & \mathbf{0}
     \end{bmatrix}^{\mathsf{T}} & \Leftrightarrow \mathbf{Q} & = \mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z       \\
-    D_{zu}=                    &
+    \mathbf{D}_{zu}=                            &
     \begin{bmatrix}
-        0 & \sqrt{R}
+        \mathbf{0} & \sqrt{\mathbf{R}}
     \end{bmatrix}^{\mathsf{T}} & \Leftrightarrow \mathbf{R} & = \mathbf{D}_{zu}^{\mathsf{T}}\mathbf{D}_{zu}
 \end{align*}
 which yields the known LQR problem
 \begin{equation*}
-    \|z\|_2^2=\int_0^{+\infty}(x^{\mathsf{T}}Qx+u^{\mathsf{T}}Ru)\;dt
+    \|\mathbf{z}\|_2^2=\int_0^{+\infty}(\mathbf{x}^{\mathsf{T}}\mathbf{Q}\mathbf{x}+\mathbf{u}^{\mathsf{T}}\mathbf{R}\mathbf{u})\;dt
 \end{equation*}
 
 \ptitle{ARE}
@@ -36,12 +36,12 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
 \ptitle{Technical Considerations}
 
 \begin{enumerate}
-    \item $(A,B_u)$ stabilizable.
-    \item $(C_z,A)$ detectable.\\
-          This ensures that any unstable mode of $A$ is detected by the performance output.
-    \item $\begin{bmatrix} A- j\omega I& B_u\\ C_z& D_{zu}\end{bmatrix}$ has full column rank for all $\omega\in\mathbb{R}$\\
+    \item $(\mathbf{A},\mathbf{B}_u)$ stabilizable.
+    \item $(\mathbf{C}_z,\mathbf{A})$ detectable.\\
+          This ensures that any unstable mode of $\mathbf{A}$ is detected by the performance output.
+    \item $\begin{bmatrix} \mathbf{A}- j\omega \mathbf{I}& \mathbf{B}_u\\ \mathbf{C}_z& \mathbf{D}_{zu}\end{bmatrix}$ has full column rank for all $\omega\in\mathbb{R}$\\
           Ensures that control effort is penalized at all $\omega$ so that the Hamiltonian does not have purely imaginary eigenvalues.
-    \item $D_{zu}^{\mathsf{T}}D_{zu}=R$, invertible, i.e., $D_{zu}$ has full column rank\\
+    \item $\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{D}_{zu}=\mathbf{R}$, invertible, i.e., $\mathbf{D}_{zu}$ has full column rank\\
           Is for convenience.
 \end{enumerate}
 
@@ -49,7 +49,7 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
 
 \begin{itemize}
     \item One can show that this control law is optimal to achieve the stated minimization.
-    \item Technical considerations 1.-3.\ ensure that the Riccati equation admits a solution $Y$ that is positive semi-definite.
+    \item Technical considerations 1.-3.\ ensure that the Riccati equation admits a solution $\mathbf{Y}$ that is positive semi-definite.
 \end{itemize}
 
 
@@ -57,30 +57,31 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
 In the LQE problem we assume
 \begin{itemize}
     \item That $\mathbf{u}$ takes the role uf the observer update
-    \item Full state updates: $\mathbf{B_u}=\mathbf{\mathbb{I}}$ ($u$ updates the states)
-    \item Zero initial conditions: $\tilde{x}(0)=x(0)-\hat{x}(0)=0$
-    \item $B_w D_{yw}^{\mathsf{T}}=0$
+    \item Full state updates: $\mathbf{B}_u=\mathbf{\mathbb{I}}$ ($u$ updates the states)
+    \item Zero initial conditions: $\tilde{\mathbf{x}}(0)=\mathbf{x}(0)-\hat{\mathbf{x}}(0)=0$
+    \item $\mathbf{B}_w \mathbf{D}_{yw}^{\mathsf{T}}=0$
 \end{itemize}
-and try to find an update signal $u(t,\tilde{x})\in \mathcal{L}_2$ that minimizes power in the error signal due to white noise disturbance $w$.
+and try to find an update signal $\mathbf{u}(t,\tilde{x})\in \mathcal{L}_2$ that minimizes power in the error signal due to white noise disturbance $w$.
 
 \newpar{}
 \ptitle{Noise}
 
 Process noise and sensor noise affect the system as
 \begin{align*}
-    \dot{\tilde{x}}= & A\tilde{x}+B_{w} w   &  & \text{ affects real, physical state} \\
-    y=               & C_y\tilde{x}+D_{yw}w &  & \text{ affects measurements}
+    \frac{d\tilde{\mathbf{x}} }{dt}= & \mathbf{A}\tilde{\mathbf{x}}+\mathbf{B}_{w} \mathbf{w}   &  & \text{ affects real, physical state} \\
+    \mathbf{y}=                      & \mathbf{C}_y\tilde{\mathbf{x}}+\mathbf{D}_{yw}\mathbf{w} &  & \text{ affects measurements}
 \end{align*}
 and are modelled by
 \begin{align*}
-    B_w=    & \begin{bmatrix}\sqrt{Q}&0\end{bmatrix}^{\mathsf{T}} & \Leftrightarrow \mathbf{Q} & = \mathbf{B}_w\mathbf{B}_w^{\mathsf{T}}       \\
-    D_{yw}= & \begin{bmatrix}0&\sqrt{R}\end{bmatrix}              & \Leftrightarrow \mathbf{R} & = \mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}
+    \mathbf{B}_w=    & \begin{bmatrix}\sqrt{\mathbf{Q}}&\mathbf{0}\end{bmatrix}^{\mathsf{T}} & \Leftrightarrow \mathbf{Q}          & = \mathbf{B}_w\mathbf{B}_w^{\mathsf{T}}       \\
+    \mathbf{D}_{yw}= & \begin{bmatrix}\mathbf{0}&\sqrt{\mathbf{R}}\end{bmatrix}              & \Leftrightarrow \mathbf{\mathbf{R}} & = \mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}
 \end{align*}
 where process noise and sensor noise are not correlated i.e.
 \begin{equation*}
-    \mathbb{E}\left[w^{\mathsf{T}} B_w^{\mathsf{T}} D_{yw}w^{\mathsf{T}}\right]=0
+    \mathbb{E}\left[w^{\mathsf{T}} \mathbf{B}_w^{\mathsf{T}} \mathbf{D}_{yw}w^{\mathsf{T}}\right]=0
 \end{equation*}
 
+\newpar{}
 \ptitle{ARE}
 \noindent\begin{gather*}
     \mathbf{A}\mathbf{Y}_L + \mathbf{Y}_L \mathbf{A}^{\mathsf{T}} - \mathbf{Y}_L \mathbf{C}_y^{\mathsf{T}}{\left(\mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}\right)}^{-1} \mathbf{C}_y \mathbf{Y}_L + \mathbf{B}_w\mathbf{B}_w^{\mathsf{T}} = \mathbf{0}\\
@@ -88,16 +89,17 @@ where process noise and sensor noise are not correlated i.e.
 \end{gather*}
 where $\mathbf{Y}_L$ is symmetric and positive semidefinite.
 
+\newpar{}
 \ptitle{Technical Considerations}
 
 \begin{enumerate}
-    \item $(C_y,A)$ detectable.\\
+    \item $(\mathbf{C}_y,\mathbf{A})$ detectable.\\
           To observe unstable modes.
-    \item $(A,B_w)$ stabilizable\\
+    \item $(\mathbf{A},\mathbf{B}_w)$ stabilizable\\
           That unstable modes are affected by disturbance to actually track it.
-    \item $\begin{bmatrix}A-j\omega I&B_w\\C_y&D_{yw}\end{bmatrix}$ has full row rank for all $\omega\in\mathbb{R}$\\
+    \item $\begin{bmatrix}\mathbf{A}-j\omega I&\mathbf{B}_w\\\mathbf{C}_y&\mathbf{D}_{yw}\end{bmatrix}$ has full row rank for all $\omega\in\mathbb{R}$\\
           That errors are penalized at all frequencies and condition on Hamiltonian.
-    \item $D_{yw} D_{yw}^{\mathsf{T}}=R_{ww}$ invertible, i.e., $D_{yw}$ has full row rank.\\
+    \item $\mathbf{D}_{yw} \mathbf{D}_{yw}^{\mathsf{T}}=\mathbf{R}_{ww}$ invertible, i.e., $\mathbf{D}_{yw}$ has full row rank.\\
           For convenience.
 \end{enumerate}
 
@@ -105,28 +107,28 @@ where $\mathbf{Y}_L$ is symmetric and positive semidefinite.
 
 \begin{itemize}
     \item One can show that this control law is optimal to achieve the stated minimization.
-    \item Technical considerations 1.-3.\ ensure that the Riccati equation admits a solution $Y$ that is positive semi-definite.
+    \item Technical considerations 1.-3.\ ensure that the Riccati equation admits a solution $\mathbf{Y}$ that is positive semi-definite.
 \end{itemize}
 
 \subsubsection{LQG}
 Due to the \textbf{separation principle} we can design the LQR and LQE controller separately (assuming all technical considerations are fulfilled). This process yields an \textbf{optimal controller} of the form
 \begin{equation*}
-    K=\left[\begin{array}{c|cc}%chktex 44
-            A+B_u F+LC_y & -L & B_u \\
+    \mathbf{K}=\left[\begin{array}{c|cc}%chktex 44
+            \mathbf{A}+\mathbf{B}_u \mathbf{F}+\mathbf{L}\mathbf{C}_y & -\mathbf{L} & \mathbf{B}_u \\
             \hline  %chktex 44
-            F            & 0  & I   \\
-            -C_y         & I  & 0
+            \mathbf{F}                                                & 0           & \mathbf{I}   \\
+            -\mathbf{C}_y                                             & \mathbf{I}  & 0
         \end{array}\right]
 \end{equation*}
 with
 \begin{equation*}
-    F=-R_{uu}^{-1}(B_{u}^{\mathsf{T}}X+D_{zu}^{\mathsf{T}}C_{z})
+    \mathbf{F}=-\mathbf{R}_{uu}^{-1}(\mathbf{B}_{u}^{\mathsf{T}}X+\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{C}_{z})
 \end{equation*}
-where $X$ is the stabilizing solution to the corresponding ARE and an \textbf{optimal observer}
+where $\mathbf{X}$ is the stabilizing solution to the corresponding ARE and an \textbf{optimal observer}
 \begin{equation*}
-    L=-(YC_y^{\mathsf{T}}+B_w D_{yw}^{\mathsf{T}})R_{ww}^{-1}
+    \mathbf{L}=-(\mathbf{Y}\mathbf{C}_y^{\mathsf{T}}+\mathbf{B}_w \mathbf{D}_{yw}^{\mathsf{T}})\mathbf{R}_{ww}^{-1}
 \end{equation*}
-where $Y$ is the stabilizing solution to the corresponding ARE.
+where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
 
 \subsection{\texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
 \ptitle{Differentiation from $\mathcal{H}_2$ Synthesis}
@@ -146,41 +148,41 @@ where $Y$ is the stabilizing solution to the corresponding ARE.
 \begin{itemize}
     \item In principle, we would like to find a controller K that minimizes the energy ($\mathcal{L}_2$) gain of the CL system i.e.
           \begin{equation*}
-              \left\|T_{zw}\right\|_{\mathcal{H}_\infty}=\sup_{w\neq0}\frac{\left\|z\right\|_{\mathcal{L}_2}}{\left\|w\right\|_{\mathcal{L}_2}}
+              \left\|\mathbf{T}_{zw}\right\|_{\mathcal{H}_\infty}=\sup_{w\neq0}\frac{\left\|\mathbf{z}\right\|_{\mathcal{L}_2}}{\left\|\mathbf{w}\right\|_{\mathcal{L}_2}}
           \end{equation*}
     \item However, the optimal controller(s) are such that
           \begin{enumerate}
-              \item $\sigma_{\max}(T_{zw}(j\omega))$ is a constant over all frequencies, the response does not roll off at high frequencies (\textit{Bode's integral law}).
+              \item $\sigma_{\max}(\mathbf{T}_{zw}(j\omega))$ is a constant over all frequencies, the response does not roll off at high frequencies (\textit{Bode's integral law}).
               \item The controller is not strictly proper. (The optimal controller is not unique.)
               \item Computing an optimal controller is numerically challenging
           \end{enumerate}
 \end{itemize}
 
-\subsubsection{Suboptimal \texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
+\subsubsection[Suboptimal H-infinity Synthesis]{Suboptimal $\mathcal{H}_\infty$ Synthesis}
 In practice one pursues a sub-optimal design, i.e., given $\gamma>0$, find a controller $K$ such that
 \begin{equation*}
-    \|T_{zw}\|_{\mathcal{H}_\infty}<\gamma
+    \|\mathbf{T}_{zw}\|_{\mathcal{H}_\infty}<\gamma
 \end{equation*}
 if one exists. This can be formulated mathematically as a cost function:
 \begin{equation*}
-    \|z\|_{\mathcal{L}_2}^2-\gamma^2\|w\|_{\mathcal{L}_2}^2
+    \|\mathbf{z}\|_{\mathcal{L}_2}^2-\gamma^2\|\mathbf{w}\|_{\mathcal{L}_2}^2
 \end{equation*}
 where we search for the smallest $\gamma$ such that the controller can achieve negative cost. We \textbf{need} $\boldsymbol{\gamma}\mathbf{\le1}$ for a stabilizing controller as otherways for larger gamma one could easily achieve negative cost even though the energy of the disturbance gets not damped at all! The formula can be understood as
 \begin{itemize}
-    \item $z$ is the performance output given some disturbance $w$
-    \item We want to damp $z$ given $w$ (remember the definition of the induced $\mathcal{L}_2$ norm above)
-    \item The aforementioned formula becomes negative if the disturbance energy term is larger than the (hopefully damped) performance output $z$. A small $\gamma$ gives an even better controller as it is more difficult to achieve negative cost then.
+    \item $\mathbf{z}$ is the performance output given some disturbance $\mathbf{w}$
+    \item We want to damp $\mathbf{z}$ given $\mathbf{w}$ (remember the definition of the induced $\mathcal{L}_2$ norm above)
+    \item The aforementioned formula becomes negative if the disturbance energy term is larger than the (hopefully damped) performance output $\mathbf{z}$. A small $\gamma$ gives an even better controller as it is more difficult to achieve negative cost then.
 \end{itemize}
 
 \newpar{}
 \ptitle{Bisection Algorithm}
 
 \begin{enumerate}
-    \item Initialize to, e.g, $\gamma_-=0,\gamma_+=$ the $\mathcal{H}_\infty$ norm of the \textbf{$\mathcal{H}_2$ optimal design} (approximation of a reasonable bound). Let $K_+$ be the optimal $\mathcal{H}_2$ controller.
-    \item Let $\gamma\gets \frac{\gamma_-+\gamma_+}{2}$. Check whether a controller exists such that $\|T_{zw}\|_{\mathcal{H}_\infty}<\gamma$.
-    \item If yes, set $\gamma_+\leftarrow\gamma$, and set $K_+$ to the controller just designed. Otherwise, set $\gamma_-\leftarrow\gamma$.
+    \item Initialize to, e.g, $\gamma_-=0,\gamma_+=$ the $\mathcal{H}_\infty$ norm of the \textbf{$\mathcal{H}_2$ optimal design} (approximation of a reasonable bound). Let $\mathbf{K}_+$ be the optimal $\mathcal{H}_2$ controller.
+    \item Let $\gamma\gets \frac{\gamma_-+\gamma_+}{2}$. Check whether a controller exists such that $\|\mathbf{T}_{zw}\|_{\mathcal{H}_\infty}<\gamma$.
+    \item If yes, set $\gamma_+\leftarrow\gamma$, and set $\mathbf{K}_+$ to the controller just designed. Otherwise, set $\gamma_-\leftarrow\gamma$.
     \item Repeat from step 2 until $\gamma_+-\gamma_-<\epsilon$.
-    \item Return $K_+$.
+    \item Return $\mathbf{K}_+$.
 \end{enumerate}
 
 \newpar{}
@@ -188,8 +190,8 @@ where we search for the smallest $\gamma$ such that the controller can achieve n
 
 Solving the problem is simplified if
 \begin{itemize}
-    \item $C_{z}^{\mathsf{T}}D_{zu}=0$, i.e.,the cost if of the form $\int_0^{+\infty}x^{\mathsf{T}}Qx+u^{\mathsf{T}}Ru\;dt$.
-    \item $B_w D_{yw}^{\mathsf{T}}=0$, i.e., process noise and sensor noise are uncorrelated.
-    \item $D_{zu}^{\mathsf{T}}D_{zu}=1,D_{yw}D_{yw}^{\mathsf{T}}=1$.
+    \item $\mathbf{C}_{z}^{\mathsf{T}}\mathbf{D}_{zu}=0$, i.e.,the cost if of the form $\int_0^{+\infty}\mathbf{x}^{\mathsf{T}}\mathbf{Q}\mathbf{x}+\mathbf{u}^{\mathsf{T}}\mathbf{R}\mathbf{u}\;dt$.
+    \item $\mathbf{B}_w \mathbf{D}_{yw}^{\mathsf{T}}=0$, i.e., process noise and sensor noise are uncorrelated.
+    \item $\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{D}_{zu}=1,\mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}=1$.
 \end{itemize}
 
