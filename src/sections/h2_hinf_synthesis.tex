@@ -140,7 +140,7 @@ where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
           \end{enumerate}
     \item $\mathcal{H}_2$ specifications are given in \textbf{time domain}: difficult to handle frequency-domain specifications.
     \item For $\mathcal{H}_2$ design one could use a ``mixed sensitivity'' approach, and further augment the plant $P$ with frequency-dependent weigthing functions.
-    \item $\mathcal{H}_\infty$ provides a more direct way to handle \textbf{frequency-domain specifications.}
+    \item $\mathcal{H}_\infty$ provides a more direct way to handle \textbf{frequency-domain specifications.} i.e.\ it allows to achieve a desired level of robustness to disturbances and noise (``Bode obstacles'').
 \end{itemize}
 
 \newpar{}
@@ -156,6 +156,23 @@ where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
               \item The controller is not strictly proper. (The optimal controller is not unique.)
               \item Computing an optimal controller is numerically challenging
           \end{enumerate}
+\end{itemize}
+
+\ptitle{Applying Frequency Weights}
+
+One can apply frequency weights to different performance outputs, similar to the ``Bode obstacles'' for SISO systems.
+\begin{itemize}
+    \item In order for $\mathcal{H}_\infty$ synthesis to be possible, frequency weights must be \textbf{stable and proper}.
+    \item Integrators (not asymptotically stable) can be approximated by very slow poles.
+    \item MATLAB: 
+    \begin{itemize}
+        \item \texttt{Pinf=augw(G,W1,0,W3)}\\
+        creates the augmented (weighted) system
+        \item \texttt{[Kinf, CL, GAM, INFO]=hinfsyn(Pinf,1,1)}\\
+        applies optimal $\mathcal{H}_\infty$ synthesis
+        \item \texttt{[K09, CL, GAM, I]=hinfsyn(Pinf,1,1,0.9)}\\
+        applies suboptimal $\mathcal{H}_\infty$ synthesis targeting $\gamma=0.9$. This can yield a more feasible controller (less control effort)
+    \end{itemize}
 \end{itemize}
 
 \subsubsection[Suboptimal H-infinity Synthesis]{Suboptimal $\mathcal{H}_\infty$ Synthesis}
