@@ -1,13 +1,81 @@
 \section{Nonlinear Systems}
 
 \subsection{Concepts of Stability}
+A nonlinear system
+\noindent\begin{align*}
+    \dot{\mathbf{x}}(t) & = f(\mathbf{x}(t), \mathbf{u}(t)) & \mathbf{x}(0)=\mathbf{x}_0 \\
+    \mathbf{y}(t)       & = h(\mathbf{x}(t), \mathbf{u}(t))
+\end{align*}
+\textbf{does not satisfy the superposition property} and therefore
+\begin{itemize}
+    \item Effects from inputs and from initial conditions caannot be seperated.
+    \item The input cannot be seperated into elementary inputs and the output will not be a composition of elementary outputs.
+\end{itemize}
+
+\newpar{}
+\ptitle{Properties}
+\begin{itemize}
+    \item A nonlinear system can have zero, one or multiple \textbf{equillibrium points} s.t.\ $f(\mathbf{x}_e, 0)=0$.
+    \item In contrast to linear systems that require infinite time to go to infinity, nonlinear systes can \textbf{go to infinity in finite time}.
+    \item Nonlniear systems may generate permanent oscillations of fixed amplitude - \textbf{limit cycles} - independent of initial conditions.
+    \item Nonlinear systems can generate outputs at frequencies that are submultiples or multiples of the input frequency (\textbf{Subharmonic oscillations}).
+    \item Deterministic nonlinear systems can generate \textbf{chaos}.
+\end{itemize}
 
 \subsection{Lyapunov Stability Theory}
-
 \subsubsection{Types of Stability}
+Assuming $\mathbf{u}=0, \mathbf{x}_e=0$, the eqilibrium $\mathbf{x}_e$ of the systems
+\noindent\begin{equation*}
+    \dot{\mathbf{x}} = f(\mathbf{x}), \quad f(\mathbf{x}_e) = 0
+\end{equation*}
+is
+\begin{itemize}
+    \item \textbf{Stable in the sense of Lyapunov}
+          \noindent\begin{equation*}
+              \|\mathbf{x}(0)\| < \delta \Rightarrow \|\mathbf{x}(t)\| \leq \varepsilon,\qquad \forall t\geq 0,\; \delta > 0,\; \varepsilon\geq0
+          \end{equation*}
+    \item \textbf{Asymtotically stable}
+          \noindent\begin{equation*}
+              \|\mathbf{x}(0)\| < \delta \Rightarrow \lim_{t\to +\infty} \mathbf{x}(t)=0, \qquad \delta>0
+          \end{equation*}
+    \item \textbf{Exponentially stable}
+          \noindent\begin{equation*}
+              \|\mathbf{x}(0)\| < \delta \Rightarrow \|\mathbf{x}(t)\| < \beta e^{-\alpha t}, \qquad \forall t\geq 0,\; \alpha, \beta, \delta >0
+          \end{equation*}
+\end{itemize}
 
 \subsubsection{Lyapunov Functions}
+\textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the quilibrium point and non-increasing along all trajectories.}
+\newpar{}
+For a given compact subset $D$ of the state space containing $\mathbf{x}_e$, a Lypunov function is defined as
+\noindent\begin{equation*}
+    V:D \to \mathbb{R} \mapsto V(\mathbf{x})
+\end{equation*}
+
+If this Lyapunov function satisfies
+\noindent\begin{align*}
+    V(\mathbf{x})                 & \geq 0                                                                                                                                                          &  & \forall \mathbf{x}\in D    \\
+    V(\mathbf{x})                 & = 0 \Leftrightarrow \mathbf{x}_e = \mathbf{x}                                                                                                                                                   \\
+    \frac{d}{dt} V(\mathbf{x}(t)) & = \frac{\partial V(\mathbf{x})}{\partial t} \frac{\partial \mathbf{x}(t)}{\partial \mathbf{x}} = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}) \leq 0 &  & \forall \mathbf{x}(t)\in D
+\end{align*}
+the equillibrium point $\mathbf{x_e}$ is \textbf{stable in the sense of Lyapunov}.
+
+\newpar{}
+Futhermore, $\mathbf{x}_e$ is \textbf{asymptotically stable} if
+\noindent\begin{equation*}
+    \dot{V}(\mathbf{x}(t)) = 0 \Leftarrow \mathbf{x}(t) = \mathbf{x}_e
+\end{equation*}
+and \textbf{exponentially stable} if
+\noindent\begin{equation*}
+    \dot{V}(\mathbf{x}(t)) < -\alpha V(\mathbf{x}(t)), \qquad \alpha>0
+\end{equation*}
+
 \paragraph{Global Stability}
+To ensure global stability, i.e. $D=\mathbb{R}^n$, a Lyapunov function $V$ satisfying the aforementioned properties needs to be \textbf{radially unbounded}:
+\noindent\begin{equation*}
+    \|\mathbf{x}\| \to +\infty \Rightarrow V(\mathbf{x}) \to +\infty
+\end{equation*}
+
 \paragraph{Indirect Method}
 \paragraph{LaSalle's Invariance Principle}
 
