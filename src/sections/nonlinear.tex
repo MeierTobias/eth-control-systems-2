@@ -77,10 +77,124 @@ To ensure global stability, i.e. $D=\mathbb{R}^n$, a Lyapunov function $V$ satis
 \end{equation*}
 
 \paragraph{Indirect Method}
+According to the \textbf{Hartman-Grobman Theorem}, a linearized system
+\noindent\begin{equation*}
+    A = \left.\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}} \right|_{\mathbf{x} = 0}
+\end{equation*} with no unstable pole behaves qualitatively the same as the nonlinear around the equilibrium point.
+
+\newpar{}
+As a result, the Lyapunov function of the linear system also describes the nonlinear system for sufficiently small deviations from the equilibrium point.
+
+\newpar{}
+\textbf{Remark}
+
+The solution $\mathbf{P}$ of the Riccati equation can be interpreted as a Lyapunov equation:
+\noindent\begin{equation*}
+    V(\mathbf{x}) = \mathbf{x}^{\mathsf{T}} \mathbf{Px}
+\end{equation*}
+
 \paragraph{LaSalle's Invariance Principle}
+LaSalle's invariance theorem is useful if Lyapunov stability is given by the existence of a Lyapunov function but $\dot{V}=0$ not only at $\mathbf{x}_e$:
+
+\newpar{}
+\textit{Let $\Omega\in D$ be a (compact) positively invariant set i.e., $\mathbf{x}(t_0)\in \Omega \Rightarrow \mathbf{x}(t)\in\Omega$.
+    Let $V_D\to \mathbb{R}^n$, such that $V(\mathbf{x})\leq 0\; \forall \mathbf{x}\in \Omega$.
+    Then, $\mathbf{x}(t)$ will eventually approach the largest positively invariant set in which $\dot{V}=0$
+}
 
 \subsection{Control Lyapunov Functions}
+If a Control Lyapunov Function (CLF) exists, it provides a way to construct a stabilizing feedback with an appropriate control input $\tilde{\mathbf{u}}$ (\textit{Artstein's Theorem}).
+
+\newpar{}
+A CLF satisfies
+\noindent\begin{align*}
+    V(\mathbf{x})                                              & \geq 0                                                                                           &  & \text{positive definite}  \\
+    V(\mathbf{x})                                              & = 0 \Leftrightarrow \mathbf{x} = 0                                                               &  & \text{radially unbounded} \\
+    \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
+\end{align*}
+
 \subsubsection{Gain Scheduling}
+In gain scheduling, the state space is partitioned into disjoint subspaces and for a number of design equilibria ($\mathbf{x}_i, \mathbf{u}_i$)  nominal contorl laws $\mathbf{K}_i$ are designed using the aforementioned techniques.
+
+\newpar{}
+The dynamics of the system around a equilibrium point $\mathbf{x}_i$ can be approximated by
+\noindent\begin{equation*}
+    \dot{\mathbf{x}} = \mathbf{A}_i(\mathbf{x}-\mathbf{x}_i) + \mathbf{B}_i(\mathbf{u}-\mathbf{u}_i)
+\end{equation*}
+
+The stability of
+\noindent\begin{equation*}
+    \mathbf{u} = \mathbf{u}_i+\mathbf{K}_i(\mathbf{x}-\mathbf{x}_i)
+\end{equation*}
+can be proven with the Lyapunov function ($\forall i$)
+\noindent\begin{equation*}
+    V(\mathbf{x}) = \min_{i} {(\mathbf{x}-\mathbf{x}_i)}^{\mathsf{T}}\mathbf{P}(\mathbf{x}-\mathbf{x}_i)
+\end{equation*}
+
 \subsubsection{Multiple Lyapunov Functions}
+Another option is to consider multiple Lyapunov functions $V_i$ with corresponding sets $X_i$ that satisfy
+\begin{itemize}
+    \item positive definite in $X_i$
+    \item $\dot{V_i}(\mathbf{x})\leq 0$ when $\mathbf{x}\in X_i$
+\end{itemize}
+
+and to check if the system satisfies the \textbf{sequence non-increasing condition}:
+\noindent\begin{equation*}
+    V_i[k+1] < V_i[k] \qquad \forall k \in \mathbb{N}
+\end{equation*}
+
 \subsubsection{Linear Parameter-Varying Systems}
+A third option is to rewrite the nonlinear system in a ``linear'' fashion with slow varying parameter $\sigma(\mathbf{x})$
+\noindent\begin{equation*}
+    \dot{\mathbf{x}}_\delta = \mathbf{A} (\sigma(\mathbf{x}))\mathbf{x}_\delta + \mathbf{B}(\sigma(\mathbf{x}))\mathbf{u}_\delta\quad
+    \begin{cases}
+        \mathbf{x}_\delta = \mathbf{x}-\mathbf{x}_e(\sigma(\mathbf{x})) \\
+        \mathbf{u}_\delta = \mathbf{u}-\mathbf{u}_e(\sigma(\mathbf{x}))
+    \end{cases}
+\end{equation*}
+
+This system is \textbf{exponentially stable} if
+\noindent\begin{equation*}
+    {\bar{\mathbf{A}}(\sigma)}^{\mathsf{T}} \mathbf{P} + \mathbf{P}\bar{\mathbf{A}}(\sigma) + \sum \rho_i \frac{\partial \mathbf{P}(\sigma)}{\partial \sigma_i} < 0,\qquad
+    \begin{cases}
+        \sigma(t)\in S       \\
+        \dot{\sigma(t)}\in R \\
+        \forall \sigma\in S, \rho\in R
+    \end{cases}
+\end{equation*}
+In other words, the existence of a family of positive matrices $\mathbf{P}(\sigma)$ (common Lyapunov functions) prove the systems exponential stability.
+
 \subsubsection{Backstepping Control}
+Backstepping is a form of \textit{cascaded control} where a control input $\mathbf{u}$ is chosen s.t.\ the output $\mathbf{z}$ of the outer loop stabilizes the inner loop:
+
+\noindent\begin{align*}
+    \dot{\mathbf{x}} & = f_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{z}                         &  & \text{inner loop} \\
+    \dot{\mathbf{z}} & = f_1(\mathbf{x},\mathbf{z}) + g_1(\mathbf{x}, \mathbf{z}) \mathbf{u} &  & \text{outer loop}
+\end{align*}
+where the inner system has an equilibrium point in $\mathbf{x}=0, \mathbf{z}=0$.
+
+\newpar{}
+If $\mathbf{z} = \mathbf{u}_0(\mathbf{x})$ then 
+\noindent\begin{equation*}
+    \frac{d}{dt} V_0(\mathbf{x}) = -W(\mathbf{x}) < 0
+\end{equation*}
+proving stability in the sense of Lyapounov.
+
+\newpar{}
+\ptitle{Controlling the Error}
+
+In order to ensure stability, Lyapunov stability of the error $\mathbf{e} = \mathbf{z}-\mathbf{u}_0$ needs to be established.
+
+The Lypunov candidate
+\noindent\begin{equation*}
+    V_1(\mathbf{x}, \mathbf{e}) = V_0(\mathbf{x})+\frac{1}{2} \mathbf{e}^2
+\end{equation*}
+satisfies
+\noindent\begin{equation*}
+    \frac{d}{dt}V_1(\mathbf{x}, \mathbf{e}) = -W(\mathbf{x}) - k_1 \mathbf{e}^2 <0 ,\qquad \forall(\mathbf{x},\mathbf{e}) \neq 0
+\end{equation*}
+and thus proves the stability of the ``error'' system
+\noindent\begin{align*}
+    \dot{\mathbf{x}} &= f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}\\
+    \dot{\mathbf{e}} &= \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
+\end{align*}
