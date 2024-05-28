@@ -65,10 +65,16 @@ Futhermore, $\mathbf{x}_e$ is \textbf{asymptotically stable} if
 \noindent\begin{equation*}
     \dot{V}(\mathbf{x}(t)) = 0 \Leftarrow \mathbf{x}(t) = \mathbf{x}_e
 \end{equation*}
-and \textbf{exponentially stable} if
+i.e.\ given $\dot{V}(\mathbf{x}(t)) = 0$ we know that the system is in the \textbf{only} equilibrium point. Finally, $\mathbf{x}_e$ is \textbf{exponentially stable} if
 \noindent\begin{equation*}
     \dot{V}(\mathbf{x}(t)) < -\alpha V(\mathbf{x}(t)), \qquad \alpha>0
 \end{equation*}
+
+\newpar
+\ptitle{Remarks}
+\begin{itemize}
+    \item If there could be multiplie equilibrium points one needs to use LaSalle.
+\end{itemize}
 
 \paragraph{Global Stability}
 To ensure global stability, i.e. $D=\mathbb{R}^n$, a Lyapunov function $V$ satisfying the aforementioned properties needs to be \textbf{radially unbounded}:
