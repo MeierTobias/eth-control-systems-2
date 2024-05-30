@@ -74,8 +74,8 @@ i.e.\ given $\dot{V}(\mathbf{x}(t)) = 0$ we know that the system is in the \text
 \ptitle{Remarks}
 \begin{itemize}
     \item If there could be multiplie equilibrium points one needs to use LaSalle.
-    %TBD: must the "only equilibrium point" from above be (0,...0)?
-    %TBD: x eventually aproaches the largest pos. inv. set. in which Vdot=0. But are there also pos. inv. sets in which Vdot \neq 0?
+          %TBD: must the "only equilibrium point" from above be (0,...0)?
+          %TBD: x eventually aproaches the largest pos. inv. set. in which Vdot=0. But are there also pos. inv. sets in which Vdot \neq 0?
 \end{itemize}
 
 \paragraph{Global Stability}
@@ -188,7 +188,7 @@ Backstepping is a form of \textit{cascaded control} where a control input $\math
 where the inner system has an equilibrium point in $\mathbf{x}=0, \mathbf{z}=0$.
 
 \newpar{}
-If $\mathbf{z} = \mathbf{u}_0(\mathbf{x})$ then 
+If $\mathbf{z} = \mathbf{u}_0(\mathbf{x})$ then
 \noindent\begin{equation*}
     \frac{d}{dt} V_0(\mathbf{x}) = -W(\mathbf{x}) < 0
 \end{equation*}
@@ -209,6 +209,79 @@ satisfies
 \end{equation*}
 and thus proves the stability of the ``error'' system
 \noindent\begin{align*}
-    \dot{\mathbf{x}} &= f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}\\
-    \dot{\mathbf{e}} &= \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
+    \dot{\mathbf{x}} & = f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}                                                               \\
+    \dot{\mathbf{e}} & = \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
 \end{align*}
+
+\subsection{Feedback Linearization}
+Feedback linearization is an approach based on a change of variables, transforming the nonlinear system into a linear one (seen from the controller perspective). In other words the nonlinearity gets ``hidden'' in a substituted input signal. 
+In order to apply this technique the system needs to be \textbf{differentially flat} with a \textbf{flat output} (see Section~\ref{diff_flatness}).
+\newpar{}
+To find the input transformation that linearizes the system
+\begin{align*}
+    \dot{x} & = f(x) + g(x) u \\
+    y       & = h(x)
+\end{align*}
+the output has to be differentiated enough times until the input $u$ appears in the equation.
+\begin{align*}
+    \dot{y} & = \frac{\partial h}{\partial x}f(x) + \frac{\partial h}{\partial x}g(x) u\\
+            & = L_f h(x) + L_g h(x) u
+\end{align*}
+where $L_f h$ and $L_g h$ are called the \textit{Lie derivatives} of $h$ with respect to $f$ and $g$, respectively.
+% TODO: add output case
+If $L_g h(x) = 0$, the output has to be differentiated again
+\begin{equation*}
+    \ddot{y} = L_f^2 h(x) + L_g L_f h(x) u
+\end{equation*}
+where
+\begin{align*}
+    L_f^2 h(x)   & := L_f(L_f h(x))  \\
+    L_g L_f h(x) & := L_g (L_f h(x))
+\end{align*}
+
+
+% This corresponds to the \textbf{relative degree} of the nonlinear system.
+
+
+
+% TODO: Maybe add as en example
+% In the case of the nonlinear pendulum with a torque input $u$ and an output $y=\theta$
+% \begin{align*}
+%     \dot{x}_1 & = x_2 \\
+%     \dot{x}_2 & = -a \sin(x_1)-c x_2 + u\\
+%     y &= x_1
+% \end{align*}
+% A virtual control signal $v = -a \sin(x_1)-c x_2 + u$ can be substituted which results in the linear system
+% \begin{align*}
+%     \dot{x}_1 & = x_2 \\
+%     \dot{x}_2 & = v\\
+%     y &= x_1
+% \end{align*}
+% This can be controlled by a simple feedback controller with $v = -k_1x_1 -k_2x_2$. The physical control input $u$ is then recovered from 
+% \begin{equation*}
+%     u = v + a \sin(x_1) +c x_2 = -k_1x_1 -k_2x_2 + a \sin(x_1) +c x_2 
+% \end{equation*} 
+
+
+
+\newpar{}
+\ptitle{Remarks:}
+\begin{itemize}
+    \item The actuator basically cancels out the behavior of the original system to replace it with the designed linear one.
+    \item This has the disadvantage that potential good characteristics of the nonlinear system (like damping) get actively canceled out.
+    \item Feedback linearization provides an exact linear model of a nonlinear system. Not like the Jacobian-Linearization which linearizes the system around an equilibrium point.
+\end{itemize}
+
+\subsubsection{Differental Flatness}\label{diff_flatness}
+A dynamic system
+\begin{gather*}
+    \dot{x} = f(x,u) \\
+    y = h(x,u)
+\end{gather*}
+is differentially flat, with flat output $y$, if one can compute the state and input trajectories as a function of the flat outputs and a finite number of derivatives.
+\begin{equation*}
+    (x,u) = M(y,\dot{y}, \ldots, y^{(m)})
+\end{equation*}
+
+% TODO: Example from page 6
+
