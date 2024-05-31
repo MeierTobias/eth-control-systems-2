@@ -244,6 +244,29 @@ by choosing
 \begin{equation*}
     u = \frac{1}{L_g L_f^{\gamma-1} h(x)}(-L_f^\gamma h(x) + v)
 \end{equation*}
+A realization of this system is given by
+\begin{align*}
+    \dot{x} & = \begin{bmatrix}
+                    0      & 1      & 0      & \cdots & 0      \\
+                    0      & 0      & 1      & \cdots & 0      \\
+                    \vdots & \vdots & \vdots & \ddots & \vdots \\
+                    0      & 0      & 0      & \cdots & 1      \\
+                    0      & 0      & 0      & \cdots & 0
+                \end{bmatrix}
+    x +
+    \begin{bmatrix}
+        0      \\
+        0      \\
+        \vdots \\
+        0      \\
+        1
+    \end{bmatrix}
+    v                                                      \\
+    y       & = \begin{bmatrix}
+                    1 & 0 & \cdots & 0
+                \end{bmatrix}
+    x
+\end{align*}
 
 \newpar{}
 Explicit examples for $\gamma = 1$
@@ -359,7 +382,7 @@ is differentially flat, with flat output $y$, if one can compute the state and i
 \end{center}
 
 \subsubsection{Feedback control of differentially-flat systems}
-The geometric property of differential flatness allows to compute the input control signal and the internal state of a system given a desired, sufficient differentiable output trajectory. A problem arises if the actual initial state does not match the computed initial state. This deviation can be controlled by introducing a feedback loop into the virtual signal $v$.
+The geometric property of differential flatness allows to compute the input control signal and the internal state of a system given a desired, sufficient differentiable output trajectory. A problem arises if the actual initial state does not match the computed initial state. This deviation can be controlled by introducing a feedback loop into the virtual signal $v$ depending on the desired output $y_d$
 \begin{equation*}
     v = y_d^{(\gamma)} + K \begin{bmatrix}
         y_d - y             \\
@@ -368,11 +391,36 @@ The geometric property of differential flatness allows to compute the input cont
         y_d^{(\gamma-1)} - y^{(\gamma-1)}
     \end{bmatrix}
 \end{equation*}
+or the desired internal state $\mathbf{x}_d$
+\begin{equation*}
+    v = y_d^{(\gamma)} + K \begin{bmatrix}
+        x_d - x             \\
+        \dot{x}_d - \dot{x} \\
+        \vdots              \\
+        x_d^{(\gamma-1)} - x^{(\gamma-1)}
+    \end{bmatrix}
+\end{equation*}
 
 \newpar{}
 \ptitle{Remarks:}
 \begin{itemize}
     \item Due to the coordinate transformation it becomes hard to check the control input e.g.\ for saturation bounds.
+    \item The feedback is non-proper, i.e., it contains a number of differentiators that is equal to the relative degree
+    \item The closed-loop dynamics are (internally) stable iff the zero dynamics are stable, i.e., if the system is minimum phase.
 \end{itemize}
 
-\subsubsection{Zero dynamics}
+\subsubsection{Zero dynamics} 
+% Maybe write this section in a simpler more understandable way
+By only looking at the input-output relationship $y^{(\gamma)}=v$, one ignores the dynamics on a manifold of dimensions $n-\gamma$.
+
+It is possible to find a $u_0(x)$ such that $y=\dot{y}=\ddot{y}=\cdots=0$, and still have non-trivial dynamics in the state space 
+\begin{equation*}
+    \dot{x} = f(x) + g(x)u_0(x)
+\end{equation*}
+In other words, there can be a control input that only excites the internal behavior of the system but does not affect the output.
+
+This is called the \textbf{zero dynamics} of the system.
+\newpar{}
+Assume now that $f(x_0) = 0$, and $h(x_0) = 0$, i.e., that $x_0$ is an equilibrium point, with zero output. Then, the system is said to be asymptotically (exponentially) minimum-phase at $x_0$ if $x_0$ is an asymptotically (exponentially) stable equilibrium point for the zero dynamics.
+\newpar{}
+Note that if the system is not minimum-phase, the feedback linearization approach does not ensure internal stability of the closed-loop system, i.e., there are ``unobservable mode'' that are unstable.
