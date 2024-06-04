@@ -92,7 +92,7 @@ with
     \|\Delta(s)\|_{\mathcal{H}_\infty} < 1 \\
     \|M(s)\|_{\mathcal{H}_\infty} < 1
 \end{gather*}
-where $M(s)$ is the TF from the output of $\delta$ ti its input.
+where $M(s)$ is the TF from the output of $\Delta$ to its input.
 
 \subsubsection{First Order Weights}
 \ptitle{Lowpass}
@@ -297,7 +297,7 @@ where
 \begin{equation*}
     C_0(s)=-{X_0(s)}^{-1}Y_0(s)
 \end{equation*}
-is the TF when $Q(s)=0$ with controller gain $K_0$ and observer gail $L_0$
+is the TF when $Q(s)=0$ with controller gain $K_0$ and observer gain $L_0$
 \noindent\begin{align*}
     X_0(s) & = -K_0{(sI-A-L_0C)}^{-1}B   \\
     Y_0(s) & = -K_0{(sI-A-L_0C)}^{-1}L_0
@@ -309,7 +309,7 @@ and $N$, $D$ are the nominator and denominator of the plant
 \end{align*}
 where $L_0$ is an observer gain that would stabilize the error dynamics.
 \newpar{}
-It can be show that the interconnection of the system is stable if the \textbf{Bezout identity} is fulfilled
+It can be shown that the interconnection of the system is stable if the \textbf{Bezout identity} is fulfilled
 \begin{equation*}
     D(s)X(s)-N(s)Y(s)=1
 \end{equation*}
