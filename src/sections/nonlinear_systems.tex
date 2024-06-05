@@ -218,7 +218,7 @@ Feedback linearization is an approach based on a change of variables, transformi
 
 In order to apply this technique the system needs to be \textbf{differentially flat} with a \textbf{flat output} (see Section~\ref{diff_flatness}).
 \newpar{}
-To find the input transformation that linearizes the system
+To find the input transformation that linearizes a system of the form
 \begin{align*}
     \dot{x} & = f(x) + g(x) u \\
     y       & = h(x)
@@ -234,17 +234,17 @@ with
     L_f^2 h(x)   & := L_f(L_f h(x))                     \\
     L_g L_f h(x) & := L_g (L_f h(x))
 \end{align*}
-where $L_f h(x)$ and $L_g h(x)$ are called the \textit{Lie derivatives} of $h(x)$.
+where $L_f h(x)$ and $L_g h(x)$ are called the \textit{Lie derivatives} of $h(x)$ in direction $f$ or $g$ respectively.
 \newpar{}
-The system then can be transformed into a linear system
+The system then can be transformed into a (virtually) linear system
 \begin{equation*}
     \frac{d^\gamma y}{dt^\gamma} = v
 \end{equation*}
-by choosing
+by choosing a physical input
 \begin{equation*}
     u = \frac{1}{L_g L_f^{\gamma-1} h(x)}(-L_f^\gamma h(x) + v)
 \end{equation*}
-A realization of this system is given by
+A (linear, ``virtual'') realization of this system is given by
 \begin{align*}
     \dot{x} & = \begin{bmatrix}
                     0      & 1      & 0      & \cdots & 0      \\
@@ -269,7 +269,7 @@ A realization of this system is given by
 \end{align*}
 
 \newpar{}
-Explicit examples for $\gamma = 1$
+Explicit examples for $\gamma = 1$ (then $L_f h(x)=h(x)$)
 \begin{align*}
     \dot{y} & = L_f h(x) + L_g h(x) u             \\
     \dot{y} & = v                                 \\
@@ -287,6 +287,7 @@ and for $\gamma = 2$
 \begin{itemize}
     \item The actuator basically cancels out the behavior of the original system to replace it with the designed linear one.
     \item This has the disadvantage that potential good characteristics of the nonlinear system (like damping) get actively canceled out.
+    \item One can imagine the FB linearization as controlling a virtual linear system with control input $v$ but under the hood applying a cleverly chosen physical control input $u$.
     \item Feedback linearization provides an exact linear model of a nonlinear system. Not like the Jacobian-Linearization which linearizes the system around an equilibrium point.
 \end{itemize}
 
