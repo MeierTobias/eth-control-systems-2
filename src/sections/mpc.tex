@@ -1,0 +1,40 @@
+\section{Model Predictive Control (MPC)}
+
+For a discrete-time nonlinear control system of the form
+\begin{align*}
+    \mathbf{x}[k+1] & = f(\mathbf{x}[k], \mathbf{u}[k]) \\
+    \mathbf{y}[k]   & = h(\mathbf{x}[k],\mathbf{u}[k])
+\end{align*}
+a general description of the cost function and the constraints with the horizon length $H$ can be formulated as following
+\begin{align*}
+    \min_{u[0], \ldots, u[H-1]} J_{H}(\mathbf{x,u}) & := \sum_{k=0}^{H-1}g(\mathbf{x}[k],\mathbf{u}[k]) \\
+    \mathbf{x}[k+1]                                 & = f(\mathbf{x}[k]. \mathbf{u}[k])                 \\
+    \mathbf{x}[0]                                   & = \mathbf{x}_0                                    \\
+    \mathbf{x}[k]                                   & \in X                                             \\
+    \mathbf{u}[k]                                   & \in U                                             \\
+    k                                               & = 0,\ldots,H-1
+\end{align*}
+By solving these equations one can obtain the best control input $u$ for the next step. This is then done over and over again.
+
+\newpar{}
+
+The remaining costs from $k=H, \ldots, \infty$ are called the tail. If the prediction is too short-sighted (hence the tail is to large) the system can get instable. To fix this, one can
+\begin{itemize}
+    \item shorten the tail (enlarge the horizon). This introduces more computational effort each step.
+    \item make the tail zero (or sufficiently small). If the state is forced to an equilibrium at the end of the horizon it wil remain there and the tail will have no further effect.
+    \item replace the tail with an estimate.
+\end{itemize}
+
+The formulation becomes
+\begin{align*}
+    \min_{u[0], \ldots, u[H-1]} J_{H}(\mathbf{x,u}) & := \sum_{k=0}^{H-1}g(\mathbf{x}[k],\mathbf{u}[k]) \textcolor{blue}{+V(\textbf{x}[H])} \\
+    \mathbf{x}[k+1]                                 & = f(\mathbf{x}[k]. \mathbf{u}[k])                                                     \\
+    \mathbf{x}[0]                                   & = \mathbf{x}_0                                                                        \\
+    \mathbf{x}[k]                                   & \in X                                                                                 \\
+    \mathbf{u}[k]                                   & \in U                                                                                 \\
+    \textcolor{blue}{\mathbf{x}[H]}                 & \textcolor{blue}{\;\in X_H}                                                           \\
+    k                                               & = 0,\ldots,H-1
+\end{align*}
+
+\subsection{Terminal Constraints}
+
