@@ -18,11 +18,11 @@ By solving these equations one can obtain the best control input $u$ for the nex
 
 \newpar{}
 
-The remaining costs from $k=H, \ldots, \infty$ are called the tail. If the prediction is too short-sighted (hence the tail is to large) the system can get instable. To fix this, one can
+The remaining costs from $k=H, \ldots, \infty$ are called the tail. If the prediction is too short-sighted (hence the tail is to large) the system can get unstable. To fix this, one can
 \begin{itemize}
     \item shorten the tail (enlarge the horizon). This introduces more computational effort each step.
-    \item make the tail zero (or sufficiently small). If the state is forced to an equilibrium at the end of the horizon it wil remain there and the tail will have no further effect.
-    \item replace the tail with an estimate.
+    \item make the tail zero (or sufficiently small). See Section~\ref{mpc_terminal_constraint}.
+    \item replace the tail with an estimate. See Section~\ref{mpc_terminal_cost}.
 \end{itemize}
 
 The formulation becomes
@@ -36,5 +36,80 @@ The formulation becomes
     k                                               & = 0,\ldots,H-1
 \end{align*}
 
-\subsection{Terminal Constraints}
+\subsection{Terminal Constraints}\label{mpc_terminal_constraint}
+
+If the state is forced to an equilibrium at the end of the horizon it wil remain there and the tail will have no further effect. On the down side this may put excessive pressure on the actuators/control effort.
+
+\subsection{Terminal Cost}\label{mpc_terminal_cost}
+
+The best terminal cost estimate would be $V = J^*_\infty$ the cost from the end of the horizon up to infinity.
+
+Because this is not determinable we are looking for a \textbf{global Control Lyapunov Function (CLF)} such that
+\begin{equation*}
+    V(\mathbf{x}) \geq \mathbf{c}_v {\lVert \mathbf{x} \rVert}^2
+\end{equation*}
+and
+\begin{equation*}
+    \min_{u}(V(f(\mathbf{x,u})) + \mathbf{x}^T \mathbf{Qx + u}^T \mathbf{R u}) \leq 0 \quad \forall \; \mathbf{x}
+\end{equation*}
+which is an upper bound for the optimal cost
+\begin{equation*}
+    V(\mathbf{x}) \geq J^*_\infty (\mathbf{x})
+\end{equation*}
+If we ensure that the terminal cost of the next step $V(f(\mathbf{x,u}))$ is less or equal to the current terminal cost $V(\mathbf{x})$ we get a stabilizing control law.
+
+However, the MPC control law will have better performance -- if not optimal, i.e. % TODO: Maybe explain this in more detail
+\begin{equation*}
+    J^*_\infty(\mathbf{x}) \leq J^*_H(\mathbf{x}) \leq J^*_{CLF}(\mathbf{x})
+\end{equation*}
+
+An example of a CLF candidate may be given by the solution $\mathbf{P}$ of the Algebraic Ricatti Equation of the LQR problem, i.e., given $V(x) = \mathbf{x}^T \mathbf{Px}$.
+
+\subsection{Solving the Finite Horizon Optimization}
+
+For an unconstrained, differentiable and convex optimization problem one can
+\begin{itemize}
+    \item set the gradient to zero to find the stationary points.
+    \item use a gradient descent method.
+\end{itemize}
+
+In most cases one deals with limiting constraints. To incorporate these into the cost function a so called \textbf{barrier function} is added.
+\begin{equation*}
+    V(\mathbf{x,u}) - \log(-c(\mathbf{x,u}))
+\end{equation*}
+Note that the function $c$ is defined in a way such that
+\begin{equation*}
+    c(\mathbf{x,u}) \leq 0
+\end{equation*}
+Hence the barrier function is not defined for $(x,u)$ not satisfying the constraints, and it becomes very large when approaching the boundaries of the constraint set.
+
+To solve this kind of optimization problem the \textbf{barrier interior-point method} can be used.
+
+\subsubsection{Barrier Interior-Point Metod}
+Interior point methods solve \textbf{convex problems} of the form
+\begin{align*}
+    \min \quad         & f_0(x)                                 \\
+    \text{s.t.:} \quad & f_i(x) \leq 0 , \quad 0 = 1, \ldots, m \\
+                       & Ax = b
+\end{align*}
+where the scalar functions $f_0,f_1,\ldots,f_m$ are convex and twice differentiable.
+\newpar{}
+The problem is converted into a minimization with affine equality constraints by adding \textbf{barrier functions} in the following way
+\begin{align*}
+    \min \quad        & f_0(x) - \frac{1}{t}\sum_{i=1}^{m}\log(-f_i(x)) \\
+    \text{s.t.:}\quad & Ax=b
+\end{align*}
+
+As $t \to +\infty$, the objective function gets closer to $f_0$, but diverges very steeply at the boundary of the feasible set.
+\newpar{}
+The problem is then solved iteratively using gradient descent or Newton method for $t=\mu^k t_0$ with $t_0>0, \mu > 1$ where $k$ is the iteration variable. The solution of the pervious step is used as a starting point for the next step.
+
+% TODO: Add graphical example like the one drawn on the blackboard.
+
+\newpar{}
+\ptitle{Remarks:}
+\begin{itemize}
+    \item The sequence of intermediate optimal solutions forms what is known as the \textbf{cental path}, which is always contained in the interior of the feasible set.
+    \item This method terminates with $\mathcal{O}(\sqrt{m})$ time.
+\end{itemize}
 
