@@ -1,0 +1,469 @@
+\section{Nonlinear Systems}
+
+\subsection{Concepts of Stability}
+A nonlinear system
+\noindent\begin{align*}
+    \dot{\mathbf{x}}(t) & = f(\mathbf{x}(t), \mathbf{u}(t)) & \mathbf{x}(0)=\mathbf{x}_0 \\
+    \mathbf{y}(t)       & = h(\mathbf{x}(t), \mathbf{u}(t))
+\end{align*}
+\textbf{does not satisfy the superposition property} and therefore
+\begin{itemize}
+    \item Effects from inputs and from initial conditions caannot be seperated.
+    \item The input cannot be seperated into elementary inputs and the output will not be a composition of elementary outputs.
+\end{itemize}
+
+\newpar{}
+\ptitle{Properties}
+\begin{itemize}
+    \item A nonlinear system can have zero, one or multiple \textbf{equillibrium points} s.t.\ $f(\mathbf{x}_e, 0)=0$.
+    \item In contrast to linear systems that require infinite time to go to infinity, nonlinear systes can \textbf{go to infinity in finite time}.
+    \item Nonlniear systems may generate permanent oscillations of fixed amplitude - \textbf{limit cycles} - independent of initial conditions.
+    \item Nonlinear systems can generate outputs at frequencies that are submultiples or multiples of the input frequency (\textbf{Subharmonic oscillations}).
+    \item Deterministic nonlinear systems can generate \textbf{chaos}.
+\end{itemize}
+
+\subsection{Lyapunov Stability Theory}
+\subsubsection{Types of Stability}
+Assuming $\mathbf{u}=0, \mathbf{x}_e=0$, the eqilibrium $\mathbf{x}_e$ of the systems
+\noindent\begin{equation*}
+    \dot{\mathbf{x}} = f(\mathbf{x}), \quad f(\mathbf{x}_e) = 0
+\end{equation*}
+is
+\begin{itemize}
+    \item \textbf{Stable in the sense of Lyapunov}
+          \noindent\begin{equation*}
+              \|\mathbf{x}(0)\| < \delta \Rightarrow \|\mathbf{x}(t)\| \leq \varepsilon,\qquad \forall t\geq 0,\; \delta > 0,\; \varepsilon\geq0
+          \end{equation*}
+    \item \textbf{Asymtotically stable}
+          \noindent\begin{equation*}
+              \|\mathbf{x}(0)\| < \delta \Rightarrow \lim_{t\to +\infty} \mathbf{x}(t)=0, \qquad \delta>0
+          \end{equation*}
+    \item \textbf{Exponentially stable}
+          \noindent\begin{equation*}
+              \|\mathbf{x}(0)\| < \delta \Rightarrow \|\mathbf{x}(t)\| < \beta e^{-\alpha t}, \qquad \forall t\geq 0,\; \alpha, \beta, \delta >0
+          \end{equation*}
+\end{itemize}
+
+\subsubsection{Lyapunov Functions}
+\textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the quilibrium point and non-increasing along all trajectories.}
+\newpar{}
+For a given compact subset $D$ of the state space containing $\mathbf{x}_e$, a Lypunov function is defined as
+\noindent\begin{equation*}
+    V:D \to \mathbb{R} \mapsto V(\mathbf{x})
+\end{equation*}
+
+If this Lyapunov function satisfies
+\noindent\begin{align*}
+    V(\mathbf{x})          & \geq 0                                                                                                                                                                   &  & \forall \mathbf{x}\in D    \\
+    V(\mathbf{x})          & = 0 \Leftrightarrow \mathbf{x}_e = \mathbf{x}                                                                                                                            &  & \text{(if and only if)}    \\
+    \dot{V}(\mathbf{x}(t)) & = \frac{\partial V(\mathbf{x})}{\partial \mathbf{x}} \frac{\partial \mathbf{x}(t)}{\partial t} = \frac{\partial V(\mathbf{x})}{\partial \mathbf{x}} f(\mathbf{x}) \leq 0 &  & \forall \mathbf{x}(t)\in D
+\end{align*}
+the equillibrium point $\mathbf{x_e}$ is \textbf{stable in the sense of Lyapunov}. Remember that $V$ is defined on a set containing $\mathbf{x}_e$.
+
+\newpar{}
+Futhermore, $\mathbf{x}_e$ is \textbf{asymptotically stable} if
+\noindent\begin{equation*}
+    \dot{V}(\mathbf{x}(t)) = 0 \Leftarrow \mathbf{x}(t) = \mathbf{x}_e \quad \text{(only if)}
+\end{equation*}
+Finally, $\mathbf{x}_e$ is \textbf{exponentially stable} if
+\noindent\begin{equation*}
+    \dot{V}(\mathbf{x}(t)) < -\alpha V(\mathbf{x}(t)), \qquad \alpha>0
+\end{equation*}
+
+\newpar{}
+\ptitle{Remarks}
+\begin{itemize}
+    \item If there could be multiplie equilibrium points one needs to use LaSalle.
+    \item $V(\mathbf{x})=0$ must hold in any equilibrium point, even if there are more then one.
+          %TBD: must the "only equilibrium point" from above be (0,...0)?
+          %TBD: x eventually aproaches the largest pos. inv. set. in which Vdot=0. But are there also pos. inv. sets in which Vdot \neq 0?
+    \item If one has more than one state vector, then
+          \begin{equation*}
+              \dot{V}=\sum_{i} \frac{\partial V(\mathbf{x}_i)}{\partial \mathbf{x}_i} \frac{\partial \mathbf{x}_i(t)}{\partial t}
+          \end{equation*}
+    \item For asymptotical stability, given $\dot{V}(\mathbf{x}(t)) = 0$ we know that the system is in the \textbf{only} equilibrium point.
+\end{itemize}
+
+\paragraph{Global Stability}
+According to the Barbashin-Krasovski theorem, to ensure global stability (not necessarily asymptotical or exponential), i.e. $D=\mathbb{R}^n$, a Lyapunov function $V$ satisfying the aforementioned three properties \textbf{additionally} needs to be \textbf{radially unbounded}:
+\noindent\begin{equation*}
+    \|\mathbf{x}\| \to +\infty \Rightarrow V(\mathbf{x}) \to +\infty
+\end{equation*}
+
+\paragraph{Indirect Method}
+According to the \textbf{Hartman-Grobman Theorem}, a linearized system
+\noindent\begin{equation*}
+    A = \left.\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}} \right|_{\mathbf{x} = 0}
+\end{equation*} with no unstable pole behaves qualitatively the same as the nonlinear around the equilibrium point.
+
+\newpar{}
+As a result, the Lyapunov function of the linear system also describes the nonlinear system for sufficiently small deviations from the equilibrium point.
+
+\newpar{}
+\textbf{Remark}
+
+The solution $\mathbf{P}$ of the Riccati equation can be interpreted as a Lyapunov equation:
+\noindent\begin{equation*}
+    V(\mathbf{x}) = \mathbf{x}^{\mathsf{T}} \mathbf{Px}
+\end{equation*}
+
+\paragraph{LaSalle's Invariance Principle}
+LaSalle's invariance theorem is useful if Lyapunov stability is given by the existence of a Lyapunov function but $\dot{V}=0$ not only at $\mathbf{x}_e$:
+
+\newpar{}
+\textit{Let $\Omega\in D$ be a (compact) positively invariant set i.e., $\mathbf{x}(t_0)\in \Omega \Rightarrow \mathbf{x}(t)\in\Omega$.
+    Let $V_D\to \mathbb{R}^n$, such that $\dot{V}(\mathbf{x})\leq 0\; \forall \mathbf{x}\in \Omega$ (i.e.\ there could be multiple points with $\dot{V}=0$).
+    Then, $\mathbf{x}(t)$ will eventually approach the largest positively invariant set in which $\dot{V}=0$
+}
+\newpar{}
+\textbf{Remarks}
+\begin{itemize}
+    \item A set $\Omega$ is positively invariant if, once the system's state $\mathbf{x}(t)$ enters this set, it will stay in this set for all future time $t \geq t_0$. This means if $\mathbf{x}(t_0) \in \Omega$, then $\mathbf{x}(t) \in \Omega\; \forall t \geq t_0$.
+    \item For the pendulum, one has multiple states (turning points, origin) where $\dot{\mathbf{x}}=0$ but $\mathbf{x}(t)$ only stays at the origin (but not at the turning points) once it has ``entered'' this equilibrium set (i.e.\ stopped moving).
+\end{itemize}
+
+\subsection{Control Lyapunov Functions}
+If a Control Lyapunov Function (CLF) exists, it provides a way to construct a stabilizing feedback with an appropriate control input $\tilde{\mathbf{u}}$ (\textit{Artstein's Theorem}).
+
+\newpar{}
+A CLF satisfies
+\noindent\begin{align*}
+    V(\mathbf{x})                                              & \geq 0                                                                                           &  & \text{positive definite}  \\
+    V(\mathbf{x})                                              & = 0 \Leftrightarrow \mathbf{x} = 0                                                               &  & \text{radially unbounded} \\
+    \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
+\end{align*}
+
+In the following methods, one aims to find a control Lypunov function to prove stabilizing behavior.
+
+\subsubsection{Gain Scheduling}
+In gain scheduling, the state space is partitioned into disjoint subspaces and for a number of design equilibria ($\mathbf{x}_i, \mathbf{u}_i$)  nominal contorl laws $\mathbf{K}_i$ are designed using the aforementioned techniques.
+
+\newpar{}
+The dynamics of the system around a equilibrium point $\mathbf{x}_i$ can be approximated by
+\noindent\begin{equation*}
+    \dot{\mathbf{x}} = \mathbf{A}_i(\mathbf{x}-\mathbf{x}_i) + \mathbf{B}_i(\mathbf{u}-\mathbf{u}_i)
+\end{equation*}
+
+The stability of
+\noindent\begin{equation*}
+    \mathbf{u} = \mathbf{u}_i+\mathbf{K}_i(\mathbf{x}-\mathbf{x}_i)
+\end{equation*}
+can be proven with the Lyapunov function ($\forall i$)
+\noindent\begin{equation*}
+    V(\mathbf{x}) = \min_{i} {(\mathbf{x}-\mathbf{x}_i)}^{\mathsf{T}}\mathbf{P}(\mathbf{x}-\mathbf{x}_i)
+\end{equation*}
+
+\subsubsection{Multiple Lyapunov Functions}
+Another option is to consider multiple Lyapunov-like functions $V_i$ with corresponding sets $X_i$ that satisfy
+\begin{itemize}
+    \item positive definite in $X_i$
+    \item $\dot{V_i}(\mathbf{x})\leq 0$ when $\mathbf{x}\in X_i$
+\end{itemize}
+Then, define $V_i[k]$ as infimum taken by $V_i$ in the given time interval and to check if the system satisfies the \textbf{sequence non-increasing condition}:
+\noindent\begin{equation*}
+    V_i[k+1] < V_i[k] \qquad \forall k \in \mathbb{N}
+\end{equation*}
+
+\newpar{}
+\ptitle{Rationale}
+
+Assuming the system can move from region to region, we look at all time intervals where system is in a certain region $X_i$. We want to have the Lyapunov function decreased everytime the system reenters a certain region again. Defining $V_i$ as infimum (largest lower bound), we have stable behaviour if the infimum decreases at every re-entry of region $X_i$.
+
+\subsubsection{Linear Parameter-Varying (LPV) Systems}
+A third option is to rewrite the nonlinear system in a ``linear'' fashion with slow varying parameter $\sigma(\mathbf{x})$
+\noindent\begin{equation*}
+    \dot{\mathbf{x}}_\delta = \mathbf{A} (\sigma(\mathbf{x}))\mathbf{x}_\delta + \mathbf{B}(\sigma(\mathbf{x}))\mathbf{u}_\delta\quad
+    \begin{cases}
+        \mathbf{x}_\delta = \mathbf{x}-\mathbf{x}_e(\sigma(\mathbf{x})) \\
+        \mathbf{u}_\delta = \mathbf{u}-\mathbf{u}_e(\sigma(\mathbf{x}))
+    \end{cases}
+\end{equation*}
+
+\newpar{}
+\ptitle{Lyapunv Condition for LPV}
+
+This system is \textbf{exponentially stable} if
+\noindent\begin{equation*}
+    {\bar{\mathbf{A}}(\sigma)}^{\mathsf{T}} \mathbf{P} + \mathbf{P}\bar{\mathbf{A}}(\sigma) + \sum \rho_i \frac{\partial \mathbf{P}(\sigma)}{\partial \sigma_i} < 0,\qquad
+    \begin{cases}
+        \sigma(t)\in S       \\
+        \dot{\sigma(t)}\in R \\
+        \forall \sigma\in S, \rho\in R
+    \end{cases}
+\end{equation*}
+In other words, the existence of a family of positive matrices $\mathbf{P}(\sigma)$ (common Lyapunov functions) prove the systems exponential stability.
+
+\newpar{}
+\ptitle{LPV Controllers}
+
+\begin{itemize}
+    \item One assumes $\sigma$ is measurable
+    \item Then, one will design a stabilizing controller for every $\sigma$
+    \item LPV can be imagined as continuous gain scheduling: one has controllers depending on a (possibly infinite) number of $\sigma$s instead of a number of equilibrium points
+\end{itemize}
+
+\subsubsection{Backstepping Control}
+Backstepping is a form of \textit{cascaded control} where a control input $\mathbf{u}$ is chosen s.t.\ the output $\mathbf{z}$ of the outer loop stabilizes the inner loop:
+
+\noindent\begin{align*}
+    \dot{\mathbf{x}} & = f_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{z}                         &  & \text{inner loop} \\
+    \dot{\mathbf{z}} & = f_1(\mathbf{x},\mathbf{z}) + g_1(\mathbf{x}, \mathbf{z}) \mathbf{u} &  & \text{outer loop}
+\end{align*}
+where the inner system has an equilibrium point in $\mathbf{x}=0, \mathbf{z}=0$.
+
+\newpar{}
+If $\mathbf{z} = \mathbf{u}_0(\mathbf{x})$ then
+\noindent\begin{equation*}
+    \frac{d}{dt} V_0(\mathbf{x}) = -W(\mathbf{x}) < 0
+\end{equation*}
+proving stability in the sense of Lyapounov.
+
+\newpar{}
+\ptitle{Controlling the Error}
+
+In order to ensure stability, Lyapunov stability of the error $\mathbf{e} = \mathbf{z}-\mathbf{u}_0$ needs to be established.
+The error evolves as
+\begin{align*}
+    \dot{\mathbf{x}} & =\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{u}_{0}(x)+\mathbf{g}_{0}(\mathbf{x})\mathbf{e},                                                                                                                                                   \\
+    \dot{\mathbf{e}} & =\mathbf{f}_{1}(\mathbf{x},\mathbf{z})+\mathbf{g}_{1}(\mathbf{x},\mathbf{z})\mathbf{u}-\frac{\partial \mathbf{u}_{0}(\mathbf{x})}{\partial \mathbf{x}}\left(\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{z}\right)=\mathbf{v}
+\end{align*}
+Then, the Lypunov candidate
+\noindent\begin{equation*}
+    V_1(\mathbf{x}, \mathbf{e}) = V_0(\mathbf{x})+\frac{1}{2} \mathbf{e}^2
+\end{equation*}
+satisfies
+\noindent\begin{equation*}
+    \frac{d}{dt}V_1(\mathbf{x}, \mathbf{e}) = -W(\mathbf{x}) - k_1 \mathbf{e}^2 <0 ,\qquad \forall(\mathbf{x},\mathbf{e}) \neq 0
+\end{equation*}
+if one cleverly picks
+\begin{equation*}
+    \mathbf{v}=-\frac{\partial V_0(\mathbf{x})}{\partial \mathbf{x}}\mathbf{g}_0(\mathbf{x})-k_1\mathbf{e},\quad k_1>0
+\end{equation*}
+and thus proves the stability of the ``error'' system
+\noindent\begin{align*}
+    \dot{\mathbf{x}} & = f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}                                                               \\
+    \dot{\mathbf{e}} & = \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
+\end{align*}
+
+\newpar{}
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item The control input $\mathbf{u}$ affects $\mathbf{z}$, which in turn affects $\mathbf{x}$
+    \item One assumes that the inner system is easily controllable by $\mathbf{u}_0$ (e.g.\ because it is linear)
+    \item The idea can be extended to multiple nested sytems
+\end{itemize}
+
+\subsection{Feedback Linearization}
+Feedback linearization is an approach based on a change of variables, transforming the nonlinear system into a linear one (seen from the controller perspective). In other words the nonlinearity gets ``hidden'' in a transformed input signal.
+
+In order to apply this technique the system needs to be \textbf{differentially flat} with a \textbf{flat output} (see Section~\ref{diff_flatness}).
+\newpar{}
+To find the input transformation that linearizes a system of the form
+\begin{align*}
+    \dot{x} & = f(x) + g(x) u \\
+    y       & = h(x)
+\end{align*}
+the output $y$ has to be differentiated $\gamma$ times, where $\gamma$ (the relative degree) is the smallest number (if it exists) such that
+\begin{equation*}
+    L_g L_f^{\gamma-1} h(x) \ne 0
+\end{equation*}
+with
+\begin{align*}
+    L_f h(x)     & := \frac{\partial h}{\partial x}f(x) \\
+    L_g h(x)     & := \frac{\partial h}{\partial x}g(x) \\
+    L_f^2 h(x)   & := L_f(L_f h(x))                     \\
+    L_g L_f h(x) & := L_g (L_f h(x))
+\end{align*}
+where $L_f h(x)$ and $L_g h(x)$ are called the \textit{Lie derivatives} of $h(x)$ in direction $f$ or $g$ respectively.
+\newpar{}
+The system then can be transformed into a (virtually) linear system
+\begin{equation*}
+    \frac{d^\gamma y}{dt^\gamma} = v
+\end{equation*}
+by choosing a physical input
+\begin{equation*}
+    u = \frac{1}{L_g L_f^{\gamma-1} h(x)}(-L_f^\gamma h(x) + v)
+\end{equation*}
+A (linear, ``virtual'') realization of this system is given by
+\begin{align*}
+    \dot{x} & = \begin{bmatrix}
+                    0      & 1      & 0      & \cdots & 0      \\
+                    0      & 0      & 1      & \cdots & 0      \\
+                    \vdots & \vdots & \vdots & \ddots & \vdots \\
+                    0      & 0      & 0      & \cdots & 1      \\
+                    0      & 0      & 0      & \cdots & 0
+                \end{bmatrix}
+    x +
+    \begin{bmatrix}
+        0      \\
+        0      \\
+        \vdots \\
+        0      \\
+        1
+    \end{bmatrix}
+    v                                                      \\
+    y       & = \begin{bmatrix}
+                    1 & 0 & \cdots & 0
+                \end{bmatrix}
+    x
+\end{align*}
+
+\newpar{}
+Explicit examples for $\gamma = 1$ (then $L_f h(x)=h(x)$)
+\begin{align*}
+    \dot{y} & = L_f h(x) + L_g h(x) u             \\
+    \dot{y} & = v                                 \\
+    u       & = \frac{1}{L_g h(x)}(-L_f h(x) + v)
+\end{align*}
+and for $\gamma = 2$
+\begin{align*}
+    \ddot{y} & = L_f^2 h(x) + L_g L_f h(x) u             \\
+    \ddot{y} & = v                                       \\
+    u        & = \frac{1}{L_g L_f h(x)}(-L_f^2 h(x) + v)
+\end{align*}
+
+\newpar{}
+\ptitle{Remarks:}
+\begin{itemize}
+    \item Only works for \textbf{controllable} systems
+    \item The actuator basically cancels out the behavior of the original system to replace it with the designed linear one.
+    \item This has the disadvantage that potential good characteristics of the nonlinear system (like damping) get actively canceled out.
+    \item One can imagine the FB linearization as controlling a virtual linear system with control input $v$ but under the hood applying a cleverly chosen physical control input $u$.
+    \item Feedback linearization provides an exact linear model of a nonlinear system. Not like the Jacobian-Linearization which linearizes the system around an equilibrium point.
+\end{itemize}
+
+\begin{examplesection}[Pendulum]
+    In the case of the nonlinear pendulum with a torque input $u$ and an output $y=\theta$
+    \begin{align*}
+        \dot{x}_1 & = x_2                    \\
+        \dot{x}_2 & = -a \sin(x_1)-c x_2 + u \\
+        y         & = x_1
+    \end{align*}
+    The Lie derivatives are
+    \begin{align*}
+        L_f h(x) & = \begin{bmatrix}
+                         1 & 0
+                     \end{bmatrix}
+        \begin{bmatrix}
+            x_2 \\
+            -a \sin(x_1) -cx_2
+        \end{bmatrix} = x_2
+        \\
+        L_g h(s) & = \begin{bmatrix}
+                         1 & 0
+                     \end{bmatrix}
+        \begin{bmatrix}
+            0 \\
+            1
+        \end{bmatrix} = 0
+    \end{align*}
+    Since $L_g h(x) = 0$ we need to differentiate again
+    \begin{align*}
+        L_f^2 h(x)   & = \begin{bmatrix}
+                             0 & 1
+                         \end{bmatrix}
+        \begin{bmatrix}
+            x_2 \\
+            -a \sin(x_1) -cx_2
+        \end{bmatrix} = -a \sin(x_1) -c x_2
+        \\
+        L_g L_f h(s) & = \begin{bmatrix}
+                             0 & 1
+                         \end{bmatrix}
+        \begin{bmatrix}
+            0 \\
+            1
+        \end{bmatrix} = 1
+    \end{align*}
+    This results in
+    \begin{equation*}
+        u = \frac{1}{L_g L_f h(x)}(-L_f^2 h(x) + v) = a \sin(x_1) + c x_2 + v
+    \end{equation*}
+    and the linear system
+    \begin{align*}
+        \dot{x}_1 & = x_2 \\
+        \dot{x}_2 & = v   \\
+        y         & = x_1
+    \end{align*}
+    with
+    \begin{equation*}
+        v = -a \sin(x_1)-c x_2 + u
+    \end{equation*}
+\end{examplesection}
+
+\subsubsection{Differental Flatness}\label{diff_flatness}
+A dynamic system
+\begin{gather*}
+    \dot{x} = f(x,u) \\
+    y = h(x,u)
+\end{gather*}
+is differentially flat, with flat output $y$, if one can compute the state and input trajectories as a function of the flat outputs and a finite number of derivatives.
+\begin{equation*}
+    (x,u) = M(y,\dot{y}, \ldots, y^{(m)})
+\end{equation*}
+
+\begin{examplesection}[Pendulum]
+    The nonlinear pendulum with a torque input $u$ and an output $y=\theta$
+    \begin{align*}
+        \dot{x}_1 & = x_2                    \\
+        \dot{x}_2 & = -a \sin(x_1)-c x_2 + u \\
+        y         & = x_1
+    \end{align*}
+    Is differentially flat with flat output $y$. As per definition $x$ and $u$ can be reconstructed from $y$, $\dot{y}$ and $\ddot{y}$.
+    \begin{align*}
+        x_1 & = y                                \\
+        x_2 & = \dot{y}                          \\
+        u   & = \ddot{y} + c \dot{y} + a \sin(y)
+    \end{align*}
+\end{examplesection}
+
+\paragraph{Differental flat systems}
+\begin{center}
+    \includegraphics[width=\linewidth]{nonlinear_systems_diff_flat_1.png}
+    \includegraphics[width=\linewidth]{nonlinear_systems_diff_flat_2.png}
+\end{center}
+
+\subsubsection{Feedback control of differentially-flat systems}
+The geometric property of differential flatness allows to compute the input control signal and the internal state of a system given a desired, sufficient differentiable output trajectory. A problem arises if the actual initial state does not match the computed initial state. This deviation can be controlled by introducing a feedback loop into the virtual signal $v$ depending on the desired output $y_d$
+\begin{equation*}
+    v = y_d^{(\gamma)} + K \begin{bmatrix}
+        y_d - y             \\
+        \dot{y}_d - \dot{y} \\
+        \vdots              \\
+        y_d^{(\gamma-1)} - y^{(\gamma-1)}
+    \end{bmatrix}
+\end{equation*}
+or the desired internal state $\mathbf{x}_d$
+\begin{equation*}
+    v = y_d^{(\gamma)} + K \begin{bmatrix}
+        x_d - x             \\
+        \dot{x}_d - \dot{x} \\
+        \vdots              \\
+        x_d^{(\gamma-1)} - x^{(\gamma-1)}
+    \end{bmatrix}
+\end{equation*}
+
+\newpar{}
+\ptitle{Remarks:}
+\begin{itemize}
+    \item Due to the coordinate transformation it becomes hard to check the control input e.g.\ for saturation bounds.
+    \item The feedback is non-proper, i.e., it contains a number of differentiators that is equal to the relative degree
+    \item The closed-loop dynamics are (internally) stable iff the zero dynamics are stable, i.e., if the system is minimum phase.
+\end{itemize}
+
+\subsubsection{Zero dynamics}
+% TODO: Maybe write this section in a simpler more understandable way
+By only looking at the input-output relationship $y^{(\gamma)}=v$, one ignores the dynamics on a manifold of dimensions $n-\gamma$.
+
+It is possible to find a $u_0(x)$ such that $y=\dot{y}=\ddot{y}=\cdots=0$, and still have non-trivial dynamics in the state space
+\begin{equation*}
+    \dot{x} = f(x) + g(x)u_0(x)
+\end{equation*}
+In other words, there can be a control input that only excites the internal behavior of the system but does not affect the output.
+
+This is called the \textbf{zero dynamics} of the system.
+\newpar{}
+Assume now that $f(x_0) = 0$, and $h(x_0) = 0$, i.e., that $x_0$ is an equilibrium point, with zero output. Then, the system is said to be asymptotically (exponentially) minimum-phase at $x_0$ if $x_0$ is an asymptotically (exponentially) stable equilibrium point for the zero dynamics.
+\newpar{}
+Note that if the system is not minimum-phase, the feedback linearization approach does not ensure internal stability of the closed-loop system, i.e., there are ``unobservable mode'' that are unstable.

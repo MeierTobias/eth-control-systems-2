@@ -1,9 +1,21 @@
 \subsection{\texorpdfstring{$\mathcal{H}_2$}{H2} Synthesis}
+The dynamics of the standard setup for modern control synthesis are given by
+\begin{align*}
+    \quad \mathbf{x}(0) & =\mathbf{x}_{0}                                                                              \\
+    \dot{\mathbf{x}}(t) & =\quad \mathbf{A}\mathbf{x}(t)+\mathbf{B}_{w}\mathbf{w}(t)+\mathbf{B}_{u}\mathbf{u}(t)       \\
+    \mathbf{z}(t)       & =\quad \mathbf{C}_{z}\mathbf{x}(t)+\mathbf{D}_{zw}\mathbf{w}(t)+\mathbf{D}_{zu}\mathbf{u}(t) \\
+    \mathbf{y}(t)       & =\quad \mathbf{C}_{y}\mathbf{x}(t)+\mathbf{D}_{yw}\mathbf{w}(t)+\mathbf{D}_{yu}\mathbf{u}(t)
+\end{align*}
+LQR, LQE, LQG are applied to special cases of the standard setup.
 \subsubsection{LQR}
+
+\newpar{}
+\ptitle{Problem Statement}
+
 In the LQR problem we assume
 \begin{itemize}
     \item Full state feedback: $\mathbf{C_y}=\mathbf{\mathbb{I}}$
-    \item No disturbance input: $w=0$
+    \item No disturbance input: $w=0$ ($\mathbf{B}_w=\mathbf{D}_{zw}=\mathbf{D}_{yw}=\mathbf{0}$)
     \item $\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$
 \end{itemize}
 and try to find a control signal $u(t,x)$ that minimizes
@@ -26,13 +38,20 @@ which yields the known LQR problem
     \|\mathbf{z}\|_2^2=\int_0^{+\infty}(\mathbf{x}^{\mathsf{T}}\mathbf{Q}\mathbf{x}+\mathbf{u}^{\mathsf{T}}\mathbf{R}\mathbf{u})\;dt
 \end{equation*}
 
-\ptitle{ARE}
-\noindent\begin{gather*}
-    \mathbf{A}^{\mathsf{T}}\mathbf{X}_F + \mathbf{X}_F \mathbf{A} - \mathbf{X}_F \mathbf{B}_u{\left(\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{B}_{zu}\right)}^{-1} \mathbf{B}_u^{\mathsf{T}} \mathbf{X}_F + \mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z = \mathbf{0}\\
+\newpar{}
+\ptitle{Solving for the Controller Matrix}
+
+One can show that minimizing $\|\mathbf{z}\|_2^2$ imposes the following ARE on $\mathbf{X}_F$:
+\begin{equation*}
+    \mathbf{A}^{\mathsf{T}}\mathbf{X}_F + \mathbf{X}_F \mathbf{A} - \mathbf{X}_F \mathbf{B}_u{\left(\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{B}_{zu}\right)}^{-1} \mathbf{B}_u^{\mathsf{T}} \mathbf{X}_F + \mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z = \mathbf{0}
+\end{equation*}
+Solving this ARE yields the controller
+\begin{equation*}
     \mathbf{F} = -{\left(\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{D}_{zu}\right)}^{-1} \mathbf{B}_u^{\mathsf{T}}\mathbf{X}_F
-\end{gather*}
+\end{equation*}
 where $\mathbf{X}_F$ is symmetric and positive semidefinite.
 
+\newpar{}
 \ptitle{Technical Considerations}
 
 \begin{enumerate}
@@ -45,6 +64,7 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
           Is for convenience.
 \end{enumerate}
 
+\newpar{}
 \ptitle{Remarks}
 
 \begin{itemize}
@@ -54,6 +74,10 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
 
 
 \subsubsection{LQE}
+
+\newpar{}
+\ptitle{Problem Statement}
+
 In the LQE problem we assume
 \begin{itemize}
     \item That $\mathbf{u}$ takes the role uf the observer update
@@ -82,11 +106,16 @@ where process noise and sensor noise are not correlated i.e.
 \end{equation*}
 
 \newpar{}
-\ptitle{ARE}
-\noindent\begin{gather*}
-    \mathbf{A}\mathbf{Y}_L + \mathbf{Y}_L \mathbf{A}^{\mathsf{T}} - \mathbf{Y}_L \mathbf{C}_y^{\mathsf{T}}{\left(\mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}\right)}^{-1} \mathbf{C}_y \mathbf{Y}_L + \mathbf{B}_w\mathbf{B}_w^{\mathsf{T}} = \mathbf{0}\\
-    \mathbf{F} = -\mathbf{Y}_L\mathbf{C}_y^{\mathsf{T}}{\left(\mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}\right)}^{-1}
-\end{gather*}
+\ptitle{Solving for the Observer Matrix}
+
+One can show that the given problem statement on $\mathbf{u}$ imposes the following ARE on $\mathbf{Y}_L$:
+\begin{equation*}
+    \mathbf{A}\mathbf{Y}_L + \mathbf{Y}_L \mathbf{A}^{\mathsf{T}} - \mathbf{Y}_L \mathbf{C}_y^{\mathsf{T}}{\left(\mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}\right)}^{-1} \mathbf{C}_y \mathbf{Y}_L + \mathbf{B}_w\mathbf{B}_w^{\mathsf{T}} = \mathbf{0}
+\end{equation*}
+The optimal observer matrix is then given by
+\begin{equation*}
+    \mathbf{L} = -\mathbf{Y}_L\mathbf{C}_y^{\mathsf{T}}{(\underbrace{\mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}}_{=\mathbf{R}})}^{-1}    
+\end{equation*}
 where $\mathbf{Y}_L$ is symmetric and positive semidefinite.
 
 \newpar{}
@@ -130,6 +159,11 @@ where $\mathbf{X}$ is the stabilizing solution to the corresponding ARE and an \
 \end{equation*}
 where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
 
+\newpar{}
+\ptitle{Technical Considerations}
+
+Remember that LGQ combines LQR and LQE.
+
 \subsection{\texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
 \ptitle{Differentiation from $\mathcal{H}_2$ Synthesis}
 \begin{itemize}
@@ -151,27 +185,27 @@ where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
 \end{itemize}
 
 \subsubsection{Optimal \texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
-\begin{itemize}
-    \item In principle, we would like to find a controller K that minimizes the energy ($\mathcal{L}_2$) gain of the CL system i.e.
-          \begin{equation*}
-              \left\|\mathbf{T}_{zw}\right\|_{\mathcal{H}_\infty}=\sup_{w\neq0}\frac{\left\|\mathbf{z}\right\|_{\mathcal{L}_2}}{\left\|\mathbf{w}\right\|_{\mathcal{L}_2}}
-          \end{equation*}
-    \item However, the optimal controller(s) are such that
-          \begin{enumerate}
-              \item $\sigma_{\max}(\mathbf{T}_{zw}(j\omega))$ is a constant over all frequencies, the response does not roll off at high frequencies (\textit{Bode's integral law}).
-              \item The controller is not strictly proper. (The optimal controller is not unique)
-              \item Computing an optimal controller is numerically challenging.
-          \end{enumerate}
-\end{itemize}
+In principle, we would like to find a controller K that minimizes the energy ($\mathcal{L}_2$) gain of the CL system i.e.
+\begin{equation*}
+    \left\|\mathbf{T}_{zw}\right\|_{\mathcal{H}_\infty}=\sup_{w\neq0}\frac{\left\|\mathbf{z}\right\|_{\mathcal{L}_2}}{\left\|\mathbf{w}\right\|_{\mathcal{L}_2}}
+\end{equation*}
+However, the optimal controller(s) are such that
+\begin{enumerate}
+    \item $\sigma_{\max}(\mathbf{T}_{zw}(j\omega))$ is a constant over all frequencies, the response does not roll off at high frequencies (\textit{Bode's integral law}).
+    \item The controller is not strictly proper. (The optimal controller is not unique)
+    \item Computing an optimal controller is numerically challenging.
+\end{enumerate}
 
 \subsubsection[Suboptimal H-infinity Synthesis]{Suboptimal $\mathcal{H}_\infty$ Synthesis}
+\newpar{}
+\ptitle{Problem Statement}
 In practice one pursues a sub-optimal design, i.e., given $\gamma>0$, find a controller $K$ such that
 \begin{equation*}
     \|\mathbf{T}_{zw}\|_{\mathcal{H}_\infty}<\gamma
 \end{equation*}
 if one exists. This can be formulated mathematically as a cost function:
 \begin{equation*}
-    \|\mathbf{z}\|_{\mathcal{L}_2}^2-\gamma^2\|\mathbf{w}\|_{\mathcal{L}_2}^2
+    \|\mathbf{z}\|_{\mathcal{L}_2}^2-\gamma^2\|\mathbf{w}\|_{\mathcal{L}_2}^2 < 0
 \end{equation*}
 where we search for the smallest $\gamma$ such that the controller can achieve negative cost. We \textbf{need} $\boldsymbol{\gamma}\mathbf{\le1}$ for a stabilizing controller as otherways for larger gamma one could easily achieve negative cost even though the energy of the disturbance gets not damped at all! The formula can be understood as
 \begin{itemize}
@@ -179,6 +213,29 @@ where we search for the smallest $\gamma$ such that the controller can achieve n
     \item We want to damp $\mathbf{z}$ given $\mathbf{w}$ (remember the definition of the induced $\mathcal{L}_2$ norm above)
     \item The aforementioned formula becomes negative if the disturbance energy term is larger than the (hopefully damped) performance output $\mathbf{z}$. A small $\gamma$ gives an even better controller as it is more difficult to achieve negative cost then.
 \end{itemize}
+
+\newpar{}
+\ptitle{Conditions}
+
+For feasibility one must have
+\begin{enumerate}
+    \item $(\mathbf{A}_{ext}, \mathbf{B}_2)$ must be stabilizable
+    \item $(\mathbf{C}_{ext, y},\mathbf{A}_{ext})$ must be detectable
+    \item $\begin{bmatrix}\mathbf{A}-j\omega \mathbf{I}&\mathbf{B}_w\end{bmatrix},\begin{bmatrix}\mathbf{A}^{\prime}-j\omega \mathbf{I}&\mathbf{C}_z^{\prime}\end{bmatrix}$ must have full row rank
+\end{enumerate}
+\newpar{}
+A controller $\mathbf{K}$ fulfilling the cost inequality exists, only if 
+\begin{enumerate}
+    \item The following ARE has a solution for $\mathbf{X}_{\infty}$
+    \begin{equation*}
+        \mathbf{A}^{\prime}\mathbf{X}_{\infty}+\mathbf{X}_{\infty}\mathbf{A}+\mathbf{C}_{z}^{\prime}\mathbf{C}_{z}=\mathbf{X}_{\infty}(\mathbf{B}_{u}\mathbf{B}_{u}^{\prime}-\gamma^{-2}\mathbf{B}_{w}\mathbf{B}_{w}^{\prime})\mathbf{X}_{\infty}
+    \end{equation*}
+    \item The following ARE has a solution for $\mathbf{Y}_{\infty}$
+    \begin{equation*}
+        \mathbf{A}\mathbf{Y}_\infty + \mathbf{Y}_\infty \mathbf{A}^{\prime} + \mathbf{B}_w^{\prime} \mathbf{B}_w = \mathbf{Y}_\infty (\mathbf{C}_y \mathbf{C}_y^{\prime} - \gamma^{-2} \mathbf{C}_z \mathbf{C}_z^{\prime}) \mathbf{Y}_\infty
+    \end{equation*}
+    \item The matrix $\gamma^2 \mathbf{I} - \mathbf{Y}_{\infty} \mathbf{X}_{\infty}$ is positive definite
+\end{enumerate}
 
 \newpar{}
 \ptitle{Bisection Algorithm}
@@ -190,6 +247,20 @@ where we search for the smallest $\gamma$ such that the controller can achieve n
     \item Repeat from step 2 until $\gamma_+-\gamma_-<\epsilon$.
     \item Return $\mathbf{K}_+$.
 \end{enumerate}
+\newpar{}
+Remarks
+\begin{itemize}
+    \item The conditions are only fulfilled if $\gamma\le 1$
+    \item For $\gamma>1$ use relaxed weights
+    \item The final controller gains are 
+    \begin{equation*}
+        \mathbf{F}_u=-\mathbf{B}_u^{\prime}\mathbf{X}_\infty,\quad \mathbf{F}_w=\frac1{\gamma^2}\mathbf{B}_w^{\prime}\mathbf{X}_\infty 
+    \end{equation*}
+    \item The final observer gain is 
+    \begin{equation*}
+        \mathbf{L}=-{(\mathbf{I}-\gamma^{-2}\mathbf{Y}_\infty \mathbf{X}_\infty)}^{-1}\mathbf{Y}_\infty \mathbf{C}_y^{\prime}
+    \end{equation*}
+\end{itemize}
 
 \newpar{}
 \ptitle{Simplified Setup}
@@ -206,13 +277,13 @@ One can apply frequency weights to different performance outputs, similar to the
 \begin{itemize}
     \item In order for $\mathcal{H}_\infty$ synthesis to be possible, frequency weights must be \textbf{stable and proper}.
     \item Integrators (not asymptotically stable) can be approximated by very slow poles.
-    \item MATLAB: 
-    \begin{itemize}
-        \item \texttt{Pinf=augw(G,W1,0,W3)}\\
-        creates the augmented (weighted) system
-        \item \texttt{[Kinf, CL, GAM, INFO]=hinfsyn(Pinf,1,1)}\\
-        applies optimal $\mathcal{H}_\infty$ synthesis
-        \item \texttt{[K09, CL, GAM, I]=hinfsyn(Pinf,1,1,0.9)}\\
-        applies suboptimal $\mathcal{H}_\infty$ synthesis targeting $\gamma=0.9$. This can yield a more feasible controller (less control effort)
-    \end{itemize}
+    \item MATLAB:
+          \begin{itemize}
+              \item \texttt{Pinf=augw(G,W1,0,W3)}\\
+                    creates the augmented (weighted) system
+              \item \texttt{[Kinf, CL, GAM, INFO]=hinfsyn(Pinf,1,1)}\\
+                    applies optimal $\mathcal{H}_\infty$ synthesis
+              \item \texttt{[K09, CL, GAM, I]=hinfsyn(Pinf,1,1,0.9)}\\
+                    applies suboptimal $\mathcal{H}_\infty$ synthesis targeting $\gamma=0.9$. This can yield a more feasible controller (less control effort)
+          \end{itemize}
 \end{itemize}
