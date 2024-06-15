@@ -63,7 +63,7 @@ However, the MPC control law will have better performance -- if not optimal, i.e
     J^*_\infty(\mathbf{x}) \leq J^*_H(\mathbf{x}) \leq J^*_{CLF}(\mathbf{x})
 \end{equation*}
 
-An example of a CLF candidate may be given by the solution $\mathbf{P}$ of the Algebraic Ricatti Equation of the LQR problem, i.e., given $V(x) = \mathbf{x}^T \mathbf{Px}$.
+An example of a CLF candidate may be given by the solution $\mathbf{P}$ of the Algebraic Ricatti Equation of the LQR problem, i.e., given $V(\mathbf{x}) = \mathbf{x}^T \mathbf{Px}$.
 
 \subsection{Solving the Finite Horizon Optimization}
 
@@ -85,19 +85,19 @@ Hence the barrier function is not defined for $(x,u)$ not satisfying the constra
 
 To solve this kind of optimization problem the \textbf{barrier interior-point method} can be used.
 
-\subsubsection{Barrier Interior-Point Metod}
+\subsubsection{Barrier Interior-Point Method}
 Interior point methods solve \textbf{convex problems} of the form
 \begin{align*}
-    \min \quad         & f_0(x)                                 \\
-    \text{s.t.:} \quad & f_i(x) \leq 0 , \quad 0 = 1, \ldots, m \\
-                       & Ax = b
+    \min \quad         & f_0( \mathbf{x})                                 \\
+    \text{s.t.:} \quad & f_i( \mathbf{x}) \leq 0 , \quad 0 = 1, \ldots, m \\
+                       &  \mathbf{Ax} = \mathbf{b}
 \end{align*}
 where the scalar functions $f_0,f_1,\ldots,f_m$ are convex and twice differentiable.
 \newpar{}
 The problem is converted into a minimization with affine equality constraints by adding \textbf{barrier functions} in the following way
 \begin{align*}
-    \min \quad        & f_0(x) - \frac{1}{t}\sum_{i=1}^{m}\log(-f_i(x)) \\
-    \text{s.t.:}\quad & Ax=b
+    \min \quad        & f_0(\mathbf{x}) - \frac{1}{t}\sum_{i=1}^{m}\log(-f_i(\mathbf{x})) \\
+    \text{s.t.:}\quad & \mathbf{Ax}=\mathbf{b}
 \end{align*}
 
 As $t \to +\infty$, the objective function gets closer to $f_0$, but diverges very steeply at the boundary of the feasible set.
@@ -109,7 +109,7 @@ The problem is then solved iteratively using gradient descent or Newton method f
 \newpar{}
 \ptitle{Remarks:}
 \begin{itemize}
-    \item The sequence of intermediate optimal solutions forms what is known as the \textbf{cental path}, which is always contained in the interior of the feasible set.
+    \item The sequence of intermediate optimal solutions forms what is known as the \textbf{central path}, which is always contained in the interior of the feasible set.
     \item This method terminates with $\mathcal{O}(\sqrt{m})$ time.
 \end{itemize}
 
