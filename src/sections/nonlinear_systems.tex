@@ -111,17 +111,21 @@ The solution $\mathbf{P}$ of the Riccati equation can be interpreted as a Lyapun
 LaSalle's invariance theorem is useful if Lyapunov stability is given by the existence of a Lyapunov function but $\dot{V}=0$ not only at $\mathbf{x}_e$:
 
 \newpar{}
-Let $\Omega\in D$ be a (compact) positively invariant set ($\mathbf{x}$ stays in the set) i.e., $\mathbf{x}(t_0)\in \Omega \Rightarrow \mathbf{x}(t)\in\Omega\; \forall t \geq t_0$.
-
-Let $V_D\to \mathbb{R}^n$, such that $\dot{V}(\mathbf{x})\leq 0\; \forall \mathbf{x}\in \Omega$ (i.e.\ there could be multiple points with $\dot{V}=0$).
-
-Then, $\mathbf{x}(t)$ will eventually approach the largest positively invariant set in which $\dot{V}=0$.
+\begin{itemize}[leftmargin=14pt]
+    \item Let $\Omega\subset D$ be a compact positively invariant set w.r.t.\ $\dot{\mathbf{x}}$ ($\mathbf{x}$ stays in the set) i.e., $\mathbf{x}(t_0)\in \Omega \Rightarrow \mathbf{x}(t)\in\Omega\; \forall t \geq t_0$.
+    \item Let $V:D\to \mathbb{R}^n$, such that $\dot{V}(\mathbf{x})\leq 0\; \forall \mathbf{x}\in \Omega$.
+    \item Let $E=\left\{\mathbf{x}: \dot{V}(\mathbf{x})=0\right\}\subset \Omega$ (possibly multiple pts.).
+    \item[$\rhd$] Then every solution starting in $\Omega$ approaches $M\subset E$ (largest invariant set in $E$) as $t\to \infty$. 
+    \item[$\rhd$] This proves asymptotic stability.
+\end{itemize}
+\newpar{}
+\begin{equation*}
+  M\subset E \subset \Omega \subset D \subset \mathbb{R}^n  
+\end{equation*}
 
 \newpar{}
 \textbf{Remarks}
-\begin{itemize}
-    % \item A set $\Omega$ is positively invariant if, once the system's state $\mathbf{x}(t)$ enters this set, it will stay in this set for all future time $t \geq t_0$. This means if $\mathbf{x}(t_0) \in \Omega$, then $\mathbf{x}(t) \in \Omega\; \forall t \geq t_0$.
-    \item For the pendulum, one has multiple states (turning points, origin) where $\dot{\mathbf{x}}=0$ but $\mathbf{x}(t)$ only stays at the origin (but not at the turning points) once it has ``entered'' this equilibrium set (i.e.\ stopped moving).
+\begin{itemize}\item For the pendulum, one has multiple states (turning points, origin) where $\dot{\mathbf{x}}=0$ but $\mathbf{x}(t)$ only stays at the origin (but not at the turning points) once it has ``entered'' this equilibrium set (i.e.\ stopped moving).
 \end{itemize}
 
 \subsection{Control Lyapunov Functions}
