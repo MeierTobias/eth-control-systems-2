@@ -111,14 +111,16 @@ The solution $\mathbf{P}$ of the Riccati equation can be interpreted as a Lyapun
 LaSalle's invariance theorem is useful if Lyapunov stability is given by the existence of a Lyapunov function but $\dot{V}=0$ not only at $\mathbf{x}_e$:
 
 \newpar{}
-\textit{Let $\Omega\in D$ be a (compact) positively invariant set i.e., $\mathbf{x}(t_0)\in \Omega \Rightarrow \mathbf{x}(t)\in\Omega$.
-    Let $V_D\to \mathbb{R}^n$, such that $\dot{V}(\mathbf{x})\leq 0\; \forall \mathbf{x}\in \Omega$ (i.e.\ there could be multiple points with $\dot{V}=0$).
-    Then, $\mathbf{x}(t)$ will eventually approach the largest positively invariant set in which $\dot{V}=0$
-}
+Let $\Omega\in D$ be a (compact) positively invariant set ($\mathbf{x}$ stays in the set) i.e., $\mathbf{x}(t_0)\in \Omega \Rightarrow \mathbf{x}(t)\in\Omega\; \forall t \geq t_0$.
+
+Let $V_D\to \mathbb{R}^n$, such that $\dot{V}(\mathbf{x})\leq 0\; \forall \mathbf{x}\in \Omega$ (i.e.\ there could be multiple points with $\dot{V}=0$).
+
+Then, $\mathbf{x}(t)$ will eventually approach the largest positively invariant set in which $\dot{V}=0$.
+
 \newpar{}
 \textbf{Remarks}
 \begin{itemize}
-    \item A set $\Omega$ is positively invariant if, once the system's state $\mathbf{x}(t)$ enters this set, it will stay in this set for all future time $t \geq t_0$. This means if $\mathbf{x}(t_0) \in \Omega$, then $\mathbf{x}(t) \in \Omega\; \forall t \geq t_0$.
+    % \item A set $\Omega$ is positively invariant if, once the system's state $\mathbf{x}(t)$ enters this set, it will stay in this set for all future time $t \geq t_0$. This means if $\mathbf{x}(t_0) \in \Omega$, then $\mathbf{x}(t) \in \Omega\; \forall t \geq t_0$.
     \item For the pendulum, one has multiple states (turning points, origin) where $\dot{\mathbf{x}}=0$ but $\mathbf{x}(t)$ only stays at the origin (but not at the turning points) once it has ``entered'' this equilibrium set (i.e.\ stopped moving).
 \end{itemize}
 
@@ -133,10 +135,10 @@ A CLF satisfies
     \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
 \end{align*}
 
-In the following methods, one aims to find a control Lypunov function to prove stabilizing behavior.
+In the following methods, one aims to find a control Lypunov function to prove stabilizing behavior with a specific control input.
 
 \subsubsection{Gain Scheduling}
-In gain scheduling, the state space is partitioned into disjoint subspaces and for a number of design equilibria ($\mathbf{x}_i, \mathbf{u}_i$)  nominal contorl laws $\mathbf{K}_i$ are designed using the aforementioned techniques.
+In gain scheduling, the state space is partitioned into disjoint subspaces and for a number of design equilibria ($\mathbf{x}_i, \mathbf{u}_i$)  nominal control laws $\mathbf{K}_i$ are designed using the aforementioned techniques.
 
 \newpar{}
 The dynamics of the system around a equilibrium point $\mathbf{x}_i$ can be approximated by
@@ -159,7 +161,7 @@ Another option is to consider multiple Lyapunov-like functions $V_i$ with corres
     \item positive definite in $X_i$
     \item $\dot{V_i}(\mathbf{x})\leq 0$ when $\mathbf{x}\in X_i$
 \end{itemize}
-Then, define $V_i[k]$ as infimum taken by $V_i$ in the given time interval and to check if the system satisfies the \textbf{sequence non-increasing condition}:
+Then, define $V_i[k]$ as infimum taken by $V_i$ in the given time interval and check if the system satisfies the \textbf{sequence non-increasing condition}:
 \noindent\begin{equation*}
     V_i[k+1] < V_i[k] \qquad \forall k \in \mathbb{N}
 \end{equation*}
@@ -167,7 +169,7 @@ Then, define $V_i[k]$ as infimum taken by $V_i$ in the given time interval and t
 \newpar{}
 \ptitle{Rationale}
 
-Assuming the system can move from region to region, we look at all time intervals where system is in a certain region $X_i$. We want to have the Lyapunov function decreased everytime the system reenters a certain region again. Defining $V_i$ as infimum (largest lower bound), we have stable behaviour if the infimum decreases at every re-entry of region $X_i$.
+Assuming the system can move from region to region, we look at all time intervals where the system is in a certain region $X_i$. We want to have the Lyapunov function decreased everytime the system reenters a certain region again. Defining $V_i$ as infimum (largest lower bound), we have stable behaviour if the infimum decreases at every re-entry of region $X_i$.
 
 \subsubsection{Linear Parameter-Varying (LPV) Systems}
 A third option is to rewrite the nonlinear system in a ``linear'' fashion with slow varying parameter $\sigma(\mathbf{x})$
@@ -187,7 +189,7 @@ This system is \textbf{exponentially stable} if
     {\bar{\mathbf{A}}(\sigma)}^{\mathsf{T}} \mathbf{P} + \mathbf{P}\bar{\mathbf{A}}(\sigma) + \sum \rho_i \frac{\partial \mathbf{P}(\sigma)}{\partial \sigma_i} < 0,\qquad
     \begin{cases}
         \sigma(t)\in S       \\
-        \dot{\sigma(t)}\in R \\
+        \dot{\sigma}(t)\in R \\
         \forall \sigma\in S, \rho\in R
     \end{cases}
 \end{equation*}
@@ -224,8 +226,8 @@ proving stability in the sense of Lyapounov.
 In order to ensure stability, Lyapunov stability of the error $\mathbf{e} = \mathbf{z}-\mathbf{u}_0$ needs to be established.
 The error evolves as
 \begin{align*}
-    \dot{\mathbf{x}} & =\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{u}_{0}(x)+\mathbf{g}_{0}(\mathbf{x})\mathbf{e},                                                                                                                                                   \\
-    \dot{\mathbf{e}} & =\mathbf{f}_{1}(\mathbf{x},\mathbf{z})+\mathbf{g}_{1}(\mathbf{x},\mathbf{z})\mathbf{u}-\frac{\partial \mathbf{u}_{0}(\mathbf{x})}{\partial \mathbf{x}}\left(\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{z}\right)=\mathbf{v}
+    \dot{\mathbf{x}} & =\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{u}_{0}(x)+\mathbf{g}_{0}(\mathbf{x})\mathbf{e},                                                                                                                                                                                                                                              \\
+    \dot{\mathbf{e}} & =\underbrace{\mathbf{f}_{1}(\mathbf{x},\mathbf{z})+\mathbf{g}_{1}(\mathbf{x},\mathbf{z})\mathbf{u}}_{\dot{\mathbf{z}}}-\underbrace{\frac{\partial \mathbf{u}_{0}(\mathbf{x})}{\partial \mathbf{x}}\overbrace{\left(\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{z}\right)}^{\dot{\mathbf{x}}}}_{\dot{\mathbf{u}}_0(\mathbf{x})}=\mathbf{v}
 \end{align*}
 Then, the Lypunov candidate
 \noindent\begin{equation*}
@@ -239,11 +241,11 @@ if one cleverly picks
 \begin{equation*}
     \mathbf{v}=-\frac{\partial V_0(\mathbf{x})}{\partial \mathbf{x}}\mathbf{g}_0(\mathbf{x})-k_1\mathbf{e},\quad k_1>0
 \end{equation*}
-and thus proves the stability of the ``error'' system
-\noindent\begin{align*}
-    \dot{\mathbf{x}} & = f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}                                                               \\
-    \dot{\mathbf{e}} & = \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
-\end{align*}
+and thus proves the stability of the ``error'' system.
+% \noindent\begin{align*}
+%     \dot{\mathbf{x}} & = f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}                                                               \\
+%     \dot{\mathbf{e}} & = \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
+% \end{align*}
 
 \newpar{}
 \ptitle{Remarks}
@@ -270,10 +272,10 @@ the output $y$ has to be differentiated $\gamma$ times, where $\gamma$ (the rela
 \end{equation*}
 with
 \begin{align*}
-    L_f h(x)     & := \frac{\partial h}{\partial x}f(x) \\
-    L_g h(x)     & := \frac{\partial h}{\partial x}g(x) \\
-    L_f^2 h(x)   & := L_f(L_f h(x))                     \\
-    L_g L_f h(x) & := L_g (L_f h(x))
+    L_f h(x)     & := \frac{\partial h}{\partial x}f(x)                                            \\
+    L_g h(x)     & := \frac{\partial h}{\partial x}g(x)                                            \\
+    L_f^2 h(x)   & := L_f(L_f h(x)) = \frac{\partial L_f h(x)}{\partial x}f(x) \\
+    L_g L_f h(x) & := L_g (L_f h(x)) = \frac{\partial L_f h(x)}{\partial x}g(x)
 \end{align*}
 where $L_f h(x)$ and $L_g h(x)$ are called the \textit{Lie derivatives} of $h(x)$ in direction $f$ or $g$ respectively.
 \newpar{}
@@ -398,9 +400,9 @@ A dynamic system
     \dot{x} = f(x,u) \\
     y = h(x,u)
 \end{gather*}
-is differentially flat, with flat output $y$, if one can compute the state and input trajectories as a function of the flat outputs and a finite number of derivatives.
+is differentially flat, with flat output $y$, if one can compute the state and input trajectories as a function (map $\Xi$) of the flat outputs and a finite number of derivatives.
 \begin{equation*}
-    (x,u) = M(y,\dot{y}, \ldots, y^{(m)})
+    (x,u) = \Xi (y,\dot{y}, \ldots, y^{(m)})
 \end{equation*}
 
 \begin{examplesection}[Pendulum]
@@ -453,17 +455,35 @@ or the desired internal state $\mathbf{x}_d$
 \end{itemize}
 
 \subsubsection{Zero dynamics}
-% TODO: Maybe write this section in a simpler more understandable way
-By only looking at the input-output relationship $y^{(\gamma)}=v$, one ignores the dynamics on a manifold of dimensions $n-\gamma$.
+% By only looking at the input-output relationship $\mathbf{y}^{(\gamma)}=v$, one ignores the dynamics on a manifold of dimensions $n-\gamma$.
+\ptitle{Checking for Asymptotic Minimum Phase}
 
-It is possible to find a $u_0(x)$ such that $y=\dot{y}=\ddot{y}=\cdots=0$, and still have non-trivial dynamics in the state space
-\begin{equation*}
-    \dot{x} = f(x) + g(x)u_0(x)
+If it is possible to find an input $\mathbf{u}_0(\mathbf{x})$ that satisfies
+\noindent\begin{equation*}
+    \mathbf{y}=\dot{\mathbf{y}}=\cdots=\mathbf{y}^{(\gamma)}=0
 \end{equation*}
-In other words, there can be a control input that only excites the internal behavior of the system but does not affect the output.
+the \textbf{zero dynamics} (if they exist) are given by
+\begin{equation*}
+    \dot{\mathbf{x}} = f(\mathbf{x}) + g(\mathbf{x})\mathbf{u}_0(\mathbf{x})
+\end{equation*}
 
-This is called the \textbf{zero dynamics} of the system.
+Given an equilibrium point $f(\mathbf{x}_0)=0$ with zero output $h(\mathbf{x}_0)=0$, if the zero dynamics for the equilibrium point $\mathbf{x}_0$, i.e.\
+\begin{equation*}
+    \dot{\mathbf{x}} = f(\mathbf{x}_0) + g(\mathbf{x}_0)\mathbf{u}_0(\mathbf{x}_0)
+\end{equation*}
+are \textbf{asymptotically} (exponentially) \textbf{stable}, the system is said to be \textbf{asymptotically} (exponentially) \textbf{minimum-phase}.
+
+% \newpar{}
+% It is possible to find a $\mathbf{u}_0(x)$ such that $\mathbf{y}=\dot{\mathbf{y}}=\ddot{\mathbf{y}}=\cdots=\mathbf{y}^{(\gamma)}=0$, and still have non-trivial dynamics in the state space
+% \begin{equation*}
+%     \dot{\mathbf{x}} = f(\mathbf{x}) + g(\mathbf{x})\mathbf{u}_0(\mathbf{x})
+% \end{equation*}
+% This is called the \textbf{zero dynamics} of the system.
+
+% In other words, there can be a control input that only excites the internal behavior of the system but does not affect the output (system is unobservable).
+% \newpar{}
+% Assume now that $f(x_0) = 0$, and $h(x_0) = 0$, i.e., that $x_0$ is an equilibrium point, with zero output. Then, the system is said to be asymptotically (exponentially) minimum-phase at $x_0$ if $x_0$ is an asymptotically (exponentially) stable equilibrium point for the zero dynamics.
 \newpar{}
-Assume now that $f(x_0) = 0$, and $h(x_0) = 0$, i.e., that $x_0$ is an equilibrium point, with zero output. Then, the system is said to be asymptotically (exponentially) minimum-phase at $x_0$ if $x_0$ is an asymptotically (exponentially) stable equilibrium point for the zero dynamics.
-\newpar{}
-Note that if the system is not minimum-phase, the feedback linearization approach does not ensure internal stability of the closed-loop system, i.e., there are ``unobservable mode'' that are unstable.
+\ptitle{Breaking Condition}
+
+If the system is not minimum-phase, the feedback linearization approach does not ensure internal stability of the closed-loop system, i.e., there are ``unobservable modes'' that are unstable.
