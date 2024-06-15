@@ -263,40 +263,40 @@ In order to apply this technique the system needs to be \textbf{differentially f
 \newpar{}
 To find the input transformation that linearizes a system of the form
 \begin{align*}
-    \dot{x} & = f(x) + g(x) u \\
-    y       & = h(x)
+    \dot{\mathbf{x}} & = f(\mathbf{x}) + g(\mathbf{x}) \mathbf{u} \\
+    \mathbf{y}       & = h(\mathbf{x})
 \end{align*}
 the output $y$ has to be differentiated $\gamma$ times, where $\gamma$ (the relative degree) is the smallest number (if it exists) such that
 \begin{equation*}
-    L_g L_f^{\gamma-1} h(x) \ne 0
+    L_g L_f^{\gamma-1} h(\mathbf{x}) \ne 0
 \end{equation*}
 with
 \begin{align*}
-    L_f h(x)     & := \frac{\partial h}{\partial x}f(x)                                            \\
-    L_g h(x)     & := \frac{\partial h}{\partial x}g(x)                                            \\
-    L_f^2 h(x)   & := L_f(L_f h(x)) = \frac{\partial L_f h(x)}{\partial x}f(x) \\
-    L_g L_f h(x) & := L_g (L_f h(x)) = \frac{\partial L_f h(x)}{\partial x}g(x)
+    L_f h(\mathbf{x})     & := \frac{\partial h}{\partial \mathbf{x}}f(\mathbf{x})                                           \\
+    L_g h(\mathbf{x})     & := \frac{\partial h}{\partial \mathbf{x}}g(\mathbf{x})                                           \\
+    L_f^2 h(\mathbf{x})   & := L_f(L_f h(\mathbf{x})) = \frac{\partial L_f h(\mathbf{x})}{\partial \mathbf{x}}f(\mathbf{x})  \\
+    L_g L_f h(\mathbf{x}) & := L_g (L_f h(\mathbf{x})) = \frac{\partial L_f h(\mathbf{x})}{\partial \mathbf{x}}g(\mathbf{x})
 \end{align*}
-where $L_f h(x)$ and $L_g h(x)$ are called the \textit{Lie derivatives} of $h(x)$ in direction $f$ or $g$ respectively.
+where $L_f h(\mathbf{x})$ and $L_g h(\mathbf{x})$ are called the \textit{Lie derivatives} of $h(\mathbf{x})$ in direction $f$ or $g$ respectively.
 \newpar{}
 The system then can be transformed into a (virtually) linear system
 \begin{equation*}
-    \frac{d^\gamma y}{dt^\gamma} = v
+    \frac{d^\gamma \mathbf{y}}{dt^\gamma} = \mathbf{v}
 \end{equation*}
 by choosing a physical input
 \begin{equation*}
-    u = \frac{1}{L_g L_f^{\gamma-1} h(x)}(-L_f^\gamma h(x) + v)
+    \mathbf{u} = \frac{1}{L_g L_f^{\gamma-1} h(\mathbf{x})}(-L_f^\gamma h(\mathbf{x}) + \mathbf{v})
 \end{equation*}
 A (linear, ``virtual'') realization of this system is given by
 \begin{align*}
-    \dot{x} & = \begin{bmatrix}
+    \dot{\mathbf{x}} & = \begin{bmatrix}
                     0      & 1      & 0      & \cdots & 0      \\
                     0      & 0      & 1      & \cdots & 0      \\
                     \vdots & \vdots & \vdots & \ddots & \vdots \\
                     0      & 0      & 0      & \cdots & 1      \\
                     0      & 0      & 0      & \cdots & 0
                 \end{bmatrix}
-    x +
+    \mathbf{x} +
     \begin{bmatrix}
         0      \\
         0      \\
@@ -304,25 +304,25 @@ A (linear, ``virtual'') realization of this system is given by
         0      \\
         1
     \end{bmatrix}
-    v                                                      \\
+    \mathbf{v}                                                      \\
     y       & = \begin{bmatrix}
                     1 & 0 & \cdots & 0
                 \end{bmatrix}
-    x
+    \mathbf{x}
 \end{align*}
 
 \newpar{}
-Explicit examples for $\gamma = 1$ (then $L_f h(x)=h(x)$)
+Explicit examples for $\gamma = 1$ %(then $L_f h(x)=h(x)$)
 \begin{align*}
-    \dot{y} & = L_f h(x) + L_g h(x) u             \\
-    \dot{y} & = v                                 \\
-    u       & = \frac{1}{L_g h(x)}(-L_f h(x) + v)
+    \dot{\mathbf{y}\mathbf{}} & = L_f h(\mathbf{x}) + L_g h(\mathbf{x}) \mathbf{u}             \\
+    \dot{\mathbf{y}} & = \mathbf{v}                                 \\
+    \mathbf{u}       & = \frac{1}{L_g h(\mathbf{x})}(-L_f h(\mathbf{x}) + \mathbf{v})
 \end{align*}
 and for $\gamma = 2$
 \begin{align*}
-    \ddot{y} & = L_f^2 h(x) + L_g L_f h(x) u             \\
-    \ddot{y} & = v                                       \\
-    u        & = \frac{1}{L_g L_f h(x)}(-L_f^2 h(x) + v)
+    \ddot{\mathbf{y}} & = L_f^2 h(\mathbf{x}) + L_g L_f h(\mathbf{x}) \mathbf{u}             \\
+    \ddot{\mathbf{y}} & = \mathbf{v}                                       \\
+    \mathbf{u}        & = \frac{1}{L_g L_f h(\mathbf{x})}(-L_f^2 h(\mathbf{x}) + \mathbf{v})
 \end{align*}
 
 \newpar{}
@@ -338,21 +338,21 @@ and for $\gamma = 2$
 \begin{examplesection}[Pendulum]
     In the case of the nonlinear pendulum with a torque input $u$ and an output $y=\theta$
     \begin{align*}
-        \dot{x}_1 & = x_2                    \\
-        \dot{x}_2 & = -a \sin(x_1)-c x_2 + u \\
-        y         & = x_1
+        \dot{\mathbf{x}}_1 & = \mathbf{x}_2                    \\
+        \dot{\mathbf{x}}_2 & = -a \sin(\mathbf{x}_1)-c \mathbf{x}_2 + \mathbf{u} \\
+        \mathbf{y}         & = \mathbf{x}_1
     \end{align*}
     The Lie derivatives are
     \begin{align*}
-        L_f h(x) & = \begin{bmatrix}
+        L_f h(\mathbf{x}) & = \begin{bmatrix}
                          1 & 0
                      \end{bmatrix}
         \begin{bmatrix}
-            x_2 \\
-            -a \sin(x_1) -cx_2
-        \end{bmatrix} = x_2
+            \mathbf{x}_2 \\
+            -a \sin(\mathbf{x}_1) -cbf  _2
+        \end{bmatrix} = \mathbf{x}_2
         \\
-        L_g h(s) & = \begin{bmatrix}
+        L_g h(\mathbf{x}) & = \begin{bmatrix}
                          1 & 0
                      \end{bmatrix}
         \begin{bmatrix}
@@ -360,17 +360,17 @@ and for $\gamma = 2$
             1
         \end{bmatrix} = 0
     \end{align*}
-    Since $L_g h(x) = 0$ we need to differentiate again
+    Since $L_g h(\mathbf{x}) = 0$ we need to differentiate again
     \begin{align*}
-        L_f^2 h(x)   & = \begin{bmatrix}
+        L_f^2 h(\mathbf{x})   & = \begin{bmatrix}
                              0 & 1
                          \end{bmatrix}
         \begin{bmatrix}
-            x_2 \\
-            -a \sin(x_1) -cx_2
-        \end{bmatrix} = -a \sin(x_1) -c x_2
+            \mathbf{x}_2 \\
+            -a \sin(\mathbf{x}_1) -c\mathbf{x}_2
+        \end{bmatrix} = -a \sin(\mathbf{x}_1) -c \mathbf{x}_2
         \\
-        L_g L_f h(s) & = \begin{bmatrix}
+        L_g L_f h(\mathbf{x}) & = \begin{bmatrix}
                              0 & 1
                          \end{bmatrix}
         \begin{bmatrix}
@@ -380,43 +380,43 @@ and for $\gamma = 2$
     \end{align*}
     This results in
     \begin{equation*}
-        u = \frac{1}{L_g L_f h(x)}(-L_f^2 h(x) + v) = a \sin(x_1) + c x_2 + v
+        \mathbf{u} = \frac{1}{L_g L_f h(\mathbf{x})}(-L_f^2 h(\mathbf{x}) + \mathbf{v}) = a \sin(\mathbf{x}_1) + c \mathbf{x}_2 + \mathbf{v}
     \end{equation*}
     and the linear system
     \begin{align*}
-        \dot{x}_1 & = x_2 \\
-        \dot{x}_2 & = v   \\
-        y         & = x_1
+        \dot{\mathbf{x}}_1 & = \mathbf{x}_2 \\
+        \dot{\mathbf{x}}_2 & = \mathbf{v}   \\
+        \mathbf{y}         & = \mathbf{x}_1
     \end{align*}
     with
     \begin{equation*}
-        v = -a \sin(x_1)-c x_2 + u
+        \mathbf{v} = -a \sin(\mathbf{x}_1)-c \mathbf{x}_2 + \mathbf{u}
     \end{equation*}
 \end{examplesection}
 
 \subsubsection{Differental Flatness}\label{diff_flatness}
 A dynamic system
 \begin{gather*}
-    \dot{x} = f(x,u) \\
-    y = h(x,u)
+    \dot{\mathbf{x}} = f(\mathbf{x},\mathbf{u}) \\
+    \mathbf{y} = h(\mathbf{x},\mathbf{u})
 \end{gather*}
-is differentially flat, with flat output $y$, if one can compute the state and input trajectories as a function (map $\Xi$) of the flat outputs and a finite number of derivatives.
+is differentially flat, with flat output $\mathbf{y}$, if one can compute the state and input trajectories as a function (map $\Xi$) of the flat outputs and a finite number of derivatives.
 \begin{equation*}
-    (x,u) = \Xi (y,\dot{y}, \ldots, y^{(m)})
+    (\mathbf{x},\mathbf{u}) = \Xi (\mathbf{y},\dot{\mathbf{y}}, \ldots, \mathbf{y}^{(m)})
 \end{equation*}
 
 \begin{examplesection}[Pendulum]
-    The nonlinear pendulum with a torque input $u$ and an output $y=\theta$
+    The nonlinear pendulum with a torque input $\mathbf{u}$ and an output $\mathbf{y}=\theta$
     \begin{align*}
-        \dot{x}_1 & = x_2                    \\
-        \dot{x}_2 & = -a \sin(x_1)-c x_2 + u \\
-        y         & = x_1
+        \dot{\mathbf{x}}_1 & = \mathbf{x}_2                    \\
+        \dot{\mathbf{x}}_2 & = -a \sin(\mathbf{x}_1)-c \mathbf{x}_2 + \mathbf{u} \\
+        \mathbf{y}         & = \mathbf{x}_1
     \end{align*}
     Is differentially flat with flat output $y$. As per definition $x$ and $u$ can be reconstructed from $y$, $\dot{y}$ and $\ddot{y}$.
     \begin{align*}
-        x_1 & = y                                \\
-        x_2 & = \dot{y}                          \\
-        u   & = \ddot{y} + c \dot{y} + a \sin(y)
+        \mathbf{x}_1 & = \mathbf{y}                                \\
+        \mathbf{x}_2 & = \dot{\mathbf{y}}                          \\
+        \mathbf{u}   & = \ddot{\mathbf{y}} + c \dot{\mathbf{y}} + a \sin(\mathbf{y})
     \end{align*}
 \end{examplesection}
 
@@ -427,22 +427,22 @@ is differentially flat, with flat output $y$, if one can compute the state and i
 \end{center}
 
 \subsubsection{Feedback control of differentially-flat systems}
-The geometric property of differential flatness allows to compute the input control signal and the internal state of a system given a desired, sufficient differentiable output trajectory. A problem arises if the actual initial state does not match the computed initial state. This deviation can be controlled by introducing a feedback loop into the virtual signal $v$ depending on the desired output $y_d$
+The geometric property of differential flatness allows to compute the input control signal and the internal state of a system given a desired, sufficient differentiable output trajectory. A problem arises if the actual initial state does not match the computed initial state. This deviation can be controlled by introducing a feedback loop into the virtual signal $\mathbf{v}$ depending on the desired output $\mathbf{y}_d$
 \begin{equation*}
-    v = y_d^{(\gamma)} + K \begin{bmatrix}
-        y_d - y             \\
-        \dot{y}_d - \dot{y} \\
+    \mathbf{v} = \mathbf{y}_d^{(\gamma)} + K \begin{bmatrix}
+        \mathbf{y}_d - \mathbf{y}             \\
+        \dot{\mathbf{y}}_d - \dot{\mathbf{y}} \\
         \vdots              \\
-        y_d^{(\gamma-1)} - y^{(\gamma-1)}
+        \mathbf{y}_d^{(\gamma-1)} - \mathbf{y}^{(\gamma-1)}
     \end{bmatrix}
 \end{equation*}
 or the desired internal state $\mathbf{x}_d$
 \begin{equation*}
-    v = y_d^{(\gamma)} + K \begin{bmatrix}
-        x_d - x             \\
-        \dot{x}_d - \dot{x} \\
+    \mathbf{v} = \mathbf{y}_d^{(\gamma)} + K \begin{bmatrix}
+        \mathbf{x}_d - \mathbf{x}             \\
+        \dot{\mathbf{x}}_d - \dot{\mathbf{x}} \\
         \vdots              \\
-        x_d^{(\gamma-1)} - x^{(\gamma-1)}
+        \mathbf{x}_d^{(\gamma-1)} - \mathbf{x}^{(\gamma-1)}
     \end{bmatrix}
 \end{equation*}
 
