@@ -204,6 +204,15 @@ To discretize the $\mathbf{A}, \mathbf{B}, \mathbf{C}, \mathbf{D}$ matrices of a
 Alternatively the DT state space matrices $\mathbf{A}_d, \mathbf{B}_d, \mathbf{C}_d, \mathbf{D}_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform.
 
 \subsubsection{Discretization: Frequency Domain}\label{disc::tustin}
+\ptitle{Euler Forward}
+\noindent\begin{equation*}
+    s = \frac{z-1}{T}
+\end{equation*}
+\ptitle{Euler Backward}
+\noindent\begin{equation*}
+    s = \frac{z-1}{zT}
+\end{equation*}
+
 \ptitle{Tustin's Method}
 \begin{equation*}
     G_{d}(z)=G\left(s=\frac2T\frac{z-1}{z+1}\right)

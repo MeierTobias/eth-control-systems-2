@@ -456,11 +456,11 @@ If the matrix $\mathbf{A}$ contains $s$, the directions of poles and zeros can b
 \ptitle{Example Norms}
 \begin{itemize}
     \item Euclidean norm: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}}\mathbf{x}}$
-    \item For Hermitian, pos.\ definite matrices: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}} Qx}$
+    \item For Hermitian, pos.\ definite matrices: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}} \mathbf{Qx}}$
     \item p-norm: $\|\mathbf{x}\|_p{=\left(\sum_{i=1}^n x_i^p\right)}^{1/p}$ with the important cases
           \begin{align*}
                & \|\mathbf{x}\|_1=\sum_1^n\left|x_i\right|,               \\
-               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^n {x_i}^2}             \\
+               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^n {x_i}^2} = \sqrt{\mathbf{x}^{\mathsf{H}}\mathbf{x}   }         \\
                & \left\|\mathbf{x}\right\|_\infty=\max_i\left|x_i\right|.
           \end{align*}
 \end{itemize}
@@ -553,8 +553,8 @@ Signals are functions and functions are vectors.
 \noindent\begin{equation*}
     \|w\|_2^2=
     \begin{cases}
-        \sum\limits_{k\in\mathbb{Z}}w[k]'w[k] = \sum\limits_{k\in\mathbb{Z}}\|w[k]\|_2^2 & \mathsf{(DT)} \\
-        \int_{-\infty}^\infty w(t)'w(t) dt = \int_{-\infty}^\infty\|w(t)\|_2^2 dt        & \mathsf{(CT)}
+        \sum\limits_{k\in\mathbb{Z}}{w[k]}^{\mathsf{H}}w[k] = \sum\limits_{k\in\mathbb{Z}}\|w[k]\|_2^2 & \mathsf{(DT)} \\
+        \int_{-\infty}^\infty {w(t)}^{\mathsf{H}}w(t) dt = \int_{-\infty}^\infty\|w(t)\|_2^2 dt        & \mathsf{(CT)}
     \end{cases}
 \end{equation*}
 
