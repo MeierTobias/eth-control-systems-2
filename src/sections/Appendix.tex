@@ -26,6 +26,12 @@
     \item For every hermitian matrix $\mathbf{S}$ exists a unitary matrix $\mathbf{U}$ s.t. $\mathbf{U}^{\mathsf{H}}\mathbf{SU}$ is a diagonal matrix.
 \end{itemize}
 
+\newpar{}
+\ptitle{Matrix Exponential Function}
+\begin{equation*}
+    e^{\mathbf{X}} = \sum_{k=0}^{\infty}\frac{1}{k!}\mathbf{X^k}
+\end{equation*}
+
 \subsubsection{Transpose, Adjoint and Inverse}
 \noindent\begin{align*}
     \mathbf{A}^\mathsf{H}                  & = {(\mathbf{A}^\mathsf{T})}^*                   \\[.75em]
@@ -96,3 +102,14 @@
 \end{equation*}
 \textbf{Remark} Any row or column can be chosen (choose wisely: 0)
 
+\newpar{}
+\ptitle{Inversion}
+
+\begin{align*}
+    \mathbf{A}^{-1} & = \frac{\text{adj}(\mathbf{A})}{\text{det}(\mathbf{A})} \\
+    \mathbf{A}^{-1} & = \frac{1}{a_{11}a_{22} - a_{12}a_{21}}
+    \begin{bmatrix}
+        a_{22}  & - a_{12} \\
+        -a_{21} & a_{11}
+    \end{bmatrix}
+\end{align*}
