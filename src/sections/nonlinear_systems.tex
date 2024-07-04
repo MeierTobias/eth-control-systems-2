@@ -47,7 +47,7 @@ is
 \subsubsection{Lyapunov Functions}
 \textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the quilibrium point and non-increasing along all trajectories.}
 \newpar{}
-For a given compact subset $D$ of the state space containing $\mathbf{x}_e$, a Lypunov function is defined as
+For a given compact subset $D$ of the state space containing $\mathbf{x}_e$, a Lyapunov function is defined as
 \noindent\begin{equation*}
     V:D \to \mathbb{R} \mapsto V(\mathbf{x})
 \end{equation*}
@@ -140,7 +140,7 @@ A CLF satisfies
     \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
 \end{align*}
 
-In the following methods, one aims to find a control Lypunov function to prove stabilizing behavior with a specific control input.
+In the following methods, one aims to find a control Lyapunov function to prove stabilizing behavior with a specific control input.
 
 \subsubsection{Gain Scheduling}
 In gain scheduling, the state space is partitioned into disjoint subspaces and for a number of design equilibria ($\mathbf{x}_i, \mathbf{u}_i$)  nominal control laws $\mathbf{K}_i$ are designed using the aforementioned techniques.
@@ -234,7 +234,7 @@ The error evolves as
     \dot{\mathbf{x}} & =\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{u}_{0}(x)+\mathbf{g}_{0}(\mathbf{x})\mathbf{e},                                                                                                                                                                                                                                              \\
     \dot{\mathbf{e}} & =\underbrace{\mathbf{f}_{1}(\mathbf{x},\mathbf{z})+\mathbf{g}_{1}(\mathbf{x},\mathbf{z})\mathbf{u}}_{\dot{\mathbf{z}}}-\underbrace{\frac{\partial \mathbf{u}_{0}(\mathbf{x})}{\partial \mathbf{x}}\overbrace{\left(\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{z}\right)}^{\dot{\mathbf{x}}}}_{\dot{\mathbf{u}}_0(\mathbf{x})}=\mathbf{v}
 \end{align*}
-Then, the Lypunov candidate
+Then, the Lyapunov candidate
 \noindent\begin{equation*}
     V_1(\mathbf{x}, \mathbf{e}) = V_0(\mathbf{x})+\frac{1}{2} \mathbf{e}^2
 \end{equation*}
