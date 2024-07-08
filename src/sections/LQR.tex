@@ -2,17 +2,22 @@
 \subsection{Cost Functional}
 LQR can be used to systematically optimize the \textbf{static gain vector K} based on \textit{tracking errors} and \textit{control effort}.
 
-For th   e reference input $r(t) = 0$ the cost functional $J$ is defined as
+For the reference input $r(t) = 0$ the cost functional $J$ is defined as
 \noindent\begin{equation*}
     J(\mathbf{x,t})=\int_0^{+\infty} \Bigl[\underbrace{{\mathbf{x}(t)}^{\mathsf{T}}\mathbf{Qx}(t)}_{\textsf{tracking error}} + \underbrace{{\mathbf{u}(t)}^{\mathsf{T}} \mathbf{Ru}(t)}_{\textsf{control effort}} \Bigr]dt
 \end{equation*}
 \textbf{Remarks:}
 \begin{itemize}
-    \item $\mathbf{Q}$ is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^{\mathsf{T}}$
-    \item $\mathbf{Q}$ is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
-    \item $\mathbf{Q}$ must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
-    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall u\neq 0$ or $eig(\mathbf{R}) > 0$
+    \item $\mathbf{Q}$
+    \begin{itemize}
+        \item is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^{\mathsf{T}}$
+        \item is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
+        \item must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
+    \end{itemize}
+    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall \mathbf{u}\neq \mathbf{0}$ or $eig(\mathbf{R}) > 0$
+    % TODO: Why must Q but not R be symmetric?
     \item The pair $\mathbf{A,B}$ must be stabilizable
+    % TODO: Why not reachable?
     \item In general, there is an additional cross-coupling term $\mathbf{x}^{\mathsf{T}}\mathbf{Nu}$ in $J$ which is often neglected i.e.\ equal to $0$
 \end{itemize}
 
@@ -36,7 +41,7 @@ where
 \noindent\begin{equation*}
     \sum_{i=1}^n q_i^2=1\text{ and }\sum_{i=1}^m r_i^2=1
 \end{equation*}
-and $x_{i,\max}$, $u_{j,\max}$ are the maximum deviations that we are willing to tolerate for the $i$-th state and $j$-th input, respectively.
+and $x_{i,\max}$, $u_{j,\max}$ are the \textbf{maximum deviations} that we are willing to tolerate for the $i$-th state and $j$-th input, respectively.
 
 \subsection{Continuous Time}
 First, check $\mathbf{A,B}$ for reachability!
@@ -66,7 +71,7 @@ then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\m
 \textbf{Remarks:}
 
 \begin{itemize}
-    \item LQR guarantees a phase margin of at least 60°
+    \item LQR guarantees a phase margin of at least 60° and gain margin in $[\frac{1}{2},\infty)$
     \item LQR applies directly to MIMO-systems
 \end{itemize}
 
