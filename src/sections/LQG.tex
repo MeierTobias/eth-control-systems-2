@@ -58,7 +58,7 @@ we get
             \mathbf{A}-\mathbf{BK} & \mathbf{BK}              \\
             0                      & (\mathbf{A}-\mathbf{LC})
         \end{bmatrix}
-    }_{A_{cl}}
+    }_{\mathbf{A_{cl}}}
     \begin{bmatrix}
         \mathbf{x} \\
         \bm{\eta}
@@ -78,7 +78,7 @@ we get
     \end{bmatrix}
 \end{align*}
 
-The determinant of the closed-loop dynamic output feedback system $A_{cl}$ is
+The determinant of the closed-loop dynamic output feedback system $\mathbf{A_{cl}}$ is
 \begin{equation*}
     \det(\mathbf{A}_{cl})=\det(\mathbf{A}-\mathbf{BK})\det(\mathbf{A}-\mathbf{LC})
 \end{equation*}
@@ -97,8 +97,7 @@ both the observer and the controller can be designed individually i.e.\
 \ptitle{Recall:}
 
 The determinant of a $2\times2$ block matrix
-
-if $M$ is invertible
+if $\mathbf{M}$ is invertible
 \begin{align*}
     \det\begin{bmatrix}
             \mathbf{M} & \mathbf{N} \\
@@ -148,28 +147,28 @@ and from $u$ to $y$ (\textbf{open-loop})
 
 \textbf{Remarks}
 \begin{itemize}
-    \item In $G_{yr}^{cl}$, only the closed-loop poles of the controller are retained (observer and system are cancelled) and opne-loop zeros are retained.
+    \item In $G_{yr}^{cl}$, only the closed-loop poles of the controller are retained (observer and system are cancelled) and open-loop zeros are retained.
     \item $G_{uy}$, has the same order as the plant and the number of closed-loop poles is doubled (all stable)
 \end{itemize}
 
 \ptitle{Transmission Zeros}
 
 \begin{align*}
-    \left.\left|\det\begin{bmatrix}sI-A+BK & -BK     & -BKS \\
-               0       & sI-A+LC & 0    \\
-               C       & 0       & 0\end{bmatrix}\right.\right| \\
-    \left.=|\det(sI-A+LC)|\cdot\left|\det\begin{bmatrix}sI-A+BK & -BKS \\
-               C       & 0\end{bmatrix}\right.\right|
+    \left.\left|\det\begin{bmatrix}s\mathbf{I}-\mathbf{A}+\mathbf{BK} & -\mathbf{BK}                       & -\mathbf{BKS} \\
+               \mathbf{0}                         & s\mathbf{I}-\mathbf{A}+\mathbf{LC} & \mathbf{0}    \\
+               \mathbf{C}                         & \mathbf{0}                         & 0\end{bmatrix}\right.\right| \\
+    \left.=|\det(s\mathbf{I}-\mathbf{A}+\mathbf{LC})|\cdot\left|\det\begin{bmatrix}s\mathbf{I}-\mathbf{A}+\mathbf{BK} & -\mathbf{BKS} \\
+               \mathbf{C}                         & 0\end{bmatrix}\right.\right|
 \end{align*}
 
 \begin{itemize}
-    \item The eigenvalues of $(A-LC)$ are also zeros
+    \item The eigenvalues of $(\mathbf{A}-\mathbf{LC})$ are also zeros
     \item In the closed loop, only observer poles are eliminated due to pole zero cancellation
 \end{itemize}
 
 
 
-\ptitle{Reference scaling}
+\ptitle{Reference Scaling}
 
 To ensure a DC-Gain of $1$ we need the reference scaling matrix $S$ to satisfy
 

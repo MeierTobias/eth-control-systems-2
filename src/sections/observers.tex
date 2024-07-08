@@ -132,7 +132,7 @@ where each $\mathbf{w}(t)$ is the realization of a random variable.
 If such a signal additionally is Gaussian-distributed it is called ``zero mean Gaussian white noise''.
 
 \subsubsection{Colored Noise}
-To simulate physical noise we let a white noise input $w$ propagate through a LTI system model (filter) and use the system's output as noise signal:
+To simulate physical noise we let a white noise input $w$ propagate through an LTI system model (filter) and use the system's output as noise signal:
 \begin{align*}
     \dot{\mathbf{x}} & =\mathbf{Ax}+\mathbf{Bw} \\
     \mathbf{ y}      & = \mathbf{Cx}
@@ -145,7 +145,7 @@ The LTI system usually acts as low-pass filter in this case.
 Noise affects our state estimation adversely. The LQE / Kalman filter aims at an optimal trade-off between
 \begin{itemize}
     \item trusting the sensory information and hence, having higher observer gains in $\mathbf{L}$ (increases noise-sensitivity, left image)
-    \item trusting the state-space model and hence, having lower observer gains in $\mathbf{L}$ (decreases noise-sensitivity, right image)
+    \item trusting the state-space model and hence, having lower observer gains (slower convergence) in $\mathbf{L}$ (decreases noise-sensitivity, right image)
 \end{itemize}
 and corrects state estimation based on available measurements and assumptions on noise.
 \begin{center}
