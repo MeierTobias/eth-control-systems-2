@@ -155,13 +155,13 @@ then apply LQR to the modified state space model which yields a controller
 \end{align*}
 
 \subsection{Symmetric Root Locus}
-The symmetric root locus can be used to understand the influence of $\rho$ on the poles of a closed loop LQR feedback system.
+The symmetric root locus can be used to understand the influence of $\rho$ (penalizes control effort) on the poles of a closed loop LQR feedback system.
 By using $\mathbf{Q}=\mathbf{C}^{\mathsf{T}} \mathbf{C}$ and $\mathbf{R}=\rho \mathbf{I}$, the symmetric root locus condition simplifies to
 \noindent\begin{align*}
-    \rho \mathbf{I}+G(s)G(-s) & =0 \qquad \Leftrightarrow \\
-    \rho D(s)D(-s)+N(s)N(-s)  & =0
+    \rho \mathbf{I}+\mathbf{G}(s)\mathbf{G}(-s)                  & =\mathbf{0} \qquad \Leftrightarrow \\
+    \rho \mathbf{D}(s)\mathbf{D}(-s)+\mathbf{N}(s)\mathbf{N}(-s) & =\mathbf{0}
 \end{align*}
-where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
+where $\mathbf{G}(-s)$ corresponds to flipping signs in all the odd coefficients.
 
 \newpar{}
 \ptitle{Symmetric Root Locus Rules}
@@ -171,9 +171,9 @@ where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
     \item symmetric to the real and imaginary axis
     \item LQR closed-loop poles are all in the LHP
     \item $\rho \rightarrow \infty$ (expensive control):\newline
-          cl.\ poles approach stable ol.\ poles and the mirror-images of the unstable ol.\ poles (all on LHP)
+          CL poles approach stable OL poles and the mirror-images of the unstable OL poles (all on LHP)
     \item $\rho \rightarrow 0$ (cheap control):\newline
-          cl.\ poles approach mp.\ ol.\ zeros and the mirror-images of the nmp.\ ol.\ zeros or go to infinity along the LHP asymptotes (all on LHP)
+          CL poles approach MP OL zeros and the mirror-images of the NMP OL zeros or go to infinity along the LHP asymptotes (all on LHP)
 \end{itemize}
 
 \begin{examplesection}[Example: Symmetric Root Locus]
@@ -186,11 +186,11 @@ where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
         \includegraphics[width = \linewidth]{symm_rlocus.png}
     \end{center}
     Here the open-loop system features both a nonminimum-phase zero and an unstable pole.
-    When looking at the left half of the \textit{symmetric root locus}, the mirrored nmp.\ zero and unstable pole stabilize the system such that
+    When looking at the left half of the \textit{symmetric root locus}, the mirrored NMP zero and mirrored unstable pole stabilize the system such that
     for any $\rho$ the closed loop poles will stay on the LHP.
 \end{examplesection}
 
-\subsection{Kalman Frequency Domain Equality}
+\subsection{LQR Margins: Kalman Frequency Domain Equality}
 Considering a SISO LTI system
 \noindent\begin{align*}
     \dot{\mathbf{x}} & = \mathbf{Ax} + \mathbf{Bu}                                 \\
@@ -213,8 +213,9 @@ In the frequency domain ($s=j\omega$)
 \noindent\begin{equation*}
     \left|1+L(j\omega)\right|^2=1+\frac1\rho\left|G(j\omega)\right|^2\geq1
 \end{equation*}
-In the Nyquist plot, the transfer function using the LQR-gain is always outside of a unit circle centered at -1 i.e.
+In the Nyquist plot, the transfer function using the LQR gain is always outside of a unit circle centered at -1 i.e.
 \begin{itemize}
     \item The phase margin is at least 60° because the Nyquist curve cannot enter a unit circe centered at $-1$ (property of LQR)
     \item The gain margin is ($\frac{1}{2},\infty$) because the loop transfer function (Nyquist curve) will never cross the real axis between ($-2, 0$) (unit circle argument again)\newline $\to -\frac{1}{k} = (\frac{1}{2}, \infty)$
+    \item Note however the restrictions e.g.\ \cite{539438}
 \end{itemize}
