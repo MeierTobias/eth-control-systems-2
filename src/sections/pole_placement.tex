@@ -1,5 +1,4 @@
 \section{Pole Placement}
-
 \subsection{Full State Feedback}
 Assuming the internal state of a sytem can be accessed completely, the system can be controlled
 with a \textit{reference signal} $r$ (scalar) \textit{scaling vector} $\mathbf{S}$ (column vector) and a static gain $\mathbf{K}$ (row vector):
@@ -20,10 +19,10 @@ Remarks:
 \end{itemize}
 
 \subsection{Pole Placement}\label{sec:pole_placement}
-Pole placement can be used to tune $\mathbf{K}$ and $\mathbf{S}$ to achieve the desired closed loop poles $\lambda_i$.
+Pole placement can be used to tune $\mathbf{K}$ and $\mathbf{S}$ to achieve the desired closed loop poles $\lambda_i$ of a controllable system.
 The desired characteristic equation is
 \noindent\begin{align*}
-    \varphi_{cl,des} & =\det{(sI-A+BK)}=(s-\lambda_1)(s-\lambda_2)\ldots(s-\lambda_n) \\
+    \varphi_{cl,des} & =\det{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}=(s-\lambda_1)(s-\lambda_2)\ldots(s-\lambda_n) \\
                      & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0
 \end{align*}
 
@@ -85,14 +84,14 @@ If the system is \textbf{controllable} but not in reachable canonical form, the 
 \end{itemize}
 
 \subsubsection{Ackermann's Formula}
-Assuming that the system is \textbf{controllable}, Ackermann's formula can be used to calculate $\mathbf{K}$ for both \textbf{\textit{CT}} and \textbf{\textit{DT}} systems:
+Assuming that the system is \textbf{controllable}, Ackermann's formula can be used to calculate $\mathbf{K}$ for \textbf{both} CT and DT systems:
 \noindent\begin{align*}
     \mathbf{K}               & =\begin{bmatrix}
                                     0, & \ldots, & 0, & 1
                                 \end{bmatrix}
     \mathbf{R}^{-1}\varphi_{cl}(\mathbf{A})                                                               \\
     \varphi_{cl}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n)  \\
-    \varphi_{cl}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 I               \\
+    \varphi_{cl}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 \mathbf{I}               \\
                              & = (\mathbf{A}-\lambda_1 \mathbf{I})\ldots(\mathbf{A}-\lambda_n \mathbf{I})
 \end{align*}
 Note: $\alpha_0$ must be multiplied by the corresponding identity matrix.
