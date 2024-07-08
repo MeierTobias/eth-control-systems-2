@@ -9,15 +9,15 @@ For the reference input $r(t) = 0$ the cost functional $J$ is defined as
 \textbf{Remarks:}
 \begin{itemize}
     \item $\mathbf{Q}$
-    \begin{itemize}
-        \item is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^{\mathsf{T}}$
-        \item is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
-        \item must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
-    \end{itemize}
+          \begin{itemize}
+              \item is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^{\mathsf{T}}$
+              \item is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
+              \item must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
+          \end{itemize}
     \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall \mathbf{u}\neq \mathbf{0}$ or $eig(\mathbf{R}) > 0$
-    % TODO: Why must Q but not R be symmetric?
+          % TODO: Why must Q but not R be symmetric?
     \item The pair $\mathbf{A,B}$ must be stabilizable
-    % TODO: Why not reachable?
+          % TODO: Why not reachable?
     \item In general, there is an additional cross-coupling term $\mathbf{x}^{\mathsf{T}}\mathbf{Nu}$ in $J$ which is often neglected i.e.\ equal to $0$
 \end{itemize}
 
@@ -71,7 +71,10 @@ then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\m
 \textbf{Remarks:}
 
 \begin{itemize}
-    \item LQR guarantees a phase margin of at least 60° and gain margin in $[\frac{1}{2},\infty)$
+    \item LQR guarantees a phase margin of at least 60° and gain margin in $\left[\frac{1}{2},\infty\right)$
+    \begin{itemize}
+        \item However, robustness is limited (see\ \cite{539438})
+    \end{itemize}
     \item LQR applies directly to MIMO-systems
 \end{itemize}
 
@@ -188,8 +191,8 @@ where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
 \subsection{Kalman Frequency Domain Equality}
 Considering a SISO LTI system
 \noindent\begin{align*}
-    \dot{\mathbf{x}} & = \mathbf{Ax} + \mathbf{Bu}                      \\
-    y                & = \mathbf{Cx}                                    \\
+    \dot{\mathbf{x}} & = \mathbf{Ax} + \mathbf{Bu}                                 \\
+    y                & = \mathbf{Cx}                                               \\
     \mathbf{Q}       & = \mathbf{C}^{\mathsf{T}} \mathbf{C}, \quad \mathbf{R}=\rho
 \end{align*}
 and

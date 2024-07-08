@@ -5,6 +5,11 @@
 % load the template headers
 \input{\templatePath/summary_headers.tex} % ChkTex 27
 
+% for sources
+\usepackage[natbib=true, style=ieee, sorting=none]{biblatex}
+\addbibresource{sources.bib}
+\usepackage{csquotes}
+
 \begin{document}
 \begin{multicols*}{3}
 
@@ -28,6 +33,7 @@
     \input{sections/mpc.tex}
     \newpage
     \input{sections/Appendix.tex}
+    \input{sections/references.tex}
 
 \end{multicols*}
 \end{document}
