@@ -212,13 +212,17 @@ The SSV is defined with respect to a \textbf{class of perturbations} $\mathbb{D}
     \item $\mu(\mathbf{M})\geq0$
     \item If $\mathbb{D}$ is arbitrary: $\mu(\mathbf{M})=\|\mathbf{M}\|_{\mathcal{H}_\infty}$ (unstructured case)
     \item If $\mathbb{D}=\{\lambda I:\lambda\in\mathbb{C}\}$: $\mu(\mathbf{M})=\rho(\mathbf{M})$ (spectral radius, largest eigenvalue)
-    \item If $\mathbb{D}$ is the set of diagonal (complex) matrices: $\mu(\mathbf{M})=\mu(\mathbf{D}^{-1}\mathbf{MD})$ for any invertible $\mathbf{D}$ and
+    \item If $\mathbb{D}$ is the set of diagonal (complex) matrices then
+          \begin{equation*}
+              \mu(\mathbf{M})=\mu(\mathbf{D}^{-1}\mathbf{MD})
+          \end{equation*}
+          for any invertible $\mathbf{D}$ and
           \begin{equation*}
               \rho(\mathbf{M})\leq\mu(\mathbf{M})\leq\inf_{\mathbf{D}}\sigma_{\max}(\mathbf{D}^{-1}\mathbf{MD})\leq\sigma_{\max}(\mathbf{M})
           \end{equation*}
 \end{itemize}
 
-
+\subsubsection{Accessing Stability Using SSV}
 \ptitle{Stability Condition}
 
 The $\mathbf{M}-\boldsymbol{\Delta}$ FB system is stable for all $\boldsymbol{\Delta}\in \mathbb{D}$, $\left\|\boldsymbol{\Delta}\right\|_{\mathcal{H}_\infty}<1$ iff
@@ -226,46 +230,54 @@ The $\mathbf{M}-\boldsymbol{\Delta}$ FB system is stable for all $\boldsymbol{\D
     \mu(\mathbf{M}(j\omega))\leq1,\quad\forall\omega\in\mathbb{R}
 \end{equation*}
 
-\ptitle{Scalar Combined Robustness}
+\begin{examplesection}[Example: Scalar Combined Robustness]
+    The modal decomposition gives valuable insight regarding the behavior of a system. The modes (eigenvalues and corresponding eigenvectors) are analyzed one at a time.
+    \begin{enumerate}
+        \item The magnitude of the eigenvalue describes the influence of the corresponding mode.
+        \item The property (real, complex or repeated) of the eigenvalue describes the behavior over time of that mode.
+        \item The corresponding eigenvector describes the states/dimensions the mode is acting on. For example $x,y,z$ or $\varphi, \dot{\varphi}$
+    \end{enumerate}
 
-\begin{equation*}
-    \mathbf{M}=\begin{bmatrix}
-        -\frac{\mathbf{W}_1\mathbf{P}_0\mathbf{K}}{1+\mathbf{P}_0\mathbf{K}} \\
-        \frac{\mathbf{W}_2}{1+\mathbf{P}_0\mathbf{K}}
-    \end{bmatrix}
-    \begin{bmatrix}
-        1 & 1
-    \end{bmatrix}
-\end{equation*}
-yields
+    \begin{equation*}
+        \mathbf{M}=\begin{bmatrix}
+            -\frac{\mathbf{W}_1\mathbf{P}_0\mathbf{K}}{1+\mathbf{P}_0\mathbf{K}} \\
+            \frac{\mathbf{W}_2}{1+\mathbf{P}_0\mathbf{K}}
+        \end{bmatrix}
+        \begin{bmatrix}
+            1 & 1
+        \end{bmatrix}
+    \end{equation*}
+    yields
 
-\begin{align*}
-    \mu(\mathbf{M}(j\omega)) & =\left|\frac{\mathbf{W}_1\mathbf{P}_0\mathbf{K}}{1+\mathbf{P}_0\mathbf{K}}(j\omega)\right|+\left|\frac{\mathbf{W}_2}{1+\mathbf{P}_0\mathbf{K}}(j\omega)\right|\leq1 \\
-                             & =|\mathbf{W}_1 \mathbf{L}(j\omega)|+|\mathbf{W}_2(j\omega)|\leq|1+\mathbf{L}(j\omega)|\quad\forall\omega\in\mathrm{R}
-\end{align*}
-where
-\begin{itemize}
-    \item $\mathbf{L}=\mathbf{P}_0 \mathbf{K}$
-    \item $\mathbf{W}_1$ is a high-pass
-    \item $\mathbf{W}_2$ is a low-pass
-    \item $|\mathbf{L}|$ is a low-pass (low-pass assumption for physical systems)
-\end{itemize}
-Therefore, one has for low frequencies
-\begin{equation*}
-    |\mathbf{W}_1(j\omega)|+\frac{|\mathbf{W}_2(j\omega)|}{|\mathbf{L}(j\omega)|}\leq1
-\end{equation*}
-\begin{equation*}
-    |\mathbf{L}(j\omega)|\geq\frac{|\mathbf{W}_2(j\omega)|}{1-|\mathbf{W}_1(j\omega)|}\approx|\mathbf{W}_2(j\omega)|
-\end{equation*}
-and for high frequencies
-\begin{equation*}
-    |\mathbf{W}_1(j\omega)||\mathbf{L}(j\omega)|+|\mathbf{W}_2(j\omega)|\leq1
-\end{equation*}
-\begin{equation*}
-    |\mathbf{L}(j\omega)|\leq\frac{1-|\mathbf{W}_2(j\omega)|}{|\mathbf{W}_1(j\omega)|}\approx\frac1{|\mathbf{W}_1(j\omega)|}
-\end{equation*}
-One can look at the condition with an advanced Nyquist condition.
-\begin{center}
-    \includegraphics[width = 0.7\linewidth]{chad_nyquist.png}
-\end{center}
+    \begin{align*}
+        \mu(\mathbf{M}(j\omega)) & =\left|\frac{\mathbf{W}_1\mathbf{P}_0\mathbf{K}}{1+\mathbf{P}_0\mathbf{K}}(j\omega)\right|+\left|\frac{\mathbf{W}_2}{1+\mathbf{P}_0\mathbf{K}}(j\omega)\right|\leq1 \\
+                                 & =|\mathbf{W}_1 \mathbf{L}(j\omega)|+|\mathbf{W}_2(j\omega)|\leq|1+\mathbf{L}(j\omega)|\quad\forall\omega\in\mathrm{R}
+    \end{align*}
+    where
+    \begin{itemize}
+        \item $\mathbf{L}=\mathbf{P}_0 \mathbf{K}$
+        \item $\mathbf{W}_1$ is a high-pass
+        \item $\mathbf{W}_2$ is a low-pass
+        \item $|\mathbf{L}|$ is a low-pass (low-pass assumption for physical systems)
+    \end{itemize}
+    Therefore, one has for low frequencies
+    \begin{equation*}
+        |\mathbf{W}_1(j\omega)|+\frac{|\mathbf{W}_2(j\omega)|}{|\mathbf{L}(j\omega)|}\leq1
+    \end{equation*}
+    \begin{equation*}
+        |\mathbf{L}(j\omega)|\geq\frac{|\mathbf{W}_2(j\omega)|}{1-|\mathbf{W}_1(j\omega)|}\approx|\mathbf{W}_2(j\omega)|
+    \end{equation*}
+    and for high frequencies
+    \begin{equation*}
+        |\mathbf{W}_1(j\omega)||\mathbf{L}(j\omega)|+|\mathbf{W}_2(j\omega)|\leq1
+    \end{equation*}
+    \begin{equation*}
+        |\mathbf{L}(j\omega)|\leq\frac{1-|\mathbf{W}_2(j\omega)|}{|\mathbf{W}_1(j\omega)|}\approx\frac1{|\mathbf{W}_1(j\omega)|}
+    \end{equation*}
+    One can look at the condition with an advanced Nyquist condition.
+    \begin{center}
+        \includegraphics[width = 0.7\linewidth]{chad_nyquist.png}
+    \end{center}
+
+\end{examplesection}
 

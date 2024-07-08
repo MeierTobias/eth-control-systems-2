@@ -288,6 +288,8 @@ The closed-loop dynamics are given by
     \end{bmatrix}
 \end{equation*}
 The closed-loop poles are the union of the full-state feedback poles $A+BK$, the observer poles $A+LC$ and the poles of $Q(s)$.
+
+\subsubsection{Controller Design}
 \newpar{}
 The TF from $y$ to $u$ hence the TF of the controller $C(s)$ can be written as
 \begin{equation*}
@@ -308,7 +310,8 @@ and $N$, $D$ are the nominator and denominator of the plant
     D(s) & = -C(sI-A-L_0-C^{-1}L_0)
 \end{align*}
 where $L_0$ is an observer gain that would stabilize the error dynamics.
-\newpar{}
+
+\paragraph{Finding a Stabilizing Controller}
 It can be shown that the interconnection of the system is stable if the \textbf{Bezout identity} is fulfilled
 \begin{equation*}
     D(s)X(s)-N(s)Y(s)=1
@@ -317,6 +320,14 @@ and that all feedback stabilizing controllers for $P$ are given by
 \begin{equation*}
     C(s) = \frac{Y_0(s) -D(s)Q(s)}{X_0(s)-N(s)Q(s)}
 \end{equation*}
+One can then
+\begin{enumerate}
+    \item Find a default ``dummy'' controller $C_0(s)$.
+    \item Plug it into $C(s)$.
+    \item Use optimization algorithms to find a better controller $C(s)$ by systematically iterating through many $Q$ functions.
+\end{enumerate}
+
+\subsubsection{(Complementary) Sensitivity}
 The sensitivity function is given by
 \begin{equation*}
     S(s) = D(s)(X_0(s)-N(S)Q(s))
