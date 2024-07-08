@@ -1,7 +1,7 @@
-\section{Linear-Quadratic Gaussian Compensator (LQG)}
-\subsection{LQG State Space Description}
+\section{\texorpdfstring{Linear-Quadratic Gaussian Compensator (LQG) / \\ Dynamic output Feedback Compensator (DOFC)}{Linear-Quadratic Gaussian Compensator (LQG) / Dynamic output Feedback Compensator (DOFC)}}
+\subsection{LQG/DOFC State Space Description}
 
-The combination of the LQR and the LQE is referred to as a Linear-Quadratic Gaussian Compensator.
+The combination of the LQR and the LQE is referred to as a LQG/DOFC.
 
 \newpar{}
 
@@ -129,7 +129,7 @@ In particular
         \end{bmatrix}
 \end{align*}
 
-\subsubsection{Properties of LQG}
+\subsubsection{Properties of LQG/DOFC}
 
 \begin{itemize}
     \item The estimation error is uncontrollable from the reference input (The estimation error is not influenced by the reference).
@@ -137,7 +137,7 @@ In particular
 \end{itemize}
 
 \subsection{Transfer Function}
-The \textbf{closed-loop} transfer function of the LQG from $r$ to $y$ is
+The \textbf{closed-loop} transfer function of the LQG/DOFC from $r$ to $y$ is
 \begin{equation*}
     G_{yr}^{cl} = \mathbf{C}{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{BKS}
 \end{equation*}
@@ -193,7 +193,7 @@ for a SISO system
     \bar{N}=\mathbf{KS}=\frac{1}{\mathbf{C}{(\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}}
 \end{equation*}
 
-\subsection{LQG with Integrator}
+\subsection{LQG/DOFC with Integrator}
 
 \begin{center}
     \includegraphics[width = \linewidth]{DOFC.png}
@@ -314,4 +314,4 @@ The transfer function from $y$ to $u$ is
 
 \subsection{Margins}
 
-While LQG ensures the closed-loop stability of the nominal system, the stability margins can be \textbf{arbitrarily small}.
+While LQG/DFOC ensures the closed-loop stability of the nominal system, the stability margins can be \textbf{arbitrarily small}.
