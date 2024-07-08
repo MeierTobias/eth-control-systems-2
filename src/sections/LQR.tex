@@ -72,9 +72,9 @@ then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\m
 
 \begin{itemize}
     \item LQR guarantees a phase margin of at least 60° and gain margin in $\left[\frac{1}{2},\infty\right)$
-    \begin{itemize}
-        \item However, robustness is limited (see\ \cite{539438})
-    \end{itemize}
+          \begin{itemize}
+              \item However, robustness is limited (see\ \cite{539438})
+          \end{itemize}
     \item LQR applies directly to MIMO-systems
 \end{itemize}
 
@@ -146,8 +146,8 @@ This is simply done by adding the integral of the error to the state space model
 then apply LQR to the modified state space model which yields a controller
 \begin{align*}
     \mathbf{K}' & =\begin{bmatrix}
-                       K & K_I
-                   \end{bmatrix}                            \\
+                       \mathbf{K} & K_I
+                   \end{bmatrix}                          \\
     \mathbf{u}  & =-\mathbf{K}'\begin{bmatrix}
                                    \mathbf{x} \\
                                    x_I
@@ -162,6 +162,8 @@ By using $\mathbf{Q}=\mathbf{C}^{\mathsf{T}} \mathbf{C}$ and $\mathbf{R}=\rho \m
     \rho D(s)D(-s)+N(s)N(-s)  & =0
 \end{align*}
 where $G(-s)$ corresponds to flipping signs in all the odd coefficients.
+
+\newpar{}
 \ptitle{Symmetric Root Locus Rules}
 
 \begin{itemize}
