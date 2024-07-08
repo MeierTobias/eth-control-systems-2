@@ -1,5 +1,5 @@
 \section{LQR}
-More details on the derivation of LQR can be found under $\mathrm{H}_2$ Synthesis:\ \ref{h2_synth}.
+More details on the derivation of LQR can be found under \ref{h2_synth} $\mathcal{H}_2$ Synthesis.
 \subsection{Cost Functional}
 LQR can be used to systematically optimize the \textbf{static gain vector K} based on \textit{tracking errors} and \textit{control effort}.
 
@@ -15,7 +15,7 @@ For the reference input $r(t) = 0$ the cost functional $J$ is defined as
               \item is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
               \item must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
           \end{itemize}
-    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall \mathbf{u}\neq \mathbf{0}$ or $eig(\mathbf{R}) > 0$
+    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall \mathbf{u}\neq \mathbf{0}$ or $eig(\mathbf{R}) > 0$ (otherways not every control effort is penalized).
           % TODO: Why must Q but not R be symmetric?
     \item The pair $\mathbf{A,B}$ must be stabilizable
           % TODO: Why not reachable?
@@ -99,8 +99,8 @@ and the \textit{static gain matrix} obtained with $\mathbf{u} = -\mathbf{Kx}$ is
 
 \textbf{\code{Matlab:}} \code{[K\_d,P\_d]=dlqr(A,B,Q,R)}
 
-\subsection{Integrator}
-If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs.
+\subsection{LQR Servo: Integrator}
+Feed-forward reference scaling is not \textbf{robust}, e.g.\ to changes/uncertainties in the plant dynamics or disturbances. If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs.
 This is simply done by adding the integral of the error to the state space model
 \noindent\begin{align*}
     \dot{x_I} & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + r \\
@@ -218,5 +218,6 @@ In the Nyquist plot, the transfer function using the LQR gain is always outside 
 \begin{itemize}
     \item The phase margin is at least 60° because the Nyquist curve cannot enter a unit circe centered at $-1$ (property of LQR)
     \item The gain margin is ($\frac{1}{2},\infty$) because the loop transfer function (Nyquist curve) will never cross the real axis between ($-2, 0$) (unit circle argument again)\newline $\to -\frac{1}{k} = (\frac{1}{2}, \infty)$
-    \item Note however the restrictions e.g.\ \cite{539438}
+    \item Note however the limitations e.g.\ \cite{539438}
 \end{itemize}
+
