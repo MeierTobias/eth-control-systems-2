@@ -23,7 +23,7 @@ To unify the controller synthesis the following standard form has been establish
 
 
 \newpar{}
-The objective is to stabilize the system and minimize the performance outputs $z$.
+The objective is to stabilize the system in presence of $\boldsymbol{\Delta}$ and minimize the performance outputs $z$, given the exogenous reference and disturbances.
 
 \subsection{Frequency Weights}
 
@@ -33,26 +33,29 @@ The most common performance outputs are
 \begin{center}
     \includegraphics[width=0.9\linewidth]{frequency_weights.png}
 \end{center}
+with the known transfer functions
+\begin{align*}
+    L(s) & =P(s)C(s)                     & \text{ loop TF}            \\
+    S(s) & =G_{er}(s) = {(I+L(s))}^{-1}  & \text{ sensitivity}        \\
+    T(s) & = G_{yr}(s)                   &                            \\
+         & ={(I+L(s))}^{-1}L(s) = I-S(s) & \text{ comp.\ sensitivity}
+\end{align*}
 
+\newpar{}
 \ptitle{Tracking Error}
 
 Is given by
 \begin{equation*}
     z_1=W_1 G_{er} = W_1 S(s)
 \end{equation*}
-with the sensitivity function $S(s)$ and the loop transfer function $L(s)$:
-\begin{gather*}
-    S(s)=G_{er}(s) = {(I+L(s))}^{-1} \\
-    L(s)=P(s)C(s)
-\end{gather*}
 \begin{itemize}
     \item If $W_1(s)$ is chosen large at low frequencies $S(s)$ must be small in order to minimize $z_1$. In other words, the tracking error must be small at low frequencies.
     \item This is the same as requiring $\sigma_{\min}[L(s)] \gg |W_1(s)|$, which corresponds to the low-frequency ``Bode obstacle'' in the SISO case.
 \end{itemize}
 
 \newpar{}
-
 \ptitle{Control Effort}
+% TODO: Would one then make S large to achieve a small C?
 
 Is given by
 \begin{equation*}
@@ -63,16 +66,11 @@ Is given by
 \end{itemize}
 
 \newpar{}
-
 \ptitle{Noise Rejection}
 
 Is given by
 \begin{equation*}
     z_3= W_3 G_{yn} =-W_3 T(s)
-\end{equation*}
-with the complementary sensitivity function
-\begin{equation*}
-    T(s) = G_{yr}(s)={(I+L(s))}^{-1}L(s) = I-S(s)
 \end{equation*}
 \begin{itemize}
     \item If $W_3$ is chosen very large for high frequencies, the complementary sensitivity must be very small at high frequencies.
@@ -80,7 +78,6 @@ with the complementary sensitivity function
 \end{itemize}
 
 \newpar{}
-
 \ptitle{Stability Robustness}
 
 For stability robustness in the presence of uncertainty $\Delta$ the same weighting method can be applied.
@@ -95,6 +92,8 @@ with
 where $M(s)$ is the TF from the output of $\Delta$ to its input.
 
 \subsubsection{First Order Weights}
+\textbf{MATLAB}: \texttt{makeweight}
+\newpar{}
 \ptitle{Lowpass}
 \begin{equation*}
     W(s) = \frac{M}{\frac{Ms}{\omega}+1}
@@ -105,8 +104,8 @@ where $M(s)$ is the TF from the output of $\Delta$ to its input.
     W(s) = \frac{Ms}{s+M\omega}
 \end{equation*}
 
-\subsection{State-Space Representation}
-To synthesize a controller an assembled state space model of the generalized system ($G$) can be constructed.
+\subsection{State Space Representation}
+To synthesize a controller an assembled state space model of the generalized system ($G$) can be constructed. This yields a similar approach as the transfer function-based one before.
 
 \ptitle{Plant}
 \begin{gather*}
@@ -119,6 +118,7 @@ To synthesize a controller an assembled state space model of the generalized sys
         \right]                            \\
     P(s) = {C_p(sI-A_p)}^{-1}B_p+D_p
 \end{gather*}
+\textbf{MATLAB}: \texttt{P=ss(Ap, Bp, Cp, Dp)}
 
 \ptitle{Frequency Weights}
 
@@ -151,8 +151,10 @@ The generalized system is obtained by stacking all the state-space models:
         G_{yw}(s) & G_{yu}(s) \\
     \end{bmatrix}
 \end{gather*}
-The matrix $A$ contains both the dynamics of the plant and the frequency weights.
+The matrix $A$ contains both the dynamics of the plant and the frequency weights.\\
+\textbf{MATLAB}: \texttt{augw(P, W1, W2, W3)}
 
+\newpar{}
 \ptitle{Controller}
 \begin{gather*}
     K : \left[
@@ -165,10 +167,40 @@ The matrix $A$ contains both the dynamics of the plant and the frequency weights
     K(s) = {C_c(sI-A_c)}^{-1}B_c+D_c
 \end{gather*}
 
-The closed loop TF from the exogenous inputs $w$ to the performance outputs $z$ is given by the \textit{Linear Fractional Transformation}:
+% TODO: Some more remarks on why we need F(s) and how we use the things derived in this section to actually create a controller.
+As $u(s)=K(s)y(s)$ the closed loop TF from the exogenous inputs $w$ to the performance outputs $z$ is given by the \textit{Linear Fractional Transformation}:
 \begin{equation*}
     F(s) = G_{zw}(s) + G_{zu}(s)K(s){(I-G_{yu}(s))}^{-1}G_{yw}(s)
 \end{equation*}
+
+\textbf{MATLAB}: \texttt{F = lft(G, K)}
+
+\subsubsection{Controller Synthesis}
+Given $F$ one can use various control synthesis techniques, e.g.\
+\newpar{}
+\ptitle{$\mathcal{H}_2$ Design}
+
+Minimize
+\begin{equation*}
+    \|F\|_{2}:={\left(\frac{1}{2\pi}\int_{-\infty}^{+\infty}\mathrm{Tr}[{F(j\omega)}^{*}F(j\omega)]\mathrm{~d}\omega\right)}^{1/2}
+\end{equation*}
+i.e.\
+\begin{equation*}
+    \int_0^{+\infty}\|f(t)\|_2^2dt
+\end{equation*}
+
+\newpar{}
+\ptitle{$\mathcal{H}_\infty$ Design}
+
+Minimize
+\begin{equation*}
+    \|F\|_\infty:=\sup_\omega\sigma_{\max}[F(j\omega)]
+\end{equation*}
+i.e.\
+\begin{equation*}
+    \int_0^{+\infty}\|z(t)\|_2^2dt
+\end{equation*}
+for unit-energy inputs i.e.\ $\int_0^{+\infty}\|w(t)\|_2^2 dt=1$
 
 \begin{examplesection}[Example Assembly]
     For the system
@@ -252,13 +284,26 @@ The closed loop TF from the exogenous inputs $w$ to the performance outputs $z$ 
 \end{examplesection}
 
 \subsection{Youla's Q Parameterization}
-One can get all stabilizing controllers for a given plant as a function of a single stable transfer function Q(s). This is called the Youla parameterization (Q-parameterization). It's the extension of a full state feedback controller (including observer) with a system \textcolor{purple}{$Q$} that takes the innovation as an input.
+% TODO: 
+%-Structure of this section could be optimized
+%-Remark on SISO/MIMO
+One can get all stabilizing controllers for a given plant as a function of a single stable transfer function Q(s). This is called the Youla parameterization (Q-parameterization).
+\begin{itemize}
+    \item Extension of a full state feedback controller (including observer) with a system \textcolor{purple}{$Q$} that takes the innovation as an input.
+    \item Valid in a very general setting, including MIMO
+    \item $Q$ needs to be \textbf{stable} and has to consist of a \textbf{proper rational} transfer function. Reminder:
+          \begin{itemize}
+              \item Proper: $\deg(Den)\le \deg(Num)$
+              \item Rational: fraction of two polynomials
+          \end{itemize}
+    \item Note that positive feedback is used (common in modern control).
+\end{itemize}
+
 \begin{center}
     \includegraphics[width=0.8\linewidth]{youlas_Q_parameterization.png}
 \end{center}
-$Q$ needs to be \textbf{stable} and has to consist of a \textbf{proper rational} transfer function.
 \newpar{}
-The closed-loop dynamics are given by
+Assuming a controllable and observable plant, the closed-loop dynamics are given by
 \begin{equation*}
     \begin{bmatrix}
         \dot{x}   \\
@@ -289,7 +334,7 @@ The closed-loop dynamics are given by
 \end{equation*}
 The closed-loop poles are the union of the full-state feedback poles $A+BK$, the observer poles $A+LC$ and the poles of $Q(s)$.
 
-\subsubsection{Controller Design}
+\subsubsection{SISO Controller Design}
 \newpar{}
 The TF from $y$ to $u$ hence the TF of the controller $C(s)$ can be written as
 \begin{equation*}
@@ -316,7 +361,7 @@ It can be shown that the interconnection of the system is stable if the \textbf{
 \begin{equation*}
     D(s)X(s)-N(s)Y(s)=1
 \end{equation*}
-and that all feedback stabilizing controllers for $P$ are given by
+and that all feedback stabilizing controllers for a \textbf{SISO}(!) system $P$ are given by
 \begin{equation*}
     C(s) = \frac{Y_0(s) -D(s)Q(s)}{X_0(s)-N(s)Q(s)}
 \end{equation*}
@@ -324,7 +369,7 @@ One can then
 \begin{enumerate}
     \item Find a default ``dummy'' controller $C_0(s)$.
     \item Plug it into $C(s)$.
-    \item Use optimization algorithms to find a better controller $C(s)$ by systematically iterating through many $Q$ functions.
+    \item Use optimization algorithms to find a better controller $C(s)$ by systematically iterating through many \textbf{stable} $Q$ functions.
 \end{enumerate}
 
 \subsubsection{(Complementary) Sensitivity}
