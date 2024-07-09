@@ -43,7 +43,7 @@ which yields the known LQR problem
 
 One can show that minimizing $\|\mathbf{z}\|_2^2$ imposes the following ARE on $\mathbf{X}_F$:
 \begin{equation*}
-    \mathbf{A}^{\mathsf{T}}\mathbf{X}_F + \mathbf{X}_F \mathbf{A} - \mathbf{X}_F \mathbf{B}_u{\left(\underbrace{\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{D}_{zu}}_{\mathbf{R}}\right)}^{-1} \mathbf{B}_u^{\mathsf{T}} \mathbf{X}_F + \underbrace{\mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z}_{Q} = \mathbf{0}
+    \mathbf{A}^{\mathsf{T}}\mathbf{X}_F + \mathbf{X}_F \mathbf{A} - \mathbf{X}_F \mathbf{B}_u{(\underbrace{\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{D}_{zu}}_{\mathbf{R}})}^{-1} \mathbf{B}_u^{\mathsf{T}} \mathbf{X}_F + \underbrace{\mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z}_{Q} = \mathbf{0}
 \end{equation*}
 Solving this ARE yields the controller
 \begin{equation*}
@@ -100,6 +100,7 @@ and are modelled by
     \mathbf{D}_{yw}= & \begin{bmatrix}\mathbf{0}&\sqrt{\mathbf{R}}\end{bmatrix}              & \Leftrightarrow \mathbf{\mathbf{R}} & = \mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}
 \end{align*}
 where process noise and sensor noise are not correlated i.e.
+% TODO: Why does he use an expectation here but under "Hinf synthesis->simplified setup" he uses the matrices directly and not their expectation w.r.t. "w"
 \begin{equation*}
     \mathbb{E}\left[\mathbf{w}^{\mathsf{T}} \mathbf{B}_w^{\mathsf{T}} \mathbf{D}_{yw}\mathbf{w}^{\mathsf{T}}\right]=0
 \end{equation*}
