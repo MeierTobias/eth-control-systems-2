@@ -24,11 +24,15 @@ A nonlinear system
 
 \subsection{Lyapunov Stability Theory}
 \subsubsection{Types of Stability}
-Assuming $\mathbf{u}=0, \mathbf{x}_e=0$, the eqilibrium $\mathbf{x}_e$ of the systems
-\noindent\begin{equation*}
-    \dot{\mathbf{x}} = f(\mathbf{x}), \quad f(\mathbf{x}_e) = 0
+Assuming $\mathbf{u}=0, \mathbf{x}_e=0$, then in the eqilibrium $\mathbf{x}_e$ of the system
+\begin{equation*}
+    \dot{\mathbf{x}} = f(\mathbf{x})
 \end{equation*}
-is
+one has
+\noindent\begin{equation*}
+    f(\mathbf{x}_e) = 0
+\end{equation*}
+The equilibrium is said to be
 \begin{itemize}
     \item \textbf{Stable in the sense of Lyapunov}
           \noindent\begin{equation*}
@@ -106,6 +110,7 @@ The solution $\mathbf{P}$ of the Riccati equation can be interpreted as a Lyapun
 \noindent\begin{equation*}
     V(\mathbf{x}) = \mathbf{x}^{\mathsf{T}} \mathbf{Px}
 \end{equation*}
+$V$ then fulfills the criteria for a Lyapounov function.
 
 \paragraph{LaSalle's Invariance Principle}
 LaSalle's invariance theorem is useful if Lyapunov stability is given by the existence of a Lyapunov function but $\dot{V}=0$ not only at $\mathbf{x}_e$:
@@ -116,12 +121,12 @@ LaSalle's invariance theorem is useful if Lyapunov stability is given by the exi
     \item Let $\Omega\subset D$ be a compact positively invariant set w.r.t.\ $\dot{\mathbf{x}}$ ($\mathbf{x}$ stays in the set) i.e., $\mathbf{x}(t_0)\in \Omega \Rightarrow \mathbf{x}(t)\in\Omega\; \forall t \geq t_0$.
     \item Let $V:D\to \mathbb{R}^n$, such that $\dot{V}(\mathbf{x})\leq 0\; \forall \mathbf{x}\in \Omega$.
     \item Let $E=\left\{\mathbf{x}: \dot{V}(\mathbf{x})=0\right\}\subset \Omega$ (possibly multiple pts.).
-    \item[$\rhd$] Then every solution starting in $\Omega$ approaches $M\subset E$ (largest invariant set in $E$) as $t\to \infty$. 
+    \item[$\rhd$] Then every solution starting in $\Omega$ approaches $M\subset E$ (largest invariant set in $E$) as $t\to \infty$.
     \item[$\rhd$] This proves asymptotic stability.
 \end{itemize}
 \newpar{}
 \begin{equation*}
-  M\subset E \subset \Omega \subset D \subset \mathbb{R}^n  
+    M\subset E \subset \Omega \subset D \subset \mathbb{R}^n
 \end{equation*}
 
 \newpar{}
@@ -140,7 +145,7 @@ A CLF satisfies
     \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
 \end{align*}
 
-In the following methods, one aims to find a control Lyapunov function to prove stabilizing behavior with a specific control input.
+i.e.\ using the control iput $u$, $V$ becomes a Lyapounov function. In the following methods, one aims to find a control Lyapunov function to prove stabilizing behavior with a specific control input.
 
 \subsubsection{Gain Scheduling}
 In gain scheduling, the state space is partitioned into disjoint subspaces and for a number of design equilibria ($\mathbf{x}_i, \mathbf{u}_i$)  nominal control laws $\mathbf{K}_i$ are designed using the aforementioned techniques.
@@ -151,14 +156,20 @@ The dynamics of the system around a equilibrium point $\mathbf{x}_i$ can be appr
     \dot{\mathbf{x}} = \mathbf{A}_i(\mathbf{x}-\mathbf{x}_i) + \mathbf{B}_i(\mathbf{u}-\mathbf{u}_i)
 \end{equation*}
 
+\paragraph{Common Lyapounov Function}
 The stability of
 \noindent\begin{equation*}
     \mathbf{u} = \mathbf{u}_i+\mathbf{K}_i(\mathbf{x}-\mathbf{x}_i)
 \end{equation*}
-can be proven with the Lyapunov function ($\forall i$)
+in \textbf{all} regions $i$ can be proven by finding a common Lyapunov function
 \noindent\begin{equation*}
     V(\mathbf{x}) = \min_{i} {(\mathbf{x}-\mathbf{x}_i)}^{\mathsf{T}}\mathbf{P}(\mathbf{x}-\mathbf{x}_i)
 \end{equation*}
+\begin{itemize}
+    \item Note however, that this is \textbf{not} always possible.
+    \item This means that, even if one designs a specific controller for each region, the CL could still be unstable.
+
+\end{itemize}
 
 \subsubsection{Multiple Lyapunov Functions}
 Another option is to consider multiple Lyapunov-like functions $V_i$ with corresponding sets $X_i$ that satisfy
@@ -219,16 +230,11 @@ Backstepping is a form of \textit{cascaded control} where a control input $\math
 where the inner system has an equilibrium point in $\mathbf{x}=0, \mathbf{z}=0$.
 
 \newpar{}
-If $\mathbf{z} = \mathbf{u}_0(\mathbf{x})$ then
+Assuming the inner system is stable for a certain $\mathbf{z} = \mathbf{u}_0(\mathbf{x})$ then
 \noindent\begin{equation*}
     \frac{d}{dt} V_0(\mathbf{x}) = -W(\mathbf{x}) < 0
 \end{equation*}
-proving stability in the sense of Lyapounov.
-
-\newpar{}
-\ptitle{Controlling the Error}
-
-In order to ensure stability, Lyapunov stability of the error $\mathbf{e} = \mathbf{z}-\mathbf{u}_0$ needs to be established.
+Then, in order to ensure stability, Lyapunov stability of the error $\mathbf{e} = \mathbf{z}-\mathbf{u}_0$ needs to be established.
 The error evolves as
 \begin{align*}
     \dot{\mathbf{x}} & =\mathbf{f}_{0}(\mathbf{x})+\mathbf{g}_{0}(\mathbf{x})\mathbf{u}_{0}(x)+\mathbf{g}_{0}(\mathbf{x})\mathbf{e},                                                                                                                                                                                                                                              \\
@@ -251,15 +257,33 @@ and thus proves the stability of the ``error'' system.
 %     \dot{\mathbf{x}} & = f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}                                                               \\
 %     \dot{\mathbf{e}} & = \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
 % \end{align*}
+Using $\dot{u_0}=\dot{z}-\dot{e}$ one finally finds the stabilizing controll law as
+\begin{align*}
+    u_1(x,z) & = \frac{1}{g_1(x,z)}\left(\frac{\partial u_0(x)}{\partial x}\left(f_0(x)+g_0(x)z\right)-f_1(x,z) \right. \\
+             & \left. -\frac{\partial V_0(x)}{\partial x}g_0(x)-k_1(z-u_0(x))\right)
+\end{align*}
 
 \newpar{}
 \ptitle{Remarks}
 
 \begin{itemize}
     \item The control input $\mathbf{u}$ affects $\mathbf{z}$, which in turn affects $\mathbf{x}$
-    \item One assumes that the inner system is easily controllable by $\mathbf{u}_0$ (e.g.\ because it is linear)
+    \item One assumes that the inner system is easily controllable by $\mathbf{u}_0$ e.g.\ because
+          \begin{itemize}
+              \item it is linear
+              \item one can find a control Lyapounov function for it
+          \end{itemize}
     \item The idea can be extended to multiple nested sytems
 \end{itemize}
+
+\paragraph{Recursive Backstepping}
+The same approach can be used recurively as 
+\begin{align*}
+    \dot{x}     & =\quad f_{0}(x)+g_{0}(x)z_{1},                     \\
+    \dot{z}_{1} & =\quad f_{1}(x,z_{1})+g_{1}(x,z_{1})z_{2},         \\
+                & \vdots                                             \\
+    \dot{z}_{m} & =\quad f_{m}(x,z_{1},\ldots,z_{m})+g_{1}(x,z_{m})u
+\end{align*}
 
 \subsection{Feedback Linearization}
 Feedback linearization is an approach based on a change of variables, transforming the nonlinear system into a linear one (seen from the controller perspective). In other words the nonlinearity gets ``hidden'' in a transformed input signal.
@@ -295,12 +319,12 @@ by choosing a physical input
 A (linear, ``virtual'') realization of this system is given by
 \begin{align*}
     \dot{\mathbf{x}} & = \begin{bmatrix}
-                    0      & 1      & 0      & \cdots & 0      \\
-                    0      & 0      & 1      & \cdots & 0      \\
-                    \vdots & \vdots & \vdots & \ddots & \vdots \\
-                    0      & 0      & 0      & \cdots & 1      \\
-                    0      & 0      & 0      & \cdots & 0
-                \end{bmatrix}
+                             0      & 1      & 0      & \cdots & 0      \\
+                             0      & 0      & 1      & \cdots & 0      \\
+                             \vdots & \vdots & \vdots & \ddots & \vdots \\
+                             0      & 0      & 0      & \cdots & 1      \\
+                             0      & 0      & 0      & \cdots & 0
+                         \end{bmatrix}
     \mathbf{x} +
     \begin{bmatrix}
         0      \\
@@ -310,9 +334,9 @@ A (linear, ``virtual'') realization of this system is given by
         1
     \end{bmatrix}
     \mathbf{v}                                                      \\
-    y       & = \begin{bmatrix}
-                    1 & 0 & \cdots & 0
-                \end{bmatrix}
+    y                & = \begin{bmatrix}
+                             1 & 0 & \cdots & 0
+                         \end{bmatrix}
     \mathbf{x}
 \end{align*}
 
@@ -320,13 +344,13 @@ A (linear, ``virtual'') realization of this system is given by
 Explicit examples for $\gamma = 1$ %(then $L_f h(x)=h(x)$)
 \begin{align*}
     \dot{\mathbf{y}\mathbf{}} & = L_f h(\mathbf{x}) + L_g h(\mathbf{x}) \mathbf{u}             \\
-    \dot{\mathbf{y}} & = \mathbf{v}                                 \\
-    \mathbf{u}       & = \frac{1}{L_g h(\mathbf{x})}(-L_f h(\mathbf{x}) + \mathbf{v})
+    \dot{\mathbf{y}}          & = \mathbf{v}                                                   \\
+    \mathbf{u}                & = \frac{1}{L_g h(\mathbf{x})}(-L_f h(\mathbf{x}) + \mathbf{v})
 \end{align*}
 and for $\gamma = 2$
 \begin{align*}
     \ddot{\mathbf{y}} & = L_f^2 h(\mathbf{x}) + L_g L_f h(\mathbf{x}) \mathbf{u}             \\
-    \ddot{\mathbf{y}} & = \mathbf{v}                                       \\
+    \ddot{\mathbf{y}} & = \mathbf{v}                                                         \\
     \mathbf{u}        & = \frac{1}{L_g L_f h(\mathbf{x})}(-L_f^2 h(\mathbf{x}) + \mathbf{v})
 \end{align*}
 
@@ -343,23 +367,23 @@ and for $\gamma = 2$
 \begin{examplesection}[Pendulum]
     In the case of the nonlinear pendulum with a torque input $u$ and an output $y=\theta$
     \begin{align*}
-        \dot{\mathbf{x}}_1 & = \mathbf{x}_2                    \\
+        \dot{\mathbf{x}}_1 & = \mathbf{x}_2                                      \\
         \dot{\mathbf{x}}_2 & = -a \sin(\mathbf{x}_1)-c \mathbf{x}_2 + \mathbf{u} \\
         \mathbf{y}         & = \mathbf{x}_1
     \end{align*}
     The Lie derivatives are
     \begin{align*}
         L_f h(\mathbf{x}) & = \begin{bmatrix}
-                         1 & 0
-                     \end{bmatrix}
+                                  1 & 0
+                              \end{bmatrix}
         \begin{bmatrix}
             \mathbf{x}_2 \\
             -a \sin(\mathbf{x}_1) -cbf  _2
         \end{bmatrix} = \mathbf{x}_2
         \\
         L_g h(\mathbf{x}) & = \begin{bmatrix}
-                         1 & 0
-                     \end{bmatrix}
+                                  1 & 0
+                              \end{bmatrix}
         \begin{bmatrix}
             0 \\
             1
@@ -368,16 +392,16 @@ and for $\gamma = 2$
     Since $L_g h(\mathbf{x}) = 0$ we need to differentiate again
     \begin{align*}
         L_f^2 h(\mathbf{x})   & = \begin{bmatrix}
-                             0 & 1
-                         \end{bmatrix}
+                                      0 & 1
+                                  \end{bmatrix}
         \begin{bmatrix}
             \mathbf{x}_2 \\
             -a \sin(\mathbf{x}_1) -c\mathbf{x}_2
         \end{bmatrix} = -a \sin(\mathbf{x}_1) -c \mathbf{x}_2
         \\
         L_g L_f h(\mathbf{x}) & = \begin{bmatrix}
-                             0 & 1
-                         \end{bmatrix}
+                                      0 & 1
+                                  \end{bmatrix}
         \begin{bmatrix}
             0 \\
             1
@@ -413,14 +437,14 @@ is differentially flat, with flat output $\mathbf{y}$, if one can compute the st
 \begin{examplesection}[Pendulum]
     The nonlinear pendulum with a torque input $\mathbf{u}$ and an output $\mathbf{y}=\theta$
     \begin{align*}
-        \dot{\mathbf{x}}_1 & = \mathbf{x}_2                    \\
+        \dot{\mathbf{x}}_1 & = \mathbf{x}_2                                      \\
         \dot{\mathbf{x}}_2 & = -a \sin(\mathbf{x}_1)-c \mathbf{x}_2 + \mathbf{u} \\
         \mathbf{y}         & = \mathbf{x}_1
     \end{align*}
     Is differentially flat with flat output $y$. As per definition $x$ and $u$ can be reconstructed from $y$, $\dot{y}$ and $\ddot{y}$.
     \begin{align*}
-        \mathbf{x}_1 & = \mathbf{y}                                \\
-        \mathbf{x}_2 & = \dot{\mathbf{y}}                          \\
+        \mathbf{x}_1 & = \mathbf{y}                                                  \\
+        \mathbf{x}_2 & = \dot{\mathbf{y}}                                            \\
         \mathbf{u}   & = \ddot{\mathbf{y}} + c \dot{\mathbf{y}} + a \sin(\mathbf{y})
     \end{align*}
 \end{examplesection}
@@ -437,7 +461,7 @@ The geometric property of differential flatness allows to compute the input cont
     \mathbf{v} = \mathbf{y}_d^{(\gamma)} + K \begin{bmatrix}
         \mathbf{y}_d - \mathbf{y}             \\
         \dot{\mathbf{y}}_d - \dot{\mathbf{y}} \\
-        \vdots              \\
+        \vdots                                \\
         \mathbf{y}_d^{(\gamma-1)} - \mathbf{y}^{(\gamma-1)}
     \end{bmatrix}
 \end{equation*}
@@ -446,7 +470,7 @@ or the desired internal state $\mathbf{x}_d$
     \mathbf{v} = \mathbf{y}_d^{(\gamma)} + K \begin{bmatrix}
         \mathbf{x}_d - \mathbf{x}             \\
         \dot{\mathbf{x}}_d - \dot{\mathbf{x}} \\
-        \vdots              \\
+        \vdots                                \\
         \mathbf{x}_d^{(\gamma-1)} - \mathbf{x}^{(\gamma-1)}
     \end{bmatrix}
 \end{equation*}
