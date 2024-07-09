@@ -325,7 +325,7 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
 
 \subsection{Singular Value Decomposition (SVD)}
 
-Any matrix $\mathbf{A}\in \mathbb{C}^{m\times n}$ can be decomposed as
+Any(!) matrix $\mathbf{A}\in \mathbb{C}^{m\times n}$ can be decomposed as
 \noindent\begin{equation*}
     \mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{\mathsf{H}}\quad \begin{cases}
         \mathbf{U}\in \mathbb{C}^{m\times m} & \text{left singular vectors}                          \\
@@ -333,6 +333,7 @@ Any matrix $\mathbf{A}\in \mathbb{C}^{m\times n}$ can be decomposed as
         \mathbf{V}\in \mathbb{C}^{n\times n} & \text{right singular vectors}\
     \end{cases}
 \end{equation*}
+where $\mathbf{U}, \mathbf{V}$ are unitary, $\boldsymbol{\Sigma}$ is diagonal.
 
 \ptitle{$2\times 3$ Example}
 
@@ -363,6 +364,7 @@ with eigenvalues
 \ptitle{Remarks}
 
 \begin{itemize}
+    \item See Appendix: \ref{app:mat_prop} for detailed understanding.
     \item $\mathbf{U},\:\mathbf{V}$ are unitary i.e. $\mathbf{U}^H \mathbf{U}=\mathbf{U}\mathbf{U}^H=\mathbf{I}$
     \item Unitary implies positive semi-definite and real, non-negative eigenvalues.
     \item (Upper- and lower-) diagonal matrices have their singular values (or eigenvalues) on the main diagonal.
@@ -416,7 +418,12 @@ When looking at the columns of $\mathbf{A}$ separatly
 \noindent\begin{equation*}
     \mathbf{Av}_i=\sigma_i \mathbf{u}_i
 \end{equation*}
-shows that a input in direction $\mathbf{v}_i$ results in an output in direction $\mathbf{u}_i$ with amplification $\sigma_i$.
+shows that
+\begin{itemize}
+    \item a unit input in direction $\mathbf{v}_i$ results in an output in direction $\mathbf{u}_i$ with amplification $\sigma_i$.
+    \item in contrast to multiplying $\mathbf{A}$ by a general vector, in case of a singular vector one can exactly predict the output direction and magnitude.
+    \item SVD can be seen as generalized eigenvalues/-vectors.
+\end{itemize}
 
 \newpar{}
 \ptitle{Zeros and Poles}
@@ -538,7 +545,7 @@ For the $p = \infty$ norm we get the \textbf{max-sum row}:
 
 \begin{itemize}
     \item non-induced
-    \item still has submultiplicative property
+    \item has submultiplicative property even though not induced
 \end{itemize}
 
 \textbf{Remarks}: $x_k$ describes the elements of the vector $\mathbf{x}$ for which the norm-specific maximum amplification happens.
@@ -592,40 +599,45 @@ where the absolute value of the signal must be taken because the maximum could b
     (\|w\|_1<\infty) \land (\|w\|_\infty<\infty)           & \Rightarrow \|w\|_2<\sqrt{\|w\|_1\|w\|_\infty} < \infty
 \end{align*}
 
+\newpar{}
+\ptitle{Example}
+
 \begin{center}
-    \includegraphics[width = 0.7\linewidth]{signal_norm.png}
+    \includegraphics[width = \linewidth]{signal_norm.png}
 \end{center}
+which illustrates property 3 from above (in both directions).
 
 \newpar{}
 \subsubsection{System Norms}
-A system maps an input $u$ to an output $y$:
+Similar to a matrix, a system maps an input $u$ to an output $y$:
 \noindent\begin{equation*}
     y=Su
 \end{equation*}
 
-The induced norm is defined as
+The induced norm is therefore defined as
 \noindent\begin{equation*}
     \|S\|_{p,\mathrm{ind}}:=\sup_{u\neq0}\frac{\|Su\|_p}{\|u\|_p}=\sup_{u\neq0}\frac{\|y\|_p}{\|u\|_p}
 \end{equation*}
 
-\newpar{}
+\paragraph{Terminology}
+The $\mathcal{L}_2$ norm
+\begin{itemize}
+    \item is the \textit{2-norm of a signal} in continuous time along the real (time) axis.
+\end{itemize}
+The $l_2$ norm
+\begin{itemize}
+    \item is the discrete analogon of the $\mathcal{L}_2$ norm.
+\end{itemize}
+The $\mathcal{H}_\infty$ norm
+\begin{itemize}
+    \item is the \textit{2-norm of a complex function} along the imaginary axis.
+\end{itemize}
+
 \paragraph{Parseval's Identity}
 \noindent\begin{equation*}
     \underbrace{\|y\|_{\mathcal{L}_2}^2}_{\textsf{Time}}=\int_0^\infty\|y(t)\|_2^2 dt=\frac1{2\pi}\int_{-\infty}^{+\infty}\|Y(j\omega)\|_2^2 d\omega=\underbrace{\|Y(s)\|_{\mathcal{H}_2}^2}_{\textsf{Freq.} (s=j\omega)}
 \end{equation*}
 i.e.\ energy is conserved from time to frequency domain.
-
-\paragraph[L2-induced Norm]{$\mathcal{L}_2$-induced Norm}
-\noindent\begin{equation*}
-    \sup_{u\neq0}\frac{\|y\|_{\mathcal{L}_2}}{\|u\|_{\mathcal{L}_2}}=\sup_{\omega\in\mathbb{R}}\sigma_{\max}[G(j\omega)]=:\|G\|_{\mathcal{H}_\infty}
-\end{equation*}
-\textbf{Remarks}:
-\begin{itemize}
-    \item In words, the maximum amplification of the absolute values in time domain corresponds to the maximum singular value of the system.   % TODO: Correct?
-    \item In SISO systems, the $\mathcal{H}_\infty$ norm corresponds to the peak value of the Bode plot.
-    \item The submultiplicative property for $\mathcal{H}_\infty$ holds.
-    \item Note that the singular values are frequency-dependent i.e.\ can be shown in a Bode plot.
-\end{itemize}
 
 \paragraph[H2-induced Norm]{$\mathcal{H}_2$-norm}
 \ptitle{Properties}
@@ -674,18 +686,29 @@ The $\mathcal{H}_2$-norm measures
 \begin{itemize}
     \item The LQR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
     \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}\mathbf{G}(j\omega)=0$
-    \item Lyapunov equations are linear in the unknown matrices whereas Riccati equations have order 2 in the unknown matrices.
-    \item MATLAB: \texttt{lyap}.
+    \item Lyapunov equations are linear in the unknown matrices whereas Riccati equations have order 2 in the unknown matrices. MATLAB: \texttt{lyap}.
     \item Note the duality in the gramians as we had it for reachability and observability with $A,B$ and $A^H,C^H$.
     \item The $\mathcal{H}_2$ norm is a quantity in frequency domain. Note that we found a method to compute it \textbf{in state space} by solving linear equations.
     \item The gramians are (if they are not singular) equivalent conditions to the reachability and observability matrices.
 \end{itemize}
 
-\paragraph[Hinf-induced Norm]{$\mathcal{H}_{\infty}$-norm}
+\paragraph[Hinf Norm]{$\mathcal{H}_{\infty}$ norm}
+The $\mathcal{H}_{\infty}$ norm is induced by the $\mathcal{L}_2$ norm.
 \noindent\begin{equation*}
-    \|\mathbf{G}\|_{\mathcal{H}_\infty} = \sup_{\omega}\sigma_{\max}\bigl(\mathbf{G}(j\omega)\bigr)
+    \sup_{u\neq0}\frac{\|y\|_{\mathcal{L}_2}}{\|u\|_{\mathcal{L}_2}}=\sup_{\omega\in\mathbb{R}}\sigma_{\max}[G(j\omega)]=:\|G\|_{\mathcal{H}_\infty}
 \end{equation*}
 
+\newpar{}
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item In words, the maximum amplification of the \textit{signal} energy in time domain corresponds to the maximum singular value of the \textit{system} it propagates through.   % TODO: Correct?
+    \item In SISO systems, the $\mathcal{H}_\infty$ norm corresponds to the peak value of the Bode plot.
+    \item The submultiplicative property for $\mathcal{H}_\infty$ holds.
+    \item Note that the singular values are frequency-dependent i.e.\ can be shown in a Bode plot.
+\end{itemize}
+
+\newpar{}
 \ptitle{Computation}
 
 Again one wants to compute the norm in state space (instead of frequency domain), now by using \textbf{bisection}:
@@ -706,7 +729,7 @@ Again one wants to compute the norm in state space (instead of frequency domain)
     \item Go back to 2.\ until enough precision is reached. The final $\gamma$ is $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$
 \end{enumerate}
 
-\ptitle{Remarks}
+\ptitle{Remarks to Computation}
 
 \begin{itemize}
     \item The system must be \textbf{stable} and \textbf{strictly causal} to use this criterium.
