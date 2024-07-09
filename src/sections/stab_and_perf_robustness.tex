@@ -24,12 +24,19 @@ Given a feedback interconnection of $\mathbf{G}$ and an unknown system $\Delta$ 
     \item $\Delta$ is stable
     \item and $\left\|\Delta\right\|_{\mathcal{H}_\infty}<1$
 \end{itemize}
-the FB interconnection of $\mathbf{G}$ and $\Delta$ is \textbf{stable iff}
+the FB interconnection of $\mathbf{G}$ and $\Delta$ is \textbf{guaranteed} to be \textbf{stable iff}
 
 \begin{equation*}
     {\left\|\mathbf{G}\right\|}_{\mathcal{H}_{\infty}}<1
 \end{equation*}
-Otherwise, one can find a $\Delta$ so that $(\mathbf{I}-\mathbf{G}\Delta)$ singular.
+\begin{itemize}
+    \item Otherwise, one can find a $\Delta$ so that $(\mathbf{I}-\mathbf{G}\Delta)$ singular.
+    \item Note that one only makes the conservative assumptions: $\Delta$ stable and $\left\|\Delta\right\|_{\mathcal{H}_\infty}<1$
+          \begin{itemize}
+              \item Under these assumptions one has an ``iff'' condition.
+              \item In fact, one can sometimes make more assumptions (see SSV).
+          \end{itemize}
+\end{itemize}
 
 \subsection{Modelling Uncertainty}
 \begin{center}
@@ -82,7 +89,7 @@ and that there is a high-pass transfer function $W$ called \textbf{frequency wei
 
 \subsection{Robust Stability}
 \begin{itemize}
-    \item Equivalent to SISO bode plot obstacles (now obstacles are given by singular values and in time domain)
+    \item Equivalent to SISO bode plot obstacles (now obstacles are given by singular values and in time domain)    % TODO: Why in time domain?
     \item Now we impose constraints on the $\mathcal{H}_{\infty}$ norm
     \item \textbf{Caution}: depending on the convention the block diagrams vary and some matrices in a specific $\mathbf{G}$ will be permuted to the forms shown below.
 \end{itemize}
@@ -138,8 +145,11 @@ The “robust performance” problem can be formulated in a way that matches the
     \includegraphics[width = 0.75\linewidth]{robust_performance_fb.png}
 \end{center}
 \begin{itemize}
-    \item We don't want the energy (induced 2-norm) of disturbance $\xi$ to be amplified at the output
+    \item We don't want the energy (induced 2-norm) of disturbance $\xi$ to be amplified at the output.
     \item Therefore we want to limit the gain from $\xi$ to $y$
+          \begin{itemize}
+              \item Instead of unwanted amplification in the FB path we now look at $\xi \rightarrow y$.
+          \end{itemize}
 \end{itemize}
 
 Applying the SGT (assuming $\boldsymbol{\Delta}=\mathbf{G}_{y\xi}$) yields
@@ -147,11 +157,16 @@ Applying the SGT (assuming $\boldsymbol{\Delta}=\mathbf{G}_{y\xi}$) yields
     \|\mathbf{G}_{y\xi}\|_{\mathcal{H}_\infty}=\|{(\mathbf{I}+\mathbf{PC})}^{-1}\mathbf{W}\|_{\mathcal{H}_\infty}<1
 \end{equation*}
 
-\subsection{Combined Robustness}
+\subsection{Robust Disturbance Rejection}
 \begin{center}
-    \includegraphics[width = 0.75\linewidth]{combined_robustness.png}
+    \includegraphics[width = \linewidth]{combined_robustness.png}
 \end{center}
-We want to consider robust stability and robust performance simultaneously. Hence, we model an \textbf{uncertainty block}
+We want to consider robust stability and robust performance \textbf{simultaneously}. To do so we need
+\begin{itemize}
+    \item An \textbf{uncertainty block}
+    \item A \textbf{transfer function matrix} describing all uncertainty input-output relations
+\end{itemize}
+We model an uncertainty block by
 \begin{equation*}
     \begin{bmatrix}
         w_1 \\
@@ -169,10 +184,7 @@ We want to consider robust stability and robust performance simultaneously. Henc
         \mathrm{robustness}
     \end{matrix}
 \end{equation*}
-
-\subsubsection{Robust Disturbance Rejection}
-
-The transfer function matrix for the SGT is given by
+And the transfer function matrix for the SGT by
 \begin{align*}
     \mathbf{M} & =
     \begin{bmatrix}
@@ -184,12 +196,19 @@ The transfer function matrix for the SGT is given by
                       \mathbf{W}_2{(\mathbf{I}+\mathbf{P}_0\mathbf{K})}^{-1}                        & \mathbf{W}_2{(\mathbf{I}+\mathbf{P}_0\mathbf{K})}^{-1}
                   \end{bmatrix}
 \end{align*}
-Therefore, we impose
+\paragraph{Robustness Assessment}
+Robustness can now be accessed by applying the SGT to $\mathbf{M}$
 \begin{equation*}
     \left\|\mathbf{M}\right\|_{\mathcal{H}_\infty}<1
 \end{equation*}
 to achieve robust \textbf{disturbance rejection}.
 
+\newpar{}
+\ptitle{Remarks}
+\begin{itemize}
+    \item Note that we ignored the diagonal structure of $\boldsymbol{\Delta}$ which makes our assumptions too conservative (see SSV for less conservativity).
+    \item Also note that $\mathbf{M}$ has rank 1. In this case one can calculate the SSV exactly (see below).
+\end{itemize}
 
 \subsection{Structured Singular Value (SSV)}
 The condition from the \textit{unstructured SGT} is a conservative assumption as the SGT could be applied to an arbitrary $\boldsymbol{\Delta}$.
@@ -198,25 +217,25 @@ If $\boldsymbol{\Delta}$ has \textbf{block-diagonal structure}, less conservativ
 \newpar{}
 \ptitle{Definition of SSV}
 
-The SSV is defined with respect to a \textbf{class of perturbations} $\mathbb{D}$ as
+The SSV is defined with respect to a \textbf{class of perturbations} $\mathbb{D}$ as the smallest $\sigma_{\max}$ making $\mathbf{M}$ singular:
 \begin{equation*}
     \mu(\mathbf{M}):=\frac1{\inf\{\sigma_{\max}(\boldsymbol{\Delta}):\det(1-M\boldsymbol{\Delta})=0\}},\quad\boldsymbol{\Delta}\in\mathbb{D}
 \end{equation*}
 \begin{itemize}
-    \item By convention, if $\det(I-M\boldsymbol{\Delta})\neq0,\forall\boldsymbol{\Delta}\in\mathbb{D}\text{, then }\mu(M)=0$.
-    \item If $\boldsymbol{\Delta}$ is diagonal and $M$ has rank one the SSV can be computed analytically.
+    \item Convention: If $\det(I-M\boldsymbol{\Delta})\neq0,\forall\boldsymbol{\Delta}\in\mathbb{D}\text{, then }\mu(M)=0$.
+    \item If $\boldsymbol{\Delta}$ is diagonal and $\mathbf{M}$ has rank one the SSV can be computed analytically.
 \end{itemize}
 
 \ptitle{Properties of the SSV}
 \begin{itemize}
     \item $\mu(\mathbf{M})\geq0$
     \item If $\mathbb{D}$ is arbitrary: $\mu(\mathbf{M})=\|\mathbf{M}\|_{\mathcal{H}_\infty}$ (unstructured case)
-    \item If $\mathbb{D}=\{\lambda I:\lambda\in\mathbb{C}\}$: $\mu(\mathbf{M})=\rho(\mathbf{M})$ (spectral radius, largest eigenvalue)
+    \item If $\mathbb{D}=\{\lambda I:\lambda\in\mathbb{C}\}$: $\mu(\mathbf{M})=\rho(\mathbf{M})$ (spectral radius = largest eigenvalue, easy to compute)
     \item If $\mathbb{D}$ is the set of diagonal (complex) matrices then
           \begin{equation*}
               \mu(\mathbf{M})=\mu(\mathbf{D}^{-1}\mathbf{MD})
           \end{equation*}
-          for any invertible $\mathbf{D}$ and
+          for any invertible diagonal (complex) scaling matrix $\mathbf{D}$ and
           \begin{equation*}
               \rho(\mathbf{M})\leq\mu(\mathbf{M})\leq\inf_{\mathbf{D}}\sigma_{\max}(\mathbf{D}^{-1}\mathbf{MD})\leq\sigma_{\max}(\mathbf{M})
           \end{equation*}
@@ -229,17 +248,40 @@ The $\mathbf{M}-\boldsymbol{\Delta}$ FB system is stable for all $\boldsymbol{\D
 \begin{equation*}
     \mu(\mathbf{M}(j\omega))\leq1,\quad\forall\omega\in\mathbb{R}
 \end{equation*}
+which is less conservative than the SGT.
+
+\paragraph{Rank-One Problems}
+In general, there is no closed-form method for computing the SSV (must resort to, e.g., estimating upper bounds (e.g., by scaling matrices)).\\
+However, when
+\begin{itemize}
+    \item $\boldsymbol{\Delta}$ is a diagonal (complex) matrix,
+    \item and $\mathbf{M}$ is a rank 1 matrix, i.e.,
+          \begin{equation*}
+              \mathbf{M}=\mathbf{ab^H}
+          \end{equation*}
+          for some complex vectors $\mathbf{a},\mathbf{b}\in \mathbb{C}^n$
+\end{itemize}
+then one can compute the structured singular value exactly.\\
+One has
+\begin{equation*}
+    \det(\mathbf{I}-\mathbf{M}\boldsymbol{\Delta})=1-\sum_{i}\mathbf{a}_{i}\mathbf{b}_{i}^{H}\delta_{i}
+\end{equation*}
+and since $\sigma_{\max}(\boldsymbol{\Delta})=\max_i|\delta_i|$ one has
+\begin{equation*}
+    \mu(\mathbf{M})=\sum_i|\mathbf{a}_i \mathbf{b}_i^H|
+\end{equation*}
+
+\newpar{}
+\ptitle{Remarks}
+\begin{itemize}
+    \item Given the mentioned conditions one can express $\mathbf{M}$ as the product of two vectors.
+    \item One can then easily calculate the SSV from these vectors (instead of from $\mathbf{M}$).
+\end{itemize}
 
 \begin{examplesection}[Example: Scalar Combined Robustness]
-    The modal decomposition gives valuable insight regarding the behavior of a system. The modes (eigenvalues and corresponding eigenvectors) are analyzed one at a time.
-    \begin{enumerate}
-        \item The magnitude of the eigenvalue describes the influence of the corresponding mode.
-        \item The property (real, complex or repeated) of the eigenvalue describes the behavior over time of that mode.
-        \item The corresponding eigenvector describes the states/dimensions the mode is acting on. For example $x,y,z$ or $\varphi, \dot{\varphi}$
-    \end{enumerate}
-
+    The aforementioned conditions are fulfilled as $\boldsymbol{\Delta}$ diagonal and $\mathbf{M}$ has rank 1. We have
     \begin{equation*}
-        \mathbf{M}=\begin{bmatrix}
+        \mathbf{M}=\mathbf{ab^H}=\begin{bmatrix}
             -\frac{\mathbf{W}_1\mathbf{P}_0\mathbf{K}}{1+\mathbf{P}_0\mathbf{K}} \\
             \frac{\mathbf{W}_2}{1+\mathbf{P}_0\mathbf{K}}
         \end{bmatrix}
@@ -247,13 +289,12 @@ The $\mathbf{M}-\boldsymbol{\Delta}$ FB system is stable for all $\boldsymbol{\D
             1 & 1
         \end{bmatrix}
     \end{equation*}
-    yields
-
+    which yields
     \begin{align*}
         \mu(\mathbf{M}(j\omega)) & =\left|\frac{\mathbf{W}_1\mathbf{P}_0\mathbf{K}}{1+\mathbf{P}_0\mathbf{K}}(j\omega)\right|+\left|\frac{\mathbf{W}_2}{1+\mathbf{P}_0\mathbf{K}}(j\omega)\right|\leq1 \\
                                  & =|\mathbf{W}_1 \mathbf{L}(j\omega)|+|\mathbf{W}_2(j\omega)|\leq|1+\mathbf{L}(j\omega)|\quad\forall\omega\in\mathrm{R}
     \end{align*}
-    where
+    where typically
     \begin{itemize}
         \item $\mathbf{L}=\mathbf{P}_0 \mathbf{K}$
         \item $\mathbf{W}_1$ is a high-pass
@@ -274,10 +315,11 @@ The $\mathbf{M}-\boldsymbol{\Delta}$ FB system is stable for all $\boldsymbol{\D
     \begin{equation*}
         |\mathbf{L}(j\omega)|\leq\frac{1-|\mathbf{W}_2(j\omega)|}{|\mathbf{W}_1(j\omega)|}\approx\frac1{|\mathbf{W}_1(j\omega)|}
     \end{equation*}
-    One can look at the condition with an advanced Nyquist condition.
+    which corresponds to the CS1 Bode obstacles.\\
+    One can visualize the condition by an advanced Nyquist criterion.
     \begin{center}
         \includegraphics[width = 0.7\linewidth]{chad_nyquist.png}
     \end{center}
-
 \end{examplesection}
+
 
