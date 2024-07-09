@@ -8,7 +8,7 @@ For a discrete-time nonlinear control system of the form
 a general description of the cost function and the constraints with the horizon length $H$ can be formulated as following
 \begin{align*}
     \min_{u[0], \ldots, u[H-1]} J_{H}(\mathbf{x,u}) & := \sum_{k=0}^{H-1}g(\mathbf{x}[k],\mathbf{u}[k]) \\
-    \mathbf{x}[k+1]                                 & = f(\mathbf{x}[k]. \mathbf{u}[k])                 \\
+    \mathbf{x}[k+1]                                 & = f(\mathbf{x}[k], \mathbf{u}[k])                 \\
     \mathbf{x}[0]                                   & = \mathbf{x}_0                                    \\
     \mathbf{x}[k]                                   & \in X                                             \\
     \mathbf{u}[k]                                   & \in U                                             \\
@@ -18,7 +18,7 @@ By solving these equations one can obtain the best control input $u$ for the nex
 
 \newpar{}
 
-The remaining costs from $k=H, \ldots, \infty$ are called the tail. If the prediction is too short-sighted (hence the tail is to large) the system can get unstable. To fix this, one can
+The remaining costs from $k=H, \ldots, \infty$ are called the tail. If the prediction is too short-sighted (hence the tail is too large) the system can get unstable. To fix this, one can
 \begin{itemize}
     \item shorten the tail (enlarge the horizon). This introduces more computational effort each step.
     \item make the tail zero (or sufficiently small). See Section~\ref{mpc_terminal_constraint}.
@@ -28,7 +28,7 @@ The remaining costs from $k=H, \ldots, \infty$ are called the tail. If the predi
 The formulation becomes
 \begin{align*}
     \min_{u[0], \ldots, u[H-1]} J_{H}(\mathbf{x,u}) & := \sum_{k=0}^{H-1}g(\mathbf{x}[k],\mathbf{u}[k]) \textcolor{blue}{+V(\textbf{x}[H])} \\
-    \mathbf{x}[k+1]                                 & = f(\mathbf{x}[k]. \mathbf{u}[k])                                                     \\
+    \mathbf{x}[k+1]                                 & = f(\mathbf{x}[k], \mathbf{u}[k])                                                     \\
     \mathbf{x}[0]                                   & = \mathbf{x}_0                                                                        \\
     \mathbf{x}[k]                                   & \in X                                                                                 \\
     \mathbf{u}[k]                                   & \in U                                                                                 \\
@@ -38,7 +38,7 @@ The formulation becomes
 
 \subsection{Terminal Constraints}\label{mpc_terminal_constraint}
 
-If the state is forced to an equilibrium at the end of the horizon it wil remain there and the tail will have no further effect. On the down side this may put excessive pressure on the actuators/control effort.
+If the state is forced to an equilibrium at the end of the horizon it will remain there and the tail will have no further effect. On the downside this may put excessive pressure on the actuators/control effort.
 
 \subsection{Terminal Cost}\label{mpc_terminal_cost}
 
@@ -63,7 +63,7 @@ However, the MPC control law will have better performance -- if not optimal, i.e
     J^*_\infty(\mathbf{x}) \leq J^*_H(\mathbf{x}) \leq J^*_{CLF}(\mathbf{x})
 \end{equation*}
 
-An example of a CLF candidate may be given by the solution $\mathbf{P}$ of the Algebraic Ricatti Equation of the LQR problem, i.e., given $V(\mathbf{x}) = \mathbf{x}^T \mathbf{Px}$.
+An example of a CLF candidate may be given by the solution $\mathbf{P}$ of the Algebraic Riccati Equation of the LQR problem, i.e., given $V(\mathbf{x}) = \mathbf{x}^T \mathbf{Px}$.
 
 \subsection{Solving the Finite Horizon Optimization}
 
@@ -90,7 +90,7 @@ Interior point methods solve \textbf{convex problems} of the form
 \begin{align*}
     \min \quad         & f_0( \mathbf{x})                                 \\
     \text{s.t.:} \quad & f_i( \mathbf{x}) \leq 0 , \quad 0 = 1, \ldots, m \\
-                       &  \mathbf{Ax} = \mathbf{b}
+                       & \mathbf{Ax} = \mathbf{b}
 \end{align*}
 where the scalar functions $f_0,f_1,\ldots,f_m$ are convex and twice differentiable.
 \newpar{}

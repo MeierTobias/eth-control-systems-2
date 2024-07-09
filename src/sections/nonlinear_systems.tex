@@ -23,6 +23,18 @@ A nonlinear system
 \end{itemize}
 
 \subsection{Lyapunov Stability Theory}
+Lyapunov's theorem only gives a sufficient condition for stability
+\begin{itemize}
+    \item If we can find a Lyapunov function, then we know the equilibrium is stable.
+    \item However, if a candidate Lyapunov function does not satisfy the conditions in the theorem, this does not prove that the equilibrium is unstable.
+\end{itemize}
+General Lyapounov functions are
+\begin{itemize}
+    \item Energy
+    \item Quadratic Lyapunov functions are commonly used; these can be derived from linearization of the system near equilibrium points.
+    \item “Sum-of-Squares” (SoS) methods can be used to construct polynomial Lyapunov functions
+\end{itemize}
+
 \subsubsection{Types of Stability}
 Assuming $\mathbf{u}=0, \mathbf{x}_e=0$, then in the eqilibrium $\mathbf{x}_e$ of the system
 \begin{equation*}
@@ -257,10 +269,10 @@ and thus proves the stability of the ``error'' system.
 %     \dot{\mathbf{x}} & = f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}                                                               \\
 %     \dot{\mathbf{e}} & = \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
 % \end{align*}
-Using $\dot{u_0}=\dot{z}-\dot{e}$ one finally finds the stabilizing controll law as
+Using $\dot{u_0}=\dot{z}-\dot{e}$ one finally finds the stabilizing control law as
 \begin{align*}
-    u_1(x,z) & = \frac{1}{g_1(x,z)}\left(\frac{\partial u_0(x)}{\partial x}\left(f_0(x)+g_0(x)z\right)-f_1(x,z) \right. \\
-             & \left. -\frac{\partial V_0(x)}{\partial x}g_0(x)-k_1(z-u_0(x))\right)
+    u_1(x,z)  = \frac{1}{g_1(x,z)} & \left(\frac{\partial u_0(x)}{\partial x}\left(f_0(x)+g_0(x)z\right)-f_1(x,z) \right. \\
+                                   & \left. -\frac{\partial V_0(x)}{\partial x}g_0(x)-k_1(z-u_0(x))\right)
 \end{align*}
 
 \newpar{}
@@ -277,7 +289,7 @@ Using $\dot{u_0}=\dot{z}-\dot{e}$ one finally finds the stabilizing controll law
 \end{itemize}
 
 \paragraph{Recursive Backstepping}
-The same approach can be used recurively as 
+The same approach can be used recurively as
 \begin{align*}
     \dot{x}     & =\quad f_{0}(x)+g_{0}(x)z_{1},                     \\
     \dot{z}_{1} & =\quad f_{1}(x,z_{1})+g_{1}(x,z_{1})z_{2},         \\
