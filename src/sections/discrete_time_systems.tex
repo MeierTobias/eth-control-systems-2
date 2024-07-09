@@ -208,7 +208,8 @@ To discretize the $\mathbf{A}, \mathbf{B}, \mathbf{C}, \mathbf{D}$ matrices of a
     \mathbf{A}_d & :=e^{\mathbf{A}T} & \mathbf{B}_d & :=\left(\int_0^{\mathsf{T}} {e^{\mathbf{A}\theta}}d\theta\right)\mathbf{B} \overset{\mathbf{A} \text{ inv.}}{=} \mathbf{A}^{-1}\left(\mathbf{A}_d-\mathbf{I}\right)\mathbf{B} \\
     \mathbf{C}_d & :=\mathbf{C}      & \mathbf{D}_d & :=\mathbf{D}
 \end{align*}
-Alternatively the DT state space matrices $\mathbf{A}_d, \mathbf{B}_d, \mathbf{C}_d, \mathbf{D}_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform.
+Alternatively the DT state space matrices $\mathbf{A}_d, \mathbf{B}_d, \mathbf{C}_d, \mathbf{D}_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform.\\
+Reminder: Check invertibility by looking at the determinant.
 
 \subsubsection{Discretization: Frequency Domain}\label{disc::tustin}
 \ptitle{Euler Forward}
