@@ -22,8 +22,21 @@
 \noindent\begin{equation*}
     \mathbf{S}=\mathbf{S}^{\mathsf{H}}
 \end{equation*}
+For any
+\noindent\begin{equation*}
+    \mathbf{A} \in \mathbb{R}^{m\times n}
+\end{equation*}
+both
+\noindent\begin{align*}
+    \mathbf{A^H A} & \in \mathbb{R}^{n\times n} \\
+    \mathbf{A A^H} & \in \mathbb{R}^{m\times m}
+\end{align*}
+are hermitian, positive semi-definite and their eigenvalues are real and non-negative.
 \begin{itemize}
     \item For every hermitian matrix $\mathbf{S}$ exists a unitary matrix $\mathbf{U}$ s.t. $\mathbf{U}^{\mathsf{H}}\mathbf{SU}$ is a diagonal matrix.
+          \begin{itemize}
+              \item In other words, unitary matrices can diagonalize hermitian matrices which is what one uses for SVD.
+          \end{itemize}
 \end{itemize}
 
 \newpar{}
