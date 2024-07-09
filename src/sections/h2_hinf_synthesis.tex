@@ -43,7 +43,7 @@ which yields the known LQR problem
 
 One can show that minimizing $\|\mathbf{z}\|_2^2$ imposes the following ARE on $\mathbf{X}_F$:
 \begin{equation*}
-    \mathbf{A}^{\mathsf{T}}\mathbf{X}_F + \mathbf{X}_F \mathbf{A} - \mathbf{X}_F \mathbf{B}_u{\left(\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{B}_{zu}\right)}^{-1} \mathbf{B}_u^{\mathsf{T}} \mathbf{X}_F + \mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z = \mathbf{0}
+    \mathbf{A}^{\mathsf{T}}\mathbf{X}_F + \mathbf{X}_F \mathbf{A} - \mathbf{X}_F \mathbf{B}_u{\left(\underbrace{\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{D}_{zu}}_{\mathbf{R}}\right)}^{-1} \mathbf{B}_u^{\mathsf{T}} \mathbf{X}_F + \underbrace{\mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z}_{Q} = \mathbf{0}
 \end{equation*}
 Solving this ARE yields the controller
 \begin{equation*}
@@ -71,7 +71,6 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
     \item One can show that this control law is optimal to achieve the stated minimization.
     \item Technical considerations 1.-3.\ ensure that the Riccati equation admits a solution $\mathbf{Y}$ that is positive semi-definite.
 \end{itemize}
-
 
 \subsubsection{LQE / Kalman Filter}
 
