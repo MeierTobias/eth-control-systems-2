@@ -10,6 +10,8 @@
     \item Structual properties of a system (\textbf{not} affected by similatriy transforms or even feedback control!)
 \end{itemize}
 
+% TODO: I would suggest to move this part into the corresponding subsections below because most of the information is already there and not jet introduced at this point.
+
 \subsection{Reachability/Controllability}
 
 An LTI system is reachable if there exists a control signal that takes the system from an initial condition $\mathbf{x_0} = \mathbf{0}$ to any desired final state (vector) $\mathbf{x_f}$, in finite time. This means that each state can be influenced by the input.
@@ -22,18 +24,19 @@ An LTI system is reachable if there exists a control signal that takes the syste
 Mathematically expressed, a system is reachable if and only if the reachability matrix $\mathbf{R}$ has \textbf{full row rank} $n$.
 \begin{align*}
     \text{rank}(\mathbf{R}) & = n                            \\
-    \det(\mathbf{R})        & \neq 0                         \\
+    \det(\mathbf{R})        & \neq 0                         \\  % TODO: Maybe remove this and the line below. (I think only the Rank operator is correct.)
     \mathbf{\mathbf{x}}     & \in \mathrm{Range}(\mathbf{R})
 \end{align*}
 
 \newpar{}
 \ptitle{Remarks}
 \begin{itemize}
-    \item In the latter case, the (possibly underdetermined) linear system can be solved for $\mathbf{U}$ which yields the desired input sequence to fullfil the condition.
+    \item In the latter case, the (possibly underdetermined) linear system can be solved for $\mathbf{U}$ which yields the desired input sequence to fullfil the condition. % TODO: What does this mean? 
     \item Note that the condition arises from the Cayley Hamilton Theorem.
+    \item For \textbf{continuous-time systems} controllability and reachability are the same.
 \end{itemize}
 
-\ptitle{SISO diagonal systems}
+\subsubsection{SISO diagonal systems}
 
 The $i$-th mode of a system in diagonal form is reachable only if $\tilde{b}_i \neq 0$ because
 \begin{equation*}
@@ -44,15 +47,14 @@ This is a necessary but not sufficient condition for reachability of the whole s
 \subsubsection{DT Systems: Controllability}
 
 \begin{itemize}
-    \item A DT LTI system is controllable if, for any initial condition $\mathbf{x}_0$, there exists a control input that brings the state $x$ to $0$ in finite time (Note: For CT one has the ``opposite'' condition).
+    \item A DT LTI system is controllable if, for any initial condition $\mathbf{x}_0$, there exists a control input that brings the state $x$ to $0$ in finite time (Note: For CT one has the ``opposite'' condition). % TODO: This is wrong: Reachability is the ``opposite'' condition.
     \item Reachability always implies controllability
     \item Controllability only implies reachability if $\mathbf{A}_d$ is invertible
     \item An unreachable DT system with non-invertible $\mathbf{A}_d$ could be controllable (Eigenvalues at 0). E.g.:
           \begin{itemize}
               \item $\mathbf{x}[k+1] = 0\mathbf{x}[k] + 0\mathbf{u}[k]$ is controllable (state goes to $0$) but unreachable as $\det(\mathbf{R})=0$.
           \end{itemize}
-          % TODO: Can an uncontrollable system be reachable? (I don't think so)
-    \item For \textbf{continuous-time systems} controllability and reachability are the same.
+          % TODO: Can an uncontrollable system be reachable? (I don't think so) -> NO 
 \end{itemize}
 
 \subsection{Observability}
@@ -91,7 +93,7 @@ This is a necessary but not sufficient condition for observability of the whole 
 
 \subsection{Modal View: Stabilizability and Detectability}
 In a system that is stabilizable and detectable all the modes that cannot be controlled and/or observed must behave ``nicely'' on their own.
-% TODO: Is it right that these two conditions are just a "weaker" subset of Reachability/Observability?
+% TODO: Is it right that these two conditions are just a "weaker" subset of Reachability/Observability? -> NO, they are super sets (a reachable system is always stabilizable but an unreachable system can be stabilazable if the unreachable modes are stable.)
 
 \newpar{}
 \ptitle{Stabilizability}
@@ -121,7 +123,7 @@ In a system that is stabilizable and detectable all the modes that cannot be con
 
 \subsection{Kalman Decomposition}
 \begin{center}
-    \includegraphics[width = \linewidth]{Kalman_decomp.png}
+    \includegraphics[width = 0.7\linewidth]{Kalman_decomp.png}
 \end{center}
 A specific method to group basis vectors.
 

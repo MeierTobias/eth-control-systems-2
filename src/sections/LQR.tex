@@ -1,5 +1,5 @@
 \section{LQR}
-More details on the derivation of LQR can be found under\ \ref{h2_synth} $\mathcal{H}_2$ Synthesis.
+More details on the derivation of LQR can be found under \ref{h2_synth} $\mathcal{H}_2$ Synthesis.
 \subsection{Cost Functional}
 LQR can be used to systematically optimize the \textbf{static gain vector K} based on \textit{tracking errors} and \textit{control effort}.
 
@@ -16,9 +16,9 @@ For the reference input $r(t) = 0$ the cost functional $J$ is defined as
               \item must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
           \end{itemize}
     \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall \mathbf{u}\neq \mathbf{0}$ or $eig(\mathbf{R}) > 0$ (otherways not every control effort is penalized).
-          % TODO: Why must Q but not R be symmetric?
+          % TODO: Why must Q but not R be symmetric? -> I would say R must also be symmetric otherwise the the dimensions of the multiplication would not match.
     \item The pair $\mathbf{A,B}$ must be stabilizable
-          % TODO: Why not reachable?
+          % TODO: Why not reachable? -> because the unreachable modes will vanish.
     \item In general, there is an additional cross-coupling term $\mathbf{x}^{\mathsf{T}}\mathbf{Nu}$ in $J$ which is often neglected i.e.\ equal to $0$
 \end{itemize}
 
@@ -72,9 +72,9 @@ then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\m
 \textbf{Remarks:}
 
 \begin{itemize}
-    \item LQR guarantees a phase margin of at least 60° and gain margin in $\left[\frac{1}{2},\infty\right)$
+    \item LQR guarantees a phase margin of at least 60° and gain margin in $\left[\frac{1}{2},\infty\right)$ % TODO: I would remove this here because it is already stated in the margin section.
           \begin{itemize}
-              \item However, robustness is limited (see\ \cite{539438})
+              \item However, robustness is limited (see\ \cite{539438}) % TODO: How is that? I have not read the paper you cited but isn't robustness defined as a guaranteed margin to instability? And also the same as below in the margin section (do we need the citation).
           \end{itemize}
     \item LQR applies directly to MIMO-systems
 \end{itemize}
@@ -100,7 +100,7 @@ and the \textit{static gain matrix} obtained with $\mathbf{u} = -\mathbf{Kx}$ is
 \textbf{\code{Matlab:}} \code{[K\_d,P\_d]=dlqr(A,B,Q,R)}
 
 \subsection{LQR Servo: Integrator}
-Feed-forward reference scaling is not \textbf{robust}, e.g.\ to changes/uncertainties in the plant dynamics or disturbances. If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs.
+Feed-forward reference scaling is not \textbf{robust}, e.g.\ to changes/uncertainties in the plant dynamics or disturbances. If the reference input is $\neq 0$, an integrator can be used to achieve zero-steady error to step inputs. % TODO: I would say the reference input can also be zero and there could still be a need to ad an integrator to get rid of the tracking error.
 This is simply done by adding the integral of the error to the state space model
 \noindent\begin{align*}
     \dot{x_I} & =-y+r =  -\mathbf{Cx} - \mathbf{Du} + r \\
@@ -182,7 +182,7 @@ where $\mathbf{G}(-s)$ corresponds to flipping signs in all the odd coefficients
     \noindent\begin{equation*}
         G = \frac{s-1}{(s-0.5)(s^2+2s+s)}
     \end{equation*}
-    the corresponding root loci are
+    the corresponding root-loci are
     \begin{center}
         \includegraphics[width = \linewidth]{symm_rlocus.png}
     \end{center}
@@ -210,9 +210,6 @@ the \textit{Kalman Frequency Domain Equality}
 holds.
 
 \subsubsection{Margins}
-\begin{center}
-    \includegraphics[width = \linewidth]{LQR_Nyquist.png}
-\end{center}
 In the frequency domain ($s=j\omega$)
 \noindent\begin{equation*}
     \left|1+L(j\omega)\right|^2=1+\frac1\rho\left|G(j\omega)\right|^2\geq1
@@ -221,6 +218,6 @@ In the Nyquist plot, the transfer function using the LQR gain is always outside 
 \begin{itemize}
     \item The phase margin is at least 60° because the Nyquist curve cannot enter a unit circe centered at $-1$ (property of LQR)
     \item The gain margin is ($\frac{1}{2},\infty$) because the loop transfer function (Nyquist curve) will never cross the real axis between ($-2, 0$) (unit circle argument again)\newline $\to -\frac{1}{k} = (\frac{1}{2}, \infty)$
-    \item Note however the limitations e.g.\ \cite{539438}
+    \item Note however the limitations e.g.\ \cite{539438}  % TODO: What limitations? If they are not important enough to be stated I would say we don't need them in de summary. Do we really need the citation here? All the other statements are also just given from the lecture without further sources. I would suggest if in the end this is the only citation we ist omit it.
 \end{itemize}
 

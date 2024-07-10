@@ -1,4 +1,7 @@
-\section{\texorpdfstring{Linear-Quadratic Gaussian Compensator (LQG) / \\ Dynamic output Feedback Compensator (DOFC)}{Linear-Quadratic Gaussian Compensator (LQG) / Dynamic output Feedback Compensator (DOFC)}}
+\section[Linear-Quadratic Gaussian Compensator (LQG) / Dynamic output Feedback Compensator (DOFC)]{Linear-Quadratic Gaussian Compensator (LQG) / \\ Dynamic output Feedback Compensator (DOFC)}
+% TODO: Don't use the \texorpdfstring instead use the alterative text option
+% TODO: Can we shorten this to LQG/DOFC in the title and explain it here? (I think we all know what LQG)
+
 \subsection{LQG/DOFC State Space Description}
 
 The combination of the LQR and the LQE is referred to as a LQG/DOFC.
@@ -92,7 +95,6 @@ both the observer and the controller can be designed individually i.e.\
     \item choose $\mathbf{K}$ as the solution of the LQR problem
     \item choose $\mathbf{L}$ as the solution of the LQE problem \newline(approx. 10$\times$ faster than poles of $\mathbf{K}$)
 \end{itemize}
-Remember however, that the systems should be LTI and that LQE assumes Gaussian white noise.
 
 \newpar{}
 \ptitle{Recall:}
@@ -157,9 +159,9 @@ and from $u$ to $y$ (\textbf{open-loop})
 \begin{align*}
     \left.\left|\det\begin{bmatrix}s\mathbf{I}-\mathbf{A}+\mathbf{BK} & -\mathbf{BK}                       & -\mathbf{BKS} \\
                \mathbf{0}                         & s\mathbf{I}-\mathbf{A}+\mathbf{LC} & \mathbf{0}    \\
-               \mathbf{C}                         & \mathbf{0}                         & \mathbf{0}\end{bmatrix}\right.\right| \\
+               \mathbf{C}                         & \mathbf{0}                         & 0\end{bmatrix}\right.\right| \\
     \left.=|\det(s\mathbf{I}-\mathbf{A}+\mathbf{LC})|\cdot\left|\det\begin{bmatrix}s\mathbf{I}-\mathbf{A}+\mathbf{BK} & -\mathbf{BKS} \\
-               \mathbf{C}                         & \mathbf{0}\end{bmatrix}\right.\right|
+               \mathbf{C}                         & 0\end{bmatrix}\right.\right|
 \end{align*}
 
 \begin{itemize}
@@ -171,7 +173,7 @@ and from $u$ to $y$ (\textbf{open-loop})
 
 \ptitle{Reference Scaling}
 
-To ensure a DC-Gain of $1$ we need the reference scaling matrix $\mathbf{S}$ to satisfy
+To ensure a DC-Gain of $1$ we need the reference scaling matrix $S$ to satisfy
 
 in the \textbf{continuous-time} case
 \begin{align*}
@@ -185,7 +187,7 @@ for a SISO system
 
 in the \textbf{discrete-time} case
 \begin{align*}
-    \lim_{z\to1}\mathbf{G}_{yr}^{cl}(z)                              & = \mathbf{I} \\
+    \lim_{z\to1}G_{yr}^{cl}(z)                                       & = \mathbf{I} \\
     \mathbf{C}{(\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{BKS} & = \mathbf{I}
 \end{align*}
 for a SISO system
@@ -294,7 +296,7 @@ If we substitute the estimation error $\bm{\eta}=\textbf{x}-\hat{\textbf{x}}$ we
 
 \subsubsection{Transfer Function}
 
-The transfer function from $y$ to $u$ i.e.\ the TF of the compensator is
+The transfer function from $y$ to $u$ is
 \begin{equation*}
     G_{uy} = -\begin{bmatrix}
         \mathbf{K}_I & \mathbf{K}
@@ -308,10 +310,10 @@ The transfer function from $y$ to $u$ i.e.\ the TF of the compensator is
         \mathbf{L}
     \end{bmatrix}
 \end{equation*}
-wich can be used for classical observations such as Bode plot.
+
 % \textbf{Remark}
 % $u_0=\mathbf{KS}r = \tilde{N}r$ can be considered a \textit{feedforward} control input.
 
 \subsection{Margins}
 
-While LQG/DFOC ensures the closed-loop stability of the nominal system, the stability margins can be \textbf{arbitrarily small}. Therefore, stability margins always need to be considered when working with LGQ.
+While LQG/DFOC ensures the closed-loop stability of the nominal system, the stability margins can be \textbf{arbitrarily small}.
