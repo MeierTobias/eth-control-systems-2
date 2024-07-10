@@ -7,7 +7,7 @@
               \item One needs to capture system dynamics at the output.
           \end{itemize}
     \item Duality: $\mathbf{A},\mathbf{B}$ are reachable if and only if $\mathbf{A^T}, \mathbf{B^T}$ are observable.
-    \item Structual properties of a system (\textbf{not} affected by similatriy transforms or even feedback control!)
+    \item Structural properties of a system (\textbf{not} affected by similarity transforms or even feedback control!)
 \end{itemize}
 
 % TODO: I would suggest to move this part into the corresponding subsections below because most of the information is already there and not jet introduced at this point.
@@ -87,13 +87,13 @@ Mathematically expressed, a system is observable if and only if the observabilit
 
 The $i$-th mode of a system in diagonal form is observable only if $\tilde{c}_i \neq 0$ because
 \begin{equation*}
-    y=\tilde{c}_1\tilde{x}_1+\ldots+\tilde{c}_n\tilde{x}_n+\mathbf{Du} %chktex 11
+    y=\tilde{c}_1\tilde{x}_1+\ldots+\tilde{c}_n\tilde{x}_n+\mathbf{Du} % ChkTeX 11
 \end{equation*}
 This is a necessary but not sufficient condition for observability of the whole system.
 
 \subsection{Modal View: Stabilizability and Detectability}
 In a system that is stabilizable and detectable all the modes that cannot be controlled and/or observed must behave ``nicely'' on their own.
-% TODO: Is it right that these two conditions are just a "weaker" subset of Reachability/Observability? -> NO, they are super sets (a reachable system is always stabilizable but an unreachable system can be stabilazable if the unreachable modes are stable.)
+% TODO: Is it right that these two conditions are just a "weaker" subset of Reachability/Observability? -> NO, they are super sets (a reachable system is always stabilizable but an unreachable system can be stabilizable if the unreachable modes are stable.)
 
 \newpar{}
 \ptitle{Stabilizability}

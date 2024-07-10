@@ -1,5 +1,5 @@
 \section{LQR}
-More details on the derivation of LQR can be found under \ref{h2_synth} $\mathcal{H}_2$ Synthesis.
+More details on the derivation of LQR can be found under~\ref{h2_synth} $\mathcal{H}_2$ Synthesis.
 \subsection{Cost Functional}
 LQR can be used to systematically optimize the \textbf{static gain vector K} based on \textit{tracking errors} and \textit{control effort}.
 
@@ -15,7 +15,7 @@ For the reference input $r(t) = 0$ the cost functional $J$ is defined as
               \item is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $eig(\mathbf{Q}) \geq 0$
               \item must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
           \end{itemize}
-    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall \mathbf{u}\neq \mathbf{0}$ or $eig(\mathbf{R}) > 0$ (otherways not every control effort is penalized).
+    \item $\mathbf{R}$ must be positive definite i.e. $\mathbf{u}^{\mathsf{T}} \mathbf{Ru} >0\; \forall \mathbf{u}\neq \mathbf{0}$ or $eig(\mathbf{R}) > 0$ (otherwise not every control effort is penalized).
           % TODO: Why must Q but not R be symmetric? -> I would say R must also be symmetric otherwise the the dimensions of the multiplication would not match.
     \item The pair $\mathbf{A,B}$ must be stabilizable
           % TODO: Why not reachable? -> because the unreachable modes will vanish.
@@ -72,7 +72,7 @@ then the \textit{static gain matrix} $\mathbf{K}$ can be obtained by setting $\m
 \textbf{Remarks:}
 
 \begin{itemize}
-    \item LQR guarantees a phase margin of at least 60° and gain margin in $\left[\frac{1}{2},\infty\right)$ % TODO: I would remove this here because it is already stated in the margin section.
+    \item LQR guarantees a phase margin of at least 60° and gain margin in $\left[\frac{1}{2},\infty\right)$ % ChkTeX 9 % TODO: I would remove this here because it is already stated in the margin section.
           \begin{itemize}
               \item However, robustness is limited (see\ \cite{539438}) % TODO: How is that? I have not read the paper you cited but isn't robustness defined as a guaranteed margin to instability? And also the same as below in the margin section (do we need the citation).
           \end{itemize}
@@ -186,7 +186,7 @@ where $\mathbf{G}(-s)$ corresponds to flipping signs in all the odd coefficients
     \begin{center}
         \includegraphics[width = \linewidth]{symm_rlocus.png}
     \end{center}
-    Here the open-loop system features both a nonminimum-phase zero and an unstable pole.
+    Here the open-loop system features both a non-minimum-phase zero and an unstable pole.
     When looking at the left half of the \textit{symmetric root locus}, the mirrored NMP zero and mirrored unstable pole stabilize the system such that
     for any $\rho$ the closed loop poles will stay on the LHP.
 \end{examplesection}

@@ -8,15 +8,15 @@ A nonlinear system
 \end{align*}
 \textbf{does not satisfy the superposition property} and therefore
 \begin{itemize}
-    \item Effects from inputs and from initial conditions caannot be seperated.
-    \item The input cannot be seperated into elementary inputs and the output will not be a composition of elementary outputs.
+    \item Effects from inputs and from initial conditions cannot be separated.
+    \item The input cannot be separated into elementary inputs and the output will not be a composition of elementary outputs.
 \end{itemize}
 
 \newpar{}
 \ptitle{Properties}
 \begin{itemize}
-    \item A nonlinear system can have zero, one or multiple \textbf{equillibrium points} s.t.\ $f(\mathbf{x}_e, 0)=0$.
-    \item In contrast to linear systems that require infinite time to go to infinity, nonlinear systes can \textbf{go to infinity in finite time}.
+    \item A nonlinear system can have zero, one or multiple \textbf{equilibrium points} s.t.\ $f(\mathbf{x}_e, 0)=0$.
+    \item In contrast to linear systems that require infinite time to go to infinity, nonlinear systems can \textbf{go to infinity in finite time}.
     \item Nonlinear systems may generate permanent oscillations of fixed amplitude - \textbf{limit cycles} - independent of initial conditions.
     \item Nonlinear systems can generate outputs at frequencies that are submultiples or multiples of the input frequency (\textbf{Subharmonic oscillations}).
     \item Deterministic nonlinear systems can generate \textbf{chaos}.
@@ -28,7 +28,7 @@ Lyapunov's theorem only gives a sufficient condition for stability
     \item If we can find a Lyapunov function, then we know the equilibrium is stable.
     \item However, if a candidate Lyapunov function does not satisfy the conditions in the theorem, this does not prove that the equilibrium is unstable.
 \end{itemize}
-General Lyapounov functions are
+General Lyapunov functions are
 \begin{itemize}
     \item Energy
     \item Quadratic Lyapunov functions are commonly used; these can be derived from linearization of the system near equilibrium points.
@@ -36,7 +36,7 @@ General Lyapounov functions are
 \end{itemize}
 
 \subsubsection{Types of Stability}
-Assuming $\mathbf{u}=0, \mathbf{x}_e=0$, then in the eqilibrium $\mathbf{x}_e$ of the system
+Assuming $\mathbf{u}=0, \mathbf{x}_e=0$, then in the equilibrium $\mathbf{x}_e$ of the system
 \begin{equation*}
     \dot{\mathbf{x}} = f(\mathbf{x})
 \end{equation*}
@@ -50,7 +50,7 @@ The equilibrium is said to be
           \noindent\begin{equation*}
               \|\mathbf{x}(0)\| < \delta \Rightarrow \|\mathbf{x}(t)\| \leq \varepsilon,\qquad \forall t\geq 0,\; \delta > 0,\; \varepsilon\geq0
           \end{equation*}
-    \item \textbf{Asymtotically stable}
+    \item \textbf{Asymptotically stable}
           \noindent\begin{equation*}
               \|\mathbf{x}(0)\| < \delta \Rightarrow \lim_{t\to +\infty} \mathbf{x}(t)=0, \qquad \delta>0
           \end{equation*}
@@ -61,7 +61,7 @@ The equilibrium is said to be
 \end{itemize}
 
 \subsubsection{Lyapunov Functions}
-\textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the quilibrium point and non-increasing along all trajectories.}
+\textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the equilibrium point and non-increasing along all trajectories.}
 \newpar{}
 For a given compact subset $D$ of the state space containing $\mathbf{x}_e$, a Lyapunov function is defined as
 \noindent\begin{equation*}
@@ -74,7 +74,7 @@ If this Lyapunov function satisfies
     V(\mathbf{x})          & = 0 \Leftrightarrow \mathbf{x}_e = \mathbf{x}                                                                                                                            &  & \text{(if and only if)}    \\
     \dot{V}(\mathbf{x}(t)) & = \frac{\partial V(\mathbf{x})}{\partial \mathbf{x}} \frac{\partial \mathbf{x}(t)}{\partial t} = \frac{\partial V(\mathbf{x})}{\partial \mathbf{x}} f(\mathbf{x}) \leq 0 &  & \forall \mathbf{x}(t)\in D
 \end{align*}
-the equillibrium point $\mathbf{x_e}$ is \textbf{stable in the sense of Lyapunov}. Remember that $V$ is defined on a set containing $\mathbf{x}_e$.
+the equilibrium point $\mathbf{x_e}$ is \textbf{stable in the sense of Lyapunov}. Remember that $V$ is defined on a set containing $\mathbf{x}_e$.
 
 \newpar{}
 Futhermore, $\mathbf{x}_e$ is \textbf{asymptotically stable} if
@@ -89,10 +89,10 @@ Finally, $\mathbf{x}_e$ is \textbf{exponentially stable} if
 \newpar{}
 \ptitle{Remarks}
 \begin{itemize}
-    \item If there could be multiplie equilibrium points one needs to use LaSalle.
+    \item If there could be multiple equilibrium points one needs to use LaSalle.
     \item $V(\mathbf{x})=0$ must hold in any equilibrium point, even if there are more then one.
           %TODO:: must the "only equilibrium point" from above be (0,...0)?
-          %TODO:: x eventually aproaches the largest pos. inv. set. in which Vdot=0. But are there also pos. inv. sets in which Vdot \neq 0?
+          %TODO:: x eventually approaches the largest pos. inv. set. in which Vdot=0. But are there also pos. inv. sets in which Vdot \neq 0?
     \item If one has more than one state vector, then
           \begin{equation*}
               \dot{V}=\sum_{i} \frac{\partial V(\mathbf{x}_i)}{\partial \mathbf{x}_i} \frac{\partial \mathbf{x}_i(t)}{\partial t}
@@ -122,7 +122,7 @@ The solution $\mathbf{P}$ of the Riccati equation can be interpreted as a Lyapun
 \noindent\begin{equation*}
     V(\mathbf{x}) = \mathbf{x}^{\mathsf{T}} \mathbf{Px}
 \end{equation*}
-$V$ then fulfills the criteria for a Lyapounov function.
+$V$ then fulfills the criteria for a Lyapunov function.
 
 \paragraph{LaSalle's Invariance Principle}
 LaSalle's invariance theorem is useful if Lyapunov stability is given by the existence of a Lyapunov function but $\dot{V}=0$ not only at $\mathbf{x}_e$:
@@ -157,7 +157,7 @@ A CLF satisfies
     \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
 \end{align*}
 
-i.e.\ using the control iput $u$, $V$ becomes a Lyapounov function. In the following methods, one aims to find a control Lyapunov function to prove stabilizing behavior with a specific control input.
+i.e.\ using the control input $u$, $V$ becomes a Lyapunov function. In the following methods, one aims to find a control Lyapunov function to prove stabilizing behavior with a specific control input.
 
 \subsubsection{Gain Scheduling}
 In gain scheduling, the state space is partitioned into disjoint subspaces and for a number of design equilibria ($\mathbf{x}_i, \mathbf{u}_i$)  nominal control laws $\mathbf{K}_i$ are designed using the aforementioned techniques.
@@ -197,7 +197,7 @@ Then, define $V_i[k]$ as infimum taken by $V_i$ in the given time interval and c
 \newpar{}
 \ptitle{Rationale}
 
-Assuming the system can move from region to region, we look at all time intervals where the system is in a certain region $X_i$. We want to have the Lyapunov function decreased everytime the system reenters a certain region again. Defining $V_i$ as infimum (largest lower bound), we have stable behaviour if the infimum decreases at every re-entry of region $X_i$.
+Assuming the system can move from region to region, we look at all time intervals where the system is in a certain region $X_i$. We want to have the Lyapunov function decreased every time the system reenters a certain region again. Defining $V_i$ as infimum (largest lower bound), we have stable behavior if the infimum decreases at every re-entry of region $X_i$.
 
 \subsubsection{Linear Parameter-Varying (LPV) Systems}
 A third option is to rewrite the nonlinear system in a ``linear'' fashion with slow varying parameter $\sigma(\mathbf{x})$
@@ -283,13 +283,13 @@ Using $\dot{u_0}=\dot{z}-\dot{e}$ one finally finds the stabilizing control law 
     \item One assumes that the inner system is easily controllable by $\mathbf{u}_0$ e.g.\ because
           \begin{itemize}
               \item it is linear
-              \item one can find a control Lyapounov function for it
+              \item one can find a control Lyapunov function for it
           \end{itemize}
-    \item The idea can be extended to multiple nested sytems
+    \item The idea can be extended to multiple nested systems
 \end{itemize}
 
 \paragraph{Recursive Backstepping}
-The same approach can be used recurively as
+The same approach can be used recursively as
 \begin{align*}
     \dot{x}     & =\quad f_{0}(x)+g_{0}(x)z_{1},                     \\
     \dot{z}_{1} & =\quad f_{1}(x,z_{1})+g_{1}(x,z_{1})z_{2},         \\
