@@ -145,8 +145,13 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
     \item Calculate all minors (of all orders) of $\mathbf{G}(s)$
     \item Find the least common (multiple) denominator $d_{\min}(s)$ of the minors
     \item Normalize highest order minors s.t.\ they have $d_{\min}(s)$ as denominator
-    \item Find largest common numerator $n_{\max}(s)$ (usually product of $(s-z_i)$ terms) of the normalized minors from 3.
+    \item Find largest common numerator $n_{\max}(s)$ (usually product of $(s-z_i)$ terms) of the normalized highest order minors.
     \item The roots of $n_{\max}(s)$ are the MIMO zeros with their multiplicities
+    \item To find the directions $\mathbf{u}_{0,i}$ one has to solve the equation
+          \begin{equation*}
+              \lim_{s\to z_i}\left[\mathbf{G}(s)\mathbf{u}_{0,i}(s)\right]=\mathbf{0}
+          \end{equation*}
+          for each found zero $z_i$.
 \end{enumerate}
 
 \ptitle{Remarks}
@@ -177,8 +182,8 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
     \end{equation*}
     3. Normalize highest order (here 2nd order) minors:
     \begin{align*}
-         & \frac{{(s+3)}^2\cdot(s+2)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}                  \\
-         & \frac{{(s+1)}^2\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}        \\
+         & \frac{{(s+3)}^2\cdot(s+2)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)} ,                \\
+         & \frac{{(s+1)}^2\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)} ,      \\
          & -\frac{(s+4)\cdot(s+1)\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}
     \end{align*}
     4. Find $n_{\max}(s)$:
@@ -186,7 +191,7 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
         n_{\max}(s)=(s+3)(s+2)
     \end{equation*}
     5. Identify zeros: $z_1=-3,\;z_2=-2$
-    % TODO: How do we find the corresponding direction? 
+    % TODO: How do we find the corresponding direction? -> see extension above. We could add it for this example as well
 \end{examplesection}
 
 \subsubsection{Invariant Zeros}
