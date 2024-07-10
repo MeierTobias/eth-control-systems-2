@@ -209,7 +209,23 @@ To discretize the $\mathbf{A}, \mathbf{B}, \mathbf{C}, \mathbf{D}$ matrices of a
     \mathbf{C}_d & :=\mathbf{C}      & \mathbf{D}_d & :=\mathbf{D}
 \end{align*}
 Alternatively the DT state space matrices $\mathbf{A}_d, \mathbf{B}_d, \mathbf{C}_d, \mathbf{D}_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform.\\
-Reminder: Check invertibility by looking at the determinant.
+\newpar{}
+\ptitle{Calculations}
+\begin{itemize}
+    \item Check invertibility by looking at the determinant.
+    \item For diagonal matrices $\Lambda$, one can apply exponentiation elementwise on the main diagonal.
+    \item For non-diagonal matrices use
+          \begin{itemize}
+              \item either diagonalization via eigenvectors ($A=V^{-1}\cdot \Lambda \cdot V$) and
+                    \begin{equation*}
+                        e^{AT} = V^{-1}\cdot e^{\Lambda T} \cdot V
+                    \end{equation*}
+              \item or power series expansion
+                    \begin{equation*}
+                        e^{AT}=\sum_{k=0}^{\infty}\frac{1}{k!}{\left(AT\right)}^k
+                    \end{equation*}
+          \end{itemize}
+\end{itemize}
 
 \subsubsection{Discretization: Frequency Domain}\label{disc::tustin}
 \ptitle{Euler Forward}
@@ -293,10 +309,10 @@ There are two main design paradigms for DT control systems:
 
 \begin{itemize}
     \item A common method is to
-    \begin{itemize}
-        \item Use DT design if $T$ is known
-        \item Use CT design with emulation if $T$ is unknown
-    \end{itemize}
+          \begin{itemize}
+              \item Use DT design if $T$ is known
+              \item Use CT design with emulation if $T$ is unknown
+          \end{itemize}
 \end{itemize}
 
 \subsubsection{DT}
