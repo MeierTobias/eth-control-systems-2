@@ -411,21 +411,15 @@ with eigenvalues
 \end{itemize}
 
 \subsubsection{Procedure}
-Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
+Assuming $\mathbf{A}$ has rank = $\min(m,n)$:
 \begin{enumerate}
-    \item calculate eigenvalues (start with smaller matrix, pad with 0)
+    \item calculate the eigenvalues \newline (use smaller matrix, pad with 0 up to $\max(m,n)$)
           \noindent\begin{align*}
                & \lambda_{\mathbf{V}}\in \mathbb{R}^n: & \det\left(\lambda \mathbf{I}-\mathbf{A}^{\mathsf{H}}\mathbf{A}\right)\overset{!}{=}0 \\
+               & \text{or}                             &                                                                                      \\
                & \lambda_{\mathbf{U}}\in \mathbb{R}^m: & \det\left(\lambda \mathbf{I}-\mathbf{AA}^{\mathsf{H}}\right)\overset{!}{=}0
           \end{align*}
-    \item calculate eigenvectors of $\mathbf{U},\mathbf{V}$ and normalize them
-          \noindent\begin{align*}
-               & \mathbf{V}:                & \left(\lambda_{\mathbf{v}_i} \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{x} & \overset{!}{=}\mathbf{0}          \\
-               & \mathbf{U}:                & \mathbf{u}_i                                                                                 & = \frac{1}{\sigma_i}\mathbf{Av}_i \\
-               & \mathrm{if}~\sigma_i = 0 : & \left(\lambda_{\mathbf{u}_i} \mathbf{I} -\mathbf{AA}^{\mathsf{H}}\right)\mathbf{x}           & \overset{!}{=}\mathbf{0}
-          \end{align*}
-          where $\lambda_{\mathbf{u}i}=0$ if $\mathbf{V}$ has smaller dimensions than $\mathbf{U}$ and vice versa.
-    \item calculate singular values $\sigma\in \mathbb{R}^{\min(m,n)}$ and compose $\Sigma$
+    \item calculate the singular values $\sigma$ and compose $\Sigma \in \mathbb{R}^{m \times n}$. Order the singular values $\sigma$ in descending order.
           \noindent\begin{align*}
               \sigma_i & = \sqrt{\lambda_{u_i}} = \sqrt{\lambda_{v_i}}\quad i=0,1,\cdots, \min(m,n) \\
               \Sigma   & = \begin{bmatrix}
@@ -440,6 +434,36 @@ Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
                   \mathbf{0} & \cdots & \mathbf{0}
               \end{bmatrix}
           \end{align*}
+    \item calculate the eigenvectors of $\mathbf{A}^{\mathsf{H}}\mathbf{A}$. Use the same order as before and normalize the vectors if necessary.
+          \begin{gather*}
+              \mathbf{A}^{\mathsf{H}}\mathbf{A} \mathbf{v}_i = \lambda_i \mathbf{v}_i \\
+              \left(\lambda_i \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{v}_i \overset{!}{=}\mathbf{0}
+          \end{gather*}
+          then assemble $\mathbf{V}$
+          \begin{equation*}
+              \mathbf{V} = \begin{bmatrix}
+                  \vert        & \vert        &        \\
+                  \mathbf{v}_1 & \mathbf{v}_2 & \cdots \\
+                  \vert        & \vert        &
+              \end{bmatrix}
+          \end{equation*}
+    \item calculate eigenvectors of $\mathbf{A}\mathbf{A}^{\mathsf{H}}$ either with
+          \begin{gather*}
+              \mathbf{A}\mathbf{A}^{\mathsf{H}} \mathbf{u}_i = \lambda_i \mathbf{u}_i \\
+              \left(\lambda_{i} \mathbf{I} - \mathbf{A}\mathbf{A}^{\mathsf{H}}\right)\mathbf{u}_i \overset{!}{=}\mathbf{0}
+          \end{gather*}
+          or with the formula below (this can only be used for the singular values $\sigma_i \ne 0$)
+          \begin{equation*}
+              \mathbf{u}_i  = \frac{1}{\sigma_i}\mathbf{Av}_i
+          \end{equation*}
+          then assemble $\mathbf{U}$
+          \begin{equation*}
+              \mathbf{U} = \begin{bmatrix}
+                  \vert        & \vert        &        \\
+                  \mathbf{u}_1 & \mathbf{u}_2 & \cdots \\
+                  \vert        & \vert        &
+              \end{bmatrix}
+          \end{equation*}
     \item \noindent\begin{equation*}
               \mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{\mathsf{H}}
           \end{equation*}
@@ -468,9 +492,9 @@ shows that
 \newpar{}
 \ptitle{Zeros and Poles}
 
-If the matrix $\mathbf{A}$ contains $s$, the directions of poles and zeros can be found with SVD:
+For a MIMO transfer function $\mathbf{A}(s)$, the directions of poles and zeros can be found with SVD:
 \begin{enumerate}
-    \item Set $s=z, p+0.0001$
+    \item Set $s=z$ or $s=p+0.0001$
     \item Calculate SVD of $\mathbf{A}(s)$
     \item Evaluate singular values:
           \begin{enumerate}
@@ -552,7 +576,7 @@ and the submultiplicative property:
 
 \ptitle{Induced $p$-norms}
 
-For the $p = 1$ norm we get the \textbf{max-sum column}:
+For the $p = 1$ norm we get the \textbf{max column-sum}:
 \begin{equation*}
     \|\mathbf{A}\|_1=\max_j\sum_{i=1}^m|a_{ij}|,\qquad x_k=\begin{cases}
         \pm 1 & k=j         \\
@@ -571,7 +595,7 @@ and \textbf{minimal amplification} (assuming rank($\mathbf{A}$)=$n$):
 \end{equation*}
 
 \newpar{}
-For the $p = \infty$ norm we get the \textbf{max-sum row}:
+For the $p = \infty$ norm we get the \textbf{max row-sum}:
 \begin{equation*}
     \|\mathbf{A}\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|\qquad x_k=\pm 1\;\forall k
 \end{equation*}
@@ -691,20 +715,20 @@ i.e.\ energy is conserved from time to frequency domain.
 
 The $\mathcal{H}_2$ norm of a system is given by
 \begin{equation*}
-    \|\mathbf{G}\|_{\mathcal{H}_2}^2=\|g\|_{\mathcal{L}_2}^2=\mathrm{Tr}\left[\mathbf{C\mathcal{R}C}^{\prime}\right]=\mathrm{Tr}\left[\mathbf{B^{\prime}\mathcal{O}B}\right]
+    \|\mathbf{G}\|_{\mathcal{H}_2}^2=\|g\|_{\mathcal{L}_2}^2=\mathrm{Tr}\left[\mathbf{C\mathcal{R}C}^{T}\right]=\mathrm{Tr}\left[\mathbf{B^{T}\mathcal{O}B}\right]
 \end{equation*}
 where the \textbf{symmetric} matrices $\mathbf{\mathcal{R}}$ or $\mathbf{\mathcal{O}}$ are computed by solving the Lyapunov (matrix) equation
 \begin{equation*}
-    \mathbf{ A\mathcal{R}}+\mathbf{\mathcal{R}A}^{\prime}=-\mathbf{BB}^{\prime}
+    \mathbf{ A\mathcal{R}}+\mathbf{\mathcal{R}A}^{T}=-\mathbf{BB}^{T}
 \end{equation*}
 or\begin{equation*}
-    \mathbf{A^{\prime}\mathcal{O}}+\mathbf{\mathcal{O}A}=-\mathbf{C^{\prime}C}
+    \mathbf{A^{T}\mathcal{O}}+\mathbf{\mathcal{O}A}=-\mathbf{C^{T}C}
 \end{equation*}
 respectively. Note that there are $m\times n$ equations to solve.\\
 $\mathbf{\mathcal{R}}$ and $\mathbf{\mathcal{O}}$ are called Reachability and Observability \textbf{Gramians} and can also be computed by:
 \begin{align*}
-    \mathbf{\mathcal{R}} & :=\int_{0}^{\infty}e^{\mathbf{A}t}\mathbf{BB}^{\prime}e^{A^{\prime}t}\mathrm{~}dt          \\
-    \mathbf{\mathcal{O}} & :=\int_{0}^{\infty}e^{\mathbf{A}^{\prime}t}\mathbf{C^{\prime}C}e^{\mathbf{A}t}\mathrm{~}dt
+    \mathbf{\mathcal{R}} & :=\int_{0}^{\infty}e^{\mathbf{A}t}\mathbf{BB}^{T}e^{A^{T}t}\mathrm{~}dt          \\
+    \mathbf{\mathcal{O}} & :=\int_{0}^{\infty}e^{\mathbf{A}^{T}t}\mathbf{C^{T}C}e^{\mathbf{A}t}\mathrm{~}dt
 \end{align*}
 
 \ptitle{Significance}
