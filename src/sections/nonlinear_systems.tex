@@ -61,7 +61,7 @@ The equilibrium is said to be
 \end{itemize}
 
 \subsubsection{Lyapunov Functions}
-\textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the equilibrium point and non-increasing along all trajectories.}
+\textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the equilibrium point and non-increasing along all trajectories.} % TODO: non-increasing in t but could be increasing in x ???
 \newpar{}
 For a given compact subset $D$ of the state space containing $\mathbf{x}_e$, a Lyapunov function is defined as
 \noindent\begin{equation*}
@@ -87,6 +87,14 @@ Finally, $\mathbf{x}_e$ is \textbf{exponentially stable} if
 \end{equation*}
 
 \newpar{}
+\ptitle{Global Stability}
+
+According to the Barbashin-Krasovski theorem, to ensure global stability (not necessarily asymptotical or exponential), i.e. $D=\mathbb{R}^n$, a Lyapunov function $V$ satisfying the aforementioned three properties \textbf{additionally} needs to be \textbf{radially unbounded}:
+\noindent\begin{equation*}
+    \|\mathbf{x}\| \to +\infty \Rightarrow V(\mathbf{x}) \to +\infty
+\end{equation*}
+
+\newpar{}
 \ptitle{Remarks}
 \begin{itemize}
     \item If there could be multiple equilibrium points one needs to use LaSalle.
@@ -100,13 +108,35 @@ Finally, $\mathbf{x}_e$ is \textbf{exponentially stable} if
     \item For asymptotical stability, given $\dot{V}(\mathbf{x}(t)) = 0$ we know that the system is in the \textbf{only} equilibrium point.
 \end{itemize}
 
-\paragraph{Global Stability}
-According to the Barbashin-Krasovski theorem, to ensure global stability (not necessarily asymptotical or exponential), i.e. $D=\mathbb{R}^n$, a Lyapunov function $V$ satisfying the aforementioned three properties \textbf{additionally} needs to be \textbf{radially unbounded}:
-\noindent\begin{equation*}
-    \|\mathbf{x}\| \to +\infty \Rightarrow V(\mathbf{x}) \to +\infty
-\end{equation*}
-
 \paragraph{Indirect Method}
+For a linear system
+\begin{equation*}
+    \dot{\mathbf{x}} = \mathbf{Ax}
+\end{equation*}
+A common choice is a \textit{quadratic Lyapunov function}
+\begin{align*}
+    V(x) = \mathbf{x}^{T}\mathbf{Px}
+\end{align*}
+where $\mathbf{P}$ is symmetric and positive definite matrix.
+
+The Derivation along trajectories is given by
+\begin{equation*}
+    \dot{V}(\mathbf{x}) = \mathbf{x}^{T}\left(\mathbf{A}^{T}\mathbf{P+PA}\right)\mathbf{x} = - \mathbf{x}^{T}\mathbf{Qx}
+\end{equation*}
+An appropriate matrix $P$ defining the desired Lyapunov function can be found by solving
+\begin{equation*}
+    \mathbf{A}^{T}\mathbf{P+PA=-Q}
+\end{equation*}
+This is called the \textbf{Lyapunov Equation}.
+
+\newpar{}
+\ptitle{Remark}
+
+The solution $\mathbf{P}$ of the LQR Riccati equation fulfills the criteria of a Lyapunov function $V(x) = \mathbf{x}^{T}\mathbf{Px}$.
+
+\newpar{}
+\ptitle{Hartman-Grobman Theorem}
+
 According to the \textbf{Hartman-Grobman Theorem}, a linearized system
 \noindent\begin{equation*}
     A = \left.\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}} \right|_{\mathbf{x} = 0}
@@ -115,16 +145,7 @@ According to the \textbf{Hartman-Grobman Theorem}, a linearized system
 \newpar{}
 As a result, the Lyapunov function of the linear system also describes the nonlinear system for sufficiently small deviations from the equilibrium point.
 
-\newpar{}
-\textbf{Remark}
-
-The solution $\mathbf{P}$ of the Riccati equation can be interpreted as a Lyapunov equation:
-\noindent\begin{equation*}
-    V(\mathbf{x}) = \mathbf{x}^{\mathsf{T}} \mathbf{Px}
-\end{equation*}
-$V$ then fulfills the criteria for a Lyapunov function.
-
-\paragraph{LaSalle's Invariance Principle}
+\subsubsection{LaSalle's Invariance Principle}
 LaSalle's invariance theorem is useful if Lyapunov stability is given by the existence of a Lyapunov function but $\dot{V}=0$ not only at $\mathbf{x}_e$:
 
 \newpar{}
@@ -142,9 +163,19 @@ LaSalle's invariance theorem is useful if Lyapunov stability is given by the exi
 \end{equation*}
 
 \newpar{}
+\textbf{Procedure}
+\begin{enumerate}
+    \item Find the largest invariant set $E=\left\{\mathbf{x}: \dot{V}(\mathbf{x})=0\right\}$
+    \item Plug the found set $E$ into the dynamics of the system and check if the system can ``escape'' this set.
+\end{enumerate}
+
+\newpar{}
 \textbf{Remarks}
-\begin{itemize}\item For the pendulum, one has multiple states (turning points, origin) where $\dot{\mathbf{x}}=0$ but $\mathbf{x}(t)$ only stays at the origin (but not at the turning points) once it has ``entered'' this equilibrium set (i.e.\ stopped moving).
+\begin{itemize}
+    \item For the pendulum with Lyapunov function $\dot{V}(x)=-c\dot{\theta}^2$, one has multiple states (turning points) where $\dot{V}=0$ namely whenever $\dot{\theta}=0$. However the only invariant $\dot{\theta}=0$ is the one in the origin (when the pendulum stopped).
 \end{itemize}
+
+
 
 \subsection{Control Lyapunov Functions}
 If a Control Lyapunov Function (CLF) exists, it provides a way to construct a stabilizing feedback with an appropriate control input $\tilde{\mathbf{u}}$ (\textit{Artstein's Theorem}).
@@ -168,7 +199,7 @@ The dynamics of the system around a equilibrium point $\mathbf{x}_i$ can be appr
     \dot{\mathbf{x}} = \mathbf{A}_i(\mathbf{x}-\mathbf{x}_i) + \mathbf{B}_i(\mathbf{u}-\mathbf{u}_i)
 \end{equation*}
 
-\paragraph{Common Lyapounov Function}
+\paragraph{Common Lyapunov Function}
 The stability of
 \noindent\begin{equation*}
     \mathbf{u} = \mathbf{u}_i+\mathbf{K}_i(\mathbf{x}-\mathbf{x}_i)
@@ -210,7 +241,7 @@ A third option is to rewrite the nonlinear system in a ``linear'' fashion with s
 \end{equation*}
 
 \newpar{}
-\ptitle{Lyapunv Condition for LPV}
+\ptitle{Lyapunov Condition for LPV}
 
 This system is \textbf{exponentially stable} if
 \noindent\begin{equation*}
