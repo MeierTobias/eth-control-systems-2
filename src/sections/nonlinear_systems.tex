@@ -185,7 +185,7 @@ A CLF satisfies
 \noindent\begin{align*}
     V(\mathbf{x})                                              & \geq 0                                                                                           &  & \text{positive definite}  \\
     V(\mathbf{x})                                              & = 0 \Leftrightarrow \mathbf{x} = 0                                                               &  & \text{radially unbounded} \\
-    \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
+    \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial \mathbf{x}} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
 \end{align*}
 
 i.e.\ using the control input $u$, $V$ becomes a Lyapunov function. In the following methods, one aims to find a control Lyapunov function to prove stabilizing behavior with a specific control input.
