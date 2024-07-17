@@ -55,14 +55,13 @@ Is given by
 
 \newpar{}
 \ptitle{Control Effort}
-% TODO: Would one then make S large to achieve a small C?
 
 Is given by
 \begin{equation*}
     z_2=W_2 G_{ur}(s) = W_2 C(s) S(s)
 \end{equation*}
 \begin{itemize}
-    \item Useful to limit the maximum control effort
+    \item Useful to limit the maximum control effort (large $W_2$ yields small $u$)
 \end{itemize}
 
 \newpar{}
@@ -167,7 +166,6 @@ The matrix $A$ contains both the dynamics of the plant and the frequency weights
     K(s) = {C_c(sI-A_c)}^{-1}B_c+D_c
 \end{gather*}
 
-% TODO: Some more remarks on why we need F(s) and how we use the things derived in this section to actually create a controller.
 As $u(s)=K(s)y(s)$ the closed loop TF from the exogenous inputs $w$ to the performance outputs $z$ is given by the \textit{Linear Fractional Transformation}:
 \begin{equation*}
     F(s) = G_{zw}(s) + G_{zu}(s)K(s){(I-G_{yu}(s))}^{-1}G_{yw}(s)

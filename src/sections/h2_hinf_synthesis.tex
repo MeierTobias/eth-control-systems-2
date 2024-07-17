@@ -55,7 +55,7 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
 \ptitle{Technical Considerations}
 
 \begin{enumerate}
-    \item $(\mathbf{A},\mathbf{B}_u)$ stabilizable.     % TODO: If this is only stabilizable but not controllable: Does it mean that LQR yields something that is optimal for the given functional but can still yield a ridiculously slow CL system because of uncontrollable modes? (Probably yes and this would still be as good as it gets :))
+    \item $(\mathbf{A},\mathbf{B}_u)$ stabilizable.
     \item $(\mathbf{C}_z,\mathbf{A})$ detectable.\\
           This ensures that any unstable mode of $\mathbf{A}$ is detected by the performance output.
     \item $\begin{bmatrix} \mathbf{A}- j\omega \mathbf{I}& \mathbf{B}_u\\ \mathbf{C}_z& \mathbf{D}_{zu}\end{bmatrix}$ has full column rank for all $\omega\in\mathbb{R}$\\

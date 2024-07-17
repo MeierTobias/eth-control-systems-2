@@ -61,7 +61,8 @@ The equilibrium is said to be
 \end{itemize}
 
 \subsubsection{Lyapunov Functions}
-\textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the equilibrium point and non-increasing along all trajectories.} % TODO: non-increasing in t but could be increasing in x ???
+\textit{Lyapunov functions are, in a sense, a notion of energy: non-negative, minimized (0) only at the equilibrium point and non-increasing along all trajectories.}
+
 \newpar{}
 For a given compact subset $D$ of the state space containing $\mathbf{x}_e$, a Lyapunov function is defined as
 \noindent\begin{equation*}
@@ -99,8 +100,7 @@ According to the Barbashin-Krasovski theorem, to ensure global stability (not ne
 \begin{itemize}
     \item If there could be multiple equilibrium points one needs to use LaSalle.
     \item $V(\mathbf{x})=0$ must hold in any equilibrium point, even if there are more then one.
-          %TODO:: must the "only equilibrium point" from above be (0,...0)?
-          %TODO:: x eventually approaches the largest pos. inv. set. in which Vdot=0. But are there also pos. inv. sets in which Vdot \neq 0?
+          %TODO:: must the "only equilibrium point" from above be (0,...0)? -> I think not
     \item If one has more than one state vector, then
           \begin{equation*}
               \dot{V}=\sum_{i} \frac{\partial V(\mathbf{x}_i)}{\partial \mathbf{x}_i} \frac{\partial \mathbf{x}_i(t)}{\partial t}

@@ -191,7 +191,7 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
         n_{\max}(s)=(s+3)(s+2)
     \end{equation*}
     5. Identify zeros: $z_1=-3,\;z_2=-2$
-    % TODO: How do we find the corresponding direction? -> see extension above. We could add it for this example as well
+    % TODO: We could add the calculation of the zero directions here
 \end{examplesection}
 
 \subsubsection{Invariant Zeros}
@@ -229,7 +229,7 @@ The corresponding input vectors can then be determined by plugging the invariant
     \item Given zero initial condition and excitation $\mathbf{u}(t)=\mathbf{u}_i e^{s_i t}$ (zero direction and zero frequency) we get
           \begin{equation*}
               \mathbf{y}(t)=-\mathbf{C}e^{\mathbf{A}t}\mathbf{x_i}
-          \end{equation*} which contains no components of the input and becomes $\mathbf{0}$ for a corresponding non-zero initial condition.    % TODO: Doesn't the latter depend on the eigenvalues of A (poles)?
+          \end{equation*} which contains no components of the input and becomes $\mathbf{0}$ for a corresponding non-zero initial condition.
     \item For non-minimal realizations invariant zeros can give additional zeros (correspond to uncontrollable/unobservable modes).
 \end{itemize}
 
@@ -298,7 +298,6 @@ where
     \item Calculate the ranks $r_i = \text{rank}(\mathbf{R_i})$ which indicate the number of poles at location $p_i$ that are needed.
           \begin{itemize}
               \item The order of the resulting state space model will be $n=\sum_{i=1}^{n_d}r_i\geq n_d$
-              \item Check $n\le n_d$ after calculating $r_i$. % TODO: This is the opposite of the bullet point above (one of them is wrong)
           \end{itemize}
     \item Now the $\mathbf{A}$ matrix can be assembled
           \begin{equation*}
@@ -555,7 +554,6 @@ If we then provide the vector spaces with a norm, a \textbf{matrix norm is induc
     \|\mathbf{A}\|_p:=\sup_{\mathbf{x}\neq0}\frac{\|\mathbf{Ax}\|_p}{\|\mathbf{x}\|_p}=\max_{\|\mathbf{x}\|_p=1}\|\mathbf{Ax}\|_p
 \end{equation*}
 which means that the induced p-norm of $\mathbf{A}$ measures how much multiplication by $\mathbf{A}$ amplifies the p-norm of a vector. In other words, $\|\mathbf{A}\|_p$ is the \textbf{gain} of the operator $\mathbf{A}$. The p-norm finds the maximum possible amplification of a vector with length 1.
-% TODO: Should we add the proofs why p-norms are norms?
 
 \newpar{}
 \ptitle{Properties of Induced Norms}
@@ -765,8 +763,8 @@ The $\mathcal{H}_{\infty}$ norm is induced by the $\mathcal{L}_2$ norm.
 \ptitle{Remarks}
 
 \begin{itemize}
-    \item In words, the maximum amplification of the \textit{signal} energy in time domain corresponds to the maximum singular value of the \textit{system} it propagates through.   % TODO: Correct?
-    \item In SISO systems, the $\mathcal{H}_\infty$ norm corresponds to the peak value of the Bode plot.    % TODO: i.e.\ energy amplification in time domain correlates with magnitude peak in frequency domain? Kind of wild
+    \item In words, the maximum amplification of the \textit{signal} energy in time domain corresponds to the maximum singular value of the \textit{system} it propagates through.   % TODO: "in time domain" correct?
+    \item In SISO systems, the $\mathcal{H}_\infty$ norm corresponds to the peak value of the Bode plot.
     \item Submultiplicative property for $\mathcal{H}_\infty$ holds (because induced).
     \item Note that the singular values are frequency-dependent i.e.\ can be shown in a Bode plot.
 \end{itemize}

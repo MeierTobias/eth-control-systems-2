@@ -7,7 +7,7 @@ with a \textit{reference signal} $r$ (scalar) \textit{scaling vector} $\mathbf{S
     % \includegraphics[width = \linewidth]{full_state.png}
     \input{BSB/state_feedback.tex}
 \end{center}
-%TODO:: tikz image with bold vectors to show the dimensions better
+
 The corresponding closed-loop system is
 \noindent\begin{align*}
     \dot{\mathbf{x}} & =(\mathbf{A}-\mathbf{BK})\mathbf{x}+\mathbf{B}\bar{N}r, & \bar{N}=\mathbf{KS} \\
@@ -79,9 +79,7 @@ If the system is \textbf{controllable} but not in reachable canonical form, the 
 \end{itemize}
 
 \paragraph{Unreachable/Uncontrollable Modes}
-% TODO: Frazzoli mixes up reachability and controllability in lecture 3, page 14. Can they be used interchangeably here?
-% See also on page 21 where he uses "[...] is reachable, on can change its poles at will "
-Controllability (Reachability too?) is a \textbf{necessary and sufficient condition} for \textbf{arbitrary} pole placement.
+Controllability (or reachability) is a \textbf{necessary and sufficient condition} for \textbf{arbitrary} pole placement.
 Conversely, in an uncontrollable system in modal coordinates there will be at least one state
 \begin{equation*}
     \dot{\tilde{x}}_i\quad=\quad\lambda_i\tilde{x}_i+\tilde{b}_i u

@@ -1,16 +1,9 @@
 \section{Reachability and Observability}
 \begin{itemize}
     \item If a transfer function does not contain any pole-zero-cancellations, it is observable, controllable and reachable.
-    \item These conditions quantify the facts that for state-space control
-          \begin{itemize}
-              \item One needs to be able to influence states.
-              \item One needs to capture system dynamics at the output.
-          \end{itemize}
     \item Duality: $\mathbf{A},\mathbf{B}$ are reachable if and only if $\mathbf{A^T}, \mathbf{B^T}$ are observable.
     \item Structural properties of a system (\textbf{not} affected by similarity transforms or even feedback control!)
 \end{itemize}
-
-% TODO: I would suggest to move this part into the corresponding subsections below because most of the information is already there and not jet introduced at this point.
 
 \subsection{Reachability/Controllability}
 
@@ -24,14 +17,13 @@ An LTI system is reachable if there exists a control signal that takes the syste
 Mathematically expressed, a system is reachable if and only if the reachability matrix $\mathbf{R}$ has \textbf{full row rank} $n$.
 \begin{align*}
     \text{rank}(\mathbf{R}) & = n                            \\
-    \det(\mathbf{R})        & \neq 0                         \\  % TODO: Maybe remove this and the line below. (I think only the Rank operator is correct.)
     \mathbf{\mathbf{x}}     & \in \mathrm{Range}(\mathbf{R})
 \end{align*}
 
 \newpar{}
 \ptitle{Remarks}
 \begin{itemize}
-    \item In the latter case, the (possibly underdetermined) linear system can be solved for $\mathbf{U}$ which yields the desired input sequence to fullfil the condition. % TODO: What does this mean? 
+    \item If the system is reachable, then $\mathbf{x}[n] = \mathbf{RU}$ can be solved for $\mathbf{U}$ which represents the desired sequence of input signals.
     \item Note that the condition arises from the Cayley Hamilton Theorem.
     \item For \textbf{continuous-time systems} controllability and reachability are the same.
 \end{itemize}
@@ -47,14 +39,13 @@ This is a necessary but not sufficient condition for reachability of the whole s
 \subsubsection{DT Systems: Controllability}
 
 \begin{itemize}
-    \item A DT LTI system is controllable if, for any initial condition $\mathbf{x}_0$, there exists a control input that brings the state $x$ to $0$ in finite time (Note: For CT one has the ``opposite'' condition). % TODO: This is wrong: Reachability is the ``opposite'' condition.
-    \item Reachability always implies controllability
+    \item A DT LTI system is controllable if, for any initial condition $\mathbf{x}_0$, there exists a control input that brings the state $x$ to $0$ in finite time (Note: For Reachability one has the ``opposite'' condition).
+    \item Reachability always implies controllability and uncontrollable systems are never reachable
     \item Controllability only implies reachability if $\mathbf{A}_d$ is invertible
     \item An unreachable DT system with non-invertible $\mathbf{A}_d$ could be controllable (Eigenvalues at 0). E.g.:
           \begin{itemize}
               \item $\mathbf{x}[k+1] = 0\mathbf{x}[k] + 0\mathbf{u}[k]$ is controllable (state goes to $0$) but unreachable as $\det(\mathbf{R})=0$.
           \end{itemize}
-          % TODO: Can an uncontrollable system be reachable? (I don't think so) -> NO 
 \end{itemize}
 
 \subsection{Observability}
@@ -73,7 +64,6 @@ An LTI system is observable if, for any initial condition $\mathbf{x}_0$, this i
 Mathematically expressed, a system is observable if and only if the observability matrix $\mathbf{O}$ has \textbf{full column rank} $n$.
 \begin{align*}
     \text{rank}(\mathbf{O}) & = n                     \\
-    \det(\mathbf{O})        & \neq 0                  \\
     \mathbf{x}              & \notin \ker(\mathbf{O})
 \end{align*}
 
@@ -93,7 +83,6 @@ This is a necessary but not sufficient condition for observability of the whole 
 
 \subsection{Modal View: Stabilizability and Detectability}
 In a system that is stabilizable and detectable all the modes that cannot be controlled and/or observed must behave ``nicely'' on their own.
-% TODO: Is it right that these two conditions are just a "weaker" subset of Reachability/Observability? -> NO, they are super sets (a reachable system is always stabilizable but an unreachable system can be stabilizable if the unreachable modes are stable.)
 
 \newpar{}
 \ptitle{Stabilizability}
