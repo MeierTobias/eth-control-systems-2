@@ -171,7 +171,7 @@ We model the errors with the covariance matrices
 \end{align*}
 The (Luenberger) observer is given by
 \begin{align*}
-    \dot{\hat{\textbf{x}}}(t) & =(\mathbf{A}-\mathbf{LC})\hat{\mathbf{c}}(t)+\mathbf{Bu}(t)+\mathbf{Ly}(t) \\
+    \dot{\hat{\textbf{x}}}(t) & =(\mathbf{A}-\mathbf{LC})\hat{\mathbf{x}}(t)+\mathbf{Bu}(t)+\mathbf{Ly}(t) \\
     \hat{\mathbf{y}}(t)       & =\mathbf{C}\hat{\mathbf{x}}(t)
 \end{align*}
 

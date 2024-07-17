@@ -9,8 +9,8 @@ Holding results in a CT signal with average delay $T/2$.
 
 \ptitle{Zero-Order Hold (ZOH)}
 \begin{align*}
-    y(t) & =u[k], \; \forall \; kT \le t < (k+1)T, \;k \in \mathbb{Z} \\
-    y(t) & =u[\lfloor t/T\rfloor], \; \forall t \in \mathbb{R}
+    y(t) & =u[k],                                                &  & \forall \; kT \le t < (k+1)T, \;k \in \mathbb{Z} \\
+    y(t) & =u\left[\left\lfloor \frac{t}{T}\right\rfloor\right], &  & \forall t \in \mathbb{R}
 \end{align*}
 
 \subsubsection{Sampling, A \textrightarrow{} D}

@@ -9,14 +9,13 @@ The dynamics of the standard setup for modern control synthesis are given by
 LQR, LQE, LQG are applied to special cases of the standard setup.
 \subsubsection{LQR}
 
-\newpar{}
 \ptitle{Problem Statement}
 
 In the LQR problem we assume
 \begin{itemize}
     \item Full state feedback: $\mathbf{C_y}=\mathbf{\mathbb{I}}$
     \item No disturbance input: $w=0$ ($\mathbf{B}_w=\mathbf{D}_{zw}=\mathbf{D}_{yw}=\mathbf{0}$)
-    \item $\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$  % TODO: Intuition. Means what?
+    \item $\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$  % TODO: Intuition. Means what? 
 \end{itemize}
 and try to find a control signal $u(t,x)$ that minimizes
 \begin{equation*}
@@ -74,7 +73,6 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
 
 \subsubsection{LQE / Kalman Filter}
 
-\newpar{}
 \ptitle{Problem Statement}
 
 In the LQE problem we assume
@@ -160,11 +158,7 @@ where $\mathbf{X}$ is the stabilizing solution to the corresponding ARE and an \
 where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
 
 % TODO: Why do the partial solutions F and L contain the terms that were = 0 per definition in the LQR and LQE case?
-
-\newpar{}
-\ptitle{Technical Considerations}
-
-Remember that LGQ combines LQR and LQE.
+% -> not assumed for this example: If you remove them (=0), you're getting the the same F,K/L as in the LQR/LQE chapters (both original ones and h2 synthesis)
 
 \subsection{\texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
 $\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values).
@@ -200,7 +194,6 @@ However, the optimal controller(s) are such that
 \end{enumerate}
 
 \subsubsection[Suboptimal H-infinity Synthesis]{Suboptimal $\mathcal{H}_\infty$ Synthesis}
-\newpar{}
 \ptitle{Problem Statement}
 In practice one pursues a sub-optimal design, i.e., given $\gamma>0$, find a controller $K$ such that
 \begin{equation*}
@@ -223,20 +216,20 @@ where we search for the smallest $\gamma$ such that the controller can achieve n
 
 For feasibility one must have
 \begin{enumerate}
-    \item $(\mathbf{A}_{ext}, \mathbf{B}_2)$ must be stabilizable
+    \item $(\mathbf{A}_{ext}, \mathbf{B}_u)$ must be stabilizable
     \item $(\mathbf{C}_{ext, y},\mathbf{A}_{ext})$ must be detectable
-    \item $\begin{bmatrix}\mathbf{A}-j\omega \mathbf{I}&\mathbf{B}_w\end{bmatrix},\begin{bmatrix}\mathbf{A}^{\prime}-j\omega \mathbf{I}&\mathbf{C}_z^{\prime}\end{bmatrix}$ must have full row rank
+    \item $\begin{bmatrix}\mathbf{A}-j\omega \mathbf{I}&\mathbf{B}_w\end{bmatrix},\begin{bmatrix}\mathbf{A}^{\mathsf{H}}-j\omega \mathbf{I}&\mathbf{C}_z^{\mathsf{H}}\end{bmatrix}$ must have full row rank
 \end{enumerate}
 \newpar{}
 A controller $\mathbf{K}$ fulfilling the cost inequality exists, only if 
 \begin{enumerate}
     \item The following ARE has a solution for $\mathbf{X}_{\infty}$
     \begin{equation*}
-        \mathbf{A}^{\prime}\mathbf{X}_{\infty}+\mathbf{X}_{\infty}\mathbf{A}+\mathbf{C}_{z}^{\prime}\mathbf{C}_{z}=\mathbf{X}_{\infty}(\mathbf{B}_{u}\mathbf{B}_{u}^{\prime}-\gamma^{-2}\mathbf{B}_{w}\mathbf{B}_{w}^{\prime})\mathbf{X}_{\infty}
+        \mathbf{A}^{\mathsf{H}}\mathbf{X}_{\infty}+\mathbf{X}_{\infty}\mathbf{A}+\mathbf{C}_{z}^{\mathsf{H}}\mathbf{C}_{z}=\mathbf{X}_{\infty}(\mathbf{B}_{u}\mathbf{B}_{u}^{\mathsf{H}}-\gamma^{-2}\mathbf{B}_{w}\mathbf{B}_{w}^{\mathsf{H}})\mathbf{X}_{\infty}
     \end{equation*}
     \item The following ARE has a solution for $\mathbf{Y}_{\infty}$
     \begin{equation*}
-        \mathbf{A}\mathbf{Y}_\infty + \mathbf{Y}_\infty \mathbf{A}^{\prime} + \mathbf{B}_w^{\prime} \mathbf{B}_w = \mathbf{Y}_\infty (\mathbf{C}_y \mathbf{C}_y^{\prime} - \gamma^{-2} \mathbf{C}_z \mathbf{C}_z^{\prime}) \mathbf{Y}_\infty
+        \mathbf{A}\mathbf{Y}_\infty + \mathbf{Y}_\infty \mathbf{A}^{\mathsf{H}} + \mathbf{B}_w^{\mathsf{H}} \mathbf{B}_w = \mathbf{Y}_\infty (\mathbf{C}_y \mathbf{C}_y^{\mathsf{H}} - \gamma^{-2} \mathbf{C}_z \mathbf{C}_z^{\mathsf{H}}) \mathbf{Y}_\infty
     \end{equation*}
     \item The matrix $\gamma^2 \mathbf{I} - \mathbf{Y}_{\infty} \mathbf{X}_{\infty}$ is positive definite
 \end{enumerate}
@@ -258,11 +251,11 @@ Remarks
     \item For $\gamma>1$ use relaxed weights
     \item The final controller gains are 
     \begin{equation*}
-        \mathbf{F}_u=-\mathbf{B}_u^{\prime}\mathbf{X}_\infty,\quad \mathbf{F}_w=\frac1{\gamma^2}\mathbf{B}_w^{\prime}\mathbf{X}_\infty 
+        \mathbf{F}_u=-\mathbf{B}_u^{\mathsf{H}}\mathbf{X}_\infty,\quad \mathbf{F}_w=\frac1{\gamma^2}\mathbf{B}_w^{\mathsf{H}}\mathbf{X}_\infty 
     \end{equation*}
     \item The final observer gain is 
     \begin{equation*}
-        \mathbf{L}=-{(\mathbf{I}-\gamma^{-2}\mathbf{Y}_\infty \mathbf{X}_\infty)}^{-1}\mathbf{Y}_\infty \mathbf{C}_y^{\prime}
+        \mathbf{L}=-{(\mathbf{I}-\gamma^{-2}\mathbf{Y}_\infty \mathbf{X}_\infty)}^{-1}\mathbf{Y}_\infty \mathbf{C}_y^{\mathsf{H}}
     \end{equation*}
 \end{itemize}
 

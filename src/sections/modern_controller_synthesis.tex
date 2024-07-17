@@ -91,17 +91,19 @@ with
 where $M(s)$ is the TF from the output of $\Delta$ to its input.
 
 \subsubsection{First Order Weights}
-\textbf{MATLAB}: \texttt{makeweight}
+
+Weights with magnitude $m$ can be achieved by:
 \newpar{}
 \ptitle{Lowpass}
 \begin{equation*}
-    W(s) = \frac{M}{\frac{Ms}{\omega}+1}
+    W(s) = \frac{m}{\frac{ms}{\omega}+1}
 \end{equation*}
 
 \ptitle{Highpass}
 \begin{equation*}
-    W(s) = \frac{Ms}{s+M\omega}
+    W(s) = \frac{ms}{s+m\omega}
 \end{equation*}
+\textbf{MATLAB}: \texttt{makeweight}
 
 \subsection{State Space Representation}
 To synthesize a controller an assembled state space model of the generalized system ($G$) can be constructed. This yields a similar approach as the transfer function-based one before.

@@ -100,7 +100,7 @@ According to the Barbashin-Krasovski theorem, to ensure global stability (not ne
 \begin{itemize}
     \item If there could be multiple equilibrium points one needs to use LaSalle.
     \item $V(\mathbf{x})=0$ must hold in any equilibrium point, even if there are more then one.
-          %TODO:: must the "only equilibrium point" from above be (0,...0)? -> I think not
+          %TODO:: must the "only equilibrium point" from above be (0,...0)? -> I think not -> if multiple equilibria are possible, they can't all be 0 -> doesn't have to be 0
     \item If one has more than one state vector, then
           \begin{equation*}
               \dot{V}=\sum_{i} \frac{\partial V(\mathbf{x}_i)}{\partial \mathbf{x}_i} \frac{\partial \mathbf{x}_i(t)}{\partial t}
@@ -172,7 +172,7 @@ LaSalle's invariance theorem is useful if Lyapunov stability is given by the exi
 \newpar{}
 \textbf{Remarks}
 \begin{itemize}
-    \item For the pendulum with Lyapunov function $\dot{V}(x)=-c\dot{\theta}^2$, one has multiple states (turning points) where $\dot{V}=0$ namely whenever $\dot{\theta}=0$. However the only invariant $\dot{\theta}=0$ is the one in the origin (when the pendulum stopped).
+    \item For the pendulum with Lyapunov function $\dot{V}=-c\dot{\theta}^2$, one has multiple states (turning points) where $\dot{V}=0$ namely whenever $\dot{\theta}=0$. However the only invariant $\dot{\theta}=0$ is the one in the origin (when the pendulum stopped).
 \end{itemize}
 
 
@@ -185,7 +185,7 @@ A CLF satisfies
 \noindent\begin{align*}
     V(\mathbf{x})                                              & \geq 0                                                                                           &  & \text{positive definite}  \\
     V(\mathbf{x})                                              & = 0 \Leftrightarrow \mathbf{x} = 0                                                               &  & \text{radially unbounded} \\
-    \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial t} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
+    \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial \mathbf{x}} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
 \end{align*}
 
 i.e.\ using the control input $u$, $V$ becomes a Lyapunov function. In the following methods, one aims to find a control Lyapunov function to prove stabilizing behavior with a specific control input.
@@ -300,10 +300,11 @@ and thus proves the stability of the ``error'' system.
 %     \dot{\mathbf{x}} & = f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{u}_0(\mathbf{x}) + g_0(\mathbf{x})\mathbf{e}                                                               \\
 %     \dot{\mathbf{e}} & = \dot{\mathbf{z}} - \underbrace{\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}(\dot{\mathbf{x}})}_{\dot{\mathbf{u}}_0} = \mathbf{v}
 % \end{align*}
-Using $\dot{u_0}=\dot{z}-\dot{e}$ one finally finds the stabilizing control law as
+
+Using $\dot{\mathbf{u}}_0=\dot{\mathbf{z}}-\dot{\mathbf{e}}$ one finally finds the stabilizing control law as
 \begin{align*}
-    u_1(x,z)  = \frac{1}{g_1(x,z)} & \left(\frac{\partial u_0(x)}{\partial x}\left(f_0(x)+g_0(x)z\right)-f_1(x,z) \right. \\
-                                   & \left. -\frac{\partial V_0(x)}{\partial x}g_0(x)-k_1(z-u_0(x))\right)
+    u_1(\mathbf{x},\mathbf{z})  = \frac{1}{g_1(\mathbf{x},\mathbf{z})} & \left(\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}\left(f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{z}\right)-f_1(\mathbf{x},\mathbf{z}) \right. \\
+                                   & \left. -\frac{\partial V_0(\mathbf{x})}{\partial \mathbf{x}}g_0(\mathbf{x})-k_1(\mathbf{z}-\mathbf{u}_0(\mathbf{x}))\right)
 \end{align*}
 
 \newpar{}
@@ -322,10 +323,10 @@ Using $\dot{u_0}=\dot{z}-\dot{e}$ one finally finds the stabilizing control law 
 \paragraph{Recursive Backstepping}
 The same approach can be used recursively as
 \begin{align*}
-    \dot{x}     & =\quad f_{0}(x)+g_{0}(x)z_{1},                     \\
-    \dot{z}_{1} & =\quad f_{1}(x,z_{1})+g_{1}(x,z_{1})z_{2},         \\
+    \dot{\mathbf{x}}     & =\quad f_{0}(\mathbf{x})+g_{0}(\mathbf{x})\mathbf{z}_{1},                     \\
+    \dot{\mathbf{z}}_{1} & =\quad f_{1}(\mathbf{x},\mathbf{z}_{1})+g_{1}(\mathbf{x},\mathbf{z}_{1})\mathbf{z}_{2},         \\
                 & \vdots                                             \\
-    \dot{z}_{m} & =\quad f_{m}(x,z_{1},\ldots,z_{m})+g_{1}(x,z_{m})u
+    \dot{\mathbf{z}}_{m} & =\quad f_{m}(\mathbf{x},\mathbf{z}_{1},\ldots,\mathbf{z}_{m})+g_{1}(\mathbf{x},\mathbf{z}_{m})\mathbf{u}
 \end{align*}
 
 \subsection{Feedback Linearization}
