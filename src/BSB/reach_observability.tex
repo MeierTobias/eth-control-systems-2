@@ -1,0 +1,26 @@
+% Please ignore the mess I've created here, I don't feel comfortable either.
+\begin{center}
+    \begin{tikzcd}[ampersand replacement=\&]
+        \substack{\text{unstable} \\ \text{modes}}      \&[2em] \substack{\text{all} \\ \text{modes}} \&[-3em] \\[-2em]
+        \& \mathcal{C} \arrow[d, teal, xshift=-0.5ex,
+        "{\color{teal}\begin{matrix}                        %chktex 18
+            \mathsf{CT}: & \text{always}                \\
+            \mathsf{DT}: & \mathbf{A}_d \text{ invert.}
+        \end{matrix}}
+        "'                                                  %chktex 18
+        ] \& {\footnotesize\begin{cases}
+                    \mathsf{CT:} & \mathbf{x}_0 = 0 \to~\mathbf{x_f} \\
+                    \mathsf{DT:} & \mathbf{x_f} \to~0
+                \end{cases}}
+        \\[2em]
+        \mathcal{S}                                     \& \mathcal{R} \arrow[l]\arrow[u, xshift=0.5ex] \&
+        {\footnotesize\begin{cases}
+                    \mathbf{x}_0 = 0 \to~\mathbf{x_f}
+                \end{cases}}
+        \\
+        \mathcal{D}                                     \& \mathcal{O} \arrow[l]    \&
+        {\footnotesize\begin{cases}
+                    \mathbf{x}_0 \gets~\mathbf{u},\mathbf{y}
+                \end{cases}}
+    \end{tikzcd}
+\end{center}
