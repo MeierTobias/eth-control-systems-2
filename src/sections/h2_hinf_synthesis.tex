@@ -1,4 +1,4 @@
-\subsection{\texorpdfstring{$\mathcal{H}_2$}{H2} Synthesis}\label{h2_synth}
+\subsection[H2 Synthesis]{$\mathcal{H}_2$ Synthesis}\label{h2_synth}
 The dynamics of the standard setup for modern control synthesis are given by
 \begin{align*}
     \quad \mathbf{x}(0) & =\mathbf{x}_{0}                                                                              \\
@@ -160,7 +160,7 @@ where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
 % TODO: Why do the partial solutions F and L contain the terms that were = 0 per definition in the LQR and LQE case?
 % -> not assumed for this example: If you remove them (=0), you're getting the the same F,K/L as in the LQR/LQE chapters (both original ones and h2 synthesis)
 
-\subsection{\texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
+\subsection[H-infinity Synthesis]{$\mathcal{H}_\infty$ Synthesis}
 $\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values).
 
 \ptitle{Differentiation from $\mathcal{H}_2$ Synthesis}
@@ -181,7 +181,7 @@ $\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values
     \item $\mathcal{H}_\infty$ synthesis requires (as $\mathcal{H}_2$) a detectable and stabilizable plant.
 \end{itemize}
 
-\subsubsection{Optimal \texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
+\subsubsection[Optimal H-infinity Synthesis]{Optimal $\mathcal{H}_\infty$ Synthesis}
 In principle, we would like to find a controller K that minimizes the energy ($\mathcal{L}_2$) gain of the CL system i.e.
 \begin{equation*}
     \left\|\mathbf{T}_{zw}\right\|_{\mathcal{H}_\infty}=\sup_{w\neq0}\frac{\left\|\mathbf{z}\right\|_{\mathcal{L}_2}}{\left\|\mathbf{w}\right\|_{\mathcal{L}_2}}
@@ -195,6 +195,7 @@ However, the optimal controller(s) are such that
 
 \subsubsection[Suboptimal H-infinity Synthesis]{Suboptimal $\mathcal{H}_\infty$ Synthesis}
 \ptitle{Problem Statement}
+
 In practice one pursues a sub-optimal design, i.e., given $\gamma>0$, find a controller $K$ such that
 \begin{equation*}
     \|\mathbf{T}_{zw}\|_{\mathcal{H}_\infty}<\gamma
