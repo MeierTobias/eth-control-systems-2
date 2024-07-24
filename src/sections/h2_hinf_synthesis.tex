@@ -1,4 +1,4 @@
-\subsection{\texorpdfstring{$\mathcal{H}_2$}{H2} Synthesis}
+\subsection[H2 Synthesis]{$\mathcal{H}_2$ Synthesis}\label{h2_synth}
 The dynamics of the standard setup for modern control synthesis are given by
 \begin{align*}
     \quad \mathbf{x}(0) & =\mathbf{x}_{0}                                                                              \\
@@ -9,14 +9,13 @@ The dynamics of the standard setup for modern control synthesis are given by
 LQR, LQE, LQG are applied to special cases of the standard setup.
 \subsubsection{LQR}
 
-\newpar{}
 \ptitle{Problem Statement}
 
 In the LQR problem we assume
 \begin{itemize}
     \item Full state feedback: $\mathbf{C_y}=\mathbf{\mathbb{I}}$
     \item No disturbance input: $w=0$ ($\mathbf{B}_w=\mathbf{D}_{zw}=\mathbf{D}_{yw}=\mathbf{0}$)
-    \item $\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$
+    \item $\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$  % TODO: Intuition. Means what? 
 \end{itemize}
 and try to find a control signal $u(t,x)$ that minimizes
 \begin{equation*}
@@ -43,7 +42,7 @@ which yields the known LQR problem
 
 One can show that minimizing $\|\mathbf{z}\|_2^2$ imposes the following ARE on $\mathbf{X}_F$:
 \begin{equation*}
-    \mathbf{A}^{\mathsf{T}}\mathbf{X}_F + \mathbf{X}_F \mathbf{A} - \mathbf{X}_F \mathbf{B}_u{\left(\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{B}_{zu}\right)}^{-1} \mathbf{B}_u^{\mathsf{T}} \mathbf{X}_F + \mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z = \mathbf{0}
+    \mathbf{A}^{\mathsf{T}}\mathbf{X}_F + \mathbf{X}_F \mathbf{A} - \mathbf{X}_F \mathbf{B}_u{(\underbrace{\mathbf{D}_{zu}^{\mathsf{T}}\mathbf{D}_{zu}}_{\mathbf{R}})}^{-1} \mathbf{B}_u^{\mathsf{T}} \mathbf{X}_F + \underbrace{\mathbf{C}_z^{\mathsf{T}}\mathbf{C}_z}_{Q} = \mathbf{0}
 \end{equation*}
 Solving this ARE yields the controller
 \begin{equation*}
@@ -72,10 +71,8 @@ where $\mathbf{X}_F$ is symmetric and positive semidefinite.
     \item Technical considerations 1.-3.\ ensure that the Riccati equation admits a solution $\mathbf{Y}$ that is positive semi-definite.
 \end{itemize}
 
+\subsubsection{LQE / Kalman Filter}
 
-\subsubsection{LQE}
-
-\newpar{}
 \ptitle{Problem Statement}
 
 In the LQE problem we assume
@@ -83,7 +80,7 @@ In the LQE problem we assume
     \item That $\mathbf{u}$ takes the role uf the observer update
     \item Full state updates: $\mathbf{B}_u=\mathbf{\mathbb{I}}$ ($u$ updates the states)
     \item Zero initial conditions: $\tilde{\mathbf{x}}(0)=\mathbf{x}(0)-\hat{\mathbf{x}}(0)=0$
-    \item $\mathbf{B}_w \mathbf{D}_{yw}^{\mathsf{T}}=0$
+    \item $\mathbf{B}_w \mathbf{D}_{yw}^{\mathsf{T}}=0$ i.e., process noise and sensor noise are uncorrelated.
 \end{itemize}
 and try to find an update signal $\mathbf{u}(t,\tilde{x})\in \mathcal{L}_2$ that minimizes power in the error signal due to white noise disturbance $w$.
 
@@ -101,6 +98,7 @@ and are modelled by
     \mathbf{D}_{yw}= & \begin{bmatrix}\mathbf{0}&\sqrt{\mathbf{R}}\end{bmatrix}              & \Leftrightarrow \mathbf{\mathbf{R}} & = \mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}
 \end{align*}
 where process noise and sensor noise are not correlated i.e.
+% TODO: Why does he use an expectation here but under "Hinf synthesis->simplified setup" he uses the matrices directly and not their expectation w.r.t. "w"
 \begin{equation*}
     \mathbb{E}\left[\mathbf{w}^{\mathsf{T}} \mathbf{B}_w^{\mathsf{T}} \mathbf{D}_{yw}\mathbf{w}^{\mathsf{T}}\right]=0
 \end{equation*}
@@ -159,12 +157,12 @@ where $\mathbf{X}$ is the stabilizing solution to the corresponding ARE and an \
 \end{equation*}
 where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
 
-\newpar{}
-\ptitle{Technical Considerations}
+% TODO: Why do the partial solutions F and L contain the terms that were = 0 per definition in the LQR and LQE case?
+% -> not assumed for this example: If you remove them (=0), you're getting the the same F,K/L as in the LQR/LQE chapters (both original ones and h2 synthesis)
 
-Remember that LGQ combines LQR and LQE.
+\subsection[H-infinity Synthesis]{$\mathcal{H}_\infty$ Synthesis}
+$\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values).
 
-\subsection{\texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
 \ptitle{Differentiation from $\mathcal{H}_2$ Synthesis}
 \begin{itemize}
     \item $\mathcal{H}_2$ is optimal given
@@ -181,10 +179,9 @@ Remember that LGQ combines LQR and LQE.
 \ptitle{Remarks}
 \begin{itemize}
     \item $\mathcal{H}_\infty$ synthesis requires (as $\mathcal{H}_2$) a detectable and stabilizable plant.
-    \item $\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values).
 \end{itemize}
 
-\subsubsection{Optimal \texorpdfstring{$\mathcal{H}_\infty$}{H-infinity} Synthesis}
+\subsubsection[Optimal H-infinity Synthesis]{Optimal $\mathcal{H}_\infty$ Synthesis}
 In principle, we would like to find a controller K that minimizes the energy ($\mathcal{L}_2$) gain of the CL system i.e.
 \begin{equation*}
     \left\|\mathbf{T}_{zw}\right\|_{\mathcal{H}_\infty}=\sup_{w\neq0}\frac{\left\|\mathbf{z}\right\|_{\mathcal{L}_2}}{\left\|\mathbf{w}\right\|_{\mathcal{L}_2}}
@@ -197,8 +194,8 @@ However, the optimal controller(s) are such that
 \end{enumerate}
 
 \subsubsection[Suboptimal H-infinity Synthesis]{Suboptimal $\mathcal{H}_\infty$ Synthesis}
-\newpar{}
 \ptitle{Problem Statement}
+
 In practice one pursues a sub-optimal design, i.e., given $\gamma>0$, find a controller $K$ such that
 \begin{equation*}
     \|\mathbf{T}_{zw}\|_{\mathcal{H}_\infty}<\gamma
@@ -211,7 +208,8 @@ where we search for the smallest $\gamma$ such that the controller can achieve n
 \begin{itemize}
     \item $\mathbf{z}$ is the performance output given some disturbance $\mathbf{w}$
     \item We want to damp $\mathbf{z}$ given $\mathbf{w}$ (remember the definition of the induced $\mathcal{L}_2$ norm above)
-    \item The aforementioned formula becomes negative if the disturbance energy term is larger than the (hopefully damped) performance output $\mathbf{z}$. A small $\gamma$ gives an even better controller as it is more difficult to achieve negative cost then.
+    \item The aforementioned formula becomes negative if the disturbance energy term is larger than the (hopefully damped) performance output $\mathbf{z}$. A small $\gamma$ gives an even faster controller as it is more difficult to achieve negative cost then.
+    \item Faster is \textbf{not} necessarily better as control effort rises.
 \end{itemize}
 
 \newpar{}
@@ -219,20 +217,20 @@ where we search for the smallest $\gamma$ such that the controller can achieve n
 
 For feasibility one must have
 \begin{enumerate}
-    \item $(\mathbf{A}_{ext}, \mathbf{B}_2)$ must be stabilizable
+    \item $(\mathbf{A}_{ext}, \mathbf{B}_u)$ must be stabilizable
     \item $(\mathbf{C}_{ext, y},\mathbf{A}_{ext})$ must be detectable
-    \item $\begin{bmatrix}\mathbf{A}-j\omega \mathbf{I}&\mathbf{B}_w\end{bmatrix},\begin{bmatrix}\mathbf{A}^{\prime}-j\omega \mathbf{I}&\mathbf{C}_z^{\prime}\end{bmatrix}$ must have full row rank
+    \item $\begin{bmatrix}\mathbf{A}-j\omega \mathbf{I}&\mathbf{B}_w\end{bmatrix},\begin{bmatrix}\mathbf{A}^{\mathsf{H}}-j\omega \mathbf{I}&\mathbf{C}_z^{\mathsf{H}}\end{bmatrix}$ must have full row rank
 \end{enumerate}
 \newpar{}
 A controller $\mathbf{K}$ fulfilling the cost inequality exists, only if 
 \begin{enumerate}
     \item The following ARE has a solution for $\mathbf{X}_{\infty}$
     \begin{equation*}
-        \mathbf{A}^{\prime}\mathbf{X}_{\infty}+\mathbf{X}_{\infty}\mathbf{A}+\mathbf{C}_{z}^{\prime}\mathbf{C}_{z}=\mathbf{X}_{\infty}(\mathbf{B}_{u}\mathbf{B}_{u}^{\prime}-\gamma^{-2}\mathbf{B}_{w}\mathbf{B}_{w}^{\prime})\mathbf{X}_{\infty}
+        \mathbf{A}^{\mathsf{H}}\mathbf{X}_{\infty}+\mathbf{X}_{\infty}\mathbf{A}+\mathbf{C}_{z}^{\mathsf{H}}\mathbf{C}_{z}=\mathbf{X}_{\infty}(\mathbf{B}_{u}\mathbf{B}_{u}^{\mathsf{H}}-\gamma^{-2}\mathbf{B}_{w}\mathbf{B}_{w}^{\mathsf{H}})\mathbf{X}_{\infty}
     \end{equation*}
     \item The following ARE has a solution for $\mathbf{Y}_{\infty}$
     \begin{equation*}
-        \mathbf{A}\mathbf{Y}_\infty + \mathbf{Y}_\infty \mathbf{A}^{\prime} + \mathbf{B}_w^{\prime} \mathbf{B}_w = \mathbf{Y}_\infty (\mathbf{C}_y \mathbf{C}_y^{\prime} - \gamma^{-2} \mathbf{C}_z \mathbf{C}_z^{\prime}) \mathbf{Y}_\infty
+        \mathbf{A}\mathbf{Y}_\infty + \mathbf{Y}_\infty \mathbf{A}^{\mathsf{H}} + \mathbf{B}_w^{\mathsf{H}} \mathbf{B}_w = \mathbf{Y}_\infty (\mathbf{C}_y \mathbf{C}_y^{\mathsf{H}} - \gamma^{-2} \mathbf{C}_z \mathbf{C}_z^{\mathsf{H}}) \mathbf{Y}_\infty
     \end{equation*}
     \item The matrix $\gamma^2 \mathbf{I} - \mathbf{Y}_{\infty} \mathbf{X}_{\infty}$ is positive definite
 \end{enumerate}
@@ -254,11 +252,11 @@ Remarks
     \item For $\gamma>1$ use relaxed weights
     \item The final controller gains are 
     \begin{equation*}
-        \mathbf{F}_u=-\mathbf{B}_u^{\prime}\mathbf{X}_\infty,\quad \mathbf{F}_w=\frac1{\gamma^2}\mathbf{B}_w^{\prime}\mathbf{X}_\infty 
+        \mathbf{F}_u=-\mathbf{B}_u^{\mathsf{H}}\mathbf{X}_\infty,\quad \mathbf{F}_w=\frac1{\gamma^2}\mathbf{B}_w^{\mathsf{H}}\mathbf{X}_\infty 
     \end{equation*}
     \item The final observer gain is 
     \begin{equation*}
-        \mathbf{L}=-{(\mathbf{I}-\gamma^{-2}\mathbf{Y}_\infty \mathbf{X}_\infty)}^{-1}\mathbf{Y}_\infty \mathbf{C}_y^{\prime}
+        \mathbf{L}=-{(\mathbf{I}-\gamma^{-2}\mathbf{Y}_\infty \mathbf{X}_\infty)}^{-1}\mathbf{Y}_\infty \mathbf{C}_y^{\mathsf{H}}
     \end{equation*}
 \end{itemize}
 

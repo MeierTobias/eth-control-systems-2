@@ -91,6 +91,13 @@ because for an initial condition $x_0 = v_i$ the time response is given by
 \end{equation*}
 and $\mathbf{v}_i$ form a basis of the corresponding state space.
 
+\newpar{}
+\ptitle{Remarks}
+\begin{itemize}
+    \item Note that the standard coordinates time response is obtained by simply multiplying the modal components with their eigenvectors and summing over all components.
+    \item Attention, the initial conditions have to be transformed as well.
+\end{itemize}
+
 \begin{examplesection}[Example: Simple Pendulum]
     For a simple pendulum with no damping and no input the state model is given by:
     \begin{equation*}
@@ -115,17 +122,16 @@ and $\mathbf{v}_i$ form a basis of the corresponding state space.
         \end{bmatrix}
     \end{equation*}
 
-    With the initial condition
+    With the transformed initial condition
     \noindent\begin{equation*}
         \mathbf{V}^{-1}\mathbf{x}(0) = \mathbf{V}^{-1}{[1, 0]}^{\mathsf{T}} = {\left[\frac{1}{2}, \frac{1}{2}\right]}^{\mathsf{T}} = \tilde{\mathbf{x}}(0)
     \end{equation*}
-    the eigenvectors can be visualized as following:
 
     \includegraphics[width=\linewidth]{images/mode_shapes_pendulum.png}
 
     Due to the purely complex eigenvalues, the eigenvectors only rotate when evolving over time.
 
-    Combining the two modes, we get
+    As we transformed the initial conditions into modal coordinates, the time response in standard coordinates can be recovered by multiplication with the eigenvectors
     \begin{align*}
         \mathbf{x}_{ICR}(t) & = e^{j\sqrt{\frac{g}{l}}t}\frac{1}{2}
         \begin{bmatrix}
@@ -144,5 +150,5 @@ and $\mathbf{v}_i$ form a basis of the corresponding state space.
               \cos(\omega t) \\
               \textcolor{red}{-\omega\sin(\omega t)}
           \end{bmatrix}
-    \end{align*}
+    \end{align*}    
 \end{examplesection}

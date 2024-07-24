@@ -1,3 +1,6 @@
 [submodule "src/template"]
 	path = src/template
 	url = https://github.com/MeierTobias/eth-summary-template.git
+[submodule "src/common-math-sections"]
+	path = src/common-math-sections
+	url = https://github.com/MeierTobias/eth-common-math-summary.git

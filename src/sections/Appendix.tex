@@ -2,97 +2,12 @@
 \subsection{Matrices}
 \subsubsection{Matrix Properties}\label{app:mat_prop}
 
-\ptitle{Orthogonal Matrix}
-\noindent\begin{equation*}
-    \mathbf{U}^{\mathsf{T}}\mathbf{U}=\mathbf{UU}^{\mathsf{T}}=\mathbf{I}\quad \mathbf{U}\in \mathbb{R}^{n\times n}
-\end{equation*}
+\input{common-math-sections/src/matrices/properties.tex}
 
-\ptitle{Unitary Matrix}
-\noindent\begin{equation*}
-    \mathbf{U}^{\mathsf{H}}\mathbf{U}=\mathbf{UU}^{\mathsf{H}}=\mathbf{I}\quad \mathbf{U}\in \mathbb{R}^{n\times n}
-\end{equation*}
-\begin{itemize}
-    \item preserves the euclidian norm:
-          \noindent\begin{equation*}
-              \|\mathbf{Ux}\| _2=\|\mathbf{x}\|_2 \quad \forall \mathbf{x} \in \mathbb{C}^n
-          \end{equation*}
-\end{itemize}
+\subsubsection{Matrix Algebra}
 
-\ptitle{Hermitian Matrix}
-\noindent\begin{equation*}
-    \mathbf{S}=\mathbf{S}^{\mathsf{H}}
-\end{equation*}
-\begin{itemize}
-    \item For every hermitian matrix $\mathbf{S}$ exists a unitary matrix $\mathbf{U}$ s.t. $\mathbf{U}^{\mathsf{H}}\mathbf{SU}$ is a diagonal matrix.
-\end{itemize}
-
-\subsubsection{Transpose, Adjoint and Inverse}
-\noindent\begin{align*}
-    \mathbf{A}^\mathsf{H}                  & = {(\mathbf{A}^\mathsf{T})}^*                   \\[.75em]
-    {({\mathbf{A}}^\mathsf{T})}^\mathsf{T} & = \mathbf{A}                                    \\
-    {({\mathbf{A}}^\mathsf{H})}^\mathsf{H} & = \mathbf{A}                                    \\
-    {({\mathbf{A}}^{-1})}^{-1}             & = \mathbf{A}                                    \\[.75em]
-    {(\lambda\mathbf{A})}^\mathsf{T}       & = \lambda\mathbf{A}^\mathsf{T}                  \\
-    {(\lambda\mathbf{A})}^\mathsf{H}       & = \lambda\mathbf{A}^\mathsf{H}                  \\
-    {(\lambda\mathbf{A})}^{-1}             & = \lambda^{-1}\mathbf{A}^{-1}                   \\[.75em]
-    {(\mathbf{A}+\mathbf{B})}^\mathsf{T}   & = \mathbf{A}^\mathsf{T} + \mathbf{B}^\mathsf{T} \\
-    {(\mathbf{A}+\mathbf{B})}^\mathsf{H}   & = \mathbf{A}^\mathsf{H} + \mathbf{B}^\mathsf{H} \\[.75em]
-    {(\mathbf{A}\mathbf{B})}^\mathsf{T}    & = \mathbf{B}^\mathsf{T}\mathbf{A}^\mathsf{T}    \\
-    {(\mathbf{A}\mathbf{B})}^\mathsf{H}    & = \mathbf{B}^\mathsf{H}\mathbf{A}^\mathsf{H}    \\
-    {(\mathbf{A}\mathbf{B})}^{-1}          & = \mathbf{B}^{-1} \mathbf{A}^{-1}               \\[.75em]
-    \det(\mathbf{A}^\mathsf{T})            & = \det(\mathbf{A})                              \\
-    \det(\mathbf{A}^\mathsf{H})            & = {\det(\mathbf{A})}^*                          \\
-    \det(\mathbf{A}^{-1})                  & = {\det(\mathbf{A})}^{-1}                       \\[.75em]
-    \mathrm{rank}{(\mathbf{A}^\mathsf{H})} & = \mathrm{rank}(\mathbf{A})                     \\
-    \mathrm{rank}{(\mathbf{A}^{-1} )}      & = \mathrm{rank}(\mathbf{A})
-\end{align*}
-
-\ptitle{\textbf{A} is symmetric}
-\noindent\begin{align*}
-    {\mathbf{A}}^\mathsf{T} & = \mathbf{A}   \\
-    {\mathbf{A}}^\mathsf{H} & = \mathbf{A}^*
-\end{align*}
-
-\ptitle{\textbf{A} is invertible}
-\noindent\begin{align*}
-    {(\mathbf{A}^\mathsf{T})}^{-1} & = {(\mathbf{A}^{-1})}^\mathsf{T} \\
-    {(\mathbf{A}^\mathsf{H})}^{-1} & = {(\mathbf{A}^{-1})}^\mathsf{H}
-\end{align*}
-
-\ptitle{\textbf{A} is square}
-\noindent\begin{align*}
-    \mathrm{eigvals}(\mathbf{A}^\mathsf{T}) & = \mathrm{eigvals}(\mathbf{A})        \\
-    \mathrm{eigvals}(\mathbf{A}^\mathsf{H}) & = \mathrm{eigvals}{(\mathbf{A})}^*    \\
-    \mathrm{eigvals}(\mathbf{A}^{-1})       & = \mathrm{eigvals}{(\mathbf{A})}^{-1}
-\end{align*}
-
-\ptitle{Blocks}
-\noindent\begin{equation*}
-    \begin{pmatrix}
-        A_{11} & \cdots & A_{1n} \\
-        \vdots &        & \vdots \\
-        A_{m1} & \cdots & A_{mn}
-    \end{pmatrix}^\mathsf{H}=
-    \begin{pmatrix}
-        A_{11}^\mathsf{H} & \cdots & A_{m1}^\mathsf{H} \\
-        \vdots            &        & \vdots            \\
-        A_{1n}^\mathsf{H} & \cdots & A_{nm}^\mathsf{H}
-    \end{pmatrix}
-\end{equation*}
+\input{common-math-sections/src/matrices/algebra.tex}
 
 \subsubsection{Specific Solutions}
-\ptitle{Adjoint}
-\noindent\begin{equation*}
-    \mathrm{adj}(\mathbf{A})\begin{bmatrix}
-        +\begin{vmatrix}a_{22}&a_{23}\\a_{32}&a_{33}\end{vmatrix} & -\begin{vmatrix}a_{12}&a_{13}\\a_{32}&a_{33}\end{vmatrix} & +\begin{vmatrix}a_{12}&a_{13}\\a_{22}&a_{23}\end{vmatrix} \\\\
-        -\begin{vmatrix}a_{21}&a_{23}\\a_{31}&a_{33}\end{vmatrix} & +\begin{vmatrix}a_{11}&a_{13}\\a_{31}&a_{33}\end{vmatrix} & -\begin{vmatrix}a_{11}&a_{13}\\a_{21}&a_{23}\end{vmatrix} \\\\
-        +\begin{vmatrix}a_{21}&a_{22}\\a_{31}&a_{32}\end{vmatrix} & -\begin{vmatrix}a_{11}&a_{12}\\a_{31}&a_{32}\end{vmatrix} & +\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}
-    \end{bmatrix}
-\end{equation*}
 
-\ptitle{Determinant}
-\noindent\begin{equation*}
-    \det(A)=\sum_{j=1}^n \underbrace{{(-1)}^{i+j}}_{\textsf{checkboard pattern}}\cdot a_{i,j}\cdot\underbrace{m_{i,j}}_{\textsf{minor: |submatrix of }\mathbf{A}|}
-\end{equation*}
-\textbf{Remark} Any row or column can be chosen (choose wisely: 0)
-
+\input{common-math-sections/src/matrices/special_solutions.tex}

@@ -73,19 +73,49 @@ To find the interconnection start at output $\mathbf{y}$ and proceed against sig
 
 
 \subsection{Poles}
+Reminder: Even if the excitation signal does not contain frequency $p$ the output signal will contain this frequency as the initial condition response $\mathbf{x}(t) = e^{\mathbf{A}t}\mathbf{x}_0$ in modal form contains oscillations with frequency $p$.
 
+\subsubsection{State-Space Representation}
+The poles are given by the eigenvalues of $\mathbf{A}$.
+
+\subsubsection{Transfer Function Representation}
 \begin{itemize}
-    \item In MIMO systems the poles are the eigenvalues of $\mathbf{A}$.
-    \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as the determinants of all possible square submatrices (of all sizes!) in $\mathbf{G}(s)$.
+    \item The poles are given by the \textbf{roots} of the \textbf{characteristic polynomial} of $\mathbf{G}(s)$.
     \item The \textbf{characteristic polynomial} $d(s)$ of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors $G_{ij}$.
-    \item The \textbf{poles} of $\mathbf{G}(s)$ are the roots of the aforementioned LCM term.
-    \item Reminder: Even if the excitation signal does not contain frequency $p$ the output signal will contain this frequency as the initial condition response $x(t) = e^{\mathbf{A}t}x_0$ in modal form contains oscillations with frequency $p$.
+    \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as the determinants of all possible square submatrices (of all sizes!) in $\mathbf{G}(s)$.
 \end{itemize}
 
-% TODO: Example?
+\begin{examplesection}[Example: Poles of a MIMO-TF]
+    Given the transfer function $\mathbf{G}(s)$ of a MIMO system
+    \begin{equation*}
+        \mathbf{G}(s) = \begin{bmatrix}
+            \frac{s+3}{s^2} & \frac{3-S}{s^2(s-1)} \\
+            \frac{1}{s}     & \frac{3s+1}{s(s-1)}
+        \end{bmatrix}
+    \end{equation*}
+    The first order minors are
+    \begin{align*}
+        M_{1,1} & = \det(G_{2,2}) = \frac{3s+1}{s(s-1)}  \\
+        M_{1,2} & = \det(G_{2,1}) = \frac{1}{s}          \\
+        M_{2,1} & = \det(G_{1,2}) = \frac{3-S}{s^2(s-1)} \\
+        M_{2,2} & = \det(G_{1,1}) = \frac{s+3}{s^2}
+    \end{align*}
+    And the second order minor is
+    \begin{equation*}
+        M = \det(\mathbf{G}) = \frac{3s+11}{s^2(s-1)}
+    \end{equation*}
+    The characteristic polynomial is the LCM of the denominators of all minors
+    \begin{equation*}
+        s^2(s-1)
+    \end{equation*}
+    The poles are the roots of the characteristic polynomial and therefore are
+    \begin{align*}
+        s_{1,2} & = 0 \\
+        s_3     & = 1
+    \end{align*}
+\end{examplesection}
 
-\newpar{}
-\ptitle{Stability}
+\subsubsection{Stability}
 
 Same condition as in SISO systems:
 \begin{itemize}
@@ -103,7 +133,7 @@ Same condition as in SISO systems:
 
 \subsubsection{Transmission Zeros}
 
-$z_0$ is a transmission zero if there exists a non-zero, rational function $\mathbf{u}_0(s)$ such that
+$z_0$ is a transmission zero (frequency) if there exists a non-zero, rational function $\mathbf{u}_0(s)$ such that
 \begin{equation*}
     \lim_{s\to z_0}\left[\mathbf{G}(s)\mathbf{u}_0(s)\right]e^{st}=0,\quad\forall t\geq0
 \end{equation*}
@@ -113,10 +143,15 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
 
 \begin{enumerate}
     \item Calculate all minors (of all orders) of $\mathbf{G}(s)$
-    \item Find the least common denominator $d_{\min}(s)$ of the minors
+    \item Find the least common (multiple) denominator $d_{\min}(s)$ of the minors
     \item Normalize highest order minors s.t.\ they have $d_{\min}(s)$ as denominator
-    \item Find largest common numerator $n_{\max}(s)$ (usually product of $(s-z_i)$ terms) of the normalized minors from 3.
+    \item Find largest common numerator $n_{\max}(s)$ (usually product of $(s-z_i)$ terms) of the normalized highest order minors.
     \item The roots of $n_{\max}(s)$ are the MIMO zeros with their multiplicities
+    \item To find the directions $\mathbf{u}_{0,i}$ one has to solve the equation
+          \begin{equation*}
+              \lim_{s\to z_i}\left[\mathbf{G}(s)\mathbf{u}_{0,i}(s)\right]=\mathbf{0}
+          \end{equation*}
+          for each found zero $z_i$.
 \end{enumerate}
 
 \ptitle{Remarks}
@@ -136,19 +171,19 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
             0           & \frac{s+3}{{(s+1)}^2} & \frac{s+4}{s+1}
         \end{pmatrix}
     \end{equation*}
-    1. Minors (already simplifed determinants):
+    1. Minors (already simplified determinants):
     \begin{align*}
         \frac{1}{s+1},\frac{1}{s+2},\frac{2\cdot(s+1)}{(s+2)\cdot(s+3)},0,\frac{s+3}{{(s+1)}^{2}},\frac{s+4}{s+1} & \text{ (1st order)} \\
         \frac{s+3}{{(s+1)}^3},\frac{1}{s+1},-\frac{s+4}{{(s+1)}^2}                                                & \text{ (2nd order)}
     \end{align*}
-    2. Find $d_{\min}(s)$:
+    2. Find $d_{\min}(s)$ (LCM of all minor denominators):
     \begin{equation*}
         {(s+1)}^3\cdot(s+2)\cdot(s+3)
     \end{equation*}
     3. Normalize highest order (here 2nd order) minors:
     \begin{align*}
-         & \frac{{(s+3)}^2\cdot(s+2)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}                  \\
-         & \frac{{(s+1)}^2\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}        \\
+         & \frac{{(s+3)}^2\cdot(s+2)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)} ,                \\
+         & \frac{{(s+1)}^2\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)} ,      \\
          & -\frac{(s+4)\cdot(s+1)\cdot(s+2)\cdot(s+3)}{{(s+1)}^3\cdot(s+2)\cdot(s+3)}
     \end{align*}
     4. Find $n_{\max}(s)$:
@@ -156,11 +191,12 @@ which means that $\mathbf{\mathbf{G}}(s)$ \textbf{loses rank} for $s\to z_0$.
         n_{\max}(s)=(s+3)(s+2)
     \end{equation*}
     5. Identify zeros: $z_1=-3,\;z_2=-2$
+    % TODO: We could add the calculation of the zero directions here
 \end{examplesection}
 
 \subsubsection{Invariant Zeros}
 
-Invariant zeros are the values of $s$ for which the following matrix becomes singular and therefor the determinant of the matrix is zero:
+Invariant zeros are the values of $s$ (and vectors) for which the following matrix becomes singular and therefore the determinant of the matrix is zero:
 \begin{equation*}
     \det \left(\begin{bmatrix}
             s\mathbf{I}-\mathbf{A} & -\mathbf{B} \\
@@ -182,11 +218,18 @@ The corresponding input vectors can then be determined by plugging the invariant
 \ptitle{Remarks}
 
 \begin{itemize}
-    \item An invariant zero $z_i$ is associated with a vector $\mathbf{u}_i$.
-    \item Given zero initial condition and $\mathbf{u}(t)=\mathbf{u}_i e^{s_i t}$ (zero direction and zero frequency) we get
+    \item An invariant zero $z_i$ is associated with a vector
+          \begin{equation*}
+              \begin{bmatrix}
+                  \mathbf{x_i} \\
+                  \mathbf{u_i}
+              \end{bmatrix}
+          \end{equation*}
+          the same way a pole is associated with an eigenvector.
+    \item Given zero initial condition and excitation $\mathbf{u}(t)=\mathbf{u}_i e^{s_i t}$ (zero direction and zero frequency) we get
           \begin{equation*}
               \mathbf{y}(t)=-\mathbf{C}e^{\mathbf{A}t}\mathbf{x_i}
-          \end{equation*} which is independent of the input and becomes $0$ for a corresponding non-zero initial condition.
+          \end{equation*} which contains no components of the input and becomes $\mathbf{0}$ for a corresponding non-zero initial condition.
     \item For non-minimal realizations invariant zeros can give additional zeros (correspond to uncontrollable/unobservable modes).
 \end{itemize}
 
@@ -242,37 +285,41 @@ where
 \end{itemize}
 
 \newpar{}
-Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
-
-\newpar{}
 \begin{enumerate}
-    \item Write a (matrix) partial fraction expansion of $\frac{\mathbf{H}(s)}{d(s)}$
+    \item Calculate the \textbf{poles} $p_i$ of the system by determine the roots of $d(s)$.
+    \item If $d(s)$ has \textbf{no repeated roots}, one can use Gilbert's method (otherwise the generalized Gilbert's method has to be used).
+    \item Perform a (matrix) partial fraction expansion of $\mathbf{G}(s)$
           \begin{equation*}
               \mathbf{G}(s)=\frac{\mathbf{R_1}}{s-p_1}+\frac{\mathbf{R_2}}{s-p_2}+\ldots+\frac{\mathbf{R_{n_d}}}{s-p_{n_d}}+\mathbf{D}
           \end{equation*} with the residues
           \begin{equation*}
               \mathbf{R_i}=\lim_{s\to p_i}(s-p_i)\mathbf{G}(s)
           \end{equation*}
+    \item Calculate the ranks $r_i = \text{rank}(\mathbf{R_i})$ which indicate the number of poles at location $p_i$ that are needed.
           \begin{itemize}
-              \item The ranks $r_i$ of $\mathbf{R_i}$ indicate the number of poles at location $p_i$ that are needed for the realization.
               \item The order of the resulting state space model will be $n=\sum_{i=1}^{n_d}r_i\geq n_d$
-              \item Ensure that $d(s)$ has no repeated roots (otherwise one has to use the generalized Gilbert's method).
-              \item Check $n\le n_d$ after calculating $r_i$.
           \end{itemize}
-    \item Write $\overbrace{\mathbf{R_i}}^{l\times m}=\mathbf{\overbrace{\mathbf{C}_i}^{l\times r_i}\overbrace{ \mathbf{B}_i}^{r_i \times m}}$ for some $\mathbf{B_i}$, $\mathbf{C_i}$ so that
-          \begin{itemize}
-              \item $\mathbf{B_i}$ has $m$ (\# inputs) columns
-              \item $\mathbf{C_i}$ has $l$ (\# outputs) rows
-              \item $\mathbf{B_i}$ and $\mathbf{C_i}$ have $r_i$ independent rows/columns
-          \end{itemize}
-    \item Assemble the state space model as
-          \begin{gather*}
+    \item Now the $\mathbf{A}$ matrix can be assembled
+          \begin{equation*}
               \mathbf{A}  =\begin{bmatrix}
                   p_1 \mathbf{I}_{r_1\times r_1} &                                &        &                                            \\
                                                  & p_2 \mathbf{I}_{r_2\times r_2} &        &                                            \\
                                                  &                                & \ddots &                                            \\
                                                  &                                &        & p_{n_d} \mathbf{I}_{r_{n_d}\times r_{n_d}} \\
-              \end{bmatrix} \\
+              \end{bmatrix}
+          \end{equation*}
+    \item The $\mathbf{B}_i$ and $\mathbf{C}_i$ components can be constructed from the following relation
+          \begin{equation*}
+              \overbrace{\mathbf{R_i}}^{l\times m}=\mathbf{\overbrace{\mathbf{C}_i}^{l\times r_i}\overbrace{ \mathbf{B}_i}^{r_i \times m}}
+          \end{equation*}
+          so that
+          \begin{itemize}
+              \item $\mathbf{B_i}$ has $m$ (\# inputs) columns
+              \item $\mathbf{C_i}$ has $l$ (\# outputs) rows
+              \item $\mathbf{B_i}$ and $\mathbf{C_i}$ have $r_i$ independent rows/columns
+          \end{itemize}
+    \item Assemble the remaining state space matrices
+          \begin{gather*}
               \mathbf{B}  =\begin{bmatrix}
                   \mathbf{B}_1     \\
                   \mathbf{B}_2     \\
@@ -317,7 +364,7 @@ Then, if $d(s)$ has no repeated roots, one can use \textbf{Gilbert's method}:
 
 \subsection{Singular Value Decomposition (SVD)}
 
-Any matrix $\mathbf{A}\in \mathbb{C}^{m\times n}$ can be decomposed as
+Any(!) matrix $\mathbf{A}\in \mathbb{C}^{m\times n}$ can be decomposed as
 \noindent\begin{equation*}
     \mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{\mathsf{H}}\quad \begin{cases}
         \mathbf{U}\in \mathbb{C}^{m\times m} & \text{left singular vectors}                          \\
@@ -325,8 +372,9 @@ Any matrix $\mathbf{A}\in \mathbb{C}^{m\times n}$ can be decomposed as
         \mathbf{V}\in \mathbb{C}^{n\times n} & \text{right singular vectors}\
     \end{cases}
 \end{equation*}
-
-\ptitle{$2\times 3$ Example}
+where $\mathbf{U}, \mathbf{V}$ are unitary, $\boldsymbol{\Sigma}$ is diagonal.
+\newpar{}
+\ptitle{$\mathbf{2\times 3}$ Example}
 
 \noindent\begin{equation*}
     \mathbf{A}=
@@ -355,27 +403,22 @@ with eigenvalues
 \ptitle{Remarks}
 
 \begin{itemize}
+    \item See Appendix:~\ref{app:mat_prop} for detailed understanding.
     \item $\mathbf{U},\:\mathbf{V}$ are unitary i.e. $\mathbf{U}^H \mathbf{U}=\mathbf{U}\mathbf{U}^H=\mathbf{I}$
     \item Unitary implies positive semi-definite and real, non-negative eigenvalues.
     \item (Upper- and lower-) diagonal matrices have their singular values (or eigenvalues) on the main diagonal.
 \end{itemize}
 
 \subsubsection{Procedure}
-Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
+Assuming $\mathbf{A}$ has rank = $\min(m,n)$:
 \begin{enumerate}
-    \item calculate eigenvalues (start with smaller matrix, pad with 0)
+    \item calculate the eigenvalues \newline (use smaller matrix, pad with 0 up to $\max(m,n)$)
           \noindent\begin{align*}
                & \lambda_{\mathbf{V}}\in \mathbb{R}^n: & \det\left(\lambda \mathbf{I}-\mathbf{A}^{\mathsf{H}}\mathbf{A}\right)\overset{!}{=}0 \\
+               & \text{or}                             &                                                                                      \\
                & \lambda_{\mathbf{U}}\in \mathbb{R}^m: & \det\left(\lambda \mathbf{I}-\mathbf{AA}^{\mathsf{H}}\right)\overset{!}{=}0
           \end{align*}
-    \item calculate eigenvectors of $\mathbf{U},\mathbf{V}$
-          \noindent\begin{align*}
-               & \mathbf{V}:                & \left(\lambda_{\mathbf{v}_i} \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{x} & \overset{!}{=}\mathbf{0}          \\
-               & \mathbf{U}:                & \mathbf{u}_i                                                                                 & = \frac{1}{\sigma_i}\mathbf{Av}_i \\
-               & \mathrm{if}~\sigma_i = 0 : & \left(\lambda_{\mathbf{u}_i} \mathbf{I} -\mathbf{AA}^{\mathsf{H}}\right)\mathbf{x}           & \overset{!}{=}\mathbf{0}
-          \end{align*}
-          where $\lambda_{\mathbf{u}i}=0$ if $\mathbf{V}$ has smaller dimensions than $\mathbf{U}$ and vice versa.
-    \item calculate singular values $\sigma\in \mathbb{R}^{\min(m,n)}$ and compose $\Sigma$
+    \item calculate the singular values $\sigma$ and compose $\Sigma \in \mathbb{R}^{m \times n}$. Order the singular values $\sigma$ in descending order.
           \noindent\begin{align*}
               \sigma_i & = \sqrt{\lambda_{u_i}} = \sqrt{\lambda_{v_i}}\quad i=0,1,\cdots, \min(m,n) \\
               \Sigma   & = \begin{bmatrix}
@@ -390,6 +433,36 @@ Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
                   \mathbf{0} & \cdots & \mathbf{0}
               \end{bmatrix}
           \end{align*}
+    \item calculate the eigenvectors of $\mathbf{A}^{\mathsf{H}}\mathbf{A}$. Use the same order as before and normalize the vectors if necessary.
+          \begin{gather*}
+              \mathbf{A}^{\mathsf{H}}\mathbf{A} \mathbf{v}_i = \lambda_i \mathbf{v}_i \\
+              \left(\lambda_i \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{v}_i \overset{!}{=}\mathbf{0}
+          \end{gather*}
+          then assemble $\mathbf{V}$
+          \begin{equation*}
+              \mathbf{V} = \begin{bmatrix}
+                  \vert        & \vert        &        \\
+                  \mathbf{v}_1 & \mathbf{v}_2 & \cdots \\
+                  \vert        & \vert        &
+              \end{bmatrix}
+          \end{equation*}
+    \item calculate eigenvectors of $\mathbf{A}\mathbf{A}^{\mathsf{H}}$ either with
+          \begin{gather*}
+              \mathbf{A}\mathbf{A}^{\mathsf{H}} \mathbf{u}_i = \lambda_i \mathbf{u}_i \\
+              \left(\lambda_{i} \mathbf{I} - \mathbf{A}\mathbf{A}^{\mathsf{H}}\right)\mathbf{u}_i \overset{!}{=}\mathbf{0}
+          \end{gather*}
+          or with the formula below (this can only be used for the singular values $\sigma_i \ne 0$)
+          \begin{equation*}
+              \mathbf{u}_i  = \frac{1}{\sigma_i}\mathbf{Av}_i
+          \end{equation*}
+          then assemble $\mathbf{U}$
+          \begin{equation*}
+              \mathbf{U} = \begin{bmatrix}
+                  \vert        & \vert        &        \\
+                  \mathbf{u}_1 & \mathbf{u}_2 & \cdots \\
+                  \vert        & \vert        &
+              \end{bmatrix}
+          \end{equation*}
     \item \noindent\begin{equation*}
               \mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{\mathsf{H}}
           \end{equation*}
@@ -404,18 +477,23 @@ Assuming $\mathbf{A}$ has ``full'' rank = $\min(m,n)$:
 \end{itemize}
 
 \subsubsection{Interpetation}
-When looking at the columns of $\mathbf{A}$ separatly
+When looking at the columns of $\mathbf{A}$ separately
 \noindent\begin{equation*}
     \mathbf{Av}_i=\sigma_i \mathbf{u}_i
 \end{equation*}
-shows that a input in direction $\mathbf{v}_i$ results in an output in direction $\mathbf{u}_i$ with amplification $\sigma_i$.
+shows that
+\begin{itemize}
+    \item a unit input in direction $\mathbf{v}_i$ results in an output in direction $\mathbf{u}_i$ with amplification $\sigma_i$.
+    \item in contrast to multiplying $\mathbf{A}$ by a general vector, in case of a singular vector one can exactly predict the output direction and magnitude.
+    \item SVD can be seen as generalized eigenvalues/-vectors.
+\end{itemize}
 
 \newpar{}
 \ptitle{Zeros and Poles}
 
-If the matrix $\mathbf{A}$ contains $s$, the directions of poles and zeros can be found with SVD:
+For a MIMO transfer function $\mathbf{A}(s)$, the directions of poles and zeros can be found with SVD:
 \begin{enumerate}
-    \item Set $s=z, p+0.0001$
+    \item Set $s=z$ or $s=p+0.0001$
     \item Calculate SVD of $\mathbf{A}(s)$
     \item Evaluate singular values:
           \begin{enumerate}
@@ -441,7 +519,7 @@ If the matrix $\mathbf{A}$ contains $s$, the directions of poles and zeros can b
 \subsection{Norms}
 % \ptitle{Usage of Norms}
 \begin{itemize}
-    \item Inputs vectors with same but permuted entries can generate wildly different outputs due to directionality.
+    \item Input vectors with same but permuted entries can generate wildly different outputs due to directionality.
     \item Directionality depends on frequency as well.
     \item Norms are a way to measure ``sizes'' in order to compare effects in different directions.
 \end{itemize}
@@ -456,11 +534,11 @@ If the matrix $\mathbf{A}$ contains $s$, the directions of poles and zeros can b
 \ptitle{Example Norms}
 \begin{itemize}
     \item Euclidean norm: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}}\mathbf{x}}$
-    \item For Hermitian, pos.\ definite matrices: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}} Qx}$
+    \item For Hermitian, pos.\ definite matrices: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}} \mathbf{Qx}}$ is a norm
     \item p-norm: $\|\mathbf{x}\|_p{=\left(\sum_{i=1}^n x_i^p\right)}^{1/p}$ with the important cases
           \begin{align*}
-               & \|\mathbf{x}\|_1=\sum_1^n\left|x_i\right|,               \\
-               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^n {x_i}^2}             \\
+               & \|\mathbf{x}\|_1=\sum_1^n\left|x_i\right|,                                                 \\
+               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^n {x_i}^2} = \sqrt{\mathbf{x}^{\mathsf{H}}\mathbf{x}   } \\
                & \left\|\mathbf{x}\right\|_\infty=\max_i\left|x_i\right|.
           \end{align*}
 \end{itemize}
@@ -496,11 +574,11 @@ and the submultiplicative property:
 
 \ptitle{Induced $p$-norms}
 
-For the $p = 1$ norm we get the \textbf{max-sum column}:
+For the $p = 1$ norm we get the \textbf{max column-sum}:
 \begin{equation*}
     \|\mathbf{A}\|_1=\max_j\sum_{i=1}^m|a_{ij}|,\qquad x_k=\begin{cases}
-        1 & k=j         \\
-        0 & \text{else}
+        \pm 1 & k=j         \\
+        0     & \text{else}
     \end{cases}
 \end{equation*}
 
@@ -515,9 +593,9 @@ and \textbf{minimal amplification} (assuming rank($\mathbf{A}$)=$n$):
 \end{equation*}
 
 \newpar{}
-For the $p = \infty$ norm we get the \textbf{max-sum row}:
+For the $p = \infty$ norm we get the \textbf{max row-sum}:
 \begin{equation*}
-    \|\mathbf{A}\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|\qquad x_k=\pm 1
+    \|\mathbf{A}\|_\infty=\max_i\sum_{j=1}^n|a_{ij}|\qquad x_k=\pm 1\;\forall k
 \end{equation*}
 
 \ptitle{Frobenius Norm}
@@ -529,7 +607,7 @@ For the $p = \infty$ norm we get the \textbf{max-sum row}:
 
 \begin{itemize}
     \item non-induced
-    \item still has submultiplicative property
+    \item has submultiplicative property even though not induced
 \end{itemize}
 
 \textbf{Remarks}: $x_k$ describes the elements of the vector $\mathbf{x}$ for which the norm-specific maximum amplification happens.
@@ -553,8 +631,8 @@ Signals are functions and functions are vectors.
 \noindent\begin{equation*}
     \|w\|_2^2=
     \begin{cases}
-        \sum\limits_{k\in\mathbb{Z}}w[k]'w[k] = \sum\limits_{k\in\mathbb{Z}}\|w[k]\|_2^2 & \mathsf{(DT)} \\
-        \int_{-\infty}^\infty w(t)'w(t) dt = \int_{-\infty}^\infty\|w(t)\|_2^2 dt        & \mathsf{(CT)}
+        \sum\limits_{k\in\mathbb{Z}}{w[k]}^{\mathsf{H}}w[k] = \sum\limits_{k\in\mathbb{Z}}\|w[k]\|_2^2 & \mathsf{(DT)} \\
+        \int_{-\infty}^\infty {w(t)}^{\mathsf{H}}w(t) dt = \int_{-\infty}^\infty\|w(t)\|_2^2 dt        & \mathsf{(CT)}
     \end{cases}
 \end{equation*}
 
@@ -583,66 +661,72 @@ where the absolute value of the signal must be taken because the maximum could b
     (\|w\|_1<\infty) \land (\|w\|_\infty<\infty)           & \Rightarrow \|w\|_2<\sqrt{\|w\|_1\|w\|_\infty} < \infty
 \end{align*}
 
+\newpar{}
+\ptitle{Example}
+
 \begin{center}
-    \includegraphics[width = 0.7\linewidth]{signal_norm.png}
+    \includegraphics[width = \linewidth]{signal_norm.png}
 \end{center}
+which illustrates property 3 from above (in both directions).
 
 \newpar{}
 \subsubsection{System Norms}
-A system maps an input $u$ to an output $y$:
+Similar to a matrix, a system maps an input $u$ to an output $y$:
 \noindent\begin{equation*}
     y=Su
 \end{equation*}
 
-The induced norm is defined as
+The induced norm is therefore defined as
 \noindent\begin{equation*}
     \|S\|_{p,\mathrm{ind}}:=\sup_{u\neq0}\frac{\|Su\|_p}{\|u\|_p}=\sup_{u\neq0}\frac{\|y\|_p}{\|u\|_p}
 \end{equation*}
 
-\newpar{}
+\paragraph{Terminology}
+The $\mathcal{L}_2$ norm
+\begin{itemize}
+    \item is the \textit{2-norm of a signal} in continuous time along the real (time) axis.
+\end{itemize}
+The $l_2$ norm
+\begin{itemize}
+    \item is the discrete analogon of the $\mathcal{L}_2$ norm.
+\end{itemize}
+The $\mathcal{H}_\infty$ norm
+\begin{itemize}
+    \item is the \textit{2-norm of a complex function} along the imaginary axis.
+\end{itemize}
+
 \paragraph{Parseval's Identity}
 \noindent\begin{equation*}
     \underbrace{\|y\|_{\mathcal{L}_2}^2}_{\textsf{Time}}=\int_0^\infty\|y(t)\|_2^2 dt=\frac1{2\pi}\int_{-\infty}^{+\infty}\|Y(j\omega)\|_2^2 d\omega=\underbrace{\|Y(s)\|_{\mathcal{H}_2}^2}_{\textsf{Freq.} (s=j\omega)}
 \end{equation*}
+i.e.\ energy is conserved from time to frequency domain.
 
-\paragraph[L2-induced Norm]{$\mathcal{L}_2$-induced Norm}
-\noindent\begin{equation*}
-    \sup_{u\neq0}\frac{\|y\|_{\mathcal{L}_2}}{\|u\|_{\mathcal{L}_2}}=\sup_{\omega\in\mathbb{R}}\sigma_{\max}[G(j\omega)]=:\|G\|_{\mathcal{H}_\infty}
-\end{equation*}
-\textbf{Remarks}:
-\begin{itemize}
-    \item In SISO systems, the $\mathcal{H}_\infty$ norm corresponds to the peak value of the Bode plot.
-    \item The submultiplicative property for $\mathcal{H}_\infty$ holds.
-    \item Note that the singular values are frequency-dependent i.e.\ can be shown in a Bode plot.
-\end{itemize}
-
-\paragraph[H2-induced Norm]{$\mathcal{H}_2$-norm}
+\paragraph[H2-induced Norm]{$\mathcal{H}_2$ norm}
 \ptitle{Properties}
 \begin{itemize}
-    \item Measure of system's energy
+    \item Measure of system's energy (calculated in frequency domain)
     \item Average direction and frequency
-    \item Not induced
-    \item The submultiplicative property for $\mathcal{H}_\infty$ does not hold.
+    \item Not induced: Hence, the submultiplicative property does not hold.
 \end{itemize}
 
 \ptitle{Computation}
 
 The $\mathcal{H}_2$ norm of a system is given by
 \begin{equation*}
-    \|\mathbf{G}\|_{\mathcal{H}_2}^2=\|g\|_{\mathcal{L}_2}^2=\mathrm{Tr}\left[\mathbf{C\mathcal{R}C}^{\prime}\right]=\mathrm{Tr}\left[\mathbf{B^{\prime}\mathcal{O}B}\right]
+    \|\mathbf{G}\|_{\mathcal{H}_2}^2=\|g\|_{\mathcal{L}_2}^2=\mathrm{Tr}\left[\mathbf{C\mathcal{R}C}^{T}\right]=\mathrm{Tr}\left[\mathbf{B^{T}\mathcal{O}B}\right]
 \end{equation*}
 where the \textbf{symmetric} matrices $\mathbf{\mathcal{R}}$ or $\mathbf{\mathcal{O}}$ are computed by solving the Lyapunov (matrix) equation
 \begin{equation*}
-    \mathbf{ A\mathcal{R}}+\mathbf{\mathcal{R}A}^{\prime}=-\mathbf{BB}^{\prime}
+    \mathbf{ A\mathcal{R}}+\mathbf{\mathcal{R}A}^{T}=-\mathbf{BB}^{T}
 \end{equation*}
 or\begin{equation*}
-    \mathbf{A^{\prime}\mathcal{O}}+\mathbf{\mathcal{O}A}=-\mathbf{C^{\prime}C}
+    \mathbf{A^{T}\mathcal{O}}+\mathbf{\mathcal{O}A}=-\mathbf{C^{T}C}
 \end{equation*}
 respectively. Note that there are $m\times n$ equations to solve.\\
 $\mathbf{\mathcal{R}}$ and $\mathbf{\mathcal{O}}$ are called Reachability and Observability \textbf{Gramians} and can also be computed by:
 \begin{align*}
-    \mathbf{\mathcal{R}} & :=\int_{0}^{\infty}e^{\mathbf{A}t}\mathbf{BB}^{\prime}e^{A^{\prime}t}\mathrm{~}dt          \\
-    \mathbf{\mathcal{O}} & :=\int_{0}^{\infty}e^{\mathbf{A}^{\prime}t}\mathbf{C^{\prime}C}e^{\mathbf{A}t}\mathrm{~}dt
+    \mathbf{\mathcal{R}} & :=\int_{0}^{\infty}e^{\mathbf{A}t}\mathbf{BB}^{T}e^{A^{T}t}\mathrm{~}dt          \\
+    \mathbf{\mathcal{O}} & :=\int_{0}^{\infty}e^{\mathbf{A}^{T}t}\mathbf{C^{T}C}e^{\mathbf{A}t}\mathrm{~}dt
 \end{align*}
 
 \ptitle{Significance}
@@ -663,21 +747,32 @@ The $\mathcal{H}_2$-norm measures
 \begin{itemize}
     \item The LQR/LQE problem can be though as a $\mathcal{H}_2$ minimization problem.
     \item In order for $\|g\|_{\mathcal{L}_2}^2:= \|\mathbf{G}\|_{\mathcal{H}_2}^2<\infty$, the system needs to be strictly causal, i.e. $\lim_{\omega\to\infty}\mathbf{G}(j\omega)=0$
-    \item Lyapunov equations are linear in the unknown matrices whereas Riccati equations have order 2 in the unknown matrices.
-    \item MATLAB: \texttt{lyap}.
-    \item Note the duality in the gramians as we had in for reachability and observability with $A,B$ and $A^H,C^H$.
-    \item The $\mathcal{H}_2$ norm is a quantity in frequency domain. Note that we found a method to compute them \textbf{in state space} by solving linear equations.
+    \item Lyapunov equations are linear in the unknown matrices whereas Riccati equations have order 2 in the unknown matrices. MATLAB: \texttt{lyap}.
+    \item Note the duality in the gramians as we had it for reachability and observability with $A,B$ and $A^H,C^H$.
+    \item The $\mathcal{H}_2$ norm is a quantity in frequency domain. Note that we found a method to compute it \textbf{in state space} by solving linear equations.
     \item The gramians are (if they are not singular) equivalent conditions to the reachability and observability matrices.
 \end{itemize}
 
-\paragraph[Hinf-induced Norm]{$\mathcal{H}_{\infty}$-norm}
+\paragraph[Hinf Norm]{$\mathcal{H}_{\infty}$ norm}
+The $\mathcal{H}_{\infty}$ norm is induced by the $\mathcal{L}_2$ norm.
 \noindent\begin{equation*}
-    \|\mathbf{G}\|_{\mathcal{H}_\infty} = \sup_{\omega}\sigma_{\max}\bigl(\mathbf{G}(j\omega)\bigr)
+    \sup_{u\neq0}\frac{\|y\|_{\mathcal{L}_2}}{\|u\|_{\mathcal{L}_2}}=\sup_{\omega\in\mathbb{R}}\sigma_{\max}[G(j\omega)]=:\|G\|_{\mathcal{H}_\infty}
 \end{equation*}
 
+\newpar{}
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item In words, the maximum amplification of the \textit{signal} energy in time domain corresponds to the maximum singular value of the \textit{system} it propagates through.   % TODO: "in time domain" correct?
+    \item In SISO systems, the $\mathcal{H}_\infty$ norm corresponds to the peak value of the Bode plot.
+    \item Submultiplicative property for $\mathcal{H}_\infty$ holds (because induced).
+    \item Note that the singular values are frequency-dependent i.e.\ can be shown in a Bode plot.
+\end{itemize}
+
+\newpar{}
 \ptitle{Computation}
 
-Again one wants to compute the norm in state space (instead of frequency domain) by using \textbf{bisection}:
+Again one wants to compute the norm in state space (instead of frequency domain), now by using \textbf{bisection}:
 \begin{enumerate}
     \item Define a lower and an upper bound for $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$ (0 is a good lower bound as it is the minimum for any norm)
     \item Compute the \textbf{Hamiltonian matrix}
@@ -688,14 +783,14 @@ Again one wants to compute the norm in state space (instead of frequency domain)
                   -\frac{1}{\gamma}\mathbf{C}^{T}\mathbf{C} & -\mathbf{A}^{T}
               \end{bmatrix}
           \end{equation*}
-          where $\gamma$ is an estimate of $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$. Then, $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$ iff $\mathbf{H}_{\gamma}$ has no eigenvalues on the imaginary axis.
+          where $\gamma$ is an estimate of $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$. %Then, $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$ iff $\mathbf{H}_{\gamma}$ has no eigenvalues on the imaginary axis.
     \item Does $H_{\gamma}$ have eigenvalues on the imaginary axis?
           \subitem{Yes:} $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}>\gamma$, choose larger gamma.
           \subitem{No:} $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}<\gamma$, choose lower gamma.
     \item Go back to 2.\ until enough precision is reached. The final $\gamma$ is $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$
 \end{enumerate}
 
-\ptitle{Remarks}
+\ptitle{Remarks to Computation}
 
 \begin{itemize}
     \item The system must be \textbf{stable} and \textbf{strictly causal} to use this criterium.

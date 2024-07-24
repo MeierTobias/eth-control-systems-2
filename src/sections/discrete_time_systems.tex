@@ -2,19 +2,19 @@
 \subsection{Digital Control Systems}
 All continuous-time (CT) system properties hold for discrete-time (DT) in the same way as DT values form a subset of CT values.
 \subsubsection{Holding, D \textrightarrow{} A}
-\textbf{Hold}: a linear system that takes DT signal as input and outputs CT signal.
+\textbf{Hold}: Linear system that takes DT signal as input and outputs CT signal.
 
 Holding results in a CT signal with average delay $T/2$.
 \newpar{}
 
 \ptitle{Zero-Order Hold (ZOH)}
 \begin{align*}
-    y(t) & =u[k], \; \forall kT \le t < (k+1)T                 \\
-    y(t) & =u[\lfloor t/T\rfloor], \; \forall t \in \mathbb{R}
+    y(t) & =u[k],                                                &  & \forall \; kT \le t < (k+1)T, \;k \in \mathbb{Z} \\
+    y(t) & =u\left[\left\lfloor \frac{t}{T}\right\rfloor\right], &  & \forall t \in \mathbb{R}
 \end{align*}
 
 \subsubsection{Sampling, A \textrightarrow{} D}
-\textbf{Sampler}: a linear system that takes CT signal as input and outputs DT sequence.
+\textbf{Sampler}: A linear system that takes CT signal as input and outputs DT sequence.
 \begin{equation*}
     y[k]=u(kT),\quad\forall k\in\mathbb{Z}
 \end{equation*}
@@ -43,7 +43,7 @@ Low-pass filter before the A $\rightarrow$ D converter with
 \end{equation*}
 where $\omega_{c,LP}$ must be high enough to capture system dynamics.
 
-\subsection{DT State-Space Models}
+\subsection{DT State Space Models}
 \subsubsection{Difference Equations}
 
 \renewcommand{\arraystretch}{1.3}
@@ -136,7 +136,7 @@ Reminder:
 \subsection{Transfer Functions (TF) of DT LTI Systems}\label{disc:tf}
 \ptitle{Time Response to Elementary Inputs}
 
-Similar to the CT case, a geometric sequence $z^k$ corresponds to an input sequence
+Similar to the elementary inputs in the CT case, a \textit{geometric sequence} $z^k$ corresponds to an input sequence
 \begin{equation*}
     u[k] =u_0z^k=u_0e^{ksT}=u(kT), \; z=e^{sT}
 \end{equation*}
@@ -148,12 +148,19 @@ The corresponding time response is
 
 \ptitle{Pulse/Discrete TF}
 
-For asymptotically stable DT LTI systems, for large $k$:
+For asymptotically stable DT LTI systems, for large $k$ and $u[k]=u_0 z^k$:
 \begin{align*}
     y[k] & \approx G(z)u[k]                                                 \\
     G(z) & :=\mathbf{C}{(z\mathbf{I}-\mathbf{A})}^{-1}\mathbf{B}+\mathbf{D}
 \end{align*}
-\subsubsection{Special TF and Remarks}
+
+\newpar{}
+\ptitle{Remarks}
+\begin{itemize}
+    \item $z^k$ can be interpreted as samples from an exponential
+\end{itemize}
+
+\subsubsection{Special TF and Realizations}
 \ptitle{DC Gain}
 
 If $G(z)$ is asymptotically stable and $\mathbf{A}$ is invertible, i.e.\ has no eigenvalue at 1, then
@@ -177,7 +184,7 @@ Similar to CT, the natural dynamics of a DT LTI system are given by the eigenval
 
 For given eigenvalues $\lambda_i$ of $\mathbf{A}$ the eigenvalues of $\mathbf{A}_d$ are
 \begin{equation*}
-    z=e^{\lambda_1T},e^{\lambda_2T},\ldots,e^{\lambda_{n}T}
+    z_i=e^{\lambda_1T},e^{\lambda_2T},\ldots,e^{\lambda_{n}T}
 \end{equation*}
 
 \ptitle{Mapping}
@@ -201,9 +208,37 @@ To discretize the $\mathbf{A}, \mathbf{B}, \mathbf{C}, \mathbf{D}$ matrices of a
     \mathbf{A}_d & :=e^{\mathbf{A}T} & \mathbf{B}_d & :=\left(\int_0^{\mathsf{T}} {e^{\mathbf{A}\theta}}d\theta\right)\mathbf{B} \overset{\mathbf{A} \text{ inv.}}{=} \mathbf{A}^{-1}\left(\mathbf{A}_d-\mathbf{I}\right)\mathbf{B} \\
     \mathbf{C}_d & :=\mathbf{C}      & \mathbf{D}_d & :=\mathbf{D}
 \end{align*}
-Alternatively the DT state space matrices $\mathbf{A}_d, \mathbf{B}_d, \mathbf{C}_d, \mathbf{D}_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform.
+%Alternatively the DT state space matrices $\mathbf{A}_d, \mathbf{B}_d, \mathbf{C}_d, \mathbf{D}_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform. 
+%TODO: This belongs to the section "Transfer Functions (TF) of DT LTI Systems" I would suggest we add the subscript _d to the formulas there (which probably caused the confusion) and remove this comment. We discussed it and Dani wil have a look at it and will decide if we delete it or move it
+
+\newpar{}
+\ptitle{Calculations}
+\begin{itemize}
+    \item Check invertibility by looking at the determinant.
+    \item For diagonal matrices $\Lambda$, one can apply exponentiation elementwise on the main diagonal.
+    \item For non-diagonal matrices use
+          \begin{itemize}
+              \item either diagonalization via eigenvectors ($A=V^{-1}\cdot \Lambda \cdot V$) and
+                    \begin{equation*}
+                        e^{AT} = V^{-1}\cdot e^{\Lambda T} \cdot V
+                    \end{equation*}
+              \item or power series expansion
+                    \begin{equation*}
+                        e^{AT}=\sum_{k=0}^{\infty}\frac{1}{k!}{\left(AT\right)}^k
+                    \end{equation*}
+          \end{itemize}
+\end{itemize}
 
 \subsubsection{Discretization: Frequency Domain}\label{disc::tustin}
+\ptitle{Euler Forward}
+\noindent\begin{equation*}
+    s = \frac{z-1}{T}
+\end{equation*}
+\ptitle{Euler Backward}
+\noindent\begin{equation*}
+    s = \frac{z-1}{zT}
+\end{equation*}
+
 \ptitle{Tustin's Method}
 \begin{equation*}
     G_{d}(z)=G\left(s=\frac2T\frac{z-1}{z+1}\right)
@@ -220,7 +255,11 @@ which corresponds to a rearranged Padé approximation for $z$.
 \end{align*}
 
 \begin{tabularx}{\linewidth}{@{}m{0.6\linewidth}X@{}}
-    which is simple but can result in an unstable compensator as $s=\lambda \rightarrow z=1+\lambda T$.
+    which is simple but can result in an unstable compensator as
+    \begin{equation*}
+        s=\lambda \rightarrow z=1+\lambda T
+    \end{equation*}
+    i.e.\ for large $|\lambda|$ there is no mapping into the unit disk.
      &
     \includegraphics[width=0.9\linewidth, align=m]{disc_approx_forward.pdf}
 \end{tabularx}
@@ -233,7 +272,11 @@ which corresponds to a rearranged Padé approximation for $z$.
 \end{align*}
 
 \begin{tabularx}{\linewidth}{@{}m{0.6\linewidth}X@{}}
-    which avoids instability as $s=\lambda \rightarrow z={(1-\lambda T)}^{-1}$. This transforms poles into a disk smaller than the unit disk. DT poles cannot get negative real part.
+    which avoids instability as
+    \begin{equation*}
+        s=\lambda \rightarrow z={(1-\lambda T)}^{-1}
+    \end{equation*}
+    This transforms poles into a disk smaller than the unit disk. DT poles cannot get negative real part.
      &
     \includegraphics[width=0.9\linewidth, align=m]{disc_approx_backwards.pdf}
 \end{tabularx}
@@ -262,6 +305,17 @@ There are two main design paradigms for DT control systems:
 \begin{center}
     \includegraphics[width=0.9\linewidth]{digit_controller_design.pdf}
 \end{center}
+
+\newpar{}
+\ptitle{Remarks}
+
+\begin{itemize}
+    \item A common method is to
+          \begin{itemize}
+              \item Use DT design if $T$ is known
+              \item Use CT design with emulation if $T$ is unknown
+          \end{itemize}
+\end{itemize}
 
 \subsubsection{DT}
 \begin{enumerate}
