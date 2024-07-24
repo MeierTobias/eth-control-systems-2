@@ -213,18 +213,20 @@ To discretize the $\mathbf{A}, \mathbf{B}, \mathbf{C}, \mathbf{D}$ matrices of a
 
 \newpar{}
 \ptitle{Calculations}
+
+Assuming sampling time $T$
 \begin{itemize}
     \item Check invertibility by looking at the determinant.
-    \item For diagonal matrices $\Lambda$, one can apply exponentiation elementwise on the main diagonal.
+    \item For diagonal matrices $\boldsymbol{\Lambda}$, one can apply exponentiation elementwise on the main diagonal.
     \item For non-diagonal matrices use
           \begin{itemize}
-              \item either diagonalization via eigenvectors ($A=V^{-1}\cdot \Lambda \cdot V$) and
+              \item either diagonalization via eigenvectors ($\mathbf{A}=\mathbf{V}^{-1}\cdot \boldsymbol{\Lambda} \cdot \mathbf{V}$) and
                     \begin{equation*}
-                        e^{AT} = V^{-1}\cdot e^{\Lambda T} \cdot V
+                        e^{\mathbf{A}T} = \mathbf{V}^{-1}\cdot e^{\boldsymbol{\Lambda} T} \cdot \mathbf{V}
                     \end{equation*}
               \item or power series expansion
                     \begin{equation*}
-                        e^{AT}=\sum_{k=0}^{\infty}\frac{1}{k!}{\left(AT\right)}^k
+                        e^{\mathbf{A}T}=\sum_{k=0}^{\infty}\frac{1}{k!}{\left(\mathbf{A}T\right)}^k
                     \end{equation*}
           \end{itemize}
 \end{itemize}
