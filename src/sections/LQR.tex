@@ -13,6 +13,7 @@ For the reference input $r(t) = 0$ the cost functional $J$ is defined as
           \begin{itemize}
               \item is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^{\mathsf{T}}$
               \item is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $\mathrm{eig}(\mathbf{Q}) \geq 0$
+              % TODO: Why must it be sqrt (below)? Compare with LQE technical conditions
               \item must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
           \end{itemize}
     \item $\mathbf{R}$ 
