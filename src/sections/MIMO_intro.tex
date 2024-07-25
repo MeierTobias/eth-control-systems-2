@@ -460,7 +460,7 @@ Assuming $\mathbf{A}$ has rank = $\min(m,n)$:
           \end{gather*}
           or if $m<n$ use for the $\sigma_i \neq 0$
           \begin{equation*}
-            \mathbf{v}_i = \sigma_i \mathbf{P}^H \mathbf{u}_i
+            \mathbf{v}_i = \sigma_i \mathbf{A}^H \mathbf{u}_i
           \end{equation*}
           then assemble $\mathbf{V}$
           \begin{equation*}
@@ -468,7 +468,7 @@ Assuming $\mathbf{A}$ has rank = $\min(m,n)$:
                   \vert        & \vert        &        \\
                   \mathbf{v}_1 & \mathbf{v}_2 & \cdots \\
                   \vert        & \vert        &
-              \end{bmatrix}
+              \end{bmatrix} 
           \end{equation*}
     \item calculate eigenvectors of $\mathbf{A}\mathbf{A}^{\mathsf{H}}$ either with
           \begin{gather*}
@@ -516,8 +516,7 @@ shows that
     \item SVD can be seen as generalized eigenvalues/-vectors.
 \end{itemize}
 
-\newpar{}
-\ptitle{Zeros and Poles}
+\subsubsection{Zeros and Poles via SVD}
 
 For a MIMO transfer function $\mathbf{A}(s)$, the directions of poles and zeros can be found with SVD:
 \begin{enumerate}
