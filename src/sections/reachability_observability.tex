@@ -22,7 +22,7 @@ An LTI system is reachable if there exists a control signal that takes the syste
 Mathematically expressed, a system is reachable if and only if the reachability matrix $\mathbf{R}$ has \textbf{full row rank} $n$.
 \begin{align*}
     \text{rank}(\mathbf{R}) & = n                            \\
-    \mathbf{x}    & \in \mathrm{Range}(\mathbf{R})
+    \mathbf{x}              & \in \mathrm{Range}(\mathbf{R})
 \end{align*}
 
 \newpar{}
@@ -140,7 +140,7 @@ A specific method to group basis vectors.
     \mathbf{y}       & = \begin{bmatrix}
                              0 & \mathbf{C}_{ro} & 0 & \mathbf{C}_{r\bar{o}}
                          \end{bmatrix}
-    + \mathbf{Du}
+    \mathbf{x} + \mathbf{Du}
 \end{align*}
 
 \ptitle{General case}
@@ -161,7 +161,7 @@ A specific method to group basis vectors.
     \mathbf{y}       & = \begin{bmatrix}
                              0 & \mathbf{C}_{ro} & 0 & \mathbf{C}_{r\bar{o}}
                          \end{bmatrix}
-    + \mathbf{Du}
+    \mathbf{x} + \mathbf{Du}
 \end{align*}
 
 \newpar{}

@@ -53,7 +53,7 @@ where $\omega_{c,LP}$ must be high enough to capture system dynamics.
                                                              & Time-Invariant                                     & Time-Variant ($t = kT$)                                                   \\
     \cmidrule{2-3}
     \multirow{3}{*}{\begin{sideways}Nonlinear\end{sideways}} & $\mathbf{x}[k+1] = f(\mathbf{x}[k],\mathbf{u}[k])$ & $\mathbf{x}[k+1] = f(t,\mathbf{x}[k],\mathbf{u}[k])$                      \\
-                                                             & $\mathbf{y}[t] = h(\mathbf{x}[k],\mathbf{u}[k])$   & $\mathbf{y}[t] = h(t,\mathbf{x}[k],\mathbf{u}[k])$                        \\
+                                                             & $\mathbf{y}[k] = h(\mathbf{x}[k],\mathbf{u}[k])$   & $\mathbf{y}[k] = h(t,\mathbf{x}[k],\mathbf{u}[k])$                        \\
                                                              & $\mathbf{x}[0]=\mathbf{x}_0$                       & $\mathbf{x}[0]=\mathbf{x}_0$                                              \\
     \cmidrule{2-3}
     \multirow{3}{*}{\begin{sideways}Linear\end{sideways}}    & $\mathbf{x}[k+1] = \mathbf{Ax}[k]+\mathbf{Bu}[k]$  & $\mathbf{x}[k+1] = \mathbf{A}[k]\mathbf{x}[k]+\mathbf{B}[k]\mathbf{u}[k]$ \\
