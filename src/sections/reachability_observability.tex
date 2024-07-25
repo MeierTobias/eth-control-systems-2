@@ -181,4 +181,10 @@ A specific method to group basis vectors.
 \begin{itemize}
     \item In the transfer function $u \rightarrow y$ only the modes corresponding to the reachable and observable modes will appear (others will be cancelled by a zero).
     \item A minimal realization of a transfer function is a state-space model that is both reachable and observable.
+    \begin{itemize}
+        % TODO: Does a non-minimal realization always cause pole-zero cancellations in the TF?
+        \item Even more, it holds that a realization is minimal \textbf{if and only if} it is reachable and observable.
+        \item Reminder: For non-minimal realizations invariant zeros can give additional zeros (correspond to uncontrollable/unobservable modes).
+    \end{itemize}
 \end{itemize}
+

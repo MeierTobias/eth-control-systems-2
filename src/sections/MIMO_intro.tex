@@ -81,6 +81,7 @@ The poles are given by the eigenvalues of $\mathbf{A}$.
 \subsubsection{Transfer Function Representation}
 \begin{itemize}
     \item The poles are given by the \textbf{roots} of the \textbf{characteristic polynomial} of $\mathbf{G}(s)$.
+    % TODO: What about poles of nonminimal realizations?
     \item The \textbf{characteristic polynomial} $d(s)$ of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors $G_{ij}$.
     \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as the determinants of all possible square submatrices (of all sizes!) in $\mathbf{G}(s)$.
 \end{itemize}
@@ -119,7 +120,16 @@ The poles are given by the eigenvalues of $\mathbf{A}$.
 
 Same condition as in SISO systems:
 \begin{itemize}
-    \item \textbf{Stable} if $\mathrm{Re}(p_i \le 0)$ and the algebraic multiplicity of poles with zero real part is equal to their geometric multiplicity.
+    \item \textbf{Stable} if $\mathrm{Re}(p_i \le 0)$ and the algebraic multiplicity of poles with zero real part is equal to their geometric multiplicity. Reminder: 
+    \begin{itemize}
+        \item Algebraic multiplicity: multiplicity of eigenvalue $\lambda_i$ ($\lambda_i=0$ for in case)
+        \item Geometric multiplicity:
+        \begin{itemize}
+            \item Number of independent eigenvectors to eigenvalue $\lambda_i$
+            \item Dimension of eigenspace $\ker(\lambda \mathbb{1}-\mathbf{A})$ (number of free parameters). 
+            \item E.g.\ if $\lambda_i$ has algebraic multiplicity 2, then $\ker(\lambda \mathbb{1}-\mathbf{A})$ must be a plane.
+        \end{itemize}
+    \end{itemize}
     \item \textbf{Asymptotically stable}\ if $\mathrm{Re}(p_i<0)$
 \end{itemize}
 
@@ -286,8 +296,11 @@ where
 
 \newpar{}
 \begin{enumerate}
-    \item Calculate the \textbf{poles} $p_i$ of the system by determine the roots of $d(s)$.
-    \item If $d(s)$ has \textbf{no repeated roots}, one can use Gilbert's method (otherwise the generalized Gilbert's method has to be used).
+    \item Calculate $\mathbf{D}=\lim_{s\to\infty}\mathbf{G}(s)$
+    \item Calculate the \textbf{poles} $p_i$ of the system by determining the roots of $d(s)$.
+    \begin{itemize}
+        \item If $d(s)$ has \textbf{no repeated roots}, one can use Gilbert's method (otherwise the generalized Gilbert's method has to be used).
+    \end{itemize}
     \item Perform a (matrix) partial fraction expansion of $\mathbf{G}(s)$
           \begin{equation*}
               \mathbf{G}(s)=\frac{\mathbf{R_1}}{s-p_1}+\frac{\mathbf{R_2}}{s-p_2}+\ldots+\frac{\mathbf{R_{n_d}}}{s-p_{n_d}}+\mathbf{D}
@@ -298,6 +311,7 @@ where
     \item Calculate the ranks $r_i = \text{rank}(\mathbf{R_i})$ which indicate the number of poles at location $p_i$ that are needed.
           \begin{itemize}
               \item The order of the resulting state space model will be $n=\sum_{i=1}^{n_d}r_i\geq n_d$
+              \item Reminder: The row rank and column rank of a matrix are \textbf{always equal}!
           \end{itemize}
     \item Now the $\mathbf{A}$ matrix can be assembled
           \begin{equation*}
