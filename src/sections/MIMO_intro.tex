@@ -801,6 +801,7 @@ The $\mathcal{H}_{\infty}$ norm is induced by the $\mathcal{L}_2$ norm.
 
 Again one wants to compute the norm in state space (instead of frequency domain), now by using \textbf{bisection}:
 \begin{enumerate}
+    \item Check technical conditions: The system must be \textbf{stable} and \textbf{strictly causal} to use this criterium.
     \item Define a lower and an upper bound for $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$ (0 is a good lower bound as it is the minimum for any norm)
     \item Compute the \textbf{Hamiltonian matrix}
           \begin{equation*}
@@ -820,6 +821,5 @@ Again one wants to compute the norm in state space (instead of frequency domain)
 \ptitle{Remarks to Computation}
 
 \begin{itemize}
-    \item The system must be \textbf{stable} and \textbf{strictly causal} to use this criterium.
     \item There is no easy analytical way to compute $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$
 \end{itemize}
