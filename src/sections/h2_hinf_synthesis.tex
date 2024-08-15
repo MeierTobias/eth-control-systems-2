@@ -15,7 +15,7 @@ In the LQR problem we assume
 \begin{itemize}
     \item Full state feedback: $\mathbf{C_y}=\mathbf{\mathbb{I}}$
     \item No disturbance input: $w=0$ ($\mathbf{B}_w=\mathbf{D}_{zw}=\mathbf{D}_{yw}=\mathbf{0}$)
-    \item $\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$  % TODO: Intuition. Means what? 
+    \item no cross-coupling term $N$: ($\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$)
 \end{itemize}
 and try to find a control signal $u(t,x)$ that minimizes
 \begin{equation*}
