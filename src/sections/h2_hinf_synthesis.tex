@@ -174,9 +174,6 @@ where $\mathbf{X}$ is the stabilizing solution to the corresponding ARE and an \
 \end{equation*}
 where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
 
-% TODO: Why do the partial solutions F and L contain the terms that were = 0 per definition in the LQR and LQE case?
-% -> not assumed for this example: If you remove them (=0), you're getting the the same F,K/L as in the LQR/LQE chapters (both original ones and h2 synthesis)
-
 \subsection[H-infinity Synthesis]{$\mathcal{H}_\infty$ Synthesis}
 $\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values).
 
@@ -188,7 +185,7 @@ $\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values
               \item The expected covariances of the disturbance and sensor noise
           \end{enumerate} i.e.\ \textbf{optimal} w.r.t.\ time-domain specifications.
     \item $\mathcal{H}_2$ specifications are given in \textbf{time domain}: difficult to handle frequency-domain specifications.
-    \item For $\mathcal{H}_2$ design one could use a ``mixed sensitivity'' approach, and further augment the plant $P$ with frequency-dependent weigthing functions.
+    \item For $\mathcal{H}_2$ design one could use a ``mixed sensitivity'' approach, and further augment the plant $P$ with frequency-dependent weighting functions.
     \item $\mathcal{H}_\infty$ provides a more direct way to handle \textbf{frequency-domain specifications.} i.e.\ it allows to achieve a desired level of robustness to disturbances and noise (``Bode obstacles'').
 \end{itemize}
 
@@ -221,7 +218,7 @@ if one exists. This can be formulated mathematically as a cost function:
 \begin{equation*}
     \|\mathbf{z}\|_{\mathcal{L}_2}^2-\gamma^2\|\mathbf{w}\|_{\mathcal{L}_2}^2 < 0
 \end{equation*}
-where we search for the smallest $\gamma$ such that the controller can achieve negative cost. We \textbf{need} $\boldsymbol{\gamma}\mathbf{\le1}$ for a stabilizing controller as otherways for larger gamma one could easily achieve negative cost even though the energy of the disturbance gets not damped at all! The formula can be understood as
+where we search for the smallest $\gamma$ such that the controller can achieve negative cost. We \textbf{need} $\boldsymbol{\gamma}\mathbf{\le1}$ for a stabilizing controller as otherwise for larger gamma one could easily achieve negative cost even though the energy of the disturbance gets not damped at all! The formula can be understood as
 \begin{itemize}
     \item $\mathbf{z}$ is the performance output given some disturbance $\mathbf{w}$
     \item We want to damp $\mathbf{z}$ given $\mathbf{w}$ (remember the definition of the induced $\mathcal{L}_2$ norm above)

@@ -46,7 +46,7 @@ This is a necessary but not sufficient condition for reachability of the whole s
 \begin{itemize}
     \item A DT LTI system is controllable if, for any initial condition $\mathbf{x}_0$, there exists a control input that brings the state $x$ to $0$ in finite time (Note: For Reachability one has the ``opposite'' condition).
     \item Reachability always implies controllability and uncontrollable systems are never reachable
-    \item Controllability only implies reachability if $\mathbf{A}_d$ is invertible % TODO: I think we could also make it "if and only if"
+    \item Controllability only implies reachability iff $\mathbf{A}_d$ is invertible
     \item An unreachable DT system with non-invertible $\mathbf{A}_d$ could be controllable (Eigenvalues at 0). E.g.:
           \begin{itemize}
               \item $\mathbf{x}[k+1] = 0\mathbf{x}[k] + 0\mathbf{u}[k]$ is controllable (state goes to $0$) but unreachable as $\det(\mathbf{R})=0$.
