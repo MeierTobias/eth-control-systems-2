@@ -80,3 +80,7 @@ The LaTeX template of this summary can be found [here](https://github.com/MeierT
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+## Disclaimer
+
+All information, images, and materials presented here are sourced from the official lecture slides of the course "Control Systems II" taught by Emilio Frazzoli (Spring Semester 2024) and the textbook authored by Gioele Zardini.
