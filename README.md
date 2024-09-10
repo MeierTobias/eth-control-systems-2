@@ -83,4 +83,4 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ## Disclaimer
 
-All information, images, and materials presented here are sourced from the official lecture slides of the course "Control Systems II" taught by Emilio Frazzoli (Spring Semester 2024) and the textbook authored by Gioele Zardini.
+All information, images, and materials presented here are sourced from the official lecture slides of the course "Control Systems II" taught by Prof. Dr. Emilio Frazzoli (Spring Semester 2024) and the textbook authored by Gioele Zardini. This course summary is intended solely for educational and academic purposes. Any other use or distribution is strictly prohibited.
