@@ -77,13 +77,25 @@ Where $\tilde{\mathbf{A}}$ is a diagonal matrix with the eigenvalues of $\mathbf
 For a given initial condition $x(0)=x_0$ the homogeneous response can be computed as follows:\\
 \ptitle{In Modal Coordinates}
 \begin{align*}
-    \tilde{\mathbf{x}}(t) & =e^{\tilde{\mathbf{A}}t}\tilde{\mathbf{x}}(0) \\
-    \tilde{x}_i(t)        & =e^{\lambda_{i}t}\tilde{x}_i(0)
+    \tilde{\mathbf{x}}(t) & = e^{\tilde{\mathbf{A}}t}\tilde{\mathbf{x}}(0) \\
+    \tilde{x}_i(t)        & = e^{\lambda_{i}t}\tilde{x}_i(0)
 \end{align*}
-which means that each mode evolves independently (of other modes) over time.\\
+which means that
+\begin{itemize}
+    \item each mode evolves independently (of other modes) over time.
+    \item $\tilde{\mathbf{x}}(t)$ is obtained elementwise from $\tilde{x}_i(t)$.
+\end{itemize}
+
+\newpar{}
 \ptitle{In Standard Coordinates}
+
+The modes in standard coordinates are given by
 \begin{equation*}
-    \mathbf{x}(t)=\sum_{i=1}^{n}e^{\lambda_{i}t}\tilde{x}_i(0)\mathbf{v}_i
+    \mathbf{m}_i(t) = e^{\lambda_{i}t}\tilde{x}_i(0)\mathbf{v}_i
+\end{equation*}
+so that
+\begin{equation*}
+    \mathbf{x}(t)=\sum_{i=1}^{n} \mathbf{m}_i(t) = \sum_{i=1}^{n}e^{\lambda_{i}t}\tilde{x}_i(0)\mathbf{v}_i
 \end{equation*}
 because for an initial condition $x_0 = v_i$ the time response is given by
 \begin{equation*}
@@ -150,5 +162,5 @@ and $\mathbf{v}_i$ form a basis of the corresponding state space.
               \cos(\omega t) \\
               \textcolor{red}{-\omega\sin(\omega t)}
           \end{bmatrix}
-    \end{align*}    
+    \end{align*}
 \end{examplesection}

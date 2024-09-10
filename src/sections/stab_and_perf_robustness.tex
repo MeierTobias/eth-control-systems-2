@@ -9,6 +9,9 @@ The interconnection of two \textbf{stable} (MIMO) systems, with transfer functio
 \begin{equation*}
     \left\|\mathbf{G_1}\right\|_{\mathcal{H}_\infty}\cdot\left\|\mathbf{G_2}\right\|_{\mathcal{H}_\infty}<1
 \end{equation*}
+\begin{center}
+    \includegraphics[width = 0.5\linewidth]{SGT_interconn.png}
+\end{center}
 
 \ptitle{Remarks}
 \begin{itemize}
@@ -167,7 +170,7 @@ We want to consider robust stability and robust performance \textbf{simultaneous
     \item A \textbf{transfer function matrix} describing all uncertainty input-output relations
 \end{itemize}
 We model an uncertainty block by
-\begin{equation*}
+\begin{equation*}\label{diag_unc_block}
     \begin{bmatrix}
         w_1 \\
         w_2
@@ -206,18 +209,18 @@ to achieve robust \textbf{disturbance rejection}.
 \newpar{}
 \ptitle{Remarks}
 \begin{itemize}
-    \item Note that we ignored the diagonal structure of $\boldsymbol{\Delta}$ which makes our assumptions too conservative (see SSV for less conservatively).
+    \item Note that we ignored the diagonal structure of $\boldsymbol{\Delta}$ which makes our assumptions too conservative (see SSV for less conservatism).
     \item Also note that $\mathbf{M}$ has rank 1. In this case one can calculate the SSV exactly (see below).
 \end{itemize}
 
 \subsection{Structured Singular Value (SSV)}
 The condition from the \textit{unstructured SGT} is a conservative assumption as the SGT could be applied to an arbitrary $\boldsymbol{\Delta}$.
-If $\boldsymbol{\Delta}$ has \textbf{block-diagonal structure}, less conservative robustness conditions can be applied.
+For example, as the $\boldsymbol{\Delta}$ from \ref{diag_unc_block} has block-diagonal structure, less conservative robustness conditions could be applied.
 
 \newpar{}
 \ptitle{Definition of SSV}
 
-The SSV is defined with respect to a \textbf{class of perturbations} $\mathbb{D}$ as the smallest $\sigma_{\max}$ making $\mathbf{M}$ singular:
+The SSV is defined with respect to a \textbf{class of perturbations} $\mathbb{D}$ as the inverse value of the smallest $\sigma_{\max}$ making $\mathbf{M}$ singular:
 \begin{equation*}
     \mu(\mathbf{M}):=\frac1{\inf\{\sigma_{\max}(\boldsymbol{\Delta}):\det(1-M\boldsymbol{\Delta})=0\}},\quad\boldsymbol{\Delta}\in\mathbb{D}
 \end{equation*}

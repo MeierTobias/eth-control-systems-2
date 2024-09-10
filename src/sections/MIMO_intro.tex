@@ -81,7 +81,11 @@ The poles are given by the eigenvalues of $\mathbf{A}$.
 \subsubsection{Transfer Function Representation}
 \begin{itemize}
     \item The poles are given by the \textbf{roots} of the \textbf{characteristic polynomial} of $\mathbf{G}(s)$.
+          % TODO: What about poles of nonminimal realizations?
     \item The \textbf{characteristic polynomial} $d(s)$ of a minimal realization of $\mathbf{G}(s)$ is the least common multiple (LCM) of the denominators of all possible minors $G_{ij}$.
+          \begin{itemize}
+              \item Polynomial of order $n_d$
+          \end{itemize}
     \item The \textbf{minors} are the determinants of all single entries of the $\mathbf{G}(s)$ matrix as well as the determinants of all possible square submatrices (of all sizes!) in $\mathbf{G}(s)$.
 \end{itemize}
 
@@ -119,7 +123,16 @@ The poles are given by the eigenvalues of $\mathbf{A}$.
 
 Same condition as in SISO systems:
 \begin{itemize}
-    \item \textbf{Stable} if $\mathrm{Re}(p_i \le 0)$ and the algebraic multiplicity of poles with zero real part is equal to their geometric multiplicity.
+    \item \textbf{Stable} if $\mathrm{Re}(p_i \le 0)$ and the algebraic multiplicity of poles with zero real part is equal to their geometric multiplicity. Reminder:
+          \begin{itemize}
+              \item Algebraic multiplicity: multiplicity of eigenvalue $\lambda_i$ ($\lambda_i=0$ for in case)
+              \item Geometric multiplicity:
+                    \begin{itemize}
+                        \item Number of independent eigenvectors to eigenvalue $\lambda_i$
+                        \item Dimension of eigenspace $\ker(\lambda \mathbb{1}-\mathbf{A})$ (number of free parameters).
+                        \item E.g.\ if $\lambda_i$ has algebraic multiplicity 2, then $\ker(\lambda \mathbb{1}-\mathbf{A})$ must be a plane.
+                    \end{itemize}
+          \end{itemize}
     \item \textbf{Asymptotically stable}\ if $\mathrm{Re}(p_i<0)$
 \end{itemize}
 
@@ -214,6 +227,7 @@ The corresponding input vectors can then be determined by plugging the invariant
         \mathbf{u}_i
     \end{bmatrix}=\mathbf{0}
 \end{equation*}
+and then either solving the linear system.
 
 \ptitle{Remarks}
 
@@ -276,7 +290,7 @@ Compute realization of each component of $\mathbf{G}(s)$ and assemble them to a 
 
 Given
 \begin{equation*}
-    \mathbf{G}(s)=\frac{\mathbf{H}(s)}{d(s)}+\mathbf{D}
+    \mathbf{G}(s)=\frac{\mathbf{H}(s)}{d(s)}+\mathbf{D},\quad \mathbf{G}\in \mathbb{C}^{l\times m}
 \end{equation*}
 where
 \begin{itemize}
@@ -286,8 +300,11 @@ where
 
 \newpar{}
 \begin{enumerate}
-    \item Calculate the \textbf{poles} $p_i$ of the system by determine the roots of $d(s)$.
-    \item If $d(s)$ has \textbf{no repeated roots}, one can use Gilbert's method (otherwise the generalized Gilbert's method has to be used).
+    \item Calculate $\mathbf{D}=\lim_{s\to\infty}\mathbf{G}(s)$
+    \item Calculate the \textbf{poles} $p_i$ of the system by determining the roots of $d(s)$.
+          \begin{itemize}
+              \item If $d(s)$ has \textbf{no repeated roots}, one can use Gilbert's method (otherwise the generalized Gilbert's method has to be used).
+          \end{itemize}
     \item Perform a (matrix) partial fraction expansion of $\mathbf{G}(s)$
           \begin{equation*}
               \mathbf{G}(s)=\frac{\mathbf{R_1}}{s-p_1}+\frac{\mathbf{R_2}}{s-p_2}+\ldots+\frac{\mathbf{R_{n_d}}}{s-p_{n_d}}+\mathbf{D}
@@ -298,6 +315,7 @@ where
     \item Calculate the ranks $r_i = \text{rank}(\mathbf{R_i})$ which indicate the number of poles at location $p_i$ that are needed.
           \begin{itemize}
               \item The order of the resulting state space model will be $n=\sum_{i=1}^{n_d}r_i\geq n_d$
+              \item Reminder: The row rank and column rank of a matrix are \textbf{always equal}!
           \end{itemize}
     \item Now the $\mathbf{A}$ matrix can be assembled
           \begin{equation*}
@@ -338,6 +356,7 @@ where
 \begin{itemize}
     \item Figures out the minimum number of ``copies'' of each pole that we need to construct a realization of a MIMO transfer function.
     \item $\mathbf{A}$ simply contains diagonal matrices of dimension $r_i \times r_i$ with $p_i$ on their diagonals.
+    \item Transmission zeros and invariant zeros are equal in this (minimal) realization.
 \end{itemize}
 
 % TODO: Add an example?
@@ -388,9 +407,9 @@ where $\mathbf{U}, \mathbf{V}$ are unitary, $\boldsymbol{\Sigma}$ is diagonal.
             0        & \sigma_2 & 0
         \end{bmatrix}}_{\textsf{Scaling \& Dimensions}}
     \underbrace{\begin{bmatrix}
-            \text{---} & \mathbf{v_1} & \text{---} \\
-            \text{---} & \mathbf{v_2} & \text{---} \\
-            \text{---} & \mathbf{v_3} & \text{---}
+            \text{---} & \mathbf{v_1}^H & \text{---} \\
+            \text{---} & \mathbf{v_2}^H & \text{---} \\
+            \text{---} & \mathbf{v_3}^H & \text{---}
         \end{bmatrix}}_{\textsf{Rotation}}
 \end{equation*}
 with eigenvalues
@@ -404,7 +423,8 @@ with eigenvalues
 
 \begin{itemize}
     \item See Appendix:~\ref{app:mat_prop} for detailed understanding.
-    \item $\mathbf{U},\:\mathbf{V}$ are unitary i.e. $\mathbf{U}^H \mathbf{U}=\mathbf{U}\mathbf{U}^H=\mathbf{I}$
+    \item $\mathbf{U},\:\mathbf{V}$ are unitary i.e. $\mathbf{U}^H \mathbf{U}=\mathbf{U}\mathbf{U}^H=\mathbf{I}$.
+    \item For real $\mathbf{A}$, $\mathbf{A}^H \mathbf{A}$ and $\mathbf{A} \mathbf{A}^H$ are \textbf{symmetric}.
     \item Unitary implies positive semi-definite and real, non-negative eigenvalues.
     \item (Upper- and lower-) diagonal matrices have their singular values (or eigenvalues) on the main diagonal.
 \end{itemize}
@@ -433,18 +453,22 @@ Assuming $\mathbf{A}$ has rank = $\min(m,n)$:
                   \mathbf{0} & \cdots & \mathbf{0}
               \end{bmatrix}
           \end{align*}
-    \item calculate the eigenvectors of $\mathbf{A}^{\mathsf{H}}\mathbf{A}$. Use the same order as before and normalize the vectors if necessary.
+    \item calculate the eigenvectors of $\mathbf{A}^{\mathsf{H}}\mathbf{A}$ (or start with 4.\ if $m<n$). Use the same order as before and normalize the vectors if necessary.
           \begin{gather*}
               \mathbf{A}^{\mathsf{H}}\mathbf{A} \mathbf{v}_i = \lambda_i \mathbf{v}_i \\
               \left(\lambda_i \mathbf{I} -\mathbf{A}^{\mathsf{H}} \mathbf{A}\right)\mathbf{v}_i \overset{!}{=}\mathbf{0}
           \end{gather*}
+          or if $m<n$ use for the $\sigma_i \neq 0$
+          \begin{equation*}
+            \mathbf{v}_i = \sigma_i \mathbf{A}^H \mathbf{u}_i
+          \end{equation*}
           then assemble $\mathbf{V}$
           \begin{equation*}
               \mathbf{V} = \begin{bmatrix}
                   \vert        & \vert        &        \\
                   \mathbf{v}_1 & \mathbf{v}_2 & \cdots \\
                   \vert        & \vert        &
-              \end{bmatrix}
+              \end{bmatrix} 
           \end{equation*}
     \item calculate eigenvectors of $\mathbf{A}\mathbf{A}^{\mathsf{H}}$ either with
           \begin{gather*}
@@ -454,6 +478,10 @@ Assuming $\mathbf{A}$ has rank = $\min(m,n)$:
           or with the formula below (this can only be used for the singular values $\sigma_i \ne 0$)
           \begin{equation*}
               \mathbf{u}_i  = \frac{1}{\sigma_i}\mathbf{Av}_i
+          \end{equation*}
+          or for $\sigma_i=0$ solve the linear system
+          \begin{equation*}
+              \mathbf{A}\mathbf{A}^{\mathsf{H}} \mathbf{u}_i=\mathbf{0}
           \end{equation*}
           then assemble $\mathbf{U}$
           \begin{equation*}
@@ -488,8 +516,7 @@ shows that
     \item SVD can be seen as generalized eigenvalues/-vectors.
 \end{itemize}
 
-\newpar{}
-\ptitle{Zeros and Poles}
+\subsubsection{Zeros and Poles via SVD}
 
 For a MIMO transfer function $\mathbf{A}(s)$, the directions of poles and zeros can be found with SVD:
 \begin{enumerate}
@@ -535,10 +562,10 @@ For a MIMO transfer function $\mathbf{A}(s)$, the directions of poles and zeros 
 \begin{itemize}
     \item Euclidean norm: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}}\mathbf{x}}$
     \item For Hermitian, pos.\ definite matrices: $\left\|\mathbf{x}\right\|=\sqrt{\mathbf{x}^{\mathsf{H}} \mathbf{Qx}}$ is a norm
-    \item p-norm: $\|\mathbf{x}\|_p{=\left(\sum_{i=1}^n x_i^p\right)}^{1/p}$ with the important cases
+    \item p-norm: $\|\mathbf{x}\|_p{=\left(\sum_{i=1}^n {|x_i|}^p\right)}^{1/p}$ with the important cases
           \begin{align*}
-               & \|\mathbf{x}\|_1=\sum_1^n\left|x_i\right|,                                                 \\
-               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^n {x_i}^2} = \sqrt{\mathbf{x}^{\mathsf{H}}\mathbf{x}   } \\
+               & \|\mathbf{x}\|_1=\sum_1^n\left|x_i\right|,                                                   \\
+               & \|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^n {|x_i|}^2} = \sqrt{\mathbf{x}^{\mathsf{H}}\mathbf{x}   } \\
                & \left\|\mathbf{x}\right\|_\infty=\max_i\left|x_i\right|.
           \end{align*}
 \end{itemize}
@@ -774,6 +801,7 @@ The $\mathcal{H}_{\infty}$ norm is induced by the $\mathcal{L}_2$ norm.
 
 Again one wants to compute the norm in state space (instead of frequency domain), now by using \textbf{bisection}:
 \begin{enumerate}
+    \item Check technical conditions: The system must be \textbf{stable} and \textbf{strictly causal} to use this criterium.
     \item Define a lower and an upper bound for $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$ (0 is a good lower bound as it is the minimum for any norm)
     \item Compute the \textbf{Hamiltonian matrix}
           \begin{equation*}
@@ -793,6 +821,5 @@ Again one wants to compute the norm in state space (instead of frequency domain)
 \ptitle{Remarks to Computation}
 
 \begin{itemize}
-    \item The system must be \textbf{stable} and \textbf{strictly causal} to use this criterium.
     \item There is no easy analytical way to compute $\|\mathbf{G}\|_{\mathcal{H}_{\infty}}$
 \end{itemize}

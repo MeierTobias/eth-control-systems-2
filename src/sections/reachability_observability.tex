@@ -46,7 +46,7 @@ This is a necessary but not sufficient condition for reachability of the whole s
 \begin{itemize}
     \item A DT LTI system is controllable if, for any initial condition $\mathbf{x}_0$, there exists a control input that brings the state $x$ to $0$ in finite time (Note: For Reachability one has the ``opposite'' condition).
     \item Reachability always implies controllability and uncontrollable systems are never reachable
-    \item Controllability only implies reachability if $\mathbf{A}_d$ is invertible
+    \item Controllability only implies reachability if $\mathbf{A}_d$ is invertible % TODO: I think we could also make it "if and only if"
     \item An unreachable DT system with non-invertible $\mathbf{A}_d$ could be controllable (Eigenvalues at 0). E.g.:
           \begin{itemize}
               \item $\mathbf{x}[k+1] = 0\mathbf{x}[k] + 0\mathbf{u}[k]$ is controllable (state goes to $0$) but unreachable as $\det(\mathbf{R})=0$.
@@ -96,9 +96,11 @@ In a system that is stabilizable and detectable all the modes that cannot be con
           \begin{itemize}
               \item I.e.\ it must be possible to bring all unstable modal components from $\mathbf{0}$ to any desired state in finite time.
           \end{itemize}
+    \item Transform system into modal coordinates and compare $\tilde{b}_i$ with $\lambda_i$ to access stabilizability of corresponding mode.
     \item Reachability always implies stabilizability
           \begin{itemize}
               \item A stabilizable system can be unreachable: E.g.\ if stable modes can't be influenced from the input.
+              \item An unstabilizable system can never be reachable.
           \end{itemize}
 \end{itemize}
 
@@ -109,9 +111,11 @@ In a system that is stabilizable and detectable all the modes that cannot be con
           \begin{itemize}
               \item I.e.\ unstable modal behavior must be visible at the output
           \end{itemize}
+          \item Transform system into modal coordinates and compare $\tilde{c}_i$ with $\lambda_i$ to access detectability of corresponding mode.
     \item Observability always implies detectability
           \begin{itemize}
               \item A detectable system can be unobservable: E.g.\ if stable modes don't influence the output.
+              \item An undetectable system can never be observable.
           \end{itemize}
 \end{itemize}
 
@@ -138,9 +142,9 @@ A specific method to group basis vectors.
                  \end{bmatrix}
     \mathbf{u}                                                                                                                 \\
     \mathbf{y}       & = \begin{bmatrix}
-                             0 & \mathbf{C}_{ro} & 0 & \mathbf{C}_{r\bar{o}}
-                         \end{bmatrix}
-    \mathbf{x} + \mathbf{Du}
+                             0 & \mathbf{C}_{ro} & 0 & \mathbf{C}_{\bar{r}o}
+                         \end{bmatrix}\mathbf{x}
+    + \mathbf{Du}
 \end{align*}
 
 \ptitle{General case}
@@ -177,4 +181,10 @@ A specific method to group basis vectors.
 \begin{itemize}
     \item In the transfer function $u \rightarrow y$ only the modes corresponding to the reachable and observable modes will appear (others will be cancelled by a zero).
     \item A minimal realization of a transfer function is a state-space model that is both reachable and observable.
+    \begin{itemize}
+        % TODO: Does a non-minimal realization always cause pole-zero cancellations in the TF?
+        \item Even more, it holds that a realization is minimal \textbf{if and only if} it is reachable and observable.
+        \item Reminder: For non-minimal realizations invariant zeros can give additional zeros (correspond to uncontrollable/unobservable modes).
+    \end{itemize}
 \end{itemize}
+

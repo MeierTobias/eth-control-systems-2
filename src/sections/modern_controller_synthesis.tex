@@ -170,7 +170,7 @@ The matrix $A$ contains both the dynamics of the plant and the frequency weights
 
 As $u(s)=K(s)y(s)$ the closed loop TF from the exogenous inputs $w$ to the performance outputs $z$ is given by the \textit{Linear Fractional Transformation}:
 \begin{equation*}
-    F(s) = G_{zw}(s) + G_{zu}(s)K(s){(I-G_{yu}(s)K(s))}^{-1}G_{yw}(s)
+    F(s) = G_{zw}(s) + G_{zu}(s)K(s){(I-G_{yu}(s) K(s))}^{-1}G_{yw}(s)
 \end{equation*}
 
 \textbf{MATLAB}: \texttt{F = lft(G, K)}

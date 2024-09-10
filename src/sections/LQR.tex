@@ -13,6 +13,7 @@ For the reference input $r(t) = 0$ the cost functional $J$ is defined as
           \begin{itemize}
               \item is symmetric i.e. $\mathbf{Q}=\mathbf{Q}^{\mathsf{T}}$
               \item is positive semidefinite i.e. $\mathbf{x}^{\mathsf{T}} \mathbf{Qx} \geq 0$ or $\mathrm{eig}(\mathbf{Q}) \geq 0$
+              % TODO: Why must it be sqrt (below)? Compare with LQE technical conditions
               \item must give positive weights to unstable modes to penalize them in the cost function (the pair $\mathbf{A}, \sqrt{\mathbf{Q}}$ is detectable)
           \end{itemize}
     \item $\mathbf{R}$ 
@@ -168,12 +169,20 @@ where $\mathbf{G}(-s)$ corresponds to flipping signs in all the odd coefficients
 
 \begin{itemize}
     \item $2n$ branches, where $n$ is the size of $\mathbf{A}$
+    \begin{itemize}
+        \item like in standard RL, every branch starts in an OL pole
+        \item but asymptotic behaviour different from standard RL
+    \end{itemize}
     \item symmetric to the real and imaginary axis
     \item LQR closed-loop poles are all in the LHP
     \item $\rho \rightarrow \infty$ (expensive control):\newline
           CL poles approach stable OL poles and the mirror-images of the unstable OL poles (all on LHP)
     \item $\rho \rightarrow 0$ (cheap control):\newline
           CL poles approach MP OL zeros and the mirror-images of the NMP OL zeros or go to infinity along the LHP asymptotes (all on LHP)
+    \item note that for $\rho \rightarrow \infty$ there are no asymptotes to $\infty$ but only convergence towards (mirror) OL poles
+    \begin{itemize}
+        \item for $\rho \rightarrow 0$ there is also convergence to $\infty$
+    \end{itemize}
 \end{itemize}
 
 \begin{examplesection}[Example: Symmetric Root Locus]
