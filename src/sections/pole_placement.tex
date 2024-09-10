@@ -48,43 +48,34 @@ and the closed-loop characteristic polynomial can be used to choose the paramete
 \end{align*}
 
 \subsubsection{General Case}
-If the system is \textbf{controllable} but not in reachable canonical form, the following steps have to be applied
+If the system is \textbf{controllable} but not in reachable canonical form, the following steps have to be applied to transform the system into reachable canonical form $\tilde{\mathbf{A}},\tilde{\mathbf{B}},\tilde{\mathbf{C}},\tilde{\mathbf{D}}$.
 \begin{enumerate}
-    \item Calculate $\mathbf{A}'$ by comparing the characteristic polynomial of $\mathbf{A}$ with the one of the parametric $\mathbf{A}'$ from~\ref{RCF}.
-    \item Find transformation matrix $\mathbf{T}$ (using $\mathbf{A}'$ from 1.\ and the known form for $\mathbf{B}'$ to calculate $\mathbf{R}'$):
+    \item Calculate $\tilde{\mathbf{A}}$ by comparing the characteristic polynomial of $\mathbf{A}$ with the one of the parametric reachable canonical form $\tilde{\mathbf{A}}$.
+    \item Find transformation matrix $\mathbf{T}$ (using $\tilde{\mathbf{A}}$ from 1.\ and the known form for $\tilde{\mathbf{B}}$ to calculate $\tilde{\mathbf{R}}$):
           \noindent\begin{align*}
-              \mathbf{R}' & =\begin{bmatrix}
-                                 \mathbf{B}' & \mathbf{A}'\mathbf{B}' & \ldots & {(\mathbf{A}')}^{n-1}\mathbf{B}'
-                             \end{bmatrix} \\
-                          & =\mathbf{TR}  =\begin{bmatrix}
-                                               0      & 0        & \dots               & 1     \\
-                                               \vdots &          & \ddots              &       \\
-                                               0      & 1        & -a_{n-1}            & \dots \\
-                                               1      & -a_{n-1} & a_{n-1}^2 - a_{n-2} & \dots \\
-                                           \end{bmatrix}                                \\
-              \mathbf{T}  & = \mathbf{R'R}^{-1}
+              \tilde{\mathbf{R}} & =\begin{bmatrix}
+                                        \tilde{\mathbf{B}} & \tilde{\mathbf{A}}\tilde{\mathbf{B}} & \ldots & {(\tilde{\mathbf{A}})}^{n-1}\tilde{\mathbf{B}}
+                                    \end{bmatrix} \\
+                                 & =\mathbf{TR}  =\begin{bmatrix}
+                                                      0      & 0        & \dots               & 1     \\
+                                                      \vdots &          & \ddots              &       \\
+                                                      0      & 1        & -a_{n-1}            & \dots \\
+                                                      1      & -a_{n-1} & a_{n-1}^2 - a_{n-2} & \dots \\
+                                                  \end{bmatrix}                                                                                                           \\
+              \mathbf{T}         & = \tilde{\mathbf{R}}\mathbf{R}^{-1}
           \end{align*}
-          with $\mathbf{R}'$ the reachability matrix of the transformed system.
-          \begin{itemize}
-            \item $a_i$ are the coefficients of $\mathbf{A}'$
-            \item Note that there are 2 different ways to calculate $\mathbf{R}'$ of which we use the first one as $\mathbf{T}$ is unknown in the beginning.
-          \end{itemize}
-    \item Similarity transform of $\mathbf{A,B,C,D}$ into reachable canonical form $\mathbf{A',B',C',D'}$
+          with $\tilde{\mathbf{R}}$ the reachability matrix of the transformed system and $a_i$ are the coefficients of $\tilde{\mathbf{A}}$
+    \item Calculate the $\tilde{\mathbf{C}}$ matrix.
     \item Apply method for reachable canonical form
           \begin{equation*}
               \mathbf{K}^{\prime} =\left[\alpha_{0}-a_{0},\quad\alpha_{1}-a_{1},\quad\ldots,\quad\alpha_{n-1}-a_{n-1}\right]
           \end{equation*}
-    \item Transform $\mathbf{K}'$ back to the original system:
+    \item Transform $\tilde{\mathbf{K}}$ back to the original system:
           \noindent\begin{equation*}
-              \mathbf{K}          = \mathbf{K'RR}^{-1}
+              \mathbf{K}          = \tilde{\mathbf{K}}\mathbf{RR}^{-1}
           \end{equation*}
           which is possible if $\mathbf{R}$ is invertible (corresponds to controllability).
 \end{enumerate}
-
-\textbf{Remarks}:
-\begin{itemize}
-    \item $\mathbf{A'},\mathbf{A}$ share their eigenvalues, therefore a comparison of coefficients can be used.
-\end{itemize}
 
 \newpar{}
 \ptitle{Reminder}\label{RCF}
@@ -130,13 +121,13 @@ for which $b_i=0$.
 \subsubsection{Ackermann's Formula}
 Assuming that the system is \textbf{controllable}, Ackermann's formula can be used to calculate $\mathbf{K}$ for \textbf{both} CT and DT systems:
 \noindent\begin{align*}
-    \mathbf{K}               & =\begin{bmatrix}
-                                    0, & \ldots, & 0, & 1
-                                \end{bmatrix}
-    \mathbf{R}^{-1}\varphi_{cl}(\mathbf{A})                                                               \\
+    \mathbf{K}                   & =\begin{bmatrix}
+                                        0, & \ldots, & 0, & 1
+                                    \end{bmatrix}
+    \mathbf{R}^{-1}\varphi_{cl}(\mathbf{A})                                                                   \\
     \varphi_{cl,des}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n)  \\
     \varphi_{cl,des}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 \mathbf{I}      \\
-                             & = (\mathbf{A}-\lambda_1 \mathbf{I})\ldots(\mathbf{A}-\lambda_n \mathbf{I})
+                                 & = (\mathbf{A}-\lambda_1 \mathbf{I})\ldots(\mathbf{A}-\lambda_n \mathbf{I})
 \end{align*}
 
 \newpar{}

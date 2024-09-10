@@ -93,30 +93,14 @@ In a system that is stabilizable and detectable all the modes that cannot be con
 \ptitle{Stabilizability}
 \begin{itemize}
     \item A system is stabilizable if all \textbf{unstable modes are reachable}.
-          \begin{itemize}
-              \item I.e.\ it must be possible to bring all unstable modal components from $\mathbf{0}$ to any desired state in finite time.
-          \end{itemize}
-    \item Transform system into modal coordinates and compare $\tilde{b}_i$ with $\lambda_i$ to access stabilizability of corresponding mode.
     \item Reachability always implies stabilizability
-          \begin{itemize}
-              \item A stabilizable system can be unreachable: E.g.\ if stable modes can't be influenced from the input.
-              \item An unstabilizable system can never be reachable.
-          \end{itemize}
 \end{itemize}
 
 \newpar{}
 \ptitle{Detectability}
 \begin{itemize}
     \item A system is detectable if all \textbf{unstable modes are observable}.
-          \begin{itemize}
-              \item I.e.\ unstable modal behavior must be visible at the output
-          \end{itemize}
-          \item Transform system into modal coordinates and compare $\tilde{c}_i$ with $\lambda_i$ to access detectability of corresponding mode.
     \item Observability always implies detectability
-          \begin{itemize}
-              \item A detectable system can be unobservable: E.g.\ if stable modes don't influence the output.
-              \item An undetectable system can never be observable.
-          \end{itemize}
 \end{itemize}
 
 \subsection{Kalman Decomposition}
@@ -180,11 +164,5 @@ A specific method to group basis vectors.
 \ptitle{Remarks}
 \begin{itemize}
     \item In the transfer function $u \rightarrow y$ only the modes corresponding to the reachable and observable modes will appear (others will be cancelled by a zero).
-    \item A minimal realization of a transfer function is a state-space model that is both reachable and observable.
-    \begin{itemize}
-        % TODO: Does a non-minimal realization always cause pole-zero cancellations in the TF?
-        \item Even more, it holds that a realization is minimal \textbf{if and only if} it is reachable and observable.
-        \item Reminder: For non-minimal realizations invariant zeros can give additional zeros (correspond to uncontrollable/unobservable modes).
-    \end{itemize}
+    \item A realization is minimal \textbf{iff} it is reachable and observable.
 \end{itemize}
-

@@ -80,7 +80,7 @@ the equilibrium point $\mathbf{x_e}$ is \textbf{stable in the sense of Lyapunov}
 \newpar{}
 Futhermore, $\mathbf{x}_e$ is \textbf{asymptotically stable} if
 \noindent\begin{equation*}
-    \dot{V}(\mathbf{x}(t)) = 0 \text{ only if } \mathbf{x}(t) = \mathbf{x}_e
+    \dot{V}(\mathbf{x}(t)) = 0 \Leftarrow \mathbf{x}(t) = \mathbf{x}_e \quad \text{(only if)}
 \end{equation*}
 Finally, $\mathbf{x}_e$ is \textbf{exponentially stable} if
 \noindent\begin{equation*}
@@ -183,8 +183,8 @@ If a Control Lyapunov Function (CLF) exists, it provides a way to construct a st
 \newpar{}
 A CLF satisfies
 \noindent\begin{align*}
-    V(\mathbf{x})                                              & \geq 0                                                                                           &  & \text{positive definite}  \\
-    V(\mathbf{x})                                              & = 0 \Leftrightarrow \mathbf{x} = 0                                                               &  & \text{radially unbounded} \\
+    V(\mathbf{x})                                              & \geq 0                                                                                                    &  & \text{positive definite}  \\
+    V(\mathbf{x})                                              & = 0 \Leftrightarrow \mathbf{x} = 0                                                                        &  & \text{radially unbounded} \\
     \frac{d}{dt} V(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) & = \frac{\partial V(\mathbf{x})}{\partial \mathbf{x}} f(\mathbf{x}, \tilde{\mathbf{u}}(\mathbf{x})) \leq 0 &  & \forall \mathbf{x}\neq 0
 \end{align*}
 
@@ -304,7 +304,7 @@ and thus proves the stability of the ``error'' system.
 Using $\dot{\mathbf{u}}_0=\dot{\mathbf{z}}-\dot{\mathbf{e}}$ one finally finds the stabilizing control law as
 \begin{align*}
     u_1(\mathbf{x},\mathbf{z})  = \frac{1}{g_1(\mathbf{x},\mathbf{z})} & \left(\frac{\partial \mathbf{u}_0(\mathbf{x})}{\partial \mathbf{x}}\left(f_0(\mathbf{x})+g_0(\mathbf{x})\mathbf{z}\right)-f_1(\mathbf{x},\mathbf{z}) \right. \\
-                                   & \left. -\frac{\partial V_0(\mathbf{x})}{\partial \mathbf{x}}g_0(\mathbf{x})-k_1(\mathbf{z}-\mathbf{u}_0(\mathbf{x}))\right)
+                                                                       & \left. -\frac{\partial V_0(\mathbf{x})}{\partial \mathbf{x}}g_0(\mathbf{x})-k_1(\mathbf{z}-\mathbf{u}_0(\mathbf{x}))\right)
 \end{align*}
 
 \newpar{}
@@ -323,9 +323,9 @@ Using $\dot{\mathbf{u}}_0=\dot{\mathbf{z}}-\dot{\mathbf{e}}$ one finally finds t
 \paragraph{Recursive Backstepping}
 The same approach can be used recursively as
 \begin{align*}
-    \dot{\mathbf{x}}     & =\quad f_{0}(\mathbf{x})+g_{0}(\mathbf{x})\mathbf{z}_{1},                     \\
-    \dot{\mathbf{z}}_{1} & =\quad f_{1}(\mathbf{x},\mathbf{z}_{1})+g_{1}(\mathbf{x},\mathbf{z}_{1})\mathbf{z}_{2},         \\
-                & \vdots                                             \\
+    \dot{\mathbf{x}}     & =\quad f_{0}(\mathbf{x})+g_{0}(\mathbf{x})\mathbf{z}_{1},                                                \\
+    \dot{\mathbf{z}}_{1} & =\quad f_{1}(\mathbf{x},\mathbf{z}_{1})+g_{1}(\mathbf{x},\mathbf{z}_{1})\mathbf{z}_{2},                  \\
+                         & \vdots                                                                                                   \\
     \dot{\mathbf{z}}_{m} & =\quad f_{m}(\mathbf{x},\mathbf{z}_{1},\ldots,\mathbf{z}_{m})+g_{1}(\mathbf{x},\mathbf{z}_{m})\mathbf{u}
 \end{align*}
 
