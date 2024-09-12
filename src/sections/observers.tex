@@ -71,19 +71,19 @@ using the methods mentioned in Section~\ref{sec:pole_placement} (Pole Placement)
 
 $\mathbf{L}={\left[\ell_0,\cdots,\ell_{n-1}\right]}^{\mathsf{T}}$ can be obtained by comparing the eigenvalues of the observer with the desired ones:
 \noindent\begin{equation*}
-    \det\bigl(\lambda \mathbf{I} -(\mathbf{A}-\mathbf{LC})\bigr) \overset{!}{=} \varphi_{\mathrm{cl}}(\lambda)
+    \det\bigl(\lambda \mathbf{I} -(\mathbf{A}-\mathbf{LC})\bigr) \overset{!}{=} \varphi_{\mathrm{cl,des}}(\lambda)
 \end{equation*}
 
 \ptitle{Ackermann Observer Design}
 
 Similarly to state feedback we get
 \begin{align*}
-    \mathbf{L}                        & =\varphi_{\mathrm{cl}}(\mathbf{A})\mathbf{O}^{-1}\begin{bmatrix}
-                                                                                             0, & \ldots, & 0, & 1
-                                                                                         \end{bmatrix}^{\mathsf{T}} \\
-    \varphi_{\mathrm{cl}}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n)   \\
-    \varphi_{\mathrm{cl}}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 \mathbf{I}       \\
-                                      & = (\mathbf{A}-\lambda_1 \mathbf{I})\ldots(\mathbf{A}-\lambda_n \mathbf{I})
+    \mathbf{L}                            & =\varphi_{\mathrm{cl,des}}(\mathbf{A})\mathbf{O}^{-1}\begin{bmatrix}
+                                                                                                     0, & \ldots, & 0, & 1
+                                                                                                 \end{bmatrix}^{\mathsf{T}} \\
+    \varphi_{\mathrm{cl,des}}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n)       \\
+    \varphi_{\mathrm{cl,des}}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 \mathbf{I}           \\
+                                          & = (\mathbf{A}-\lambda_1 \mathbf{I})\ldots(\mathbf{A}-\lambda_n \mathbf{I})
 \end{align*}
 
 \textbf{Remarks:}
@@ -183,25 +183,26 @@ The steady-state covariance of the state estimation error
 \end{equation*}
 is minimized by solving the Riccati equation (\textit{ARE})
 \begin{equation*}
-    \mathbf{AY}+\mathbf{YA}^{\mathsf{T}}-\mathbf{YC}^{\mathsf{T}} \mathbf{R}^{-1}\mathbf{CY}+\mathbf{Q}=0
+    \mathbf{AY}+\mathbf{YA}^{\mathsf{T}}-\mathbf{YC}^{\mathsf{T}} \mathbf{R}^{-1}\mathbf{CY}+\mathbf{Q}=\mathbf{0}
 \end{equation*}
 for the \textbf{positive definite} matrix $\mathbf{Y}$ and choosing the \textit{optimal estimation gain} $\mathbf{L}$ as
 \begin{equation*}
-    \mathbf{L}=\mathbf{R}^{-1}\mathbf{CY}
+    \mathbf{L}^{\mathsf{T}}=\mathbf{R}^{-1}\mathbf{CY}
 \end{equation*}
 
 \ptitle{Remarks}:
 
 \begin{itemize}
-    \item the system has to be detectable (check for observability) and ($\mathbf{A,Q}$) stabilizable (check for reachability)\newline
+    \item the system has to be detectable (check for observability) and ($\mathbf{A,Q}$) stabilizable (check for reachability, treat $\mathbf{Q}$ like $\mathbf{B}$)\newline
           (e.g. $n=2: \mathbf{\mathcal{R}}= \left[\mathbf{Q}\quad \mathbf{AQ}\right]$)
-    \item $\mathbf{Y}$ is \textit{symmetric}, \textit{positive definite} ($\mathrm{Re}(\lambda_i) > 0, \mathrm{Im}(\lambda_i) = 0$) and has to fulfil the \textit{Sylvester criterion} e.g.\ for $n=2$:
+    \item $\mathbf{Y}$ is \textit{real}, \textit{symmetric}, \textit{positive definite} ($\mathrm{Re}(\lambda_i) > 0, \mathrm{Im}(\lambda_i) = 0$) and has to fulfil the \textit{Sylvester criterion} e.g.\ for $n=2$:
           \noindent\begin{equation*}
               \mathbf{Y}=\begin{bmatrix}
                   a & b \\
                   b & d
               \end{bmatrix}; \quad a>0, \quad ad-b^2>0
           \end{equation*}
+    \item for symmetric $\mathbf{Y}$ one has that $\mathbf{Y}\mathbf{A}^{\mathsf{T}}={(\mathbf{AY})}^{\mathsf{T}}$
     \item as expected from duality, $\mathbf{L}$ is the transpose of $\mathbf{K}$, obtained for the pair $(\mathbf{A}^{\mathsf{T}}, \mathbf{C}^{\mathsf{T}})$, and for weight matrices $\mathbf{Q}$ and $\mathbf{R}$.
     \item in practice, we can measure the noise to get a first estimate of $\mathbf{Q}$, $\mathbf{R}$
     \item as a guideline, one should make the innovations $\mathbf{C}\boldsymbol{\eta}$ as white as possible

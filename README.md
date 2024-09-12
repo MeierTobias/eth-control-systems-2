@@ -26,7 +26,7 @@ Make sure to compile with xelatex (required by fontspec).
 2. After you launched the docker daemon (started Docker Desktop) you can simply run execute the `./build_latex_local.sh` file to generate the pdf files. They are located in a newly created subfolder called `build`.  
 (Most probably you have to change the execution permissions with `chmod +x build_latex_local.sh` before you are able to run the script for the first time.)
 
-### Native LaTeX compiler
+### Native LaTeX Compiler
 
 If you want to use your own native installed LaTeX compiler we recommend to use [TeXLive](https://www.tug.org/texlive/) which integrates well within visual studio code.
 
@@ -80,3 +80,7 @@ The LaTeX template of this summary can be found [here](https://github.com/MeierT
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+## Disclaimer
+
+All information, images, and materials presented here are sourced from the official lecture slides of the course "Control Systems II" taught by Prof. Dr. Emilio Frazzoli (Spring Semester 2024) and the textbook authored by Gioele Zardini. This course summary is intended solely for educational and academic purposes. Any other use or distribution is strictly prohibited.

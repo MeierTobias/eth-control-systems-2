@@ -15,8 +15,17 @@ In the LQR problem we assume
 \begin{itemize}
     \item Full state feedback: $\mathbf{C_y}=\mathbf{\mathbb{I}}$
     \item No disturbance input: $w=0$ ($\mathbf{B}_w=\mathbf{D}_{zw}=\mathbf{D}_{yw}=\mathbf{0}$)
-    \item $\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$  % TODO: Intuition. Means what? 
+    \item no cross-coupling term $N$: ($\mathbf{C}_z^{\mathsf{T}}\mathbf{D}_{zu}=0$)
+    \item i.e.
+          \noindent\begin{equation*}
+              \begin{bmatrix}
+                  \mathbf{A}                                                                  & \mathbf{0} & \mathbf{B}_u                                                               \\
+                  \begin{bmatrix}\sqrt{\mathbf{Q}} & \mathbf{0} \end{bmatrix}^{\mathsf{T}} & \mathbf{0} & \begin{bmatrix}\mathbf{0} & \sqrt{\mathbf{R}}\end{bmatrix}^{\mathsf{T}} \\
+                  \mathbb{I}                                                                  & \mathbf{0} & \mathbf{D}_{yu}
+              \end{bmatrix}
+          \end{equation*}
 \end{itemize}
+
 and try to find a control signal $u(t,x)$ that minimizes
 \begin{equation*}
     \|\mathbf{z}\|_2^2=\int_0^{+\infty}\|\mathbf{C}_z \mathbf{x}+\mathbf{D}_{zu}\mathbf{u}\|_2^2 dt
@@ -81,6 +90,14 @@ In the LQE problem we assume
     \item Full state updates: $\mathbf{B}_u=\mathbf{\mathbb{I}}$ ($u$ updates the states)
     \item Zero initial conditions: $\tilde{\mathbf{x}}(0)=\mathbf{x}(0)-\hat{\mathbf{x}}(0)=0$
     \item $\mathbf{B}_w \mathbf{D}_{yw}^{\mathsf{T}}=0$ i.e., process noise and sensor noise are uncorrelated.
+    \item i.e.
+          \noindent\begin{equation*}
+              \begin{bmatrix}
+                  \mathbf{A}   & \begin{bmatrix} \sqrt{\mathbf{Q}} & \mathbf{0} \end{bmatrix}^{\mathsf{T}} & \mathbb{I}      \\
+                  \mathbf{C}_z & \mathbf{D}_{zw}                                                                       & \mathbf{D}_{zu} \\
+                  \mathbf{C}_y & \begin{bmatrix}\mathbf{0} &  \sqrt{\mathbf{R}}\end{bmatrix}^{\mathsf{T}}  & \mathbf{D}_{yu}
+              \end{bmatrix}
+          \end{equation*}
 \end{itemize}
 and try to find an update signal $\mathbf{u}(t,\tilde{x})\in \mathcal{L}_2$ that minimizes power in the error signal due to white noise disturbance $w$.
 
@@ -112,7 +129,7 @@ One can show that the given problem statement on $\mathbf{u}$ imposes the follow
 \end{equation*}
 The optimal observer matrix is then given by
 \begin{equation*}
-    \mathbf{L} = -\mathbf{Y}_L\mathbf{C}_y^{\mathsf{T}}{(\underbrace{\mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}}_{=\mathbf{R}})}^{-1}    
+    \mathbf{L} = -\mathbf{Y}_L\mathbf{C}_y^{\mathsf{T}}{(\underbrace{\mathbf{D}_{yw}\mathbf{D}_{yw}^{\mathsf{T}}}_{=\mathbf{R}})}^{-1}
 \end{equation*}
 where $\mathbf{Y}_L$ is symmetric and positive semidefinite.
 
@@ -157,9 +174,6 @@ where $\mathbf{X}$ is the stabilizing solution to the corresponding ARE and an \
 \end{equation*}
 where $\mathbf{Y}$ is the stabilizing solution to the corresponding ARE.
 
-% TODO: Why do the partial solutions F and L contain the terms that were = 0 per definition in the LQR and LQE case?
-% -> not assumed for this example: If you remove them (=0), you're getting the the same F,K/L as in the LQR/LQE chapters (both original ones and h2 synthesis)
-
 \subsection[H-infinity Synthesis]{$\mathcal{H}_\infty$ Synthesis}
 $\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values).
 
@@ -171,7 +185,7 @@ $\mathcal{H}_\infty$ minimizes the worst-case input-output gain (singular values
               \item The expected covariances of the disturbance and sensor noise
           \end{enumerate} i.e.\ \textbf{optimal} w.r.t.\ time-domain specifications.
     \item $\mathcal{H}_2$ specifications are given in \textbf{time domain}: difficult to handle frequency-domain specifications.
-    \item For $\mathcal{H}_2$ design one could use a ``mixed sensitivity'' approach, and further augment the plant $P$ with frequency-dependent weigthing functions.
+    \item For $\mathcal{H}_2$ design one could use a ``mixed sensitivity'' approach, and further augment the plant $P$ with frequency-dependent weighting functions.
     \item $\mathcal{H}_\infty$ provides a more direct way to handle \textbf{frequency-domain specifications.} i.e.\ it allows to achieve a desired level of robustness to disturbances and noise (``Bode obstacles'').
 \end{itemize}
 
@@ -204,7 +218,7 @@ if one exists. This can be formulated mathematically as a cost function:
 \begin{equation*}
     \|\mathbf{z}\|_{\mathcal{L}_2}^2-\gamma^2\|\mathbf{w}\|_{\mathcal{L}_2}^2 < 0
 \end{equation*}
-where we search for the smallest $\gamma$ such that the controller can achieve negative cost. We \textbf{need} $\boldsymbol{\gamma}\mathbf{\le1}$ for a stabilizing controller as otherways for larger gamma one could easily achieve negative cost even though the energy of the disturbance gets not damped at all! The formula can be understood as
+where we search for the smallest $\gamma$ such that the controller can achieve negative cost. We \textbf{need} $\boldsymbol{\gamma}\mathbf{\le1}$ for a stabilizing controller as otherwise for larger gamma one could easily achieve negative cost even though the energy of the disturbance gets not damped at all! The formula can be understood as
 \begin{itemize}
     \item $\mathbf{z}$ is the performance output given some disturbance $\mathbf{w}$
     \item We want to damp $\mathbf{z}$ given $\mathbf{w}$ (remember the definition of the induced $\mathcal{L}_2$ norm above)
@@ -222,16 +236,16 @@ For feasibility one must have
     \item $\begin{bmatrix}\mathbf{A}-j\omega \mathbf{I}&\mathbf{B}_w\end{bmatrix},\begin{bmatrix}\mathbf{A}^{\mathsf{H}}-j\omega \mathbf{I}&\mathbf{C}_z^{\mathsf{H}}\end{bmatrix}$ must have full row rank
 \end{enumerate}
 \newpar{}
-A controller $\mathbf{K}$ fulfilling the cost inequality exists, only if 
+A controller $\mathbf{K}$ fulfilling the cost inequality exists, only if
 \begin{enumerate}
     \item The following ARE has a solution for $\mathbf{X}_{\infty}$
-    \begin{equation*}
-        \mathbf{A}^{\mathsf{H}}\mathbf{X}_{\infty}+\mathbf{X}_{\infty}\mathbf{A}+\mathbf{C}_{z}^{\mathsf{H}}\mathbf{C}_{z}=\mathbf{X}_{\infty}(\mathbf{B}_{u}\mathbf{B}_{u}^{\mathsf{H}}-\gamma^{-2}\mathbf{B}_{w}\mathbf{B}_{w}^{\mathsf{H}})\mathbf{X}_{\infty}
-    \end{equation*}
+          \begin{equation*}
+              \mathbf{A}^{\mathsf{H}}\mathbf{X}_{\infty}+\mathbf{X}_{\infty}\mathbf{A}+\mathbf{C}_{z}^{\mathsf{H}}\mathbf{C}_{z}=\mathbf{X}_{\infty}(\mathbf{B}_{u}\mathbf{B}_{u}^{\mathsf{H}}-\gamma^{-2}\mathbf{B}_{w}\mathbf{B}_{w}^{\mathsf{H}})\mathbf{X}_{\infty}
+          \end{equation*}
     \item The following ARE has a solution for $\mathbf{Y}_{\infty}$
-    \begin{equation*}
-        \mathbf{A}\mathbf{Y}_\infty + \mathbf{Y}_\infty \mathbf{A}^{\mathsf{H}} + \mathbf{B}_w^{\mathsf{H}} \mathbf{B}_w = \mathbf{Y}_\infty (\mathbf{C}_y \mathbf{C}_y^{\mathsf{H}} - \gamma^{-2} \mathbf{C}_z \mathbf{C}_z^{\mathsf{H}}) \mathbf{Y}_\infty
-    \end{equation*}
+          \begin{equation*}
+              \mathbf{A}\mathbf{Y}_\infty + \mathbf{Y}_\infty \mathbf{A}^{\mathsf{H}} + \mathbf{B}_w^{\mathsf{H}} \mathbf{B}_w = \mathbf{Y}_\infty (\mathbf{C}_y \mathbf{C}_y^{\mathsf{H}} - \gamma^{-2} \mathbf{C}_z \mathbf{C}_z^{\mathsf{H}}) \mathbf{Y}_\infty
+          \end{equation*}
     \item The matrix $\gamma^2 \mathbf{I} - \mathbf{Y}_{\infty} \mathbf{X}_{\infty}$ is positive definite
 \end{enumerate}
 
@@ -250,14 +264,14 @@ Remarks
 \begin{itemize}
     \item The conditions are only fulfilled if $\gamma\le 1$
     \item For $\gamma>1$ use relaxed weights
-    \item The final controller gains are 
-    \begin{equation*}
-        \mathbf{F}_u=-\mathbf{B}_u^{\mathsf{H}}\mathbf{X}_\infty,\quad \mathbf{F}_w=\frac1{\gamma^2}\mathbf{B}_w^{\mathsf{H}}\mathbf{X}_\infty 
-    \end{equation*}
-    \item The final observer gain is 
-    \begin{equation*}
-        \mathbf{L}=-{(\mathbf{I}-\gamma^{-2}\mathbf{Y}_\infty \mathbf{X}_\infty)}^{-1}\mathbf{Y}_\infty \mathbf{C}_y^{\mathsf{H}}
-    \end{equation*}
+    \item The final controller gains are
+          \begin{equation*}
+              \mathbf{F}_u=-\mathbf{B}_u^{\mathsf{H}}\mathbf{X}_\infty,\quad \mathbf{F}_w=\frac1{\gamma^2}\mathbf{B}_w^{\mathsf{H}}\mathbf{X}_\infty
+          \end{equation*}
+    \item The final observer gain is
+          \begin{equation*}
+              \mathbf{L}=-{(\mathbf{I}-\gamma^{-2}\mathbf{Y}_\infty \mathbf{X}_\infty)}^{-1}\mathbf{Y}_\infty \mathbf{C}_y^{\mathsf{H}}
+          \end{equation*}
 \end{itemize}
 
 \newpar{}

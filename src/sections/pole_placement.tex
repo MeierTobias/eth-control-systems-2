@@ -48,35 +48,59 @@ and the closed-loop characteristic polynomial can be used to choose the paramete
 \end{align*}
 
 \subsubsection{General Case}
-If the system is \textbf{controllable} but not in reachable canonical form, the following steps have to be applied
+If the system is \textbf{controllable} but not in reachable canonical form, the following steps have to be applied to transform the system into reachable canonical form $\tilde{\mathbf{A}},\tilde{\mathbf{B}},\tilde{\mathbf{C}},\tilde{\mathbf{D}}$.
 \begin{enumerate}
-    \item Similarity transform of $\mathbf{A,B,C,D}$ into reachable canonical form $\mathbf{A',B',C',D'}$ with transformation matrix $\mathbf{T}$:
+    \item Calculate $\tilde{\mathbf{A}}$ by comparing the characteristic polynomial of $\mathbf{A}$ with the one of the parametric reachable canonical form $\tilde{\mathbf{A}}$.
+    \item Find transformation matrix $\mathbf{T}$ (using $\tilde{\mathbf{A}}$ from 1.\ and the known form for $\tilde{\mathbf{B}}$ to calculate $\tilde{\mathbf{R}}$):
           \noindent\begin{align*}
-              \mathbf{R}' & =\begin{bmatrix}
-                                 \mathbf{B}' & \mathbf{A}'\mathbf{B}' & \ldots & {(\mathbf{A}')}^{n-1}\mathbf{B}'
-                             \end{bmatrix} \\
-                          & =\mathbf{TR}  =\begin{bmatrix}
-                                               0      & 0        & \dots               & 1     \\
-                                               \vdots &          & \ddots              &       \\
-                                               0      & 1        & -a_{n-1}            & \dots \\
-                                               1      & -a_{n-1} & a_{n-1}^2 - a_{n-2} & \dots \\
-                                           \end{bmatrix}                                \\
-              \mathbf{T}  & = \mathbf{R'R}^{-1}
+              \tilde{\mathbf{R}} & =\begin{bmatrix}
+                                        \tilde{\mathbf{B}} & \tilde{\mathbf{A}}\tilde{\mathbf{B}} & \ldots & {(\tilde{\mathbf{A}})}^{n-1}\tilde{\mathbf{B}}
+                                    \end{bmatrix} \\
+                                 & =\mathbf{TR}  =\begin{bmatrix}
+                                                      0      & 0        & \dots               & 1     \\
+                                                      \vdots &          & \ddots              &       \\
+                                                      0      & 1        & -a_{n-1}            & \dots \\
+                                                      1      & -a_{n-1} & a_{n-1}^2 - a_{n-2} & \dots \\
+                                                  \end{bmatrix}                                                                                                           \\
+              \mathbf{T}         & = \tilde{\mathbf{R}}\mathbf{R}^{-1}
           \end{align*}
-          with $\mathbf{R}'$ the reachability matrix of the transformed system. Note that there are 2 different ways to calculate $\mathbf{R}'$
+          with $\tilde{\mathbf{R}}$ the reachability matrix of the transformed system and $a_i$ are the coefficients of $\tilde{\mathbf{A}}$
+    \item Calculate the $\tilde{\mathbf{C}}$ matrix.
     \item Apply method for reachable canonical form
-    \item Transform $\mathbf{K}'$ back to the original system:
-          \noindent\begin{align*}
-              \mathbf{K}^{\prime} & =\left[\alpha_{0}-a_{0},\quad\alpha_{1}-a_{1},\quad\ldots,\quad\alpha_{n-1}-a_{n-1}\right] \\
-              \mathbf{K}          & = \mathbf{K'RR}^{-1}
-          \end{align*}
+          \begin{equation*}
+              \mathbf{K}^{\prime} =\left[\alpha_{0}-a_{0},\quad\alpha_{1}-a_{1},\quad\ldots,\quad\alpha_{n-1}-a_{n-1}\right]
+          \end{equation*}
+    \item Transform $\tilde{\mathbf{K}}$ back to the original system:
+          \noindent\begin{equation*}
+              \mathbf{K}          = \tilde{\mathbf{K}}\mathbf{RR}^{-1}
+          \end{equation*}
           which is possible if $\mathbf{R}$ is invertible (corresponds to controllability).
 \end{enumerate}
 
-\textbf{Remarks}:
-\begin{itemize}
-    \item $\mathbf{A'},\mathbf{A}$ share their eigenvalues, therefore a comparison of coefficients can be used.
-\end{itemize}
+\newpar{}
+\ptitle{Reminder}\label{RCF}
+
+The reachable canonical form is given by
+
+\begin{equation*}
+    G(s)=\frac{b_{n-1}s^{n-1}+b_{n-2}s^{n-2}+\cdots+b_0}{s^n+a_{n-1}s^{n-1}+\cdots+a_0}+d\\
+\end{equation*}
+and
+\begin{align*}
+    \mathbf{A}' & =\begin{bmatrix}
+                       0      & 1    & 0 & 0      & \cdots & 0        \\
+                       0      & 0    & 1 & 0      & \cdots & 0        \\
+                       \vdots &      &   & \ddots &        & 1        \\
+                       -a_0   & -a_1 &   & \cdots &        & -a_{n-1}
+                   \end{bmatrix}, & \mathbf{B}' =\begin{bmatrix}
+                                                     0      \\
+                                                     0      \\
+                                                     \vdots \\
+                                                     1\end{bmatrix}                             \\
+    \mathbf{C}' & =\begin{bmatrix}
+                       b_0 & b_1 & \cdots & b_{n-1}
+                   \end{bmatrix},                     & \mathbf{D}'                     =[d];
+\end{align*}
 
 \paragraph{Unreachable/Uncontrollable Modes}
 Controllability (or reachability) is a \textbf{necessary and sufficient condition} for \textbf{arbitrary} pole placement.
@@ -97,13 +121,13 @@ for which $b_i=0$.
 \subsubsection{Ackermann's Formula}
 Assuming that the system is \textbf{controllable}, Ackermann's formula can be used to calculate $\mathbf{K}$ for \textbf{both} CT and DT systems:
 \noindent\begin{align*}
-    \mathbf{K}               & =\begin{bmatrix}
-                                    0, & \ldots, & 0, & 1
-                                \end{bmatrix}
-    \mathbf{R}^{-1}\varphi_{cl}(\mathbf{A})                                                               \\
-    \varphi_{cl}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n)  \\
-    \varphi_{cl}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 \mathbf{I}      \\
-                             & = (\mathbf{A}-\lambda_1 \mathbf{I})\ldots(\mathbf{A}-\lambda_n \mathbf{I})
+    \mathbf{K}                   & =\begin{bmatrix}
+                                        0, & \ldots, & 0, & 1
+                                    \end{bmatrix}
+    \mathbf{R}^{-1}\varphi_{cl}(\mathbf{A})                                                                   \\
+    \varphi_{cl,des}(s)          & =s^n+\alpha_{n-1}s^{n-1}+\ldots+\alpha_0=(s-\lambda_1)\ldots(s-\lambda_n)  \\
+    \varphi_{cl,des}(\mathbf{A}) & =\mathbf{A}^n+\alpha_{n-1}\mathbf{A}^{n-1}+\ldots+\alpha_0 \mathbf{I}      \\
+                                 & = (\mathbf{A}-\lambda_1 \mathbf{I})\ldots(\mathbf{A}-\lambda_n \mathbf{I})
 \end{align*}
 
 \newpar{}
@@ -115,6 +139,7 @@ Assuming that the system is \textbf{controllable}, Ackermann's formula can be us
 \end{itemize}
 
 \subsubsection{Reference Scaling}
+% TODO: This assumes D = 0, right?
 To ensure that the closed-loop systems follows unit steps with zero steady state error, the scaling vector $\mathbf{S}$ has to be chosen accordingly
 \noindent\begin{align*}
     G_{yr}^{cl}(s) & = G_{y\leftarrow r}^{cl}(s) =\mathbf{C}{(s\mathbf{I}-\mathbf{A}+\mathbf{BK})}^{-1}\mathbf{B}\bar{N}r,                                                                          & \bar{N}=\mathbf{KS} \\

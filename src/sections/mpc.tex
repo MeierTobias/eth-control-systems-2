@@ -58,7 +58,7 @@ which is an upper bound for the optimal cost
 \end{equation*}
 If we ensure that the terminal cost of the next step $V(f(\mathbf{x,u}))$ is less or equal to the current terminal cost $V(\mathbf{x})$ we get a stabilizing control law.
 
-However, the MPC control law will have better performance -- if not optimal, i.e. % TODO: Maybe explain this in more detail
+However, the MPC control law will have better performance -- if not optimal, i.e.
 \begin{equation*}
     J^*_\infty(\mathbf{x}) \leq J^*_H(\mathbf{x}) \leq J^*_{CLF}(\mathbf{x})
 \end{equation*}
@@ -103,8 +103,6 @@ The problem is converted into a minimization with affine equality constraints by
 As $t \to +\infty$, the objective function gets closer to $f_0$, but diverges very steeply at the boundary of the feasible set.
 \newpar{}
 The problem is then solved iteratively using gradient descent or Newton method for $t=\mu^k t_0$ with $t_0>0, \mu > 1$ where $k$ is the iteration variable. The solution of the pervious step is used as a starting point for the next step.
-
-% TODO: Add graphical example like the one drawn on the blackboard.
 
 \newpar{}
 \ptitle{Remarks:}

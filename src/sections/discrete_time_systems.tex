@@ -53,7 +53,7 @@ where $\omega_{c,LP}$ must be high enough to capture system dynamics.
                                                              & Time-Invariant                                     & Time-Variant ($t = kT$)                                                   \\
     \cmidrule{2-3}
     \multirow{3}{*}{\begin{sideways}Nonlinear\end{sideways}} & $\mathbf{x}[k+1] = f(\mathbf{x}[k],\mathbf{u}[k])$ & $\mathbf{x}[k+1] = f(t,\mathbf{x}[k],\mathbf{u}[k])$                      \\
-                                                             & $\mathbf{y}[t] = h(\mathbf{x}[k],\mathbf{u}[k])$   & $\mathbf{y}[t] = h(t,\mathbf{x}[k],\mathbf{u}[k])$                        \\
+                                                             & $\mathbf{y}[k] = h(\mathbf{x}[k],\mathbf{u}[k])$   & $\mathbf{y}[k] = h(t,\mathbf{x}[k],\mathbf{u}[k])$                        \\
                                                              & $\mathbf{x}[0]=\mathbf{x}_0$                       & $\mathbf{x}[0]=\mathbf{x}_0$                                              \\
     \cmidrule{2-3}
     \multirow{3}{*}{\begin{sideways}Linear\end{sideways}}    & $\mathbf{x}[k+1] = \mathbf{Ax}[k]+\mathbf{Bu}[k]$  & $\mathbf{x}[k+1] = \mathbf{A}[k]\mathbf{x}[k]+\mathbf{B}[k]\mathbf{u}[k]$ \\
@@ -208,23 +208,23 @@ To discretize the $\mathbf{A}, \mathbf{B}, \mathbf{C}, \mathbf{D}$ matrices of a
     \mathbf{A}_d & :=e^{\mathbf{A}T} & \mathbf{B}_d & :=\left(\int_0^{\mathsf{T}} {e^{\mathbf{A}\theta}}d\theta\right)\mathbf{B} \overset{\mathbf{A} \text{ inv.}}{=} \mathbf{A}^{-1}\left(\mathbf{A}_d-\mathbf{I}\right)\mathbf{B} \\
     \mathbf{C}_d & :=\mathbf{C}      & \mathbf{D}_d & :=\mathbf{D}
 \end{align*}
-%Alternatively the DT state space matrices $\mathbf{A}_d, \mathbf{B}_d, \mathbf{C}_d, \mathbf{D}_d$ can be used to compute the DT transfer function $G_{d}(z)$ and the corresponding difference equation can be derived using the z transform. 
-%TODO: This belongs to the section "Transfer Functions (TF) of DT LTI Systems" I would suggest we add the subscript _d to the formulas there (which probably caused the confusion) and remove this comment. We discussed it and Dani wil have a look at it and will decide if we delete it or move it
 
 \newpar{}
 \ptitle{Calculations}
+
+Assuming sampling time $T$
 \begin{itemize}
     \item Check invertibility by looking at the determinant.
-    \item For diagonal matrices $\Lambda$, one can apply exponentiation elementwise on the main diagonal.
+    \item For diagonal matrices $\boldsymbol{\Lambda}$, one can apply exponentiation elementwise on the main diagonal.
     \item For non-diagonal matrices use
           \begin{itemize}
-              \item either diagonalization via eigenvectors ($A=V^{-1}\cdot \Lambda \cdot V$) and
+              \item either diagonalization via eigenvectors ($\mathbf{A}=\mathbf{V}^{-1}\cdot \boldsymbol{\Lambda} \cdot \mathbf{V}$) and
                     \begin{equation*}
-                        e^{AT} = V^{-1}\cdot e^{\Lambda T} \cdot V
+                        e^{\mathbf{A}T} = \mathbf{V}^{-1}\cdot e^{\boldsymbol{\Lambda} T} \cdot \mathbf{V}
                     \end{equation*}
               \item or power series expansion
                     \begin{equation*}
-                        e^{AT}=\sum_{k=0}^{\infty}\frac{1}{k!}{\left(AT\right)}^k
+                        e^{\mathbf{A}T}=\sum_{k=0}^{\infty}\frac{1}{k!}{\left(\mathbf{A}T\right)}^k
                     \end{equation*}
           \end{itemize}
 \end{itemize}
